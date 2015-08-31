@@ -1,0 +1,16 @@
+{
+	"name": "wpengine/phpcompat",
+	"description": "Test PHP Compatibility.",
+	"authors": [{
+		"name": "Jason Stallings",
+		"email": "jason@stallin.gs"
+	}],
+    "require": {
+    	"squizlabs/php_codesniffer": "*",
+		"wimg/php-compatibility": "dev-master",
+		"simplyadmire/composer-plugins" : "@dev"
+   	},
+   	"autoload": {
+        "classmap": ["src/wpephpcompat.php"]
+	}
+}
