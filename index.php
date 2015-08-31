@@ -32,9 +32,9 @@ function wpephpcompat_run_test()
 
 function wpephpcompat_enqueue()
 {
-    wp_enqueue_script( 'ajax-script', plugins_url( '/src/js/run.js', __FILE__ ), array('jquery') );
+    wp_enqueue_script( 'wpephpcompat', plugins_url( '/src/js/run.js', __FILE__ ), array('jquery') );
 
-	wp_localize_script( 'ajax-script', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' )) );
+	wp_localize_script( 'wpephpcompat', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' )) );
 }
 
 function wpephpcompat_create_menu()
