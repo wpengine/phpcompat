@@ -33,8 +33,8 @@ class WPEPHPCompat
      */
     public function runTest()
     {
-        //FIXME: Need to replace WP_CONTENT_DIR, and exclude this plugin from the search. 
-        $this->values['files'] = array(WP_CONTENT_DIR);
+        $this->values['files'] = $this->generateFileList();
+        $this->values['ignored'] = $this->generateIgnoreList();
         $this->values['testVersion'] = $this->testVersion;
         $this->values['standard'] = "PHPCompatibility";
         $this->values['reportWidth'] = "9999";
