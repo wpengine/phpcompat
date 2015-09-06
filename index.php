@@ -51,7 +51,7 @@ function wpephpcompat_settings_page()
 		<h2>WP Engine PHP Compatibility</h2>
 		<p>
             <b>Test Results:</b>
-            <textarea style="width: 100%; height: 500px;" id="testResults"></textarea>
+            <textarea disabled="disabled" style="width: 100%; height: 500px; background: #FFF; color: #000;" id="testResults"></textarea>
 		</p>
         <p><input style="float: left;" name="run" id="runButton" type="button" value="Run" class="button" /><div style="display:none; visibility: visible; float: none;" class="spinner"></div>
         </p>
