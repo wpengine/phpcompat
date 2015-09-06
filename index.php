@@ -53,7 +53,7 @@ function wpephpcompat_settings_page()
             <b>Test Results:</b>
             <textarea disabled="disabled" style="width: 100%; height: 500px; background: #FFF; color: #000;" id="testResults"></textarea>
 		</p>
-        <p><input style="float: left;" name="run" id="runButton" type="button" value="Run" class="button" /><div style="display:none; visibility: visible; float: none;" class="spinner"></div>
+        <p><input style="float: left;" name="run" id="runButton" type="button" value="Run" class="button-primary" /><div style="display:none; visibility: visible; float: none;" class="spinner"></div>
         </p>
         
 	</div>
