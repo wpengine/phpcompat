@@ -4,6 +4,13 @@ jQuery(document).ready(function($)
     {
         //Unselect button so it's not highlighted. 
         $("#runButton").blur();
+        
+        //If run button is disabled, don't run test.
+        if ($("#runButton").hasClass("button-primary-disabled"))
+        {
+            alert("Scan is already running!");
+            return;
+        }
         $(".spinner").show();
         $("#testResults").text("");
         var data = 
