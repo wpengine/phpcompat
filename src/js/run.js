@@ -21,7 +21,7 @@ jQuery(document).ready(function($)
         
         var data = 
         {
-    		'action': 'wpephpcompat_run_test'
+    		'action': 'wpephpcompat_start_test'
     	};
         
     	jQuery.post(ajax_object.ajax_url, data, function(response) 

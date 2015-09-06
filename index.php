@@ -15,9 +15,9 @@ add_action('admin_menu', 'wpephpcompat_create_menu');
 //Load our JavaScript.
 add_action( 'admin_enqueue_scripts', 'wpephpcompat_enqueue' );
 //The action to run the compatibility test.
-add_action('wp_ajax_wpephpcompat_run_test', 'wpephpcompat_run_test');
+add_action('wp_ajax_wpephpcompat_run_test', 'wpephpcompat_start_test');
 
-function wpephpcompat_run_test()
+function wpephpcompat_start_test()
 {
 
     //TODO: Allow setting testVersion from the UI.
