@@ -14,8 +14,11 @@ jQuery(document).ready(function($)
         
         //Disable run button.
         $("#runButton").addClass("button-primary-disabled");
+        //Show the ajax spinner.
         $(".spinner").show();
+        //Empty the results textarea.
         $("#testResults").text("");
+        
         var data = 
         {
     		'action': 'wpephpcompat_run_test'
