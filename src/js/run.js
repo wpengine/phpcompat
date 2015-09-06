@@ -11,6 +11,9 @@ jQuery(document).ready(function($)
             alert("Scan is already running!");
             return;
         }
+        
+        //Disable run button.
+        $("#runButton").addClass("button-primary-disabled");
         $(".spinner").show();
         $("#testResults").text("");
         var data = 
