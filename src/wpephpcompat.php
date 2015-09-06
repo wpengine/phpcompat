@@ -68,6 +68,19 @@ class WPEPHPCompat
         return array($pluginDir);
     }
     
+    /**
+     * Cleans and formats the final report.
+     * @param  string $report The full report.
+     * @return string         The cleaned report.
+     */
+    private function cleanReport($report)
+    {
+        //Remove unnecessary overview.
+        $report = preg_replace ('/Time:.+\n/si', '', $report);
+        
+        //Remove whitespace.
+        $report = trim($report);
+        
         return $report;
     }
 }
