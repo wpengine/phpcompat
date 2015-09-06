@@ -47,6 +47,9 @@ class WPEPHPCompat
 
         ob_end_clean();
         
+        return $this->cleanReport($report);
+    }
+    
     /**
      * Generate a list of files to scan.
      * @return array Array of files to scan.
