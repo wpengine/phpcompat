@@ -47,6 +47,16 @@ class WPEPHPCompat
 
         ob_end_clean();
         
+    /**
+     * Generate a list of files to scan.
+     * @return array Array of files to scan.
+     */
+    private function generateFileList()
+    {
+        //FIXME: Need to replace WP_CONTENT_DIR with a list of directories to scan.
+        return array(WP_CONTENT_DIR);
+    }
+    
         return $report;
     }
 }
