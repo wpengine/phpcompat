@@ -57,6 +57,17 @@ class WPEPHPCompat
         return array(WP_CONTENT_DIR);
     }
     
+    /**
+     * Generate a list of files to ignore.
+     * @return array Array of files to exclude from the scan.
+     */
+    private function generateIgnoreList()
+    {
+        //Get this plugins relative directory.
+        $pluginDir = dirname(plugin_basename(__DIR__));
+        return array($pluginDir);
+    }
+    
         return $report;
     }
 }
