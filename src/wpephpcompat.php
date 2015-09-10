@@ -31,10 +31,10 @@ class WPEPHPCompat
      * Runs the actual PHPCompatibility test.
      * @return string Scan results.
      */
-    public function runTest()
+    public function runTest($dir)
     {
-        $this->values['files'] = $this->generateFileList();
-        $this->values['ignored'] = $this->generateIgnoreList();
+        $this->values['files'] = $dir;
+        //$this->values['ignored'] = $this->generateIgnoreList();
         $this->values['testVersion'] = $this->testVersion;
         $this->values['standard'] = "PHPCompatibility";
         $this->values['reportWidth'] = "9999";
