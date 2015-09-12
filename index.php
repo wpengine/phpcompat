@@ -50,6 +50,7 @@ function wpephpcompat_start_test()
        error_log("scan status: " . $scan_status);
        if (!$scan_status)
        {
+            //FIXME: Queue actual plugins.
             $dir = array(
 		 	    'post_title'    => "test",
  	            'post_content'  => "/vagrant/content/plugins/test",
