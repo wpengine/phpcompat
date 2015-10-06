@@ -38,6 +38,7 @@ class WPEPHPCompat
         $this->values['testVersion'] = $this->testVersion;
         $this->values['standard'] = "PHPCompatibility";
         $this->values['reportWidth'] = "9999";
+        $this->values['extensions'] =  array("php");
         
         ob_start();
         
