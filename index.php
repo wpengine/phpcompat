@@ -50,15 +50,36 @@ function wpephpcompat_start_test()
        error_log("scan status: " . $scan_status);
        if (!$scan_status)
        {
-            //FIXME: Queue actual plugins.
-            $dir = array(
-		 	    'post_title'    => "test",
- 	            'post_content'  => "/vagrant/content/plugins/test",
- 			    'post_status'   => 'publish',
- 		 	    'post_author'   => 1, 
-		 	    'post_type'	    => 'wpephpcompat_jobs'
-			);
-			error_log("Insert post:" . wp_insert_post( $dir ));
+           //Add plugins.
+           //TODO: Add logic to only get active plugins.
+            $plugin_base = dirname(__DIR__) . DIRECTORY_SEPARATOR;
+                    
+            $all_plugins = get_plugins();
+            
+            foreach ($all_plugins as $k => $v) 
+            {
+                //Exclude our plugin.
+                if ($v["Name"] === "WP Engine PHP Compatibility")
+                {
+                    continue;
+                }
+                
+                $plugin_path = $plugin_base . plugin_dir_path($k);
+                
+                add_directory($v["Name"], $plugin_path);
+            }
+            
+            //Add themes.
+            //TODO: Add logic to only get active theme.
+            $all_themes = wp_get_themes();
+            
+            foreach ($all_themes as $k => $v) 
+            {
+
+                $theme_path = $all_themes[$k]->theme_root . DIRECTORY_SEPARATOR . $k . DIRECTORY_SEPARATOR;
+                
+                add_directory($all_themes[$k]->Name, $theme_path);
+            }
             
             update_option($scan_status_name, "1");
        }
@@ -147,4 +168,17 @@ function wpephpcompat_settings_page()
         
 	</div>
 <?php 
+}
+
+function add_directory($name, $path)
+{
+    $dir = array(
+        'post_title'    => $name,
+        'post_content'  => $path,
+        'post_status'   => 'publish',
+        'post_author'   => 1, 
+        'post_type'	    => 'wpephpcompat_jobs'
+    );
+    
+    wp_insert_post( $dir );
 }
