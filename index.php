@@ -187,37 +187,7 @@ function wpephpcompat_settings_page()
         </p>
         
 	</div>
-<?php 
-}
-
-function add_directory($name, $path)
-{
-    $dir = array(
-        'post_title'    => $name,
-        'post_content'  => $path,
-        'post_status'   => 'publish',
-        'post_author'   => 1, 
-        'post_type'	    => 'wpephpcompat_jobs'
-    );
     
-    wp_insert_post( $dir );
-}
-
-function clean()
-{
-    delete_option("wpephpcompat.lock");
-    delete_option("wpephpcompat.status");
-    delete_option("wpephpcompat_scan_results");
-    wp_clear_scheduled_hook("wpephpcompat_start_test_cron");
-    
-    $args = array('posts_per_page' => -1, 'post_type' => 'wpephpcompat_jobs');
-    
-    $directories = get_posts($args);
-    
-    foreach ($directories as $directory)
-    {
-        wp_delete_post($directory->ID);
-    }
 <!-- Results template -->    
     <script id="result-template" type="text/x-handlebars-template">
         <div style="border-left-color: {{#if passed}}#038103{{else}}#e74c3c{{/if}};" class="results-card">
