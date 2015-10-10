@@ -66,7 +66,13 @@ function wpephpcompat_create_job_queue()
 
 function wpephpcompat_enqueue()
 {
-    wp_enqueue_script( 'wpephpcompat', plugins_url( '/src/js/run.js', __FILE__ ), array('jquery') );
+    wp_enqueue_style( 'wpephpcompat-style', plugins_url('/src/css/style.css', __FILE__) );
+    
+    wp_enqueue_script( 'wpephpcompat-handlebars', plugins_url( '/src/js/handlebars.js', __FILE__ ), array('jquery') );
+    
+    wp_enqueue_script( 'wpephpcompat-download', plugins_url( '/src/js/download.min.js', __FILE__ ));
+    
+    wp_enqueue_script( 'wpephpcompat', plugins_url( '/src/js/run.js', __FILE__ ), array('jquery', 'wpephpcompat-handlebars', 'wpephpcompat-download') );
 
 	wp_localize_script( 'wpephpcompat', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' )) );
 }
