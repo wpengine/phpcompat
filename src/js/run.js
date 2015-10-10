@@ -1,5 +1,16 @@
 jQuery(document).ready(function($) 
 {
+    //Handlebars if conditional.
+    Handlebars.registerHelper('if', function(conditional, options) 
+    {
+        if(conditional) 
+        {
+            return options.fn(this);
+        } else 
+        {
+            return options.inverse(this);
+        }
+    }); 
     $("#runButton").on("click", function()
     {
         //Unselect button so it's not highlighted. 
