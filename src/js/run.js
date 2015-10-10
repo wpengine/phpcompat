@@ -63,10 +63,16 @@ jQuery(document).ready(function($)
         //Empty the results textarea.
         $("#testResults").text("");
         $("#standardMode").html("");
+        var testVersion = $('input[name=phptestversion]:checked').val();
+        
+        var onlyActive = $('input[name=activeplugins]:checked').val();
+        
         
         var data = 
         {
-    		'action': 'wpephpcompat_start_test'
+    		'action': 'wpephpcompat_start_test',
+            'testVersion': testVersion,
+            'onlyActive': onlyActive
     	};
         
     	jQuery.post(ajax_object.ajax_url, data, function(response) 
