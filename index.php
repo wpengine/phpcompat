@@ -192,4 +192,19 @@ function clean()
     {
         wp_delete_post($directory->ID);
     }
+<!-- Results template -->    
+    <script id="result-template" type="text/x-handlebars-template">
+        <div style="border-left-color: {{#if passed}}#038103{{else}}#e74c3c{{/if}};" class="results-card">
+            <div class="inner-left">
+                {{#if passed}}<img src="http://www.clker.com/cliparts/9/I/e/1/i/B/dark-green-check-mark-hi.png">{{else}}<img src="http://sweetclipart.com/multisite/sweetclipart/files/x_mark_red.png">{{/if}}
+            </div>
+            <div class="inner-right">
+                <h3 style="margin: 0px;">{{plugin_name}}</h3>
+                {{#if passed}}This plugin is PHP {{testVersion}} compatible.{{else}}This plugin is <b>not</b> PHP {{testVersion}} compatible.{{/if}}<br><br>
+                <div class="addDetails"><textarea style="display: none;">{{logs}}</textarea><a class="view-details">view details</a></div>
+            </div>
+            <div style="float:right;"><div class="badge warnings">{{warnings}} Warnings</div><div class="badge errors">{{errors}} Errors</div></div>
+        </div>
+    </script>
+<?php 
 }
