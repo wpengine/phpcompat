@@ -195,6 +195,24 @@ class WPEPHPCompat
         
         return $report;
     }
+    
+    public function cleanAfterScan()
+    {
+
+        delete_option("wpephpcompat.lock");
+        delete_option("wpephpcompat.status");
+        delete_option("wpephpcompat_scan_results");
+        wp_clear_scheduled_hook("wpephpcompat_start_test_cron");
+        
+        $args = array('posts_per_page' => -1, 'post_type' => 'wpephpcompat_jobs');
+            
+        $directories = get_posts($args);
+            
+        foreach ($directories as $directory)
+        {
+            wp_delete_post($directory->ID);
+        }
+    }
 }
  
 ?>
