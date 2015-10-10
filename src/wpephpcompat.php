@@ -113,6 +113,8 @@ class WPEPHPCompat
         $this->values['reportWidth'] = "9999";
         $this->values['extensions'] =  array("php");
         
+         PHP_CodeSniffer::setConfigData('testVersion', $this->testVersion, true);
+        
         ob_start();
         
         $this->cli->process($this->values);
