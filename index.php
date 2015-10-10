@@ -28,98 +28,26 @@ if ( defined('WP_CLI') && WP_CLI ) {
 function wpephpcompat_start_test()
 {
     global $wpdb;
+
+    $wpephpc = new \WPEPHPCompat(__DIR__);
+    
+    //$wpephpc->cleanAfterScan();
+    //die();
+    
+    $testVersion = $_POST['testVersion'];
+    $onlyActive = $_POST['onlyActive'];
+
+    
+    $wpephpc->testVersion = $testVersion;
+    
+    $wpephpc->onlyActive = $onlyActive;
+    
     error_log("started");
-    $lock_name = 'wpephpcompat.lock';
-    $scan_status_name = 'wpephpcompat.status';
-    
-    // Try to lock.
-    $lock_result = add_option($lock_name, time(), '', 'no' );
-    
-    error_log("lock: ". $lock_result);
-    
-    if (!$lock_result)
-    {
-       $lock_result = get_option($lock_name);
 
-       // Bail if we were unable to create a lock, or if the existing lock is still valid.
-       if ( ! $lock_result || ( $lock_result > ( time() - MINUTE_IN_SECONDS ) ) ) 
-       {
-           error_log("Locked, this would have returned.");
-           return;
-       }
-    }
-        update_option($lock_name, time());
-       
-       //Check to see if scan has already started.
-       $scan_status = get_option($scan_status_name);
-       error_log("scan status: " . $scan_status);
-       if (!$scan_status)
-       {
-           //Add plugins.
-           //TODO: Add logic to only get active plugins.
-            $plugin_base = dirname(__DIR__) . DIRECTORY_SEPARATOR;
-                    
-            $all_plugins = get_plugins();
-            
-            foreach ($all_plugins as $k => $v) 
-            {
-                //Exclude our plugin.
-                if ($v["Name"] === "WP Engine PHP Compatibility")
-                {
-                    continue;
-                }
-                
-                $plugin_path = $plugin_base . plugin_dir_path($k);
-                
-                add_directory($v["Name"], $plugin_path);
-            }
-            
-            //Add themes.
-            //TODO: Add logic to only get active theme.
-            $all_themes = wp_get_themes();
-            
-            foreach ($all_themes as $k => $v) 
-            {
-
-                $theme_path = $all_themes[$k]->theme_root . DIRECTORY_SEPARATOR . $k . DIRECTORY_SEPARATOR;
-                
-                add_directory($all_themes[$k]->Name, $theme_path);
-            }
-            
-            update_option($scan_status_name, "1");
-       }
-       
-       $args = array('posts_per_page' => -1, 'post_type' => 'wpephpcompat_jobs');
-       $directories = get_posts($args);
-       error_log("After getting posts.");
-       
-       //If there are no directories to scan, we're finished! 
-       if (!$directories)
-       {
-           error_log("no posts");
-           clean();
-           return;
-       }
-       
-       wp_schedule_single_event( time() + ( MINUTE_IN_SECONDS ), 'wpephpcompat_start_test_cron' );
-       
-       $scan_results = get_option("wpephpcompat_scan_results");
-     
-       foreach ($directories as $directory)
-       {
-           $wpephpc = new \WPEPHPCompat();
-           $wpephpc->testVersion = "5.5";
-           $report = $wpephpc->runTest($directory->post_content);
-           $scan_results .= $report . "\n";
-           update_option("wpephpcompat_scan_results", $scan_results);
-           wp_delete_post($directory->ID);
-       }
-       
-       echo $scan_results;
-       
-       //All scans finished, clean up!
-       clean();
-       wp_die();
+    
+    $wpephpc->startTest();
+    
+    wp_die();
 }
 
 function wpephpcompat_create_job_queue() 

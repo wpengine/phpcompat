@@ -27,6 +27,70 @@ class WPEPHPCompat
         $this->cli = new PHP_CodeSniffer_CLI();
     }
     
+    public function startTest()
+    {
+        // Try to lock.
+        $lock_result = add_option($this->lock_name, time(), '', 'no' );
+        
+        error_log("lock: ". $lock_result);
+        
+        if (!$lock_result)
+        {
+           $lock_result = get_option($this->lock_name);
+
+           // Bail if we were unable to create a lock, or if the existing lock is still valid.
+           if ( ! $lock_result || ( $lock_result > ( time() - MINUTE_IN_SECONDS ) ) ) 
+           {
+               error_log("Locked, this would have returned.");
+               return;
+           }
+        }
+            update_option($this->lock_name, time());
+           
+           //Check to see if scan has already started.
+           $scan_status = get_option($this->scan_status_name);
+           error_log("scan status: " . $scan_status);
+           if (!$scan_status)
+           {
+               //Add plugins.
+               //TODO: Add logic to only get active plugins.
+               $this->generateDirectoryList();
+                
+           }
+           
+           $args = array('posts_per_page' => -1, 'post_type' => 'wpephpcompat_jobs');
+           $directories = get_posts($args);
+           error_log("After getting posts.");
+           
+           //If there are no directories to scan, we're finished! 
+           if (!$directories)
+           {
+               error_log("no posts");
+               
+               $this->cleanAfterScan();
+               
+               return;
+           }
+           
+           wp_schedule_single_event( time() + ( MINUTE_IN_SECONDS ), 'wpephpcompat_start_test_cron' );
+           
+           $scan_results = get_option("wpephpcompat_scan_results");
+         
+           foreach ($directories as $directory)
+           {
+               $report = $this->processFile($directory->post_content);
+               $scan_results .= "Name: " . $directory->post_title . "\n" . $report . "\n";
+               update_option("wpephpcompat_scan_results", $scan_results);
+               //update_post_meta($directory->ID, "results", )
+               wp_delete_post($directory->ID);
+           }
+           
+           echo $scan_results;
+           
+           //All scans finished, clean up!
+           $this->cleanAfterScan();
+    }
+    
     /**
      * Runs the actual PHPCompatibility test.
      * @return string Scan results.
