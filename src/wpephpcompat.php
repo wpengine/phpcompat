@@ -213,6 +213,19 @@ class WPEPHPCompat
             wp_delete_post($directory->ID);
         }
     }
+    
+    private function addDirectory($name, $path)
+    {
+        $dir = array(
+            'post_title'    => $name,
+            'post_content'  => $path,
+            'post_status'   => 'publish',
+            'post_author'   => 1, 
+            'post_type'	    => 'wpephpcompat_jobs'
+        );
+        
+        wp_insert_post( $dir );
+    }
 }
  
 ?>
