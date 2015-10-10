@@ -20,6 +20,11 @@ add_action('wpephpcompat_start_test_cron', 'wpephpcompat_start_test');
 //Create custom post type.
 add_action( 'init', 'wpephpcompat_create_job_queue' );
 
+//Add the phpcompat WP-CLI command.
+if ( defined('WP_CLI') && WP_CLI ) {
+    include __DIR__ . '/src/wpcli.php';
+}
+
 function wpephpcompat_start_test()
 {
     global $wpdb;
