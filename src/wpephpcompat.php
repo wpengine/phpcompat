@@ -127,13 +127,46 @@ class WPEPHPCompat
     }
     
     /**
-     * Generate a list of files to scan.
-     * @return array Array of files to scan.
+     * Generate a list of directories to scan and populate the queue.
      */
-    private function generateFileList()
+    public function generateDirectoryList()
     {
-        //FIXME: Need to replace WP_CONTENT_DIR with a list of directories to scan.
-        return array(WP_CONTENT_DIR);
+        $plugin_base = dirname($this->base) . DIRECTORY_SEPARATOR;
+                
+        $all_plugins = get_plugins();
+        
+        foreach ($all_plugins as $k => $v) 
+        {
+            //Exclude our plugin.
+            if ($v["Name"] === "WP Engine PHP Compatibility")
+            {
+                continue;
+            }
+            
+            $plugin_path = $plugin_base . plugin_dir_path($k);
+            
+            $this->addDirectory($v["Name"], $plugin_path);
+        }
+        
+        //Add themes.
+        //TODO: Add logic to only get active theme.
+        $all_themes = wp_get_themes();
+        
+        foreach ($all_themes as $k => $v) 
+        {
+            if ($this->onlyActive === "yes")
+            {
+                $current_theme = wp_get_theme();
+                if ($all_themes[$k]->Name != $current_theme->Name)
+                    continue;
+            }
+
+            $theme_path = $all_themes[$k]->theme_root . DIRECTORY_SEPARATOR . $k . DIRECTORY_SEPARATOR;
+            
+            $this->addDirectory($all_themes[$k]->Name, $theme_path);
+        }
+        
+        update_option($this->scan_status_name, "1");
     }
     
     /**
