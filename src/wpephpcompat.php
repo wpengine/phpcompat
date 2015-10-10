@@ -22,8 +22,17 @@ class WPEPHPCompat
      */
     public $testVersion = null;
     
-    function __construct() 
+    public $onlyActive = null;
+    
+    public $lock_name = 'wpephpcompat.lock';
+    
+    public $scan_status_name = 'wpephpcompat.status';
+    
+    public $base = null;
+    
+    function __construct($dir) 
     {
+        $this->base = $dir;
         $this->cli = new PHP_CodeSniffer_CLI();
     }
     
