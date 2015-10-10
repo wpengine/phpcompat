@@ -25,6 +25,12 @@ jQuery(document).ready(function($)
         }
         
     });
+    
+    $("#downloadReport").on("click", function()
+    {
+        download($("#testResults").val(), "report.txt", "text/plain");
+    });
+    
     $("#runButton").on("click", function()
     {
         //Unselect button so it's not highlighted. 
