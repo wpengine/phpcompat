@@ -62,6 +62,7 @@ jQuery(document).ready(function($)
         $(".spinner").show();
         //Empty the results textarea.
         $("#testResults").text("");
+        $("#standardMode").html("");
         
         var data = 
         {
