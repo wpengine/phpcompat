@@ -149,13 +149,34 @@ function wpephpcompat_settings_page()
         
     ?>
 	<div class="wrap">
-		<h2>WP Engine PHP Compatibility</h2>
-		<p>
-            <?php 
+		<div style="float: left;"><h2>WP Engine PHP Compatibility</h2></div> <div style="float: right; margin-top: 10px;"> <input type="checkbox" id="developermode" name="developermode" value="yes">Developer mode</div>
+        <br><br>
+        <h3>Scan Settings</h3>
+        <span style="font-weight: 900; font-size: 12px;">Scan only active plugins and themes?</span><br>
+        <input type="radio" name="activeplugins" value="yes" checked>Yes
+        <br>
+        <input type="radio" name="activeplugins" value="no">No
+        <br>
+        <span style="font-weight: 900; font-size: 12px;">PHP Version?</span><br>
+        <input type="radio" name="phptestversion" value="5.5" checked>PHP 5.5
+        <br>
+        <input type="radio" name="phptestversion" value="5.4">PHP 5.4
+        <br>
+        <input type="radio" name="phptestversion" value="5.3">PHP 5.3
+    
+		<p>            
+            <div id="standardMode">
             
-            ?>
-            <b>Test Results:</b>
-            <textarea disabled="disabled" style="width: 100%; height: 500px; background: #FFF; color: #000;" id="testResults"></textarea>
+            </div>
+            
+            <div style="display: none;" id="developerMode">
+                <b>Test Results:</b>
+                <textarea disabled="disabled" style="width: 100%; height: 500px; background: #FFF; color: #000;" id="testResults"></textarea>
+            </div>
+            <div id="footer" style="display: none;">
+            Note: Warnings are not currently an issue, but they will be in the future.<br>
+            <a id="downloadReport" href="#">Download</a>
+            </div>
 		</p>
         <p><input style="float: left;" name="run" id="runButton" type="button" value="Run" class="button-primary" /><div style="display:none; visibility: visible; float: none;" class="spinner"></div>
         </p>
