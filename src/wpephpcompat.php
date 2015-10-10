@@ -104,7 +104,7 @@ class WPEPHPCompat
      * Runs the actual PHPCompatibility test.
      * @return string Scan results.
      */
-    public function runTest($dir)
+    public function processFile($dir)
     {
         $this->values['files'] = $dir;
         //$this->values['ignored'] = $this->generateIgnoreList();
