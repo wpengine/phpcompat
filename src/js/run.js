@@ -11,6 +11,20 @@ jQuery(document).ready(function($)
             return options.inverse(this);
         }
     }); 
+    $("#developermode").change(function() 
+    {
+        if ($(this).is(":checked"))
+        {
+            $("#developerMode").show();
+            $("#standardMode").hide();
+        }
+        else 
+        {
+            $("#developerMode").hide();
+            $("#standardMode").show();
+        }
+        
+    });
     $("#runButton").on("click", function()
     {
         //Unselect button so it's not highlighted. 
