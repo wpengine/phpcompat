@@ -87,6 +87,7 @@ function wpephpcompat_settings_page()
 {
         
     ?>
+    
 	<div class="wrap">
 		<div style="float: left;"><h2>WP Engine PHP Compatibility</h2></div> <div style="float: right; margin-top: 10px;"> <input type="checkbox" id="developermode" name="developermode" value="yes">Developer mode</div>
         <br><br>
