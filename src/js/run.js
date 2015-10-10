@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) 
-{
+{   
     //Handlebars if conditional.
     Handlebars.registerHelper('if', function(conditional, options) 
     {
@@ -11,6 +11,7 @@ jQuery(document).ready(function($)
             return options.inverse(this);
         }
     }); 
+    
     $("#developermode").change(function() 
     {
         if ($(this).is(":checked"))
