@@ -143,6 +143,18 @@ class WPEPHPCompat
                 continue;
             }
             
+            //Exclude active plugins if onlyActive = "yes".
+            if ($this->onlyActive === "yes")
+            {
+                //Get array of active plugins.
+                $active_plugins = get_option('active_plugins');
+                
+                if (!in_array($k, $active_plugins))
+                {
+                    continue;
+                }
+            }
+            
             $plugin_path = $plugin_base . plugin_dir_path($k);
             
             $this->addDirectory($v["Name"], $plugin_path);
