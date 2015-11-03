@@ -154,7 +154,7 @@ function wpephpcompat_settings_page()
             <!-- Area for developer results. -->
             <div style="display: none;" id="developerMode">
                 <b>Test Results:</b>
-                <textarea disabled="disabled" style="width: 100%; height: 500px; background: #FFF; color: #000;" id="testResults"></textarea>
+                <textarea disabled="disabled" id="testResults"></textarea>
             </div>
             
             <div id="footer" style="display: none;">

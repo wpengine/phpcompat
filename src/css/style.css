@@ -82,3 +82,8 @@
 	margin-left: 5px;
 	background-color: #e74c3c;
 }
+
+#developerMode textarea
+{
+	width: 100%; height: 500px; background: #FFF; color: #000;
+}
