@@ -46,13 +46,13 @@ class WPEPHPCompat
         
         $this->debugLog("startScan: " . isset($_POST['startScan']));
         // Try to lock. 
-        $lock_result = add_option($this->lock_name, time(), '', 'no' );
+        $lock_result = add_option("wpephpcompat.lock", time(), '', 'no' );
         
         $this->debugLog("lock: ". $lock_result);
         
         if (!$lock_result)
         {
-           $lock_result = get_option($this->lock_name);
+           $lock_result = get_option("wpephpcompat.lock");
 
            // Bail if we were unable to create a lock, or if the existing lock is still valid.
            if ( ! $lock_result || ( $lock_result > ( time() - MINUTE_IN_SECONDS ) ) ) 
@@ -61,10 +61,10 @@ class WPEPHPCompat
                return;
            }
         }
-            update_option($this->lock_name, time());
+            update_option("wpephpcompat.lock", time());
            
            //Check to see if scan has already started.
-           $scan_status = get_option($this->scan_status_name);
+           $scan_status = get_option("wpephpcompat.status");
            $this->debugLog("scan status: " . $scan_status);
            if (!$scan_status)
            {
@@ -72,7 +72,7 @@ class WPEPHPCompat
                //Add plugins and themes.
                $this->generateDirectoryList();
                
-               add_option($this->scan_status_name, "1");
+               add_option("wpephpcompat.status", "1");
                 
                add_option("wpephpcompat.test_version", $this->test_version);
                add_option("wpephpcompat.only_active", $this->only_active);
@@ -136,7 +136,7 @@ class WPEPHPCompat
                $this->cleanAfterScan();
            }
            
-           update_option($this->scan_status_name, "0");
+           update_option("wpephpcompat.status", "0");
            
            $this->debugLog("Scan finished.");
            
