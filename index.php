@@ -169,7 +169,7 @@ function wpephpcompat_settings_page()
     
 <!-- Results template -->    
     <script id="result-template" type="text/x-handlebars-template">
-        <div style="border-left-color: {{#if passed}}#038103{{else}}#e74c3c{{/if}};" class="results-card">
+        <div style="border-left-color: {{#if passed}}#038103{{else}}#e74c3c{{/if}};" class="wpe-results-card">
             <div class="inner-left">
                 {{#if passed}}<img src="http://www.clker.com/cliparts/9/I/e/1/i/B/dark-green-check-mark-hi.png">{{else}}<img src="http://sweetclipart.com/multisite/sweetclipart/files/x_mark_red.png">{{/if}}
             </div>
@@ -180,7 +180,7 @@ function wpephpcompat_settings_page()
                 <div class="addDetails"><textarea style="display: none;">{{logs}}</textarea><a class="view-details">view details</a></div>
             </div>
             <?php $update_url = site_url( 'wp-admin/update-core.php' ); ?>
-            <div style="float:right;">{{#if updateAvailable}}<div class="badge update"><a href="<?php echo $update_url; ?>">Update Available</a></div>{{/if}}<div class="badge warnings">{{warnings}} Warnings</div><div class="badge errors">{{errors}} Errors</div></div>
+            <div style="float:right;">{{#if updateAvailable}}<div class="badge wpe-update"><a href="<?php echo $update_url; ?>">Update Available</a></div>{{/if}}<div class="badge warnings">{{warnings}} Warnings</div><div class="badge errors">{{errors}} Errors</div></div>
         </div>
     </script>
 <?php 
