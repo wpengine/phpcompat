@@ -13,6 +13,7 @@
 	padding-right: 16px; 
 	padding-top: 14px; 
 	margin-bottom: 10px;
+	/*box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.12);*/
 }
 
 .results-card .inner-left
@@ -32,7 +33,7 @@
 	letter-spacing: normal;
 	text-rendering: auto;
 	vertical-align: top;
-	width: 534px;
+	width: 450px;
 	word-spacing: 0px;
 }
 
@@ -52,6 +53,7 @@
 {
 	font-size: 12px; 
 	color: #c0c0c0;
+	cursor: pointer;
 }
 
 .results-card .badge
@@ -62,8 +64,16 @@
 	padding: 2px 10px; 
 }
 
+.update a:link, .update a:visited, .update a:hover, .update a:active { color:#ffffff; cursor: pointer; text-decoration: none; }
+
+.results-card .update
+{
+	background-color: #60bb8f;
+}
+
 .results-card .warnings
 {
+	margin-left: 5px;
 	background-color: #f1c40f;
 }
 

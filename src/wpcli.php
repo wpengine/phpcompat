@@ -21,21 +21,32 @@ class PHPCompat_Command extends WP_CLI_Command {
      *
      * @synopsis <version>
      */
-    function __invoke( $args, $assoc_args ) {
-        list( $testVersion ) = $args;
+    function __invoke( $args, $assoc_args ) 
+    {
+        list( $test_version ) = $args;
+        
+        WP_CLI::line("Testing compatibility with PHP " . $test_version . ".");
 		
 		$root_dir = realpath(__DIR__ . "/../");
 		
 		$wpephpc = new \WPEPHPCompat($root_dir);
 		
-		$wpephpc->testVersion = $testVersion;
+		$wpephpc->test_version = $test_version;
 		
-		$wpephpc->onlyActive = "yes";
+		$wpephpc->only_active = "yes";
 		
-		$wpephpc->startTest();
-		
-        // Print a success message
-        WP_CLI::success( "Test finished!" );
+		$results = $wpephpc->startTest();
+        
+        echo $results; 
+        
+        if (preg_match("/(\d*) ERRORS?/i", $results)) 
+        {
+            WP_CLI::error( "Your WordPress install is not compatible." );
+        } 
+        else 
+        {
+            WP_CLI::success( "Your WordPress install is compatible." );
+        }
     }
 }
 
