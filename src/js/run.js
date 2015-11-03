@@ -1,3 +1,6 @@
+//Global variables. 
+var test_version, only_active, timer;
+
 jQuery(document).ready(function($) 
 {   
     //Handlebars if conditional.
@@ -24,7 +27,6 @@ jQuery(document).ready(function($)
             $("#developerMode").hide();
             $("#standardMode").show();
         }
-        
     });
     
     $("#downloadReport").on("click", function()
@@ -57,109 +59,178 @@ jQuery(document).ready(function($)
             return;
         }
         
+        //Start timer to check scan status.
+        timer = setInterval(function()
+        {
+            checkStatus();
+        }, 5000);
+        
         //Disable run button.
         $("#runButton").addClass("button-primary-disabled");
         //Show the ajax spinner.
         $(".spinner").show();
         //Empty the results textarea.
-        $("#testResults").text("");
-        $("#standardMode").html("");
-        var testVersion = $('input[name=phptestversion]:checked').val();
+        resetDisplay();
         
-        var onlyActive = $('input[name=activeplugins]:checked').val();
+        $("#footer").hide();
+        
+        test_version = $('input[name=phptest_version]:checked').val();
+        
+        only_active = $('input[name=active_plugins]:checked').val();
         
         
         var data = 
         {
     		'action': 'wpephpcompat_start_test',
-            'testVersion': testVersion,
-            'onlyActive': onlyActive
+            'test_version': test_version,
+            'only_active': only_active,
+            'startScan': 1
     	};
         
     	jQuery.post(ajax_object.ajax_url, data, function(response) 
         {
-            var compatible = 1;
-            $("#runButton").removeClass("button-primary-disabled");
-            $(".spinner").hide();
-            $("#testResults").text(response);
-            
-            $("#footer").show();
-            
-            $("#runButton").val("Re-run");
-            
-            var plugins = response.split("Name: ");
-            
-            for (var x in plugins)
-            {
-                if (plugins[x] === "")
-                {
-                    continue;
-                }
-                
-                var name = plugins[x].substring(0, plugins[x].indexOf("\n"));
-                var log = plugins[x].substring(plugins[x].indexOf("\n"), plugins[x].length); 
-                console.log(name);
-                console.log(log);
-                var errorsRegex = /(\d*) ERRORS/g;
-                var warningRegex = /(\d*) WARNINGS?/g;
-                
-                var errors = 0;
-                var warnings = 0;
-                
-                var m;
-                while ((m = errorsRegex.exec(log)) !== null) {
-                    if (m.index === errorsRegex.lastIndex) {
-                        errorsRegex.lastIndex++;
-                    }
-                    if (parseInt(m[1]) > 0)
-                    {
-                        errors += parseInt(m[1]);
-                    }
-                }
-                
-                while ((m = warningRegex.exec(log)) !== null) {
-                    if (m.index === warningRegex.lastIndex) {
-                        warningRegex.lastIndex++;
-                    }
-                    if (parseInt(m[1]) > 0)
-                    {
-                        warnings += parseInt(m[1]);
-                    }
-                }
-                
-                //var match = warningRegex.match(log);
-                
-                //console.log(match)
-                
-                //alert("pause")
-                var passed = 1;
-                
-                if (parseInt(errors) > 0)
-                {
-                    compatible = 0;
-                    passed = 0;
-                }
-                
-                //Use handlebars to fill our template.
-                var source   = $("#result-template").html();
-                var template = Handlebars.compile(source);
-                var context = {plugin_name: name, warnings: warnings, errors: errors, logs: log, passed: passed, testVersion: testVersion};
-                var html    = template(context);
-                
-                $("#standardMode").append(html);
-                
-            }
-            if (compatible)
-            {
-                $("#standardMode").prepend("<h3>Your WordPress install is PHP " + testVersion + " compatible.");
-            }
-            else 
-            {
-                $("#standardMode").prepend("<h3>Your WordPress install is not PHP " + testVersion + " compatible.");
-            }
-            
-            
+            displayReport(response);
     	});
     });
 
 });
+
+/**
+ * Check the scan status and display results if scan is done.
+ */
+function checkStatus()
+{
+    var data = 
+    {
+        'action': 'wpephpcompat_check_status'
+    };
+    
+    jQuery.post(ajax_object.ajax_url, data, function(response) 
+    {
+        console.log(response);
+        
+        if (response !== "0")
+        {
+            displayReport(response);
+        }
+    });
+}
+
+/**
+ * Clear previous results.
+ */
+function resetDisplay()
+{
+    jQuery("#testResults").text("");
+    jQuery("#standardMode").html("");
+}
+
+/**
+ * Loop through a string and count the total matches.
+ * @param  {RegExp} regex Regex to execute.
+ * @param  {string} log   String to loop through.
+ * @return {int}          The total number of matches. 
+ */
+function findAll(regex, log)
+{
+    var m;
+    var count = 0;
+    while ((m = regex.exec(log)) !== null) 
+    {
+        if (m.index === regex.lastIndex) 
+        {
+            regex.lastIndex++;
+        }
+        if (parseInt(m[1]) > 0)
+        {
+            count += parseInt(m[1]);
+        }
+    }
+    return count;
+}
+
+/**
+ * Display the pretty report.
+ * @param  {string} response Full test results.
+ */
+function displayReport(response)
+{
+    //Clear status timer.
+    clearInterval(timer);
+    
+    var $ = jQuery;
+    var compatible = 1;
+    var errorsRegex = /(\d*) ERRORS?/g;
+    var warningRegex = /(\d*) WARNINGS?/g;
+    var updateVersionRegex = /e: (.*?);/g;
+    var currentVersionRegex = /n: (.*?);/g;
+    
+    $("#runButton").removeClass("button-primary-disabled");
+    $(".spinner").hide();
+    $("#testResults").text(response);
+    
+    $("#footer").show();
+    
+    $("#runButton").val("Re-run");
+    
+    //Separate plugins/themes.
+    var plugins = response.split("Name: ");
+    
+    //Loop through them.
+    for (var x in plugins)
+    {
+        if (plugins[x] === "")
+        {
+            continue;
+        }
+        
+        var updateVersion;
+        var updateAvailable = 0;
+        var passed = 1;
+        
+        //Extract plugin/theme name.
+        var name = plugins[x].substring(0, plugins[x].indexOf("\n"));
+        //Extract results.
+        var log = plugins[x].substring(plugins[x].indexOf("\n"), plugins[x].length); 
+        
+        //Find number of errors and warnings. 
+        var errors = findAll(errorsRegex, log);
+        var warnings = findAll(warningRegex, log);
+        
+        //Check to see if there are any plugin/theme updates.
+        if (updateVersionRegex.exec(log))
+        {
+            updateAvailable = 1;
+        }
+        
+        //Update plugin and global compatibility flags.
+        if (parseInt(errors) > 0)
+        {
+            compatible = 0;
+            passed = 0;
+        }
+        
+        //Trim whitespace and newlines from report.
+        log = log.replace(/^\s+|\s+$/g, "");
+        
+        //Use handlebars to build our template.
+        var source   = $("#result-template").html();
+        var template = Handlebars.compile(source);
+        var context = {plugin_name: name, warnings: warnings, errors: errors, logs: log, passed: passed, test_version: test_version, updateAvailable: updateAvailable};
+        var html    = template(context);
+        
+        $("#standardMode").append(html);
+        
+    }
+    
+    //Display global compatibility status.
+    if (compatible)
+    {
+        $("#standardMode").prepend("<h3>Your WordPress install is PHP " + test_version + " compatible.</h3>");
+    }
+    else 
+    {
+        $("#standardMode").prepend("<h3>Your WordPress install is not PHP " + test_version + " compatible.</h3>");
+    }
+    
+}
