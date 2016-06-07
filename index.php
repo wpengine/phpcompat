@@ -32,9 +32,6 @@ function wpephpcompat_start_test()
 
     $wpephpc = new \WPEPHPCompat(__DIR__);
     
-    //$wpephpc->cleanAfterScan();
-    //die();
-    
     if (isset($_POST['startScan']))
     {
         $test_version = $_POST['test_version'];
@@ -48,8 +45,6 @@ function wpephpcompat_start_test()
     }
         
     echo $wpephpc->startTest();
-    
-    //echo "0";
     
     wp_die();
 }
@@ -75,10 +70,11 @@ function wpephpcompat_check_status()
     }
 }
 
+/**
+ * Create custom post type to store the directories we need to process.
+ */
 function wpephpcompat_create_job_queue() 
 {
-    //set_time_limit(10);
-    
 	register_post_type( 'wpephpcompat_jobs',
 		array(
 			'labels' => array(
@@ -91,6 +87,9 @@ function wpephpcompat_create_job_queue()
 	);
 }
 
+/**
+ * Enqueue our JavaScript and CSS.
+ */
 function wpephpcompat_enqueue()
 {
     wp_enqueue_style( 'wpephpcompat-style', plugins_url('/src/css/style.css', __FILE__) );
@@ -114,18 +113,9 @@ function wpephpcompat_settings_page()
 {
         
     ?>
-    
 	<div class="wrap">
 		<div style="float: left;"><h2>WP Engine PHP Compatibility</h2></div> <div style="float: right; margin-top: 10px; text-align: right;"> <input type="checkbox" id="developermode" name="developermode" value="yes">Developer mode</div>
         <br><br>
-        <!--<fieldset class="scan-fieldset">
-            <legend><h3>Scan Settings</h3></legend>
-        <span class="scan-settings-title">Scan only active plugins and themes:</span><br>
-        <input type="radio" name="active_plugins" value="yes" checked>Yes&nbsp;&nbsp;<input type="radio" name="active_plugins" value="no">No
-        <br>
-        <span class="scan-settings-title">PHP Version:</span><br>
-        <input type="radio" name="phptest_version" value="5.5" checked>5.5&nbsp;&nbsp;<input type="radio" name="phptest_version" value="5.4">5.4&nbsp;&nbsp;<input type="radio" name="phptest_version" value="5.3">5.3
-    </fieldset>-->
     <h3 class="title">Scan Options</h3>
     <table class="form-table">
         <tbody>
@@ -171,7 +161,7 @@ function wpephpcompat_settings_page()
     <script id="result-template" type="text/x-handlebars-template">
         <div style="border-left-color: {{#if passed}}#038103{{else}}#e74c3c{{/if}};" class="wpe-results-card">
             <div class="inner-left">
-                {{#if passed}}<img src="http://www.clker.com/cliparts/9/I/e/1/i/B/dark-green-check-mark-hi.png">{{else}}<img src="http://sweetclipart.com/multisite/sweetclipart/files/x_mark_red.png">{{/if}}
+                {{#if passed}}<img src="https://cldup.com/pRASNcwenu.png">{{else}}<img src="https://cldup.com/XXLvZbqkd8.png">{{/if}}
             </div>
             <div class="inner-right">
                 <h3 style="margin: 0px;">{{plugin_name}}</h3>
@@ -179,7 +169,7 @@ function wpephpcompat_settings_page()
                 {{update}}<br>
                 <div class="addDetails"><textarea style="display: none;">{{logs}}</textarea><a class="view-details">view details</a></div>
             </div>
-            <?php $update_url = site_url( 'wp-admin/update-core.php' ); ?>
+            <?php $update_url = site_url( 'wp-admin/update-core.php' , 'admin' ); ?>
             <div style="float:right;">{{#if updateAvailable}}<div class="badge wpe-update"><a href="<?php echo $update_url; ?>">Update Available</a></div>{{/if}}<div class="badge warnings">{{warnings}} Warnings</div><div class="badge errors">{{errors}} Errors</div></div>
         </div>
     </script>

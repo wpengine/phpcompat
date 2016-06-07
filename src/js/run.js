@@ -87,10 +87,8 @@ jQuery(document).ready(function($)
             'startScan': 1
     	};
         
-    	jQuery.post(ajax_object.ajax_url, data, function(response) 
-        {
-            displayReport(response);
-    	});
+        //Start the test!
+        jQuery.post(ajax_object.ajax_url, data);
     });
 
 });
@@ -158,6 +156,9 @@ function displayReport(response)
     //Clear status timer.
     clearInterval(timer);
     
+    //Clean up before displaying results. 
+    resetDisplay();
+    
     var $ = jQuery;
     var compatible = 1;
     var errorsRegex = /(\d*) ERRORS?/g;
@@ -174,12 +175,12 @@ function displayReport(response)
     $("#runButton").val("Re-run");
     
     //Separate plugins/themes.
-    var plugins = response.split("Name: ");
+    var plugins = response.replace(/^\s+|\s+$/g, "").split("Name: ");
     
     //Loop through them.
     for (var x in plugins)
     {
-        if (plugins[x] === "")
+        if (plugins[x].trim() === "")
         {
             continue;
         }

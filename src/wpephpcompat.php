@@ -58,6 +58,13 @@ class WPEPHPCompat
            if ( ! $lock_result || ( $lock_result > ( time() - MINUTE_IN_SECONDS ) ) ) 
            {
                $this->debugLog("Process already running (locked), returning.");
+               
+               $timestamp = wp_next_scheduled( 'wpephpcompat_start_test_cron' );
+               
+               if( $timestamp == false )
+               {
+                   wp_schedule_single_event( time() + ( MINUTE_IN_SECONDS ), 'wpephpcompat_start_test_cron' );
+               }
                return;
            }
         }
@@ -86,11 +93,12 @@ class WPEPHPCompat
            
            $args = array('posts_per_page' => -1, 'post_type' => 'wpephpcompat_jobs');
            $directories = get_posts($args);
-           $this->debugLog("After getting posts.");
+           $this->debugLog(count($directories) . " plugins left to process.");
            
            //If there are no directories to scan, we're finished! 
            if (!$directories)
            {   
+               $this->debugLog("No more plugins to process.");
                $this->cleanAfterScan();
                
                return;
@@ -163,9 +171,7 @@ class WPEPHPCompat
         
         $this->cli->process($this->values);
 
-        $report = ob_get_contents();
-
-        ob_end_clean();
+        $report = ob_get_clean();
         
         return $this->cleanReport($report);
     }
