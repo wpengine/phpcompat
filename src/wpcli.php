@@ -15,39 +15,47 @@ class PHPCompat_Command extends WP_CLI_Command {
 	 * <version>
 	 * : PHP version to test.
 	 *
+	 * [--scan=<scan>]
+	 * : Whether to scan only active plugins and themes or all of them.
+	 * ---
+	 * default: active
+	 * options:
+	 *   - active
+	 *   - all
+	 * ---
+	 *
 	 * ## EXAMPLES
 	 *
-	 *     wp phpcompat 5.5
+	 *     wp phpcompat 5.5 --scan=active
 	 *
-	 * @synopsis <version>
 	 */
-	function __invoke( $args, $assoc_args )
-	{
+	function __invoke( $args, $assoc_args ) {
 		list( $test_version ) = $args;
 
-		WP_CLI::line("Testing compatibility with PHP " . $test_version . ".");
+		var_dump( $assoc_args );
 
-		$root_dir = realpath(__DIR__ . "/../");
 
-		$wpephpc = new \WPEPHPCompat($root_dir);
+		WP_CLI::line( 'Testing compatibility with PHP ' . $test_version . '.' );
+
+		$root_dir = realpath( __DIR__ . '/../' );
+
+		$wpephpc = new \WPEPHPCompat( $root_dir );
 
 		$wpephpc->cleanAfterScan();
 
 		$wpephpc->test_version = $test_version;
 
-		$wpephpc->only_active = "yes";
+		$wpephpc->only_active = 'yes';
 
 		$results = $wpephpc->startTest();
 
-		echo $results;
+		echo esc_html( $results );
 
-		if (preg_match("/(\d*) ERRORS?/i", $results))
-		{
-			WP_CLI::error( "Your WordPress install is not compatible." );
+		if ( preg_match( '/(\d*) ERRORS?/i', $results ) ) {
+			WP_CLI::error( 'Your WordPress install is not compatible.' );
 		}
-		else
-		{
-			WP_CLI::success( "Your WordPress install is compatible." );
+		else {
+			WP_CLI::success( 'Your WordPress install is compatible.' );
 		}
 	}
 }
