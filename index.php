@@ -11,29 +11,27 @@
 require __DIR__ . '/vendor/autoload.php';
 
 //Build our tools page.
-add_action('admin_menu', 'wpephpcompat_create_menu');
+add_action( 'admin_menu', 'wpephpcompat_create_menu' );
 //Load our JavaScript.
 add_action( 'admin_enqueue_scripts', 'wpephpcompat_enqueue' );
 //The action to run the compatibility test.
-add_action('wp_ajax_wpephpcompat_start_test', 'wpephpcompat_start_test');
-add_action('wp_ajax_wpephpcompat_check_status', 'wpephpcompat_check_status');
-add_action('wpephpcompat_start_test_cron', 'wpephpcompat_start_test');
+add_action( 'wp_ajax_wpephpcompat_start_test', 'wpephpcompat_start_test' );
+add_action( 'wp_ajax_wpephpcompat_check_status', 'wpephpcompat_check_status' );
+add_action( 'wpephpcompat_start_test_cron', 'wpephpcompat_start_test' );
 //Create custom post type.
 add_action( 'init', 'wpephpcompat_create_job_queue' );
 
 //Add the phpcompat WP-CLI command.
-if ( defined('WP_CLI') && WP_CLI ) {
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	include __DIR__ . '/src/wpcli.php';
 }
 
-function wpephpcompat_start_test()
-{
+function wpephpcompat_start_test() {
 	global $wpdb;
 
-	$wpephpc = new \WPEPHPCompat(__DIR__);
+	$wpephpc = new \WPEPHPCompat( __DIR__ );
 
-	if (isset($_POST['startScan']))
-	{
+	if ( isset( $_POST['startScan'] ) ) {
 		$test_version = $_POST['test_version'];
 		$only_active = $_POST['only_active'];
 
@@ -44,7 +42,7 @@ function wpephpcompat_start_test()
 		$wpephpc->cleanAfterScan();
 	}
 
-	echo $wpephpc->startTest();
+	echo esc_html( $wpephpc->startTest() );
 
 	wp_die();
 }
@@ -52,19 +50,16 @@ function wpephpcompat_start_test()
 //TODO: Use heartbeat API.
 function wpephpcompat_check_status()
 {
-	$scan_status = get_option("wpephpcompat.status");
+	$scan_status = get_option( 'wpephpcompat.status' );
 
-	if ($scan_status)
-	{
-		echo "0";
+	if ( $scan_status ) {
+		echo '0';
 		wp_die();
-	}
-	else
-	{
-		$scan_results = get_option("wpephpcompat.scan_results");
-		echo $scan_results;
+	} else {
+		$scan_results = get_option( 'wpephpcompat.scan_results' );
+		echo esc_html( $scan_results );
 
-		$wpephpc = new \WPEPHPCompat(__DIR__);
+		$wpephpc = new \WPEPHPCompat( __DIR__ );
 		$wpephpc->cleanAfterScan();
 		wp_die();
 	}
@@ -92,11 +87,11 @@ function wpephpcompat_create_job_queue()
  */
 function wpephpcompat_enqueue()
 {
-	wp_enqueue_style( 'wpephpcompat-style', plugins_url('/src/css/style.css', __FILE__) );
+	wp_enqueue_style( 'wpephpcompat-style', plugins_url( '/src/css/style.css', __FILE__ ) );
 
-	wp_enqueue_script( 'wpephpcompat-handlebars', plugins_url( '/src/js/handlebars.js', __FILE__ ), array('jquery') );
+	wp_enqueue_script( 'wpephpcompat-handlebars', plugins_url( '/src/js/handlebars.js', __FILE__ ), array( 'jquery' ) );
 
-	wp_enqueue_script( 'wpephpcompat-download', plugins_url( '/src/js/download.min.js', __FILE__ ));
+	wp_enqueue_script( 'wpephpcompat-download', plugins_url( '/src/js/download.min.js', __FILE__ ) );
 
 	wp_enqueue_script( 'wpephpcompat', plugins_url( '/src/js/run.js', __FILE__ ), array('jquery', 'wpephpcompat-handlebars', 'wpephpcompat-download') );
 
@@ -106,7 +101,7 @@ function wpephpcompat_enqueue()
 function wpephpcompat_create_menu()
 {
 	//Create Tools sub-menu.
-	$wpeallowheartbeat_settings_page = add_submenu_page('tools.php', 'PHP Compatibility', 'PHP Compatibility', 'administrator', __FILE__, 'wpephpcompat_settings_page');
+	$wpeallowheartbeat_settings_page = add_submenu_page( 'tools.php', 'PHP Compatibility', 'PHP Compatibility', 'administrator', __FILE__, 'wpephpcompat_settings_page' );
 }
 
 function wpephpcompat_settings_page()
@@ -121,7 +116,9 @@ function wpephpcompat_settings_page()
 		<tbody>
 			<tr>
 				<th scope="row"><label for="phptest_version">PHP Version</label></th>
-				<td><label><input type="radio" name="phptest_version" value="5.5" checked="checked"> PHP 5.5</label><br>
+				<td>
+					<label><input type="radio" name="phptest_version" value="7.0" checked="checked"> PHP 7.0</label><br>
+					<label><input type="radio" name="phptest_version" value="5.5" checked="checked"> PHP 5.5</label><br>
 					<label><input type="radio" name="phptest_version" value="5.4"> PHP 5.4</label><br>
 					<label><input type="radio" name="phptest_version" value="5.3"> PHP 5.3</label>
 				</td>
@@ -154,10 +151,9 @@ function wpephpcompat_settings_page()
 		</p>
 		<p><input style="float: left;" name="run" id="runButton" type="button" value="Run" class="button-primary" /><div style="display:none; visibility: visible; float: none;" class="spinner"></div>
 		</p>
-
 	</div>
 
-<!-- Results template -->
+	<!-- Results template -->
 	<script id="result-template" type="text/x-handlebars-template">
 		<div style="border-left-color: {{#if passed}}#038103{{else}}#e74c3c{{/if}};" class="wpe-results-card">
 			<div class="inner-left">

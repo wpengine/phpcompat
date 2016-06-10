@@ -15,14 +15,25 @@ class PHPCompat_Command extends WP_CLI_Command {
 	 * <version>
 	 * : PHP version to test.
 	 *
+	 * [--scan=<scan>]
+	 * : Whether to scan only active plugins and themes or all of them.
+	 * ---
+	 * default: active
+	 * options:
+	 *   - active
+	 *   - all
+	 * ---
+	 *
 	 * ## EXAMPLES
 	 *
-	 *     wp phpcompat 5.5
+	 *     wp phpcompat 5.5 --scan=active
 	 *
-	 * @synopsis <version>
 	 */
 	function __invoke( $args, $assoc_args ) {
 		list( $test_version ) = $args;
+
+		var_dump( $assoc_args );
+
 
 		WP_CLI::line( 'Testing compatibility with PHP ' . $test_version . '.' );
 
