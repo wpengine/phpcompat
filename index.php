@@ -48,8 +48,7 @@ function wpephpcompat_start_test() {
 }
 
 //TODO: Use heartbeat API.
-function wpephpcompat_check_status()
-{
+function wpephpcompat_check_status() {
 	$scan_status = get_option( 'wpephpcompat.status' );
 
 	if ( $scan_status ) {
@@ -68,8 +67,7 @@ function wpephpcompat_check_status()
 /**
  * Create custom post type to store the directories we need to process.
  */
-function wpephpcompat_create_job_queue()
-{
+function wpephpcompat_create_job_queue() {
 	register_post_type( 'wpephpcompat_jobs',
 		array(
 			'labels' => array(
@@ -85,8 +83,7 @@ function wpephpcompat_create_job_queue()
 /**
  * Enqueue our JavaScript and CSS.
  */
-function wpephpcompat_enqueue()
-{
+function wpephpcompat_enqueue() {
 	wp_enqueue_style( 'wpephpcompat-style', plugins_url( '/src/css/style.css', __FILE__ ) );
 
 	wp_enqueue_script( 'wpephpcompat-handlebars', plugins_url( '/src/js/handlebars.js', __FILE__ ), array( 'jquery' ) );
@@ -98,14 +95,12 @@ function wpephpcompat_enqueue()
 	wp_localize_script( 'wpephpcompat', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' )) );
 }
 
-function wpephpcompat_create_menu()
-{
+function wpephpcompat_create_menu() {
 	//Create Tools sub-menu.
 	$wpeallowheartbeat_settings_page = add_submenu_page( 'tools.php', 'PHP Compatibility', 'PHP Compatibility', 'administrator', __FILE__, 'wpephpcompat_settings_page' );
 }
 
-function wpephpcompat_settings_page()
-{
+function wpephpcompat_settings_page() {
 
 	?>
 	<div class="wrap">
