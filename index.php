@@ -59,19 +59,20 @@ function wpephpcompat_check_status() {
 		'total'    => $total_jobs,
 		'progress' => ( $count_jobs->publish / $total_jobs ) * 100
 	);
-	echo json_encode( $to_encode );
 
 	if ( $scan_status ) {
-		//echo '0';
-		wp_die();
+		$to_encode['results'] = '0';
 	} else {
 		$scan_results = get_option( 'wpephpcompat.scan_results' );
-		echo esc_html( $scan_results );
+		$to_encode['results'] = esc_html( $scan_results );
 
 		$wpephpc = new \WPEPHPCompat( __DIR__ );
 		$wpephpc->cleanAfterScan();
-		wp_die();
 	}
+
+	echo json_encode( $to_encode );
+	wp_die();
+
 }
 
 /**

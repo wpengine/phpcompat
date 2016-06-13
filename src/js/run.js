@@ -111,8 +111,8 @@ function checkStatus()
         console.log(response);
         obj = JSON.parse(response);
 
-        if (response !== "0") {
-            displayReport(response);
+        if (obj.results !== 0) {
+            displayReport(obj.status);
             jQuery( "#progressbar" ).progressbar({ value: 100 });
         } else {
             jQuery( "#progressbar" ).progressbar({ value: obj.progress });
