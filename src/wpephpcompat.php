@@ -83,6 +83,9 @@ class WPEPHPCompat
 
 							 add_option("wpephpcompat.test_version", $this->test_version);
 							 add_option("wpephpcompat.only_active", $this->only_active);
+
+
+							 add_option("wpephpcompat.numdirs", '100');
 					 }
 					 else
 					 {
@@ -268,25 +271,24 @@ class WPEPHPCompat
 		/**
 		 * Remove all database entries created by the scan.
 		 */
-		public function cleanAfterScan()
-		{
+		public function cleanAfterScan() {
 				//Delete options created during the scan.
-				delete_option("wpephpcompat.lock");
-				delete_option("wpephpcompat.status");
-				delete_option("wpephpcompat.scan_results");
-				delete_option("wpephpcompat.test_version");
-				delete_option("wpephpcompat.only_active");
+				delete_option( "wpephpcompat.lock" );
+				delete_option( "wpephpcompat.status" );
+				delete_option( "wpephpcompat.scan_results" );
+				delete_option( "wpephpcompat.test_version" );
+				delete_option( "wpephpcompat.only_active" );
+				//delete_option( "wpephpcompat.numdirs" );
 
 				//Clear scheduled cron.
-				wp_clear_scheduled_hook("wpephpcompat_start_test_cron");
+				wp_clear_scheduled_hook( "wpephpcompat_start_test_cron" );
 
 				//Make sure all directories are removed from the queue.
-				$args = array('posts_per_page' => -1, 'post_type' => 'wpephpcompat_jobs');
+				$args = array( 'posts_per_page' => -1, 'post_type' => 'wpephpcompat_jobs' );
 				$directories = get_posts($args);
 
-				foreach ($directories as $directory)
-				{
-						wp_delete_post($directory->ID);
+				foreach ($directories as $directory) {
+					wp_delete_post($directory->ID);
 				}
 		}
 

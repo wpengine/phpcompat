@@ -50,6 +50,15 @@ function wpephpcompat_start_test() {
 //TODO: Use heartbeat API.
 function wpephpcompat_check_status() {
 	$scan_status = get_option( 'wpephpcompat.status' );
+	$count_jobs = wp_count_posts( 'wpephpcompat_jobs' );
+	$total_jobs = get_option( 'wpephpcompat.numdirs' );
+
+	$to_encode = array(
+		'status' => $scan_status,
+		'count'  => $count_jobs->publish,
+		'progress' => ( $count_jobs / $total_jobs ) * 100
+	);
+	echo json_encode( $to_encode );
 
 	if ( $scan_status ) {
 		echo '0';
@@ -92,6 +101,10 @@ function wpephpcompat_enqueue() {
 
 	wp_enqueue_script( 'wpephpcompat', plugins_url( '/src/js/run.js', __FILE__ ), array('jquery', 'wpephpcompat-handlebars', 'wpephpcompat-download') );
 
+	wp_enqueue_script( 'jquery-ui-progressbar' );
+	wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+
+
 	wp_localize_script( 'wpephpcompat', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' )) );
 }
 
@@ -128,6 +141,10 @@ function wpephpcompat_settings_page() {
 	</table>
 
 		<p>
+
+			<label for="">Progress</label>
+			<div id="progressbar"></div>
+
 			<!-- Area for pretty results. -->
 			<div id="standardMode">
 
