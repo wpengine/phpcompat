@@ -85,7 +85,8 @@ class WPEPHPCompat
 							 add_option("wpephpcompat.only_active", $this->only_active);
 
 
-							 add_option("wpephpcompat.numdirs", '100');
+							 $count_jobs = wp_count_posts( 'wpephpcompat_jobs' );
+							 add_option("wpephpcompat.numdirs", $count_jobs->publish );
 					 }
 					 else
 					 {
@@ -278,7 +279,7 @@ class WPEPHPCompat
 				delete_option( "wpephpcompat.scan_results" );
 				delete_option( "wpephpcompat.test_version" );
 				delete_option( "wpephpcompat.only_active" );
-				//delete_option( "wpephpcompat.numdirs" );
+				delete_option( "wpephpcompat.numdirs" );
 
 				//Clear scheduled cron.
 				wp_clear_scheduled_hook( "wpephpcompat_start_test_cron" );

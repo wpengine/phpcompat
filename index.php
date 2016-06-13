@@ -54,14 +54,15 @@ function wpephpcompat_check_status() {
 	$total_jobs = get_option( 'wpephpcompat.numdirs' );
 
 	$to_encode = array(
-		'status' => $scan_status,
-		'count'  => $count_jobs->publish,
-		'progress' => ( $count_jobs / $total_jobs ) * 100
+		'status'   => $scan_status,
+		'count'    => $count_jobs->publish,
+		'total'    => $total_jobs,
+		'progress' => ( $count_jobs->publish / $total_jobs ) * 100
 	);
 	echo json_encode( $to_encode );
 
 	if ( $scan_status ) {
-		echo '0';
+		//echo '0';
 		wp_die();
 	} else {
 		$scan_results = get_option( 'wpephpcompat.scan_results' );
