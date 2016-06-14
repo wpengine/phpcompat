@@ -81,6 +81,22 @@ jQuery(document).ready(function($)
 			'startScan': 1
 		};
 
+		// Start the test!
+		jQuery.post(ajax_object.ajax_url, data, function(response)
+		{
+			// If the request returns, the test is finished!
+			displayReport(response);
+
+		}).fail(function() {
+			/**
+			 * If the original process timed out, we'll need to poll the check_status
+			 * endpoint. This means the test is now running using a WP-Cron.
+			 */
+			timer = setInterval(function()
+			{
+				checkStatus();
+			}, 5000);
+		]});
 
 	});
 
