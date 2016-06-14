@@ -151,7 +151,6 @@ function wpephpcompat_settings_page() {
 	<!-- Results template -->
 	<script id="result-template" type="text/x-handlebars-template">
 		<div style="border-left-color: {{#if passed}}#038103{{else}}#e74c3c{{/if}};" class="wpe-results-card">
-			<!-- TODO: Use local images. -->
 			<div class="inner-left">
 				{{#if passed}}<img src="<?php echo plugins_url( '/src/images/check.png', __FILE__ ); ?>">{{else}}<img src="<?php echo plugins_url( '/src/images/x.png', __FILE__ ); ?>">{{/if}}
 			</div>
