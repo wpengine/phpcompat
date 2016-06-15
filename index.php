@@ -171,7 +171,7 @@ function wpephpcompat_settings_page() {
 	<script id="result-template" type="text/x-handlebars-template">
 		<div style="border-left-color: {{#if passed}}#038103{{else}}#e74c3c{{/if}};" class="wpe-results-card">
 			<div class="inner-left">
-				{{#if passed}}<img src="https://cldup.com/pRASNcwenu.png">{{else}}<img src="https://cldup.com/XXLvZbqkd8.png">{{/if}}
+				{{#if passed}}<img src="<?php echo plugins_url( '/src/images/check.png', __FILE__ ); ?>">{{else}}<img src="<?php echo plugins_url( '/src/images/x.png', __FILE__ ); ?>">{{/if}}
 			</div>
 			<div class="inner-right">
 				<h3 style="margin: 0px;">{{plugin_name}}</h3>
