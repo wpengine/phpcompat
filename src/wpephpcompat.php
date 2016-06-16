@@ -81,23 +81,13 @@ class WPEPHPCompat
 
 			add_option("wpephpcompat.status", "1");
 
-<<<<<<< HEAD
-							 add_option("wpephpcompat.test_version", $this->test_version);
-							 add_option("wpephpcompat.only_active", $this->only_active);
 
-
-							 $count_jobs = wp_count_posts( 'wpephpcompat_jobs' );
-							 add_option("wpephpcompat.numdirs", $count_jobs->publish );
-					 }
-					 else
-					 {
-							 //Get scan settings from database.
-							 $this->test_version = get_option("wpephpcompat.test_version");
-							 $this->only_active = get_option("wpephpcompat.only_active");
-					 }
-=======
 			add_option("wpephpcompat.test_version", $this->test_version);
 			add_option("wpephpcompat.only_active", $this->only_active);
+			
+			
+			$count_jobs = wp_count_posts( 'wpephpcompat_jobs' );
+			add_option("wpephpcompat.numdirs", $count_jobs->publish );
 		}
 		else
 		{
@@ -105,8 +95,7 @@ class WPEPHPCompat
 			$this->test_version = get_option("wpephpcompat.test_version");
 			$this->only_active = get_option("wpephpcompat.only_active");
 		}
->>>>>>> ea54b124fce460251f5b46969710c300c3fc3791
-
+		
 		$args = array('posts_per_page' => -1, 'post_type' => 'wpephpcompat_jobs');
 		$directories = get_posts($args);
 		$this->debugLog(count($directories) . " plugins left to process.");
@@ -250,33 +239,6 @@ class WPEPHPCompat
 		//Add themes.
 		$all_themes = wp_get_themes();
 
-<<<<<<< HEAD
-				return $report;
-		}
-
-		/**
-		 * Remove all database entries created by the scan.
-		 */
-		public function cleanAfterScan() {
-				//Delete options created during the scan.
-				delete_option( "wpephpcompat.lock" );
-				delete_option( "wpephpcompat.status" );
-				delete_option( "wpephpcompat.scan_results" );
-				delete_option( "wpephpcompat.test_version" );
-				delete_option( "wpephpcompat.only_active" );
-				delete_option( "wpephpcompat.numdirs" );
-
-				//Clear scheduled cron.
-				wp_clear_scheduled_hook( "wpephpcompat_start_test_cron" );
-
-				//Make sure all directories are removed from the queue.
-				$args = array( 'posts_per_page' => -1, 'post_type' => 'wpephpcompat_jobs' );
-				$directories = get_posts($args);
-
-				foreach ($directories as $directory) {
-					wp_delete_post($directory->ID);
-				}
-=======
 		foreach ($all_themes as $k => $v)
 		{
 			if ($this->only_active === "yes")
@@ -289,7 +251,6 @@ class WPEPHPCompat
 			$theme_path = $all_themes[$k]->theme_root . DIRECTORY_SEPARATOR . $k . DIRECTORY_SEPARATOR;
 
 			$this->addDirectory($all_themes[$k]->Name, $theme_path);
->>>>>>> ea54b124fce460251f5b46969710c300c3fc3791
 		}
 	}
 
