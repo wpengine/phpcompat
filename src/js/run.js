@@ -30,16 +30,17 @@ jQuery(document).ready(function($)
     {
         download($("#testResults").val(), "report.txt", "text/plain");
     });
-    $(document).on("click", ".addDetails", function()
+    $( document ).on( "click", ".view-details", function ()
     {
-        var textarea = $(this).children().first();
-        if (textarea.css("display") === "none")
+        // Get the textarea with is on the same (dom) level.
+        var textarea = $( this ).siblings( "textarea" );
+        if ( textarea.css( "display" ) === "none" )
         {
-            textarea.css("display", "");
+            textarea.css( "display", "" );
         }
         else
         {
-            textarea.css("display", "none");
+            textarea.css( "display", "none" );
         }
     });
     $("#runButton").on("click", function()
