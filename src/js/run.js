@@ -69,7 +69,8 @@ jQuery(document).ready(function($)
             'only_active': only_active,
             'startScan': 1
     	};
-        // Init the Progress Bar
+        // Init and show the Progress Bar
+        jQuery( "#wpe-progress" ).show();
         jQuery( "#progressbar" ).progressbar({ value: 0 });
 
         // Start the test!
@@ -97,7 +98,7 @@ function checkStatus()
         obj = JSON.parse(response);
         if ( obj.results !== '0' ) {
             displayReport(obj.results);
-            jQuery( "#progressbar" ).progressbar({ value: 100 });
+            jQuery( "#wpe-progress" ).hide();
         } else {
             jQuery( "#progressbar" ).progressbar({ value: obj.progress });
         }
