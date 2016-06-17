@@ -87,3 +87,8 @@
 {
 	width: 100%; height: 500px; background: #FFF; color: #000;
 }
+
+#progressbar .ui-progressbar-value
+{
+	background: #0085ba;
+}
