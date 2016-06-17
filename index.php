@@ -1,11 +1,11 @@
 <?php
 /*
-	Plugin Name: WP Engine PHP Compatibility
-	Plugin URI: http://wpengine.com
-	Description: Make sure your plugins and themes are compatible with newer PHP versions.
-	Author: WP Engine
-	Version: 0.0.1
-	Author URI: http://wpengine.com
+Plugin Name: WP Engine PHP Compatibility
+Plugin URI: http://wpengine.com
+Description: Make sure your plugins and themes are compatible with newer PHP versions.
+Author: WP Engine
+Version: 0.0.1
+Author URI: http://wpengine.com
  */
 
 require __DIR__ . '/vendor/autoload.php';
@@ -50,18 +50,31 @@ function wpephpcompat_start_test() {
 //TODO: Use heartbeat API.
 function wpephpcompat_check_status() {
 	$scan_status = get_option( 'wpephpcompat.status' );
+	$count_jobs = wp_count_posts( 'wpephpcompat_jobs' );
+	$total_jobs = get_option( 'wpephpcompat.numdirs' );
 
+	$to_encode = array(
+		'status'   => $scan_status,
+		'count'    => $count_jobs->publish,
+		'total'    => $total_jobs,
+		'progress' => 100 - ( ( $count_jobs->publish / $total_jobs )  * 100 )
+	);
+	
+	// If the scan is still running.
 	if ( $scan_status ) {
-		echo '0';
-		wp_die();
+		$to_encode['results'] = '0';
 	} else {
+		// Else return the results and clean up!
 		$scan_results = get_option( 'wpephpcompat.scan_results' );
-		echo esc_html( $scan_results );
+		$to_encode['results'] = esc_html( $scan_results );
 
 		$wpephpc = new \WPEPHPCompat( __DIR__ );
 		$wpephpc->cleanAfterScan();
-		wp_die();
 	}
+
+	echo json_encode( $to_encode );
+	wp_die();
+
 }
 
 /**
@@ -91,6 +104,10 @@ function wpephpcompat_enqueue() {
 	wp_enqueue_script( 'wpephpcompat-download', plugins_url( '/src/js/download.min.js', __FILE__ ) );
 
 	wp_enqueue_script( 'wpephpcompat', plugins_url( '/src/js/run.js', __FILE__ ), array('jquery', 'wpephpcompat-handlebars', 'wpephpcompat-download') );
+
+	wp_enqueue_script( 'jquery-ui-progressbar' );
+	wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+
 
 	wp_localize_script( 'wpephpcompat', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' )) );
 }
@@ -128,6 +145,10 @@ function wpephpcompat_settings_page() {
 	</table>
 
 		<p>
+
+			<label for="">Progress</label>
+			<div id="progressbar"></div>
+
 			<!-- Area for pretty results. -->
 			<div id="standardMode">
 
