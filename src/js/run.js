@@ -52,11 +52,7 @@ jQuery(document).ready(function($)
             alert("Scan is already running!");
             return;
         }
-        //Start timer to check scan status.
-        timer = setInterval(function()
-        {
-            checkStatus();
-        }, 5000);
+
         //Disable run button.
         $("#runButton").addClass("button-primary-disabled");
         //Show the ajax spinner.
@@ -68,29 +64,23 @@ jQuery(document).ready(function($)
         only_active = $('input[name=active_plugins]:checked').val();
         var data =
         {
-    		'action': 'wpephpcompat_start_test',
+            'action': 'wpephpcompat_start_test',
             'test_version': test_version,
             'only_active': only_active,
             'startScan': 1
     	};
         // Init the Progress Bar
         jQuery( "#progressbar" ).progressbar({ value: 0 });
+
         // Start the test!
-        jQuery.post(ajax_object.ajax_url, data, function(response)
+        jQuery.post(ajax_object.ajax_url, data);
+
+        // Start timer to check scan status.
+        timer = setInterval(function()
         {
-            // If the request returns, the test is finished!
-            displayReport(response);
-            
-        }).fail(function() {
-            /**
-            * If the original process timed out, we'll need to poll the check_status
-            * endpoint. This means the test is now running using a WP-Cron.
-            */
-            timer = setInterval(function()
-            {
-                checkStatus();
-            }, 5000);
-        });
+            checkStatus();
+        }, 5000);
+
     });
 });
 /**
@@ -104,10 +94,9 @@ function checkStatus()
     };
     jQuery.post(ajax_object.ajax_url, data, function(response)
     {
-        console.log(response);
         obj = JSON.parse(response);
-        if (obj.results !== 0) {
-            displayReport(obj.status);
+        if ( obj.results !== '0' ) {
+            displayReport(obj.results);
             jQuery( "#progressbar" ).progressbar({ value: 100 });
         } else {
             jQuery( "#progressbar" ).progressbar({ value: obj.progress });

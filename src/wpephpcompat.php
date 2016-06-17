@@ -112,8 +112,6 @@ class WPEPHPCompat
 
 			$scan_results .= "Name: " . $directory->post_title . "\n\n" . $report . "\n";
 
-			//update_post_meta($directory->ID, "results", )
-
 			$update = get_post_meta( $directory->ID, "update", true );
 
 			if ( ! empty( $update ) ) {
@@ -128,17 +126,11 @@ class WPEPHPCompat
 			wp_delete_post($directory->ID);
 		}
 
-		//Only clean up if not ran from cron.
-		if ( isset( $_POST['startScan'] ) ) {
-			$this->cleanAfterScan();
-		}
-
 		update_option( "wpephpcompat.status", "0" );
 
 		$this->debugLog( "Scan finished." );
 
-		//TODO: Use json to return test_version.
-		return $scan_results;
+		return;
 	}
 
 	/**
@@ -252,7 +244,7 @@ class WPEPHPCompat
 		delete_option( "wpephpcompat.scan_results" );
 		delete_option( "wpephpcompat.test_version" );
 		delete_option( "wpephpcompat.only_active" );
-
+		delete_option( "wpephpcompat.numdirs" );
 		//Clear scheduled cron.
 		wp_clear_scheduled_hook( "wpephpcompat_start_test_cron" );
 

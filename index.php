@@ -57,12 +57,14 @@ function wpephpcompat_check_status() {
 		'status'   => $scan_status,
 		'count'    => $count_jobs->publish,
 		'total'    => $total_jobs,
-		'progress' => ( $count_jobs->publish / $total_jobs ) * 100
+		'progress' => 100 - ( ( $count_jobs->publish / $total_jobs )  * 100 )
 	);
-
+	
+	// If the scan is still running.
 	if ( $scan_status ) {
 		$to_encode['results'] = '0';
 	} else {
+		// Else return the results and clean up!
 		$scan_results = get_option( 'wpephpcompat.scan_results' );
 		$to_encode['results'] = esc_html( $scan_results );
 
