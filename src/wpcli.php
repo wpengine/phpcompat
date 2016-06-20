@@ -1,10 +1,17 @@
 <?php
 /**
- * PHPCompat WP-CLI command.
+ * Summary.
  */
-
 require __DIR__ . '/../vendor/autoload.php';
 
+
+/**
+ * PHPCompat WP-CLI command.
+ *
+ * Description.
+ *
+ * @since 1.0.0
+ */
 class PHPCompat_Command extends WP_CLI_Command {
 
 	/**
@@ -32,22 +39,19 @@ class PHPCompat_Command extends WP_CLI_Command {
 	function __invoke( $args, $assoc_args ) {
 		list( $test_version ) = $args;
 
-		var_dump( $assoc_args );
-
-
 		WP_CLI::line( 'Testing compatibility with PHP ' . $test_version . '.' );
 
 		$root_dir = realpath( __DIR__ . '/../' );
 
 		$wpephpc = new \WPEPHPCompat( $root_dir );
 
-		$wpephpc->cleanAfterScan();
+		$wpephpc->clean_after_scan();
 
 		$wpephpc->test_version = $test_version;
 
 		$wpephpc->only_active = 'yes';
 
-		$results = $wpephpc->startTest();
+		$results = $wpephpc->start_test();
 
 		echo esc_html( $results );
 
