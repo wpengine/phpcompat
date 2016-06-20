@@ -30,16 +30,17 @@ jQuery(document).ready(function($)
     {
         download($("#testResults").val(), "report.txt", "text/plain");
     });
-    $(document).on("click", ".addDetails", function()
+    $( document ).on( "click", ".view-details", function ()
     {
-        var textarea = $(this).children().first();
-        if (textarea.css("display") === "none")
+        // Get the textarea with is on the same (dom) level.
+        var textarea = $( this ).siblings( "textarea" );
+        if ( textarea.css( "display" ) === "none" )
         {
-            textarea.css("display", "");
+            textarea.css( "display", "" );
         }
         else
         {
-            textarea.css("display", "none");
+            textarea.css( "display", "none" );
         }
     });
     $("#runButton").on("click", function()
@@ -69,8 +70,8 @@ jQuery(document).ready(function($)
             'only_active': only_active,
             'startScan': 1
     	};
-        // Init the Progress Bar
-        jQuery( "#progressbar" ).progressbar({ value: 0 });
+        // Init and show the Progress Bar
+        jQuery( "#wpe-progress" ).show();
 
         // Start the test!
         jQuery.post(ajax_object.ajax_url, data);
@@ -97,7 +98,7 @@ function checkStatus()
         obj = JSON.parse(response);
         if ( obj.results !== '0' ) {
             displayReport(obj.results);
-            jQuery( "#progressbar" ).progressbar({ value: 100 });
+            jQuery( "#wpe-progress" ).hide();
         } else {
             jQuery( "#progressbar" ).progressbar({ value: obj.progress });
         }
@@ -108,8 +109,9 @@ function checkStatus()
  */
 function resetDisplay()
 {
-	jQuery("#testResults").text("");
-	jQuery("#standardMode").html("");
+    jQuery( "#progressbar" ).progressbar({ value: 0 });
+    jQuery( "#testResults" ).text("");
+    jQuery( "#standardMode" ).html("");
 }
 /**
  * Loop through a string and count the total matches.
