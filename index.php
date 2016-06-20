@@ -69,7 +69,7 @@ function wpephpcompat_check_status() {
 		'status'   => $scan_status,
 		'count'    => $count_jobs->publish,
 		'total'    => $total_jobs,
-		'progress' => 100 - ( ( $count_jobs->publish / $total_jobs )  * 100 )
+		'progress' => 100 - ( ( $count_jobs->publish / $total_jobs ) * 100 )
 	);
 
 	// If the scan is still running.
@@ -122,8 +122,9 @@ function wpephpcompat_enqueue() {
 
 	wp_enqueue_script( 'wpephpcompat', plugins_url( '/src/js/run.js', __FILE__ ), array('jquery', 'wpephpcompat-handlebars', 'wpephpcompat-download') );
 
+	// Progress Bar
 	wp_enqueue_script( 'jquery-ui-progressbar' );
-	wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+	wp_enqueue_style( 'jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
 
 
 	wp_localize_script( 'wpephpcompat', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' )) );
@@ -204,7 +205,7 @@ function wpephpcompat_settings_page() {
 	<script id="result-template" type="text/x-handlebars-template">
 		<div style="border-left-color: {{#if passed}}#038103{{else}}#e74c3c{{/if}};" class="wpe-results-card">
 			<div class="inner-left">
-				{{#if passed}}<img src="<?php echo plugins_url( '/src/images/check.png', __FILE__ ); ?>">{{else}}<img src="<?php echo plugins_url( '/src/images/x.png', __FILE__ ); ?>">{{/if}}
+				{{#if passed}}<img src="<?php echo esc_url( plugins_url( '/src/images/check.png', __FILE__ ) ); ?>">{{else}}<img src="<?php echo esc_url( plugins_url( '/src/images/x.png', __FILE__ ) ); ?>">{{/if}}
 			</div>
 			<div class="inner-right">
 				<h3 style="margin: 0px;">{{plugin_name}}</h3>
@@ -213,8 +214,8 @@ function wpephpcompat_settings_page() {
 				<textarea style="display: none;">{{logs}}</textarea><a class="view-details">view details</a>
 			</div>
 			<?php $update_url = site_url( 'wp-admin/update-core.php' , 'admin' ); ?>
-			<div style="float:right;">{{#if updateAvailable}}<div class="badge wpe-update"><a href="<?php echo $update_url; ?>">Update Available</a></div>{{/if}}<div class="badge warnings">{{warnings}} Warnings</div><div class="badge errors">{{errors}} Errors</div></div>
+			<div style="float:right;">{{#if updateAvailable}}<div class="badge wpe-update"><a href="<?php echo esc_url( $update_url ); ?>">Update Available</a></div>{{/if}}<div class="badge warnings">{{warnings}} Warnings</div><div class="badge errors">{{errors}} Errors</div></div>
 		</div>
 	</script>
-<?php
+	<?php
 }
