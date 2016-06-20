@@ -10,7 +10,7 @@ Author URI: http://wpengine.com
 
 require_once( __DIR__ . '/vendor/autoload.php' );
 
-//Build our tools page.
+// Build our tools page.
 add_action( 'admin_menu', 'wpephpcompat_create_menu' );
 
 // Load our JavaScript.
@@ -24,13 +24,16 @@ add_action( 'wpephpcompat_start_test_cron', 'wpephpcompat_start_test' );
 // Create custom post type.
 add_action( 'init', 'wpephpcompat_create_job_queue' );
 
-//Add the phpcompat WP-CLI command.
+// Add the phpcompat WP-CLI command.
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	require_once( __DIR__ . '/src/wpcli.php' );
 }
 
 /**
- * [wpephpcompat_start_test description]
+ * Summary.
+ *
+ * Description.
+ *
  * @since  1.0.0
  * @return [type] [description]
  */
@@ -40,8 +43,8 @@ function wpephpcompat_start_test() {
 	$wpephpc = new \WPEPHPCompat( __DIR__ );
 
 	if ( isset( $_POST['startScan'] ) ) {
-		$test_version = $_POST['test_version'];
-		$only_active = $_POST['only_active'];
+		$test_version = sanitize_text_field( $_POST['test_version'] );
+		$only_active = sanitize_text_field( $_POST['only_active'] );
 
 		$wpephpc->test_version = $test_version;
 
@@ -54,9 +57,14 @@ function wpephpcompat_start_test() {
 	wp_die();
 }
 
-//TODO: Use heartbeat API.
+
 /**
- * [wpephpcompat_check_status description]
+ * Summary.
+ *
+ * Description.
+ *
+ * @todo Use heartbeat API.
+ *
  * @since  1.0.0
  * @return [type] [description]
  */
@@ -110,6 +118,7 @@ function wpephpcompat_create_job_queue() {
 
 /**
  * Enqueue our JavaScript and CSS.
+ *
  * @since 1.0.0
  * @return  null
  */
@@ -131,7 +140,10 @@ function wpephpcompat_enqueue() {
 }
 
 /**
- * [wpephpcompat_create_menu description]
+ * Summary.
+ *
+ * Description.
+ *
  * @since 1.0.0
  * @return [type] [description]
  */
@@ -141,7 +153,10 @@ function wpephpcompat_create_menu() {
 }
 
 /**
- * [wpephpcompat_settings_page description]
+ * Summary.
+ *
+ * Description.
+ *
  * @since 1.0.0
  * @return [type] [description]
  */
@@ -162,7 +177,7 @@ function wpephpcompat_settings_page() {
 					<th scope="row"><label for="phptest_version">PHP Version</label></th>
 					<td>
 						<label><input type="radio" name="phptest_version" value="7.0" checked="checked"> PHP 7.0</label><br>
-						<label><input type="radio" name="phptest_version" value="5.5" checked="checked"> PHP 5.5</label><br>
+						<label><input type="radio" name="phptest_version" value="5.5"> PHP 5.5</label><br>
 						<label><input type="radio" name="phptest_version" value="5.4"> PHP 5.4</label><br>
 						<label><input type="radio" name="phptest_version" value="5.3"> PHP 5.3</label>
 					</td>

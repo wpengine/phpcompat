@@ -78,6 +78,8 @@ class WPEPHPCompat {
 	/**
 	 * Summary.
 	 *
+	 * Description.
+	 *
 	 * @param [type] $dir [description]
 	 */
 	function __construct( $dir ) {
@@ -190,6 +192,7 @@ class WPEPHPCompat {
 
 	/**
 	* Runs the actual PHPCompatibility test.
+	*
 	* @since  1.0.0
 	* @return string Scan results.
 	*/
@@ -214,6 +217,7 @@ class WPEPHPCompat {
 
 	/**
 	* Generate a list of directories to scan and populate the queue.
+	*
 	* @since  1.0.0
 	* @return  null
 	*/
@@ -222,7 +226,7 @@ class WPEPHPCompat {
 			/**
 			 * Summary.
 			 */
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 		}
 
 		$plugin_base = dirname( $this->base ) . DIRECTORY_SEPARATOR;
@@ -287,10 +291,10 @@ class WPEPHPCompat {
 	 * @return string         The cleaned report.
 	 */
 	private function cleanReport( $report ) {
-		//Remove unnecessary overview.
+		// Remove unnecessary overview.
 		$report = preg_replace ( '/Time:.+\n/si', '', $report );
 
-		//Remove whitespace.
+		// Remove whitespace.
 		$report = trim( $report );
 
 		return $report;
@@ -300,7 +304,7 @@ class WPEPHPCompat {
 	 * Remove all database entries created by the scan.
 	 *
 	 * @since  1.0.0
-	 * @return THING
+	 * @return null
 	 */
 	public function cleanAfterScan() {
 		// Delete options created during the scan.
@@ -331,7 +335,7 @@ class WPEPHPCompat {
 	 *
 	 * @param string $name Plugin or theme name.
 	 * @param string $path Full path to the plugin or theme directory.
-	 * @return THING
+	 * @return null
 	 */
 	private function addDirectory( $name, $path ) {
 		$dir = array(
@@ -339,7 +343,7 @@ class WPEPHPCompat {
 			'post_content'  => $path,
 			'post_status'   => 'publish',
 			'post_author'   => 1,
-			'post_type'	    => 'wpephpcompat_jobs'
+			'post_type'     => 'wpephpcompat_jobs'
 		);
 
 		return wp_insert_post( $dir );
@@ -350,6 +354,7 @@ class WPEPHPCompat {
 	 *
 	 * @since  1.0.0
 	 * @param  string $message Message to log.
+	 * @return null
 	 */
 	private function debugLog( $message ){
 		if ( WP_DEBUG === true ) {
