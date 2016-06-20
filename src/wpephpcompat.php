@@ -1,7 +1,7 @@
 <?php
-/**
- * Summary.
- */
+// Exit if this file is directly accessed
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 require_once ( __DIR__ . '/../vendor/autoload.php' );
 
 /**
@@ -219,7 +219,7 @@ class WPEPHPCompat {
 	* Generate a list of directories to scan and populate the queue.
 	*
 	* @since  1.0.0
-	* @return  null
+	* @return null
 	*/
 	public function generate_directory_list() {
 		if ( ! function_exists( 'get_plugins' ) ) {
