@@ -51,7 +51,7 @@ class PHPCompat_Command extends WP_CLI_Command {
 
 		$wpephpc->only_active = 'yes';
 
-		$results = $wpephpc->startTest();
+		$results = $wpephpc->start_test();
 
 		echo esc_html( $results );
 

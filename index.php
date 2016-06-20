@@ -50,7 +50,7 @@ function wpephpcompat_start_test() {
 		$wpephpc->cleanAfterScan();
 	}
 
-	echo esc_html( $wpephpc->startTest() );
+	echo esc_html( $wpephpc->start_test() );
 	wp_die();
 }
 

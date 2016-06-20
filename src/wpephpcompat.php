@@ -92,7 +92,7 @@ class WPEPHPCompat {
 	 * @todo Return the results instead of echoing.
 	 * @return  null
 	 */
-	public function startTest() {
+	public function start_test() {
 
 		$this->debugLog( "startScan: " . isset( $_POST['startScan'] ) );
 		// Try to lock.
