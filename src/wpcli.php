@@ -34,7 +34,6 @@ class PHPCompat_Command extends WP_CLI_Command {
 
 		var_dump( $assoc_args );
 
-
 		WP_CLI::line( 'Testing compatibility with PHP ' . $test_version . '.' );
 
 		$root_dir = realpath( __DIR__ . '/../' );

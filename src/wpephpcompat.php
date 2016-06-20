@@ -1,9 +1,10 @@
 <?php
+require_once ( __DIR__ . '/../vendor/autoload.php' );
 
-require __DIR__ . '/../vendor/autoload.php';
-
-class WPEPHPCompat
-{
+/**
+ * Class
+ */
+class WPEPHPCompat {
 	/**
 	* The PHP_CodeSniffer_CLI object.
 	* @var class
@@ -37,8 +38,9 @@ class WPEPHPCompat
 
 	/**
 	* Start the testing process.
-	* TODO: Return the results instead of echoing.
-	* TODO:
+	* @since  1.0.0
+	* @todo Return the results instead of echoing.
+	* @return  null
 	*/
 	public function startTest() {
 
@@ -65,7 +67,7 @@ class WPEPHPCompat
 		}
 		update_option( "wpephpcompat.lock", time() );
 
-		//Check to see if scan has already started.
+		// Check to see if scan has already started.
 		$scan_status = get_option( "wpephpcompat.status" );
 		$this->debugLog( "scan status: " . $scan_status );
 		if ( ! $scan_status) {
@@ -80,7 +82,7 @@ class WPEPHPCompat
 			$count_jobs = wp_count_posts( 'wpephpcompat_jobs' );
 			add_option( "wpephpcompat.numdirs", $count_jobs->publish );
 		} else {
-			//Get scan settings from database.
+			// Get scan settings from database.
 			$this->test_version = get_option( "wpephpcompat.test_version" );
 			$this->only_active = get_option( "wpephpcompat.only_active" );
 		}
@@ -89,7 +91,7 @@ class WPEPHPCompat
 		$directories = get_posts($args);
 		$this->debugLog(count($directories) . " plugins left to process.");
 
-		//If there are no directories to scan, we're finished!
+		// If there are no directories to scan, we're finished!
 		if ( ! $directories ) {
 			$this->debugLog("No more plugins to process.");
 			$this->cleanAfterScan();
@@ -135,6 +137,7 @@ class WPEPHPCompat
 
 	/**
 	* Runs the actual PHPCompatibility test.
+	* @since  1.0.0
 	* @return string Scan results.
 	*/
 	public function processFile( $dir ) {
@@ -158,6 +161,8 @@ class WPEPHPCompat
 
 	/**
 	* Generate a list of directories to scan and populate the queue.
+	* @since  1.0.0
+	* @return  null
 	*/
 	public function generateDirectoryList() {
 		if ( !function_exists( 'get_plugins' ) ) {
@@ -220,10 +225,10 @@ class WPEPHPCompat
 	}
 
 	/**
-	* Cleans and formats the final report.
-	* @param  string $report The full report.
-	* @return string         The cleaned report.
-	*/
+	 * Cleans and formats the final report.
+	 * @param  string $report The full report.
+	 * @return string         The cleaned report.
+	 */
 	private function cleanReport( $report ) {
 		//Remove unnecessary overview.
 		$report = preg_replace ( '/Time:.+\n/si', '', $report );
@@ -235,8 +240,10 @@ class WPEPHPCompat
 	}
 
 	/**
-	* Remove all database entries created by the scan.
-	*/
+	 * Remove all database entries created by the scan.
+	 * @since  1.0.0
+	 * @return THING
+	 */
 	public function cleanAfterScan() {
 		//Delete options created during the scan.
 		delete_option( "wpephpcompat.lock" );
@@ -258,10 +265,12 @@ class WPEPHPCompat
 	}
 
 	/**
-	* Add a path to the wpephpcompat_jobs custom post type.
-	* @param string $name Plugin or theme name.
-	* @param string $path Full path to the plugin or theme directory.
-	*/
+	 * Add a path to the wpephpcompat_jobs custom post type.
+	 *
+	 * @param string $name Plugin or theme name.
+	 * @param string $path Full path to the plugin or theme directory.
+	 * @return THING
+	 */
 	private function addDirectory( $name, $path ) {
 		$dir = array(
 			'post_title'    => $name,
@@ -275,9 +284,10 @@ class WPEPHPCompat
 	}
 
 	/**
-	* Log to the error log if WP_DEBUG is enabled.
-	* @param  string $message Message to log.
-	*/
+	 * Log to the error log if WP_DEBUG is enabled.
+	 * @since  1.0.0
+	 * @param  string $message Message to log.
+	 */
 	private function debugLog( $message ){
 		if ( WP_DEBUG === true ) {
 			if ( is_array( $message ) || is_object( $message ) ) {

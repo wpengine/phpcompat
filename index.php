@@ -4,11 +4,11 @@ Plugin Name: WP Engine PHP Compatibility
 Plugin URI: http://wpengine.com
 Description: Make sure your plugins and themes are compatible with newer PHP versions.
 Author: WP Engine
-Version: 0.0.1
+Version: 1.0.0
 Author URI: http://wpengine.com
  */
 
-require __DIR__ . '/vendor/autoload.php';
+require_once( __DIR__ . '/vendor/autoload.php' );
 
 //Build our tools page.
 add_action( 'admin_menu', 'wpephpcompat_create_menu' );
@@ -26,6 +26,11 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	include __DIR__ . '/src/wpcli.php';
 }
 
+/**
+ * [wpephpcompat_start_test description]
+ * @since  1.0.0
+ * @return [type] [description]
+ */
 function wpephpcompat_start_test() {
 	global $wpdb;
 
@@ -43,11 +48,15 @@ function wpephpcompat_start_test() {
 	}
 
 	echo esc_html( $wpephpc->startTest() );
-
 	wp_die();
 }
 
 //TODO: Use heartbeat API.
+/**
+ * [wpephpcompat_check_status description]
+ * @since  1.0.0
+ * @return [type] [description]
+ */
 function wpephpcompat_check_status() {
 	$scan_status = get_option( 'wpephpcompat.status' );
 	$count_jobs = wp_count_posts( 'wpephpcompat_jobs' );
@@ -59,7 +68,7 @@ function wpephpcompat_check_status() {
 		'total'    => $total_jobs,
 		'progress' => 100 - ( ( $count_jobs->publish / $total_jobs )  * 100 )
 	);
-	
+
 	// If the scan is still running.
 	if ( $scan_status ) {
 		$to_encode['results'] = '0';
@@ -79,6 +88,9 @@ function wpephpcompat_check_status() {
 
 /**
  * Create custom post type to store the directories we need to process.
+ *
+ * @since 1.0.0
+ * @return  null
  */
 function wpephpcompat_create_job_queue() {
 	register_post_type( 'wpephpcompat_jobs',
@@ -95,6 +107,8 @@ function wpephpcompat_create_job_queue() {
 
 /**
  * Enqueue our JavaScript and CSS.
+ * @since 1.0.0
+ * @return  null
  */
 function wpephpcompat_enqueue() {
 	wp_enqueue_style( 'wpephpcompat-style', plugins_url( '/src/css/style.css', __FILE__ ) );
@@ -112,47 +126,57 @@ function wpephpcompat_enqueue() {
 	wp_localize_script( 'wpephpcompat', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' )) );
 }
 
+/**
+ * [wpephpcompat_create_menu description]
+ * @since 1.0.0
+ * @return [type] [description]
+ */
 function wpephpcompat_create_menu() {
 	//Create Tools sub-menu.
 	$wpeallowheartbeat_settings_page = add_submenu_page( 'tools.php', 'PHP Compatibility', 'PHP Compatibility', 'administrator', __FILE__, 'wpephpcompat_settings_page' );
 }
 
+/**
+ * [wpephpcompat_settings_page description]
+ * @since 1.0.0
+ * @return [type] [description]
+ */
 function wpephpcompat_settings_page() {
-
 	?>
 	<div class="wrap">
-		<div style="float: left;"><h2>WP Engine PHP Compatibility</h2></div> <div style="float: right; margin-top: 10px; text-align: right;"> <input type="checkbox" id="developermode" name="developermode" value="yes">Developer mode</div>
+		<div style="float: left;">
+			<h2>WP Engine PHP Compatibility</h2>
+		</div>
+		<div style="float: right; margin-top: 10px; text-align: right;">
+			<input type="checkbox" id="developermode" name="developermode" value="yes">Developer mode
+		</div>
 		<br><br>
-	<h3 class="title">Scan Options</h3>
-	<table class="form-table">
-		<tbody>
-			<tr>
-				<th scope="row"><label for="phptest_version">PHP Version</label></th>
-				<td>
-					<label><input type="radio" name="phptest_version" value="7.0" checked="checked"> PHP 7.0</label><br>
-					<label><input type="radio" name="phptest_version" value="5.5" checked="checked"> PHP 5.5</label><br>
-					<label><input type="radio" name="phptest_version" value="5.4"> PHP 5.4</label><br>
-					<label><input type="radio" name="phptest_version" value="5.3"> PHP 5.3</label>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row"><label for="active_plugins">Only Active</label></th>
-				<td><label><input type="radio" name="active_plugins" value="yes" checked="checked"> Only scan active plugins and themes</label><br>
-					<label><input type="radio" name="active_plugins" value="no"> Scan all plugins and themes</label>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-
+		<h3 class="title">Scan Options</h3>
+		<table class="form-table">
+			<tbody>
+				<tr>
+					<th scope="row"><label for="phptest_version">PHP Version</label></th>
+					<td>
+						<label><input type="radio" name="phptest_version" value="7.0" checked="checked"> PHP 7.0</label><br>
+						<label><input type="radio" name="phptest_version" value="5.5" checked="checked"> PHP 5.5</label><br>
+						<label><input type="radio" name="phptest_version" value="5.4"> PHP 5.4</label><br>
+						<label><input type="radio" name="phptest_version" value="5.3"> PHP 5.3</label>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="active_plugins">Only Active</label></th>
+					<td><label><input type="radio" name="active_plugins" value="yes" checked="checked"> Only scan active plugins and themes</label><br>
+						<label><input type="radio" name="active_plugins" value="no"> Scan all plugins and themes</label>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 		<p>
-
 			<label for="">Progress</label>
 			<div id="progressbar"></div>
 
 			<!-- Area for pretty results. -->
-			<div id="standardMode">
-
-			</div>
+			<div id="standardMode"></div>
 
 			<!-- Area for developer results. -->
 			<div style="display: none;" id="developerMode">
@@ -161,11 +185,13 @@ function wpephpcompat_settings_page() {
 			</div>
 
 			<div id="footer" style="display: none;">
-			Note: Warnings are not currently an issue, but they could be in the future.<br>
-			<a id="downloadReport" href="#">Download Report</a>
+				Note: Warnings are not currently an issue, but they could be in the future.<br>
+				<a id="downloadReport" href="#">Download Report</a>
 			</div>
 		</p>
-		<p><input style="float: left;" name="run" id="runButton" type="button" value="Run" class="button-primary" /><div style="display:none; visibility: visible; float: none;" class="spinner"></div>
+		<p>
+			<input style="float: left;" name="run" id="runButton" type="button" value="Run" class="button-primary" />
+			<div style="display:none; visibility: visible; float: none;" class="spinner"></div>
 		</p>
 	</div>
 
