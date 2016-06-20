@@ -145,9 +145,10 @@ function wpephpcompat_settings_page() {
 	</table>
 
 		<p>
-
-			<label for="">Progress</label>
-			<div id="progressbar"></div>
+			<div style="display: none;" id="wpe-progress">
+				<label for="">Progress</label>
+				<div id="progressbar"></div>
+			</div>
 
 			<!-- Area for pretty results. -->
 			<div id="standardMode">
