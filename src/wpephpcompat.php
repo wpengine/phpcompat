@@ -1,47 +1,97 @@
 <?php
+/**
+ * Summary.
+ */
 require_once ( __DIR__ . '/../vendor/autoload.php' );
 
 /**
- * Class
+ * Summary.
+ *
+ * Description.
+ *
+ * @since 1.0.0
  */
 class WPEPHPCompat {
 	/**
-	* The PHP_CodeSniffer_CLI object.
-	* @var class
-	*/
+	 * The PHP_CodeSniffer_CLI object.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @var class
+	 */
 	public $cli = null;
 
 	/**
-	* Default values for PHP_CodeSniffer scan.
-	* @var array
-	*/
+	 * Default values for PHP_CodeSniffer scan.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @var array
+	 */
 	public $values = array();
 
 	/**
-	* Version of PHP to test.
-	* @var string
-	*/
+	 * Version of PHP to test.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @var string
+	 */
 	public $test_version = null;
 
+	/**
+	 * Summary.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @var string
+	 */
 	public $only_active = null;
 
+	/**
+	 * Summary.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @var string
+	 */
 	public $lock_name = 'wpephpcompat.lock';
 
+	/**
+	 * Summary.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @var string
+	 */
 	public $scan_status_name = 'wpephpcompat.status';
 
+	/**
+	 * Summary.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @var string
+	 */
 	public $base = null;
 
+	/**
+	 * Summary.
+	 *
+	 * @param [type] $dir [description]
+	 */
 	function __construct( $dir ) {
 		$this->base = $dir;
 		$this->cli = new PHP_CodeSniffer_CLI();
 	}
 
 	/**
-	* Start the testing process.
-	* @since  1.0.0
-	* @todo Return the results instead of echoing.
-	* @return  null
-	*/
+	 * Start the testing process.
+	 *
+	 * @since  1.0.0
+	 * @todo Return the results instead of echoing.
+	 * @return  null
+	 */
 	public function startTest() {
 
 		$this->debugLog( "startScan: " . isset( $_POST['startScan'] ) );
@@ -166,6 +216,9 @@ class WPEPHPCompat {
 	*/
 	public function generateDirectoryList() {
 		if ( !function_exists( 'get_plugins' ) ) {
+			/**
+			 * Summary.
+			 */
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 
@@ -226,6 +279,7 @@ class WPEPHPCompat {
 
 	/**
 	 * Cleans and formats the final report.
+	 *
 	 * @param  string $report The full report.
 	 * @return string         The cleaned report.
 	 */
@@ -241,6 +295,7 @@ class WPEPHPCompat {
 
 	/**
 	 * Remove all database entries created by the scan.
+	 *
 	 * @since  1.0.0
 	 * @return THING
 	 */
@@ -285,6 +340,7 @@ class WPEPHPCompat {
 
 	/**
 	 * Log to the error log if WP_DEBUG is enabled.
+	 *
 	 * @since  1.0.0
 	 * @param  string $message Message to log.
 	 */
