@@ -45,7 +45,7 @@ class PHPCompat_Command extends WP_CLI_Command {
 
 		$wpephpc = new \WPEPHPCompat( $root_dir );
 
-		$wpephpc->cleanAfterScan();
+		$wpephpc->clean_after_scan();
 
 		$wpephpc->test_version = $test_version;
 

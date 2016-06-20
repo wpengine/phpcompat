@@ -50,7 +50,7 @@ function wpephpcompat_start_test() {
 
 		$wpephpc->only_active = $only_active;
 
-		$wpephpc->cleanAfterScan();
+		$wpephpc->clean_after_scan();
 	}
 
 	echo esc_html( $wpephpc->start_test() );
@@ -89,7 +89,7 @@ function wpephpcompat_check_status() {
 		$to_encode['results'] = esc_html( $scan_results );
 
 		$wpephpc = new \WPEPHPCompat( __DIR__ );
-		$wpephpc->cleanAfterScan();
+		$wpephpc->clean_after_scan();
 	}
 
 	echo json_encode( $to_encode );

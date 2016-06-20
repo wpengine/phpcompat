@@ -96,18 +96,18 @@ class WPEPHPCompat {
 	 */
 	public function start_test() {
 
-		$this->debugLog( 'startScan: ' . isset( $_POST['startScan'] ) );
+		$this->debug_log( 'startScan: ' . isset( $_POST['startScan'] ) );
 		// Try to lock.
 		$lock_result = add_option( 'wpephpcompat.lock', time(), '', 'no' );
 
-		$this->debugLog( 'lock: ' . $lock_result );
+		$this->debug_log( 'lock: ' . $lock_result );
 
 		if ( ! $lock_result ) {
 			$lock_result = get_option( 'wpephpcompat.lock' );
 
 			// Bail if we were unable to create a lock, or if the existing lock is still valid.
 			if ( ! $lock_result || ( $lock_result > ( time() - MINUTE_IN_SECONDS ) ) ) {
-				$this->debugLog( 'Process already running (locked), returning.' );
+				$this->debug_log( 'Process already running (locked), returning.' );
 
 				$timestamp = wp_next_scheduled( 'wpephpcompat_start_test_cron' );
 
@@ -121,11 +121,11 @@ class WPEPHPCompat {
 
 		// Check to see if scan has already started.
 		$scan_status = get_option( 'wpephpcompat.status' );
-		$this->debugLog( 'scan status: ' . $scan_status );
+		$this->debug_log( 'scan status: ' . $scan_status );
 		if ( ! $scan_status ) {
-			$this->debugLog( 'Generating directory list.' );
+			$this->debug_log( 'Generating directory list.' );
 			//Add plugins and themes.
-			$this->generateDirectoryList();
+			$this->generate_directory_list();
 
 			add_option( 'wpephpcompat.status', '1' );
 			add_option( 'wpephpcompat.test_version', $this->test_version );
@@ -144,12 +144,12 @@ class WPEPHPCompat {
 			'post_type'      => 'wpephpcompat_jobs'
 		);
 		$directories = get_posts( $args );
-		$this->debugLog( count( $directories ) . ' plugins left to process.' );
+		$this->debug_log( count( $directories ) . ' plugins left to process.' );
 
 		// If there are no directories to scan, we're finished!
 		if ( ! $directories ) {
-			$this->debugLog( 'No more plugins to process.' );
-			$this->cleanAfterScan();
+			$this->debug_log( 'No more plugins to process.' );
+			$this->clean_after_scan();
 
 			return;
 		}
@@ -159,9 +159,9 @@ class WPEPHPCompat {
 		$scan_results = get_option( 'wpephpcompat.scan_results' );
 
 		foreach ( $directories as $directory ) {
-			$this->debugLog( 'Processing: ' . $directory->post_title );
+			$this->debug_log( 'Processing: ' . $directory->post_title );
 
-			$report = $this->processFile( $directory->post_content );
+			$report = $this->process_file( $directory->post_content );
 
 			if ( ! $report ) {
 				$report = 'PHP ' . $this->test_version . ' compatible.';
@@ -185,7 +185,7 @@ class WPEPHPCompat {
 
 		update_option( 'wpephpcompat.status', '0' );
 
-		$this->debugLog( 'Scan finished.' );
+		$this->debug_log( 'Scan finished.' );
 
 		return;
 	}
@@ -196,7 +196,7 @@ class WPEPHPCompat {
 	* @since  1.0.0
 	* @return string Scan results.
 	*/
-	public function processFile( $dir ) {
+	public function process_file( $dir ) {
 		$this->values['files']       = $dir;
 		//$this->values['ignored'] = $this->generateIgnoreList();
 		$this->values['testVersion'] = $this->test_version;
@@ -212,7 +212,7 @@ class WPEPHPCompat {
 
 		$report = ob_get_clean();
 
-		return $this->cleanReport( $report );
+		return $this->clean_report( $report );
 	}
 
 	/**
@@ -221,7 +221,7 @@ class WPEPHPCompat {
 	* @since  1.0.0
 	* @return  null
 	*/
-	public function generateDirectoryList() {
+	public function generate_directory_list() {
 		if ( ! function_exists( 'get_plugins' ) ) {
 			/**
 			 * Summary.
@@ -253,13 +253,13 @@ class WPEPHPCompat {
 
 			$plugin_path = $plugin_base . plugin_dir_path( $k );
 
-			$id = $this->addDirectory( $v['Name'], $plugin_path );
+			$id = $this->add_directory( $v['Name'], $plugin_path );
 
 			//Check for plugin updates.
 			foreach ( $update_plugins->response as $uk => $uv ) {
 				//If we have a match.
 				if ( $uk === $k ) {
-					$this->debugLog( 'An update exists for: ' . $v['Name'] );
+					$this->debug_log( 'An update exists for: ' . $v['Name'] );
 					//Save the update version.
 					update_post_meta( $id, 'update', $uv->new_version );
 					//Save the current version.
@@ -280,7 +280,7 @@ class WPEPHPCompat {
 
 			$theme_path = $all_themes[$k]->theme_root . DIRECTORY_SEPARATOR . $k . DIRECTORY_SEPARATOR;
 
-			$this->addDirectory( $all_themes[$k]->Name, $theme_path );
+			$this->add_directory( $all_themes[$k]->Name, $theme_path );
 		}
 	}
 
@@ -290,7 +290,7 @@ class WPEPHPCompat {
 	 * @param  string $report The full report.
 	 * @return string         The cleaned report.
 	 */
-	private function cleanReport( $report ) {
+	private function clean_report( $report ) {
 		// Remove unnecessary overview.
 		$report = preg_replace ( '/Time:.+\n/si', '', $report );
 
@@ -306,7 +306,7 @@ class WPEPHPCompat {
 	 * @since  1.0.0
 	 * @return null
 	 */
-	public function cleanAfterScan() {
+	public function clean_after_scan() {
 		// Delete options created during the scan.
 		delete_option( 'wpephpcompat.lock' );
 		delete_option( 'wpephpcompat.status' );
@@ -337,7 +337,7 @@ class WPEPHPCompat {
 	 * @param string $path Full path to the plugin or theme directory.
 	 * @return null
 	 */
-	private function addDirectory( $name, $path ) {
+	private function add_directory( $name, $path ) {
 		$dir = array(
 			'post_title'    => $name,
 			'post_content'  => $path,
@@ -356,7 +356,7 @@ class WPEPHPCompat {
 	 * @param  string $message Message to log.
 	 * @return null
 	 */
-	private function debugLog( $message ){
+	private function debug_log( $message ){
 		if ( WP_DEBUG === true ) {
 			if ( is_array( $message ) || is_object( $message ) ) {
 				error_log( print_r( $message , true ) );
