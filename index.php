@@ -12,18 +12,21 @@ require_once( __DIR__ . '/vendor/autoload.php' );
 
 //Build our tools page.
 add_action( 'admin_menu', 'wpephpcompat_create_menu' );
-//Load our JavaScript.
+
+// Load our JavaScript.
 add_action( 'admin_enqueue_scripts', 'wpephpcompat_enqueue' );
-//The action to run the compatibility test.
+
+// The action to run the compatibility test.
 add_action( 'wp_ajax_wpephpcompat_start_test', 'wpephpcompat_start_test' );
 add_action( 'wp_ajax_wpephpcompat_check_status', 'wpephpcompat_check_status' );
 add_action( 'wpephpcompat_start_test_cron', 'wpephpcompat_start_test' );
-//Create custom post type.
+
+// Create custom post type.
 add_action( 'init', 'wpephpcompat_create_job_queue' );
 
 //Add the phpcompat WP-CLI command.
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
-	include __DIR__ . '/src/wpcli.php';
+	require_once( __DIR__ . '/src/wpcli.php' );
 }
 
 /**
