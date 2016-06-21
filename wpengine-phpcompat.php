@@ -153,6 +153,13 @@ class WPEngine_PHPCompat {
 	 * @return  null
 	 */
 	function admin_enqueue() {
+
+		// Only enqueue these assets on the settings page.
+		$screen = get_current_screen();
+		if( 'tools_page_phpcompat/wpengine-phpcompat' != $screen->id ) {
+			return;
+		}
+
 		// Styles
 		wp_enqueue_style( 'wpephpcompat-style', plugins_url( '/src/css/style.css', __FILE__ ) );
 
@@ -165,8 +172,6 @@ class WPEngine_PHPCompat {
 		wp_enqueue_script( 'jquery-ui-progressbar' );
 		wp_enqueue_style( 'jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
 
-		// PHP to JS vars
-		wp_localize_script( 'wpephpcompat', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' )) );
 	}
 
 	/**
