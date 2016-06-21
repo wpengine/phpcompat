@@ -74,7 +74,7 @@ jQuery(document).ready(function($)
         jQuery( "#wpe-progress" ).show();
 
         // Start the test!
-        jQuery.post(ajax_object.ajax_url, data);
+        jQuery.post(ajaxurl, data);
 
         // Start timer to check scan status.
         timer = setInterval(function()
@@ -93,7 +93,7 @@ function checkStatus()
     {
         'action': 'wpephpcompat_check_status'
     };
-    jQuery.post(ajax_object.ajax_url, data, function(response)
+    jQuery.post(ajaxurl, data, function(response)
     {
         obj = JSON.parse(response);
         if ( obj.results !== '0' ) {

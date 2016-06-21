@@ -154,9 +154,6 @@ class WPEngine_PHPCompat {
 	 */
 	function admin_enqueue() {
 
-		// PHP to JS vars
-		wp_localize_script( 'wpephpcompat', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' )) );
-
 		// Only enqueue these assets on the settings page.
 		$screen = get_current_screen();
 		if( 'tools_page_phpcompat/wpengine-phpcompat' != $screen->id ) {
@@ -174,7 +171,6 @@ class WPEngine_PHPCompat {
 		// Progress Bar
 		wp_enqueue_script( 'jquery-ui-progressbar' );
 		wp_enqueue_style( 'jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
-
 
 	}
 
