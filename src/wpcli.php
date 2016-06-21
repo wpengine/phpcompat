@@ -47,7 +47,10 @@ class PHPCompat_Command extends WP_CLI_Command {
 
 		$wpephpc->test_version = $test_version;
 
-		$wpephpc->only_active = 'yes';
+		// Set scan type if 'scan' was passed in.
+		if ( isset( $assoc_args['scan'] ) && 'active' === $assoc_args['scan'] ) {
+			$wpephpc->only_active = 'yes';
+		}
 
 		$results = $wpephpc->start_test();
 
