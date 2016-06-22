@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fb71b2362767b91e8537e5aeed50c6bf",
+    "hash": "17b91bc0eae5ef3d2342c277c2ac1e1d",
+    "content-hash": "b60557cb824592fdd8292e6abc04586c",
     "packages": [
         {
             "name": "simplyadmire/composer-plugins",
@@ -12,16 +13,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SimplyAdmire/ComposerPlugins.git",
-                "reference": "9e0c76952a71caa1d953ee5779b7d4c4c298d142"
+                "reference": "d8380f670694c1c2330b22591ca74adc82cffe19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SimplyAdmire/ComposerPlugins/zipball/9e0c76952a71caa1d953ee5779b7d4c4c298d142",
-                "reference": "9e0c76952a71caa1d953ee5779b7d4c4c298d142",
+                "url": "https://api.github.com/repos/SimplyAdmire/ComposerPlugins/zipball/d8380f670694c1c2330b22591ca74adc82cffe19",
+                "reference": "d8380f670694c1c2330b22591ca74adc82cffe19",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "1.0.0",
+                "composer-plugin-api": "^1.0",
                 "squizlabs/php_codesniffer": "*"
             },
             "type": "composer-plugin",
@@ -56,26 +57,30 @@
                 "standards",
                 "typo3"
             ],
-            "time": "2015-06-21 20:23:06"
+            "time": "2016-05-12 11:58:38"
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "2.3.0",
+            "version": "2.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "5046b0e01c416fc2b06df961d0673c85bcdc896c"
+                "reference": "fb72ed32f8418db5e7770be1653e62e0d6f5dd3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/5046b0e01c416fc2b06df961d0673c85bcdc896c",
-                "reference": "5046b0e01c416fc2b06df961d0673c85bcdc896c",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/fb72ed32f8418db5e7770be1653e62e0d6f5dd3d",
+                "reference": "fb72ed32f8418db5e7770be1653e62e0d6f5dd3d",
                 "shasum": ""
             },
             "require": {
+                "ext-simplexml": "*",
                 "ext-tokenizer": "*",
                 "ext-xmlwriter": "*",
                 "php": ">=5.1.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
             },
             "bin": [
                 "scripts/phpcs",
@@ -84,7 +89,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "2.x-dev"
                 }
             },
             "autoload": {
@@ -130,7 +135,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2015-03-04 02:07:03"
+            "time": "2016-05-30 22:24:32"
         },
         {
             "name": "wimg/php-compatibility",
@@ -138,23 +143,28 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wimg/PHPCompatibility.git",
-                "reference": "e8982ebe6e6e14a0c1d2181b49ac234884d2d86d"
+                "reference": "7ae454510068f0638ba58c0c8c72fb7dd3ee99d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wimg/PHPCompatibility/zipball/e8982ebe6e6e14a0c1d2181b49ac234884d2d86d",
-                "reference": "e8982ebe6e6e14a0c1d2181b49ac234884d2d86d",
+                "url": "https://api.github.com/repos/wimg/PHPCompatibility/zipball/7ae454510068f0638ba58c0c8c72fb7dd3ee99d4",
+                "reference": "7ae454510068f0638ba58c0c8c72fb7dd3ee99d4",
                 "shasum": ""
             },
             "require": {
                 "ext-tokenizer": "*",
                 "php": ">=5.1.2",
-                "squizlabs/php_codesniffer": ">=1.5.1,<=2.3"
+                "squizlabs/php_codesniffer": "~2.0"
             },
             "require-dev": {
                 "satooshi/php-coveralls": "dev-master"
             },
             "type": "phpcodesniffer-standard",
+            "autoload": {
+                "psr-4": {
+                    "PHPCompatibility\\": ""
+                }
+            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL"
@@ -172,7 +182,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2015-08-25 14:36:52"
+            "time": "2016-06-16 14:23:51"
         }
     ],
     "packages-dev": [],
