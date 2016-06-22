@@ -255,15 +255,17 @@ class WPEPHPCompat {
 
 			$id = $this->add_directory( $v['Name'], $plugin_path );
 
-			//Check for plugin updates.
-			foreach ( $update_plugins->response as $uk => $uv ) {
-				//If we have a match.
-				if ( $uk === $k ) {
-					$this->debug_log( 'An update exists for: ' . $v['Name'] );
-					//Save the update version.
-					update_post_meta( $id, 'update', $uv->new_version );
-					//Save the current version.
-					update_post_meta( $id, 'version', $v['Version'] );
+			if ( is_object( $update_plugins ) && is_array( $update_plugins->response ) ) {
+				// Check for plugin updates.
+				foreach ( $update_plugins->response as $uk => $uv ) {
+					// If we have a match.
+					if ( $uk === $k ) {
+						$this->debug_log( 'An update exists for: ' . $v['Name'] );
+						// Save the update version.
+						update_post_meta( $id, 'update', $uv->new_version );
+						// Save the current version.
+						update_post_meta( $id, 'version', $v['Version'] );
+					}
 				}
 			}
 		}
