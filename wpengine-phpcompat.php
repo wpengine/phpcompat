@@ -19,7 +19,7 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 }
 
 /**
- * Summary.
+ * This handles hooking into WordPress.
  */
 class WPEngine_PHPCompat {
 
@@ -27,9 +27,9 @@ class WPEngine_PHPCompat {
 	private static $instance = false;
 
 	/**
-	 * Summary.
+	 * Returns an instance of this class.
 	 *
-	 * @return [type] [description]
+	 * @return self An instance of this class.
 	 */
 	public static function instance() {
 		if( ! self::$instance ) {
@@ -62,14 +62,12 @@ class WPEngine_PHPCompat {
 	}
 
 	/**
-	 * Summary.
-	 *
-	 * Description.
+	 * Start the test!
 	 *
 	 * @since  1.0.0
 	 * @action wp_ajax_wpephpcompat_start_test
 	 * @action wpephpcompat_start_test_cron
-	 * @return [type] [description]
+	 * @return null
 	 */
 	function start_test() {
 		global $wpdb;
