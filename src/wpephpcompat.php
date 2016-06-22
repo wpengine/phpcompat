@@ -99,22 +99,23 @@ class WPEPHPCompat {
 				return;
 			}
 		}
-		update_option( 'wpephpcompat.lock', time() );
+		update_option( 'wpephpcompat.lock', time(), false );
 
 		// Check to see if scan has already started.
 		$scan_status = get_option( 'wpephpcompat.status' );
 		$this->debug_log( 'scan status: ' . $scan_status );
 		if ( ! $scan_status ) {
+
+			update_option( 'wpephpcompat.status', '1', false );
+			update_option( 'wpephpcompat.test_version', $this->test_version, false );
+			update_option( 'wpephpcompat.only_active', $this->only_active, false );
+
 			$this->debug_log( 'Generating directory list.' );
 			//Add plugins and themes.
 			$this->generate_directory_list();
 
-			add_option( 'wpephpcompat.status', '1' );
-			add_option( 'wpephpcompat.test_version', $this->test_version );
-			add_option( 'wpephpcompat.only_active', $this->only_active );
-
 			$count_jobs = wp_count_posts( 'wpephpcompat_jobs' );
-			add_option( 'wpephpcompat.numdirs', $count_jobs->publish );
+			update_option( 'wpephpcompat.numdirs', $count_jobs->publish, false );
 		} else {
 			// Get scan settings from database.
 			$this->test_version = get_option( 'wpephpcompat.test_version' );
@@ -160,16 +161,16 @@ class WPEPHPCompat {
 
 			$scan_results .= "\n";
 
-			update_option( 'wpephpcompat.scan_results', $scan_results );
+			update_option( 'wpephpcompat.scan_results', $scan_results , false );
 
 			wp_delete_post( $directory->ID );
 		}
 
-		update_option( 'wpephpcompat.status', '0' );
+		update_option( 'wpephpcompat.status', '0', false );
 
 		$this->debug_log( 'Scan finished.' );
 
-		return $scan_results;;
+		return $scan_results;
 	}
 
 	/**
