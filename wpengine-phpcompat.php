@@ -85,7 +85,7 @@ class WPEngine_PHPCompat {
 			$wpephpc->clean_after_scan();
 		}
 
-		echo esc_html( $wpephpc->start_test() );
+		$wpephpc->start_test();
 		wp_die();
 	}
 
