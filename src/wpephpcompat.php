@@ -17,7 +17,7 @@ class WPEPHPCompat {
 	 *
 	 * @since 1.0.0
 	 * @access public
-	 * @var class
+	 * @var object
 	 */
 	public $cli = null;
 
@@ -58,11 +58,7 @@ class WPEPHPCompat {
 	public $base = null;
 
 	/**
-	 * Summary.
-	 *
-	 * Description.
-	 *
-	 * @param [type] $dir [description]
+	 * @param string $dir Base plugin directory.
 	 */
 	function __construct( $dir ) {
 		$this->base = $dir;
@@ -73,7 +69,6 @@ class WPEPHPCompat {
 	 * Start the testing process.
 	 *
 	 * @since  1.0.0
-	 * @todo Return the results instead of echoing.
 	 * @return  null
 	 */
 	public function start_test() {
@@ -254,7 +249,7 @@ class WPEPHPCompat {
 			}
 		}
 
-		//Add themes.
+		// Add themes.
 		$all_themes = wp_get_themes();
 
 		foreach ( $all_themes as $k => $v ) {
