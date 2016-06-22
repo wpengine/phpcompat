@@ -187,7 +187,7 @@ class WPEPHPCompat {
 
 		$this->debug_log( 'Scan finished.' );
 
-		return;
+		return $scan_results;;
 	}
 
 	/**
