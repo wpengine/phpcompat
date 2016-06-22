@@ -55,24 +55,6 @@ class WPEPHPCompat {
 	 * @access public
 	 * @var string
 	 */
-	public $lock_name = 'wpephpcompat.lock';
-
-	/**
-	 * Summary.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @var string
-	 */
-	public $scan_status_name = 'wpephpcompat.status';
-
-	/**
-	 * Summary.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @var string
-	 */
 	public $base = null;
 
 	/**
