@@ -168,7 +168,7 @@ class WPEngine_PHPCompat {
 
 		// Progress Bar
 		wp_enqueue_script( 'jquery-ui-progressbar' );
-		wp_enqueue_style( 'jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
+		wp_enqueue_style( 'jquery-style', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
 
 	}
 
