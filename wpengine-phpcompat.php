@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: WP Engine PHP Compatibility
+Plugin Name: PHP Compatibility Checker
 Plugin URI: http://wpengine.com
 Description: Make sure your plugins and themes are compatible with newer PHP versions.
 Author: WP Engine
