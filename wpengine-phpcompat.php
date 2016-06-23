@@ -113,7 +113,8 @@ class WPEngine_PHPCompat {
 		} else {
 			// Else return the results and clean up!
 			$scan_results = get_option( 'wpephpcompat.scan_results' );
-			$to_encode['results'] = esc_html( $scan_results );
+			// Not using esc_html since the results are shown in a textarea.
+			$to_encode['results'] = $scan_results;
 
 			$wpephpc = new \WPEPHPCompat( __DIR__ );
 			$wpephpc->clean_after_scan();
