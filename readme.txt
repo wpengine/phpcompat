@@ -1,4 +1,4 @@
-=== WP Engine PHP Compatibility ===
+=== PHP Compatibility Checker ===
 Contributors: wpengine, octalmage, stevenkword
 Tags: wpe, wpengine, php, compatibility, checker
 Requires at least: 3.0.1
