@@ -1,5 +1,5 @@
 // Global variables.
-var test_version, only_active, timer;
+var test_version, only_active;
 
 jQuery( document ).ready(function($) {
 
@@ -64,7 +64,7 @@ jQuery( document ).ready(function($) {
 		jQuery.post( ajaxurl, data );
 
 		// Start timer to check scan status.
-		timer = setInterval(function() {
+		setTimeout(function() {
 			checkStatus();
 		}, 5000);
 
@@ -86,6 +86,10 @@ function checkStatus() {
 			jQuery( '#progressbar' ).progressbar({
 				value: obj.progress
 			});
+			// Requeue the checkStatus call.
+			setTimeout(function() {
+				checkStatus();
+			}, 5000);
 		}
 	});
 }
@@ -123,8 +127,6 @@ function findAll( regex, log ) {
  * @param  {string} response Full test results.
  */
 function displayReport( response ) {
-	// Clear status timer.
-	clearInterval( timer );
 	// Clean up before displaying results.
 	resetDisplay();
 	var $ = jQuery;
