@@ -258,7 +258,7 @@ class WPEngine_PHPCompat {
 					<h3 style="margin: 0px;">{{plugin_name}}</h3>
 					{{#if passed}}PHP {{test_version}} compatible.{{else}}<b>Not</b> PHP {{test_version}} compatible.{{/if}}<br>
 					{{update}}<br>
-					<textarea style="display: none;">{{logs}}</textarea><a class="view-details">view details</a>
+					<textarea style="display: none; white-space: pre;">{{logs}}</textarea><a class="view-details">view details</a>
 				</div>
 				<?php $update_url = site_url( 'wp-admin/update-core.php' , 'admin' ); ?>
 				<div style="float:right;">{{#if updateAvailable}}<div class="badge wpe-update"><a href="<?php echo esc_url( $update_url ); ?>">Update Available</a></div>{{/if}}<div class="badge warnings">{{warnings}} Warnings</div><div class="badge errors">{{errors}} Errors</div></div>
