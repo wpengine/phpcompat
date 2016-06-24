@@ -134,6 +134,11 @@ class WPEPHPCompat {
 
 		wp_schedule_single_event( time() + ( MINUTE_IN_SECONDS ), 'wpephpcompat_start_test_cron' );
 
+		// Kill cron after a minute.
+		if ( ! defined( 'WP_CLI' ) ) {
+			set_time_limit( 55 );
+		}
+
 		$scan_results = get_option( 'wpephpcompat.scan_results' );
 
 		foreach ( $directories as $directory ) {
