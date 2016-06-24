@@ -33,34 +33,42 @@ QUnit.test( 'reset elements', function( assert ) {
 
 QUnit.module( 'displayReport' );
 
-QUnit.test( 'Render test', function( assert ) {
+QUnit.test( 'Render test pass', function( assert ) {
 	var fixture = $( '#qunit-fixture' );
 
-	var response = `Name: Twenty Fifteen
+	helpers.setUpReportTestFixtures(fixture, '5.5');
 
-PHP 5.5 compatible.
+	test_version = $( 'input[name=phptest_version]:checked' ).val();
 
-Name: Akismet
-
-PHP 5.5 compatible.
-Update Available: 3.1.11; Current Version: 3.1.7;
-`;
-
-	fixture.append( '<input id="runButton" class="button-primary-disabled" value="Run">' );
-	fixture.append( '<div class="spinner">Loading...</div>' );
-	fixture.append( '<textarea id="testResults"></textarea>' );
-	fixture.append( '<div id="footer" style="display: none;"></div>' );
-	fixture.append( '<div id="standardMode"></div>' );
-
-	displayReport(response);
+	displayReport(helpers.passResults);
 
 	var displayedResults = $('#testResults').text();
 
-	assert.ok( response === displayedResults, 'Text results are correct' );
+	assert.ok( helpers.passResults === displayedResults, 'Text results are correct' );
 	assert.ok( ! $('.spinner').is(':visible'), 'Spinner is hidden' );
 	assert.ok( 'Re-run' === $('#runButton').val(), 'Run button text is Re-run' );
 	assert.ok( $('#footer').is(':visible'), 'Footer is visible' );
 	assert.ok( ! $('#runButton').hasClass('button-primary-disabled'), "Run button isn't disabled" );
 	assert.ok( $('.wpe-results-card').length == 2, 'There are 2 results.' );
+	assert.ok( $('#standardMode').text().includes( 'Your WordPress install is PHP 5.5 compatible.' ), 'Test did pass.' );
+});
 
+QUnit.test( 'Render test fail', function( assert ) {
+	var fixture = $( '#qunit-fixture' );
+
+	helpers.setUpReportTestFixtures(fixture, '5.5');
+
+	test_version = $( 'input[name=phptest_version]:checked' ).val();
+
+	displayReport(helpers.failResults);
+
+	var displayedResults = $('#testResults').text();
+
+	assert.ok( helpers.failResults === displayedResults, 'Text results are correct' );
+	assert.ok( ! $('.spinner').is(':visible'), 'Spinner is hidden' );
+	assert.ok( 'Re-run' === $('#runButton').val(), 'Run button text is Re-run' );
+	assert.ok( $('#footer').is(':visible'), 'Footer is visible' );
+	assert.ok( ! $('#runButton').hasClass('button-primary-disabled'), "Run button isn't disabled" );
+	assert.ok( $('.wpe-results-card').length == 7, 'There are 7 results.' );
+	assert.ok( $('#standardMode').text().includes( 'Your WordPress install is not PHP 5.5 compatible.' ), 'Test did not pass.' );
 });
