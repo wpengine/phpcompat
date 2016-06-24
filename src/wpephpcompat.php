@@ -232,7 +232,15 @@ class WPEPHPCompat {
 				}
 			}
 
-			$plugin_path = $plugin_base . plugin_dir_path( $k );
+			$plugin_file = plugin_dir_path( $k );
+
+			// Plugin in root directory (like Hello Dolly).
+			if ( './' === $plugin_file ) {
+				$plugin_path = $plugin_base . $k;
+			}
+			else {
+				$plugin_path = $plugin_base . $plugin_file;
+			}
 
 			$id = $this->add_directory( $v['Name'], $plugin_path );
 
