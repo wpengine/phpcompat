@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: PHP Compatibility Checker
-Plugin URI: http://wpengine.com
+Plugin URI: https://wpengine.com
 Description: Make sure your plugins and themes are compatible with newer PHP versions.
 Author: WP Engine
-Version: 1.0.0
-Author URI: http://wpengine.com
+Version: 0.1.0
+Author URI: https://wpengine.com
  */
 
 // Exit if this file is directly accessed
