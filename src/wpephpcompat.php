@@ -181,7 +181,6 @@ class WPEPHPCompat {
 	*/
 	public function process_file( $dir ) {
 		$this->values['files']       = $dir;
-		//$this->values['ignored'] = $this->generateIgnoreList();
 		$this->values['testVersion'] = $this->test_version;
 		$this->values['standard']    = 'PHPCompatibility';
 		$this->values['reportWidth'] = '9999';
