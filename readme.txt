@@ -33,10 +33,8 @@ The plugin was created by WP Engine to help the WordPress community increase ado
 
 You will find the plugin options in the WP Admin ‘Tools => PHP Compatibility’ menu. Once you click ‘run’ it will take a few minutes to conduct the test. While the test is running, you cannot navigate away from the page. 
 
-
-Maybe notes about usage? 
-
 == Other Notes ==
+
 PHP Compatibility Checker includes WP-CLI command support:
 
 `wp phpcompat <version> [--scan=<scan>]`
