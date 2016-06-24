@@ -78,7 +78,11 @@ function checkStatus() {
 		'action': 'wpephpcompat_check_status'
 	};
 	jQuery.post( ajaxurl, data, function( response ) {
-		obj = JSON.parse( response );
+		try {
+			obj = JSON.parse( response );
+		} catch(e) {
+			alert(e);
+		}
 		if ( '0' !== obj.results ) {
 			displayReport( obj.results );
 			jQuery( '#wpe-progress' ).hide();
