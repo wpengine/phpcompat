@@ -56,6 +56,8 @@ class PHPCompat_Command extends WP_CLI_Command {
 
 		echo esc_html( $results );
 
+		$wpephpc->clean_after_scan();
+
 		if ( preg_match( '/(\d*) ERRORS?/i', $results ) ) {
 			WP_CLI::error( 'Your WordPress install is not compatible.' );
 		}
