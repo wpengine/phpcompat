@@ -151,11 +151,10 @@ class WPEngine_PHPCompat {
 	 * @action admin_enqueue_scripts
 	 * @return  null
 	 */
-	function admin_enqueue() {
+	function admin_enqueue( $hook ) {
 
 		// Only enqueue these assets on the settings page.
-		$screen = get_current_screen();
-		if( 'tools_page_phpcompat/wpengine-phpcompat' != $screen->id ) {
+		if( 'tools_page_phpcompat/wpengine-phpcompat' != $hook ) {
 			return;
 		}
 
