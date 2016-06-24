@@ -233,7 +233,7 @@ class WPEngine_PHPCompat {
 				<!-- Area for developer results. -->
 				<div style="display: none;" id="developerMode">
 					<b>Test Results:</b>
-					<textarea disabled="disabled" id="testResults"></textarea>
+					<textarea readonly="readonly" id="testResults"></textarea>
 				</div>
 
 				<div id="footer" style="display: none;">
