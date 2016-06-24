@@ -348,7 +348,7 @@ class WPEPHPCompat {
 	 * @return null
 	 */
 	private function debug_log( $message ){
-		if ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) {
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG === true && ! defined( 'WP_CLI' ) ) {
 			if ( is_array( $message ) || is_object( $message ) ) {
 				error_log( print_r( $message , true ) );
 			}
