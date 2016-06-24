@@ -218,7 +218,7 @@ class WPEPHPCompat {
 
 		foreach ( $all_plugins as $k => $v ) {
 			//Exclude our plugin.
-			if ( $v['Name'] === 'WP Engine PHP Compatibility' ) {
+			if ( $v['Name'] === 'PHP Compatibility Checker' ) {
 				continue;
 			}
 
