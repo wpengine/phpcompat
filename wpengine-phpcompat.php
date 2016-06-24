@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: PHP Compatibility Checker
-Plugin URI: http://wpengine.com
+Plugin URI: https://wpengine.com
 Description: Make sure your plugins and themes are compatible with newer PHP versions.
 Author: WP Engine
-Version: 1.0.0
-Author URI: http://wpengine.com
+Version: 0.1.0
+Author URI: https://wpengine.com
  */
 
 // Exit if this file is directly accessed
@@ -195,7 +195,7 @@ class WPEngine_PHPCompat {
 		?>
 		<div class="wrap">
 			<div style="float: left;">
-				<h2>PHP Compatibility Checker</h2>
+				<h2>WP Engine PHP Compatibility Checker</h2>
 			</div>
 			<div style="float: right; margin-top: 10px; text-align: right;">
 				<input type="checkbox" id="developermode" name="developermode" value="yes">Developer mode
@@ -225,6 +225,7 @@ class WPEngine_PHPCompat {
 				<div style="display: none;" id="wpe-progress">
 					<label for="">Progress</label>
 					<div id="progressbar"></div>
+					<b>Please don't leave this page during the test.</b>
 				</div>
 
 				<!-- Area for pretty results. -->
@@ -233,7 +234,7 @@ class WPEngine_PHPCompat {
 				<!-- Area for developer results. -->
 				<div style="display: none;" id="developerMode">
 					<b>Test Results:</b>
-					<textarea disabled="disabled" id="testResults"></textarea>
+					<textarea readonly="readonly" id="testResults"></textarea>
 				</div>
 
 				<div id="footer" style="display: none;">
@@ -257,7 +258,7 @@ class WPEngine_PHPCompat {
 					<h3 style="margin: 0px;">{{plugin_name}}</h3>
 					{{#if passed}}PHP {{test_version}} compatible.{{else}}<b>Not</b> PHP {{test_version}} compatible.{{/if}}<br>
 					{{update}}<br>
-					<textarea style="display: none;">{{logs}}</textarea><a class="view-details">view details</a>
+					<textarea style="display: none; white-space: pre;">{{logs}}</textarea><a class="view-details">view details</a>
 				</div>
 				<?php $update_url = site_url( 'wp-admin/update-core.php' , 'admin' ); ?>
 				<div style="float:right;">{{#if updateAvailable}}<div class="badge wpe-update"><a href="<?php echo esc_url( $update_url ); ?>">Update Available</a></div>{{/if}}<div class="badge warnings">{{warnings}} Warnings</div><div class="badge errors">{{errors}} Errors</div></div>
