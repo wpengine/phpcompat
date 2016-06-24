@@ -206,9 +206,7 @@ class WPEPHPCompat {
 	*/
 	public function generate_directory_list() {
 		if ( ! function_exists( 'get_plugins' ) ) {
-			/**
-			 * Summary.
-			 */
+
 			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 		}
 
