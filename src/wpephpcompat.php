@@ -127,7 +127,7 @@ class WPEPHPCompat {
 		// If there are no directories to scan, we're finished!
 		if ( ! $directories ) {
 			$this->debug_log( 'No more plugins to process.' );
-			$this->clean_after_scan();
+			update_option( 'wpephpcompat.status', '0', false );
 
 			return;
 		}
