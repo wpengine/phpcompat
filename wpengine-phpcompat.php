@@ -195,7 +195,7 @@ class WPEngine_PHPCompat {
 		?>
 		<div class="wrap">
 			<div style="float: left;">
-				<h2>PHP Compatibility Checker</h2>
+				<h2>WP Engine PHP Compatibility Checker</h2>
 			</div>
 			<div style="float: right; margin-top: 10px; text-align: right;">
 				<input type="checkbox" id="developermode" name="developermode" value="yes">Developer mode
