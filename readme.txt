@@ -75,18 +75,19 @@ The plugin was created by WP Engine to help the WordPress community increase ado
 
 == Screenshots ==
 
-1. Compatibility Checker Main Page
+1. Main screen: compatibility checker options
+2. Compatibility results screen
 
 == Changelog ==
 
 = 0.1 =
 - Initial version
-- PHP 5.5 Support
+- PHP 5.5, 5.4, and 5.3 Support
 - Basic WP-CLI Commands
 
 == Upgrade Notice ==
 
 = 0.1 =
 - Initial version
-- PHP 5.5 Support
+- PHP 5.5, 5.4, and 5.3 Support
 - Basic WP-CLI Commands
