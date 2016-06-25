@@ -227,6 +227,7 @@ class WPEngine_PHPCompat {
 				<div style="display: none;" id="wpe-progress">
 					<label for="">Progress</label>
 					<div id="progressbar"></div>
+					<div id="wpe-progress-count"></div>
 					<b>Please don't leave this page during the test.</b>
 				</div>
 

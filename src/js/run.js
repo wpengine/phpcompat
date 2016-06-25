@@ -1,5 +1,5 @@
 // Global variables.
-var test_version, only_active;
+var test_version, only_active, timer;
 
 jQuery( document ).ready(function($) {
 
@@ -75,6 +75,8 @@ function checkStatus() {
 	var data = {
 		'action': 'wpephpcompat_check_status'
 	};
+
+	var obj;
 	jQuery.post( ajaxurl, data, function( response ) {
 		try {
 			obj = JSON.parse( response );
@@ -88,8 +90,11 @@ function checkStatus() {
 			jQuery( '#progressbar' ).progressbar({
 				value: obj.progress
 			});
+
+			// Display the current plugin count.
+			jQuery( '#wpe-progress-count' ).text( ( obj.total - obj.count ) + '/' + obj.total );
 			// Requeue the checkStatus call.
-			setTimeout(function() {
+			timer = setTimeout(function() {
 				checkStatus();
 			}, 5000);
 		}
@@ -104,6 +109,7 @@ function resetDisplay() {
 	});
 	jQuery( '#testResults' ).text('');
 	jQuery( '#standardMode' ).html('');
+	jQuery( '#wpe-progress-count' ).text('');
 }
 /**
  * Loop through a string and count the total matches.
