@@ -134,8 +134,18 @@ class WPEPHPCompat {
 
 		wp_schedule_single_event( time() + ( MINUTE_IN_SECONDS ), 'wpephpcompat_start_test_cron' );
 
-		// Kill cron after a minute.
 		if ( ! defined( 'WP_CLI' ) ) {
+			// Close the connection to the browser.
+			ignore_user_abort(true);
+
+			header("Connection: close", true);
+			header("Content-Encoding: none\r\n");
+			header("Content-Length: 0", true);
+
+			flush();
+			ob_flush();
+
+			// Kill cron after a minute.
 			set_time_limit( 55 );
 		}
 

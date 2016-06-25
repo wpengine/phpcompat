@@ -61,13 +61,11 @@ jQuery( document ).ready(function($) {
 		jQuery( '#wpe-progress' ).show();
 
 		// Start the test!
-		jQuery.post( ajaxurl, data );
-
-		// Start timer to check scan status.
-		setTimeout(function() {
+		jQuery.post( ajaxurl, data , function()
+		{
+			// Start timer to check scan status.
 			checkStatus();
-		}, 5000);
-
+		});
 	});
 });
 /**
