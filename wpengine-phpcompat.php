@@ -26,6 +26,9 @@ class WPEngine_PHPCompat {
 	/* Define and register singleton */
 	private static $instance = false;
 
+	/* Hook for the settings page  */
+	private $page;
+
 	/**
 	 * Returns an instance of this class.
 	 *
@@ -154,7 +157,7 @@ class WPEngine_PHPCompat {
 	function admin_enqueue( $hook ) {
 
 		// Only enqueue these assets on the settings page.
-		if( 'tools_page_phpcompat/wpengine-phpcompat' != $hook ) {
+		if( $this->page !== $hook ) {
 			return;
 		}
 
@@ -181,7 +184,7 @@ class WPEngine_PHPCompat {
 	 */
 	function create_menu() {
 		// Create Tools sub-menu.
-		$wpeallowheartbeat_settings_page = add_submenu_page( 'tools.php', 'PHP Compatibility', 'PHP Compatibility', 'administrator', __FILE__, array( self::instance(), 'settings_page' ) );
+		$this->page = add_submenu_page( 'tools.php', 'PHP Compatibility', 'PHP Compatibility', 'administrator', __FILE__, array( self::instance(), 'settings_page' ) );
 	}
 
 	/**
