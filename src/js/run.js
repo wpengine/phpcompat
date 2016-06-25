@@ -81,7 +81,9 @@ function checkStatus() {
 		try {
 			obj = JSON.parse( response );
 		} catch(e) {
+			// If response wasn't JSON something is wrong.
 			alert(e);
+			return;
 		}
 		if ( '0' !== obj.results ) {
 			displayReport( obj.results );
