@@ -61,8 +61,7 @@ jQuery( document ).ready(function($) {
 		jQuery( '#wpe-progress' ).show();
 
 		// Start the test!
-		jQuery.post( ajaxurl, data , function()
-		{
+		jQuery.post( ajaxurl, data ).always(function() {
 			// Start timer to check scan status.
 			checkStatus();
 		});
