@@ -209,7 +209,7 @@ class WPEngine_PHPCompat {
 					<tr>
 						<th scope="row"><label for="phptest_version">PHP Version</label></th>
 						<td>
-							<!--<label><input type="radio" name="phptest_version" value="7.0"> PHP 7.0</label><br>-->
+							<label><input type="radio" name="phptest_version" value="7.0"> PHP 7.0</label><br>
 							<label><input type="radio" name="phptest_version" value="5.5" checked="checked"> PHP 5.5</label><br>
 							<label><input type="radio" name="phptest_version" value="5.4"> PHP 5.4</label><br>
 							<label><input type="radio" name="phptest_version" value="5.3"> PHP 5.3</label>
