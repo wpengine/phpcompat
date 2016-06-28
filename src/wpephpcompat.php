@@ -134,8 +134,11 @@ class WPEPHPCompat {
 
 		wp_schedule_single_event( time() + ( MINUTE_IN_SECONDS ), 'wpephpcompat_start_test_cron' );
 
-		// Kill cron after a minute.
-		if ( ! defined( 'WP_CLI' ) ) {
+		if ( ! $this->is_command_line() ) {
+			// Close the connection to the browser.
+			$this->close_connection("started");
+
+			// Kill cron after a minute.
 			set_time_limit( 55 );
 		}
 
@@ -348,7 +351,7 @@ class WPEPHPCompat {
 	 * @return null
 	 */
 	private function debug_log( $message ){
-		if ( defined( 'WP_DEBUG' ) && WP_DEBUG === true && ! defined( 'WP_CLI' ) ) {
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG === true && ! $this->is_command_line() ) {
 			if ( is_array( $message ) || is_object( $message ) ) {
 				error_log( print_r( $message , true ) );
 			}
@@ -356,5 +359,41 @@ class WPEPHPCompat {
 				error_log( 'WPE PHP Compatibility: ' . $message );
 			}
 		}
+	}
+
+	/**
+	 * Are we running on the command line?
+	 *
+	 * @since  1.0.0
+	 * @return boolean Returns true if the request came from the command line.
+	 */
+	private function is_command_line()
+	{
+		return defined( 'WP_CLI' ) || defined( 'PHPUNIT_TEST' );
+	}
+
+	/**
+	* Close the connection to the browser but continue processing the operation.
+	* @since  1.0.0
+	* @param  string $body The message to send to the client.
+	* @return null
+	*/
+	private function close_connection( $body ) {
+		ignore_user_abort( true );
+		ob_end_clean();
+		// Start buffering.
+		ob_start();
+		// Echo our response.
+		echo $body;
+		// Get the length of the buffer.
+		$size = ob_get_length();
+		// Close the connection.
+		header( 'Connection: close\r\n' );
+		header( 'Content-Encoding: none\r\n' );
+		header( 'Content-Length: $size' );
+		// Flush and close the buffer.
+		ob_end_flush();
+		// Flush the system output buffer.
+		flush();
 	}
 }

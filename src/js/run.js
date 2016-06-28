@@ -1,5 +1,5 @@
 // Global variables.
-var test_version, only_active;
+var test_version, only_active, timer;
 
 jQuery( document ).ready(function($) {
 
@@ -61,13 +61,10 @@ jQuery( document ).ready(function($) {
 		jQuery( '#wpe-progress' ).show();
 
 		// Start the test!
-		jQuery.post( ajaxurl, data );
-
-		// Start timer to check scan status.
-		setTimeout(function() {
+		jQuery.post( ajaxurl, data ).always(function() {
+			// Start timer to check scan status.
 			checkStatus();
-		}, 5000);
-
+		});
 	});
 });
 /**
@@ -77,11 +74,15 @@ function checkStatus() {
 	var data = {
 		'action': 'wpephpcompat_check_status'
 	};
+
+	var obj;
 	jQuery.post( ajaxurl, data, function( response ) {
 		try {
 			obj = JSON.parse( response );
 		} catch(e) {
+			// If response wasn't JSON something is wrong.
 			alert(e);
+			return;
 		}
 		if ( '0' !== obj.results ) {
 			displayReport( obj.results );
@@ -90,8 +91,11 @@ function checkStatus() {
 			jQuery( '#progressbar' ).progressbar({
 				value: obj.progress
 			});
+
+			// Display the current plugin count.
+			jQuery( '#wpe-progress-count' ).text( ( obj.total - obj.count ) + '/' + obj.total );
 			// Requeue the checkStatus call.
-			setTimeout(function() {
+			timer = setTimeout(function() {
 				checkStatus();
 			}, 5000);
 		}
@@ -106,6 +110,7 @@ function resetDisplay() {
 	});
 	jQuery( '#testResults' ).text('');
 	jQuery( '#standardMode' ).html('');
+	jQuery( '#wpe-progress-count' ).text('');
 }
 /**
  * Loop through a string and count the total matches.
