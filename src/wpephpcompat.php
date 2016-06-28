@@ -134,7 +134,7 @@ class WPEPHPCompat {
 
 		wp_schedule_single_event( time() + ( MINUTE_IN_SECONDS ), 'wpephpcompat_start_test_cron' );
 
-		if ( ! defined( 'WP_CLI' ) ) {
+		if ( ! $this->is_command_line() ) {
 			// Close the connection to the browser.
 			ignore_user_abort(true);
 
@@ -358,7 +358,7 @@ class WPEPHPCompat {
 	 * @return null
 	 */
 	private function debug_log( $message ){
-		if ( defined( 'WP_DEBUG' ) && WP_DEBUG === true && ! defined( 'WP_CLI' ) ) {
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG === true && ! $this->is_command_line() ) {
 			if ( is_array( $message ) || is_object( $message ) ) {
 				error_log( print_r( $message , true ) );
 			}
@@ -367,4 +367,16 @@ class WPEPHPCompat {
 			}
 		}
 	}
+
+	/**
+	 * Are we running on the command line?
+	 *
+	 * @since  1.0.0
+	 * @return boolean Returns true if the request came from the command line.
+	 */
+	private function is_command_line()
+	{
+		return defined( 'WP_CLI' ) || defined( 'PHPUNIT_TEST' );
+	}
+
 }
