@@ -19,7 +19,7 @@ PHP 5.5 compatible.
 
 		$results = $wpephpc->start_test();
 
-		$this->assertEquals($expected_results, $results);
+		$this->assertEquals( $expected_results, $results );
 	}
 
 	function test_scan_default_PHP_70() {
@@ -40,6 +40,6 @@ PHP 7.0 compatible.
 
 		$results = $wpephpc->start_test();
 
-		$this->assertEquals($expected_results, $results);
+		$this->assertEquals( $expected_results, $results );
 	}
 }
