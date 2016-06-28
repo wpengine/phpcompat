@@ -25,12 +25,17 @@ QUnit.test( 'reset elements', function( assert ) {
 	fixture.append( '<div id="standardMode">Hello this is text.</div>' );
 	fixture.append( '<textarea id="testResults">This is some more text!</textarea>' );
 	fixture.append( '<div id="wpe-progress-count"></div>' );
+	fixture.append( '<div id="progressbar"></div>' );
+
+	// Set the progress bar to a known state.
+	jQuery( '#progressbar' ).progressbar({ value: 5 });
 
 	resetDisplay();
 
 	assert.ok( '' === $( '#testResults' ).text(), 'testResults is empty' );
 	assert.ok( '' === $( '#standardMode' ).html(), 'standardMode is empty' );
 	assert.ok( '' === $( '#wpe-progress-count' ).text(), 'wpe-progress-count is empty' );
+	assert.ok( 0 === $( '#progressbar' ).progressbar( 'value' ), 'progressbar is set to 0' );
 });
 
 QUnit.module( 'displayReport' );
@@ -82,6 +87,7 @@ QUnit.test( 'Test checkStatus progress', function( assert ) {
 	var done = assert.async();
 	var fixture = $( '#qunit-fixture' );
 	fixture.append( '<div id="wpe-progress-count"></div>' );
+	fixture.append( '<div id="progressbar"></div>' );
 
 	// Define our mock URL.
 	ajaxurl = '/checkStatus/progress/';
@@ -97,6 +103,8 @@ QUnit.test( 'Test checkStatus progress', function( assert ) {
 		},
 		onAfterComplete: function() { // Check the results of checkStatus();
 			assert.ok( $( '#wpe-progress-count' ).text() === '16/17', 'Progress count is correct.' );
+			assert.ok( $( '#progressbar' ).progressbar( 'value' ) === 94.1176470588 , 'Progress bar is correct.' );
+
 			// Clear the next queued checkStatus call.
 			clearTimeout( timer );
 			// End the test.
