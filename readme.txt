@@ -3,7 +3,7 @@ Contributors: wpengine, octalmage, stevenkword, taylor4484
 Tags: php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine
 Requires at least: 3.0.1
 Tested up to: 4.5
-Stable tag: 1.0
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -83,19 +83,19 @@ The plugin was created by WP Engine to help the WordPress community increase ado
 
 == Changelog ==
 
-= 1.0 =
+= 1.0.0 =
 - Major update to add PHP 7 checking support
 - Improved the UX of the progress bar
 - Fixed bug with the way the plugin menu was registered
 
-= 0.1 =
+= 0.1.0 =
 - Initial version
 - PHP 5.5, 5.4, and 5.3 Support
 - Basic WP-CLI Commands
 
 == Upgrade Notice ==
 
-= 1.0 =
+= 1.0.0 =
 - Major update to add PHP 7 checking support
 - Improved the UX of the progress bar
 - Fixed bug with the way the plugin menu was registered
