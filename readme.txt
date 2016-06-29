@@ -1,9 +1,9 @@
 === PHP Compatibility Checker ===
 Contributors: wpengine, octalmage, stevenkword, taylor4484
-Tags: php 7, php 5.5, php, version, compatibility, wpe, wpengine, wp engine
+Tags: php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine
 Requires at least: 3.0.1
 Tested up to: 4.5
-Stable tag: 0.1
+Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,20 +13,25 @@ Make sure your plugins and themes are compatible with newer PHP versions.
 
 The WP Engine PHP Compatibility Checker can be used by any WordPress website on any web host to check PHP version compatibility. 
 
-This plugin will lint theme and plugin code inside your WordPress file system and provide you back a report of compatibility issues for you to fix. Compatibility issues are categorized into errors and warnings and will list the file and line number of the offending code, as well as the info about why that line of code is incompatible with the chosen version of PHP. The plugin will also suggest updates to themes and plugins, as there may be a new version that contains compatible code. 
+This plugin will lint theme and plugin code inside your WordPress file system and give you back a report of compatibility issues for you to fix. Compatibility issues are categorized into errors and warnings and will list the file and line number of the offending code, as well as the info about why that line of code is incompatible with the chosen version of PHP. The plugin will also suggest updates to themes and plugins, as a new version may offer compatible code. 
 
-This plugin does not execute your theme and plugin code, as such this plugin cannot detect runtime compatibility issues. 
+**This plugin does not execute your theme and plugin code, as such this plugin cannot detect runtime compatibility issues.**
 
-= Update to PHP 5.5 =
-* As of June 2016, 60.2% of WordPress websites run a PHP version less PHP 5.5
+= Update to PHP 7 =
+* Use this plugin to check your site for compatibility for PHP 7! 
+* As of June 2016, 60.2% of WordPress websites run a PHP version less PHP 5.5.
 * These versions of PHP have been deprecated and unsupported for over 9 months.
+* Only 1.7% of WordPress websites run PHP 7, the current main version of PHP. 
+
 
 = Disclaimer =
-While this plugin is written to detect as many problems as accurately as possible, 100% reliable detection is very difficult to ensure. It is best practice to run comprehensive tests before you migrate to a new PHP version. 
+*While this plugin is written to detect as many problems as accurately as possible, 100% reliable detection is very difficult to ensure. It is best practice to run comprehensive tests before you migrate to a new PHP version.*
 
-The plugin was created by WP Engine to help the WordPress community increase adoption of modern PHP versions. We welcome contributors to this plugin, and are excited to see how developers and other WordPress hosts use this plugin.
+The plugin was created by WP Engine to help the WordPress community increase adoption of modern PHP versions. We [welcome contributors](https://github.com/wpengine/phpcompat) to this plugin, and are excited to see how developers and other WordPress hosts use this plugin.
 
 == Installation ==
+
+*Note: If you have WordPress 2.7 or above you can simply go to 'Plugins' > 'Add New' in the WordPress admin and search for "Indeed Apply Shortcode" and install it from there.*
 
 1. Upload `phpcompat` to the `/wpengine-wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
@@ -78,6 +83,11 @@ The plugin was created by WP Engine to help the WordPress community increase ado
 
 == Changelog ==
 
+= 1.0 =
+- Major update to add PHP 7 checking support
+- Improved the UX of the progress bar
+- Fixed bug with the way the plugin menu was registered
+
 = 0.1 =
 - Initial version
 - PHP 5.5, 5.4, and 5.3 Support
@@ -85,7 +95,7 @@ The plugin was created by WP Engine to help the WordPress community increase ado
 
 == Upgrade Notice ==
 
-= 0.1 =
-- Initial version
-- PHP 5.5, 5.4, and 5.3 Support
-- Basic WP-CLI Commands
+= 1.0 =
+- Major update to add PHP 7 checking support
+- Improved the UX of the progress bar
+- Fixed bug with the way the plugin menu was registered
