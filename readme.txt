@@ -3,7 +3,7 @@ Contributors: wpengine, octalmage, stevenkword, taylor4484
 Tags: php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine
 Requires at least: 3.0.1
 Tested up to: 4.5
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,8 +69,10 @@ Yes, this plugin can be used any ANY WordPress website on ANY host.
   
 Yes! While you cannot use this WordPress plugin to test your non-WordPress projects, you can use the [Open Source PHPCompatibility Library](https://github.com/wimg/PHPCompatibility) that this plugin is built on.
 
+3) Why was my plugin/theme skipped?
+Some servers have timeouts to prevent long running queries, this is commonly 60 seconds. This can prevent the checker from being able to process large themes or plugins. You should check with your host to see if this timeout can be temporarily removed. The best way around this timeout issues is to run this plugin on a [local copy](https://make.wordpress.org/core/handbook/tutorials/installing-a-local-server/) of your site. 
 
-5) I found a bug, or have a suggestion, can I contribute back? 
+4) I found a bug, or have a suggestion, can I contribute back? 
 
 Yes! WP Engine has a public GitHub repo where you can contribute back to this plugin. Please open an issue on the [Plugin GitHub](https://github.com/wpengine/phpcompat). We actively develop this plugin, and are always happy to receive pull requests. 
 
@@ -82,6 +84,10 @@ The plugin was created by WP Engine to help the WordPress community increase ado
 2. Compatibility results screen
 
 == Changelog ==
+
+= 1.0.1 =
+- Updated compatibility library with a few bugfixes
+- Added skip logic to prevent checker from hanging
 
 = 1.0.0 =
 - Major update to add PHP 7 checking support
@@ -95,7 +101,6 @@ The plugin was created by WP Engine to help the WordPress community increase ado
 
 == Upgrade Notice ==
 
-= 1.0.0 =
-- Major update to add PHP 7 checking support
-- Improved the UX of the progress bar
-- Fixed bug with the way the plugin menu was registered
+= 1.0.1 =
+- Updated compatibility library with a few bugfixes
+- Added skip logic to prevent checker from hanging
