@@ -3,15 +3,6 @@ var test_version, only_active, timer;
 
 jQuery( document ).ready(function($) {
 
-	// Handlebars if conditional.
-	Handlebars.registerHelper('if', function( conditional, options ) {
-		if ( conditional ) {
-			return options.fn( this );
-		} else {
-			return options.inverse( this );
-		}
-	});
-
 	$( '#developermode' ).change(function() {
 		if ( $(this).is( ':checked' ) ) {
 			$( '#developerMode' ).show();
