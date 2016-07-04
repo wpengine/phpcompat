@@ -143,12 +143,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wimg/PHPCompatibility.git",
-                "reference": "cc622c3416153b296d6c1194e59e1d9532490db6"
+                "reference": "d29f9c5de9c8ef23323fe35b3b896dc2a95f444c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wimg/PHPCompatibility/zipball/cc622c3416153b296d6c1194e59e1d9532490db6",
-                "reference": "cc622c3416153b296d6c1194e59e1d9532490db6",
+                "url": "https://api.github.com/repos/wimg/PHPCompatibility/zipball/d29f9c5de9c8ef23323fe35b3b896dc2a95f444c",
+                "reference": "d29f9c5de9c8ef23323fe35b3b896dc2a95f444c",
                 "shasum": ""
             },
             "require": {
@@ -182,7 +182,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2016-06-29 16:11:00"
+            "time": "2016-07-01 22:28:08"
         }
     ],
     "packages-dev": [],
