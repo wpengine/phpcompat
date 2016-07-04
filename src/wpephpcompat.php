@@ -155,7 +155,7 @@ class WPEPHPCompat {
 			$this->debug_log( 'Attempted scan count: ' . $count );
 
 			if ( $count > 2 ) { // If we've already tried twice, skip it.
-				$scan_results .= 'The plugin/theme was skipped as it was too large to check before the server killed the process.\n\n';
+				$scan_results .= "The plugin/theme was skipped as it was too large to scan before the server killed the process.\n\n";
 				update_option( 'wpephpcompat.scan_results', $scan_results , false );
 				wp_delete_post( $directory->ID );
 				$count = 0;
