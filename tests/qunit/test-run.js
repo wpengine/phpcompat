@@ -80,6 +80,21 @@ QUnit.test( 'Render test fail', function( assert ) {
 	assert.ok( $('#standardMode').text().includes( 'Your WordPress install is not PHP 5.5 compatible.' ), 'Test did not pass.' );
 });
 
+QUnit.test( 'Render test skip', function( assert ) {
+	var fixture = $( '#qunit-fixture' );
+
+	helpers.setUpReportTestFixtures( fixture, '5.5' );
+
+	test_version = $( 'input[name=phptest_version]:checked' ).val();
+
+	displayReport(helpers.skipResults);
+
+	var displayedResults = $( '#testResults' ).text();
+
+	assert.ok( '#038103' === helpers.rgb2hex( $( ".wpe-results-card" ).eq( 0 ).css( 'border-left-color' ) ), 'First plugin marked as passed.' );
+	assert.ok( '#999999' === helpers.rgb2hex( $( ".wpe-results-card" ).eq( 1 ).css( 'border-left-color' ) ), 'Second plugin marked as skipped.' );
+});
+
 QUnit.module( 'checkStatus' );
 
 QUnit.test( 'Test checkStatus progress', function( assert ) {
