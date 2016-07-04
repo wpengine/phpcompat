@@ -3,15 +3,6 @@ var test_version, only_active, timer;
 
 jQuery( document ).ready(function($) {
 
-	// Handlebars if conditional.
-	Handlebars.registerHelper('if', function( conditional, options ) {
-		if ( conditional ) {
-			return options.fn( this );
-		} else {
-			return options.inverse( this );
-		}
-	});
-
 	$( '#developermode' ).change(function() {
 		if ( $(this).is( ':checked' ) ) {
 			$( '#developerMode' ).show();
@@ -159,6 +150,7 @@ function displayReport( response ) {
 		var updateVersion;
 		var updateAvailable = 0;
 		var passed = 1;
+		var skipped = 0;
 		// Extract plugin/theme name.
 		var name = plugins[x].substring( 0, plugins[x].indexOf( '\n' ) );
 		// Extract results.
@@ -177,6 +169,10 @@ function displayReport( response ) {
 		}
 		// Trim whitespace and newlines from report.
 		log = log.replace( /^\s+|\s+$/g, '' );
+		
+		if ( log.search('skipped') !== -1 ) {
+			skipped = 1;
+		}
 		// Use handlebars to build our template.
 		var source = $( '#result-template' ).html();
 		var template = Handlebars.compile( source );
@@ -186,6 +182,7 @@ function displayReport( response ) {
 			errors: errors,
 			logs: log,
 			passed: passed,
+			skipped: skipped,
 			test_version: test_version,
 			updateAvailable: updateAvailable
 		};

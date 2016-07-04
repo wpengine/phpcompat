@@ -58,6 +58,7 @@ QUnit.test( 'Render test pass', function( assert ) {
 	assert.ok( ! $('#runButton').hasClass('button-primary-disabled'), "Run button isn't disabled" );
 	assert.ok( $('.wpe-results-card').length == 2, 'There are 2 results.' );
 	assert.ok( $('#standardMode').text().includes( 'Your WordPress install is PHP 5.5 compatible.' ), 'Test did pass.' );
+	assert.ok( '#038103' === helpers.rgb2hex( $( ".wpe-results-card" ).eq( 0 ).css( 'border-left-color' ) ), 'First plugin marked as passed.' );
 });
 
 QUnit.test( 'Render test fail', function( assert ) {
@@ -78,6 +79,21 @@ QUnit.test( 'Render test fail', function( assert ) {
 	assert.ok( ! $('#runButton').hasClass('button-primary-disabled'), "Run button isn't disabled" );
 	assert.ok( $('.wpe-results-card').length == 7, 'There are 7 results.' );
 	assert.ok( $('#standardMode').text().includes( 'Your WordPress install is not PHP 5.5 compatible.' ), 'Test did not pass.' );
+});
+
+QUnit.test( 'Render test skip', function( assert ) {
+	var fixture = $( '#qunit-fixture' );
+
+	helpers.setUpReportTestFixtures( fixture, '5.5' );
+
+	test_version = $( 'input[name=phptest_version]:checked' ).val();
+
+	displayReport(helpers.skipResults);
+
+	var displayedResults = $( '#testResults' ).text();
+
+	assert.ok( '#038103' === helpers.rgb2hex( $( ".wpe-results-card" ).eq( 0 ).css( 'border-left-color' ) ), 'First plugin marked as passed.' );
+	assert.ok( '#999999' === helpers.rgb2hex( $( ".wpe-results-card" ).eq( 1 ).css( 'border-left-color' ) ), 'Second plugin marked as skipped.' );
 });
 
 QUnit.module( 'checkStatus' );
