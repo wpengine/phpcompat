@@ -9,6 +9,13 @@ var helpers = {
 		fixture.append( '<div id="standardMode"></div>' );
 		fixture.append( '<input type="radio" name="phptest_version" value="' + version + '" checked="checked">' );
 	},
+	rgb2hex: function(rgb) {
+		rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+		function hex(x) {
+			return ("0" + parseInt(x).toString(16)).slice(-2);
+		}
+		return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+	},
 	passResults: `Name: Twenty Fifteen
 
 PHP 5.5 compatible.
@@ -17,6 +24,15 @@ Name: Akismet
 
 PHP 5.5 compatible.
 Update Available: 3.1.11; Current Version: 3.1.7;
+`,
+	skipResults : `Name: Twenty Fifteen
+
+PHP 5.5 compatible.
+
+Name: Really Big Plugin
+
+The plugin/theme was skipped as it was too large to scan before the server killed the process.
+
 `,
 	failResults: `Name: wp-bootstrap
 
