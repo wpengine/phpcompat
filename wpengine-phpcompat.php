@@ -253,13 +253,13 @@ class WPEngine_PHPCompat {
 
 		<!-- Results template -->
 		<script id="result-template" type="text/x-handlebars-template">
-			<div style="border-left-color: {{#if passed}}#038103{{else}}#e74c3c{{/if}};" class="wpe-results-card">
+			<div style="border-left-color: {{#if skipped}}#999999{{else if passed}}#038103{{else}}#e74c3c{{/if}};" class="wpe-results-card">
 				<div class="inner-left">
-					{{#if passed}}<img src="<?php echo esc_url( plugins_url( '/src/images/check.png', __FILE__ ) ); ?>">{{else}}<img src="<?php echo esc_url( plugins_url( '/src/images/x.png', __FILE__ ) ); ?>">{{/if}}
+					{{#if skipped}}<img src="<?php echo esc_url( plugins_url( '/src/images/question.png', __FILE__ ) ); ?>">{{else if passed}}<img src="<?php echo esc_url( plugins_url( '/src/images/check.png', __FILE__ ) ); ?>">{{else}}<img src="<?php echo esc_url( plugins_url( '/src/images/x.png', __FILE__ ) ); ?>">{{/if}}
 				</div>
 				<div class="inner-right">
 					<h3 style="margin: 0px;">{{plugin_name}}</h3>
-					{{#if passed}}PHP {{test_version}} compatible.{{else}}<b>Not</b> PHP {{test_version}} compatible.{{/if}}<br>
+					{{#if skipped}}Unknown{{else if passed}}PHP {{test_version}} compatible.{{else}}<b>Not</b> PHP {{test_version}} compatible.{{/if}}<br>
 					{{update}}<br>
 					<textarea style="display: none; white-space: pre;">{{logs}}</textarea><a class="view-details">view details</a>
 				</div>
