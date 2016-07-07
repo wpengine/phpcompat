@@ -73,21 +73,23 @@ class WPEngine_PHPCompat {
 	 * @return null
 	 */
 	function start_test() {
-		global $wpdb;
+		if ( current_user_can( 'edit_posts' ) ) {
+			global $wpdb;
 
-		$wpephpc = new \WPEPHPCompat( __DIR__ );
+			$wpephpc = new \WPEPHPCompat( __DIR__ );
 
-		if ( isset( $_POST['startScan'] ) ) {
-			$test_version = sanitize_text_field( $_POST['test_version'] );
-			$only_active = sanitize_text_field( $_POST['only_active'] );
+			if ( isset( $_POST['startScan'] ) ) {
+				$test_version = sanitize_text_field( $_POST['test_version'] );
+				$only_active = sanitize_text_field( $_POST['only_active'] );
 
-			$wpephpc->test_version = $test_version;
-			$wpephpc->only_active = $only_active;
-			$wpephpc->clean_after_scan();
+				$wpephpc->test_version = $test_version;
+				$wpephpc->only_active = $only_active;
+				$wpephpc->clean_after_scan();
+			}
+
+			$wpephpc->start_test();
+			wp_die();
 		}
-
-		$wpephpc->start_test();
-		wp_die();
 	}
 
 	/**
@@ -99,33 +101,34 @@ class WPEngine_PHPCompat {
 	 * @return null
 	 */
 	function check_status() {
-		$scan_status = get_option( 'wpephpcompat.status' );
-		$count_jobs = wp_count_posts( 'wpephpcompat_jobs' );
-		$total_jobs = get_option( 'wpephpcompat.numdirs' );
+		if ( current_user_can( 'edit_posts' ) ) {
+			$scan_status = get_option( 'wpephpcompat.status' );
+			$count_jobs = wp_count_posts( 'wpephpcompat_jobs' );
+			$total_jobs = get_option( 'wpephpcompat.numdirs' );
 
-		$to_encode = array(
-			'status'   => $scan_status,
-			'count'    => $count_jobs->publish,
-			'total'    => $total_jobs,
-			'progress' => 100 - ( ( $count_jobs->publish / $total_jobs ) * 100 )
-		);
+			$to_encode = array(
+				'status'   => $scan_status,
+				'count'    => $count_jobs->publish,
+				'total'    => $total_jobs,
+				'progress' => 100 - ( ( $count_jobs->publish / $total_jobs ) * 100 )
+			);
 
-		// If the scan is still running.
-		if ( $scan_status ) {
-			$to_encode['results'] = '0';
-		} else {
-			// Else return the results and clean up!
-			$scan_results = get_option( 'wpephpcompat.scan_results' );
-			// Not using esc_html since the results are shown in a textarea.
-			$to_encode['results'] = $scan_results;
+			// If the scan is still running.
+			if ( $scan_status ) {
+				$to_encode['results'] = '0';
+			} else {
+				// Else return the results and clean up!
+				$scan_results = get_option( 'wpephpcompat.scan_results' );
+				// Not using esc_html since the results are shown in a textarea.
+				$to_encode['results'] = $scan_results;
 
-			$wpephpc = new \WPEPHPCompat( __DIR__ );
-			$wpephpc->clean_after_scan();
+				$wpephpc = new \WPEPHPCompat( __DIR__ );
+				$wpephpc->clean_after_scan();
+			}
+
+			echo json_encode( $to_encode );
+			wp_die();
 		}
-
-		echo json_encode( $to_encode );
-		wp_die();
-
 	}
 
 	/**
