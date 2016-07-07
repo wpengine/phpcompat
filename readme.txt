@@ -21,7 +21,7 @@ This plugin will lint theme and plugin code inside your WordPress file system an
 
 = Update to PHP 7 =
 * Use this plugin to check your site for compatibility for PHP 7! 
-* As of July 2016, 60.2% of WordPress websites run a PHP version less PHP 5.5.
+* As of July 2016, 59.3% of WordPress websites run a PHP version less PHP 5.5.
 * These versions of PHP have been deprecated and unsupported for over 9 months.
 * Only 1.8% of WordPress websites run PHP 7, the current main version of PHP. 
 
