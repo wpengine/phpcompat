@@ -410,7 +410,7 @@ class WPEPHPCompat {
 	*/
 	private function close_connection( $body ) {
 		ignore_user_abort( true );
-		ob_end_clean();
+		if (ob_get_length()) ob_end_clean();
 		// Start buffering.
 		ob_start();
 		// Echo our response.
