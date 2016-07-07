@@ -122,6 +122,3 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 - Changed the UI colors to better understand output at a glance
 - Exclude checking node_modules and tmp directories 
 - Fixed issue where a child theme's parent wasn't correctly checked
-
-Did you find this plugin useful? Leave us a review:
-https://wordpress.org/support/view/plugin-reviews/php-compatibility-checker
