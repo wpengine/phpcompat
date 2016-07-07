@@ -209,7 +209,7 @@ class WPEPHPCompat {
 		$this->values['standard']    = 'PHPCompatibility';
 		$this->values['reportWidth'] = '9999';
 		$this->values['extensions']  = array( 'php' );
-		$this->values['ignored'] = array( '*/tests/*', '*/jetpack/modules/*' );
+		$this->values['ignored'] = array( '*/tests/*', '*/jetpack/modules/*', '*/node_modules/*', '*/tmp/*' );
 
 		PHP_CodeSniffer::setConfigData( 'testVersion', $this->test_version, true );
 
