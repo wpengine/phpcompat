@@ -297,6 +297,15 @@ class WPEPHPCompat {
 
 			$this->add_directory( $all_themes[$k]->Name, $theme_path );
 		}
+		
+		// Add parent theme if the current theme is a child theme.
+		if ( 'yes' === $this->only_active && is_child_theme() ) {
+			$parent_theme_path = get_template_directory();
+			$theme_data        = wp_get_theme();
+			$parent_theme_name = $theme_data->parent()->Name;
+		
+			$this->add_directory( $parent_theme_name, $parent_theme_path );
+		}
 	}
 
 	/**
