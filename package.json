@@ -1,0 +1,7 @@
+{
+  "name": "php-compatibility-checker",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-wp-readme-to-markdown": "^2.0.0"
+  }
+}
