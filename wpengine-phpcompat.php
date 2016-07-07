@@ -267,7 +267,7 @@ class WPEngine_PHPCompat {
 					<textarea style="display: none; white-space: pre;">{{logs}}</textarea><a class="view-details">view details</a>
 				</div>
 				<?php $update_url = site_url( 'wp-admin/update-core.php' , 'admin' ); ?>
-				<div style="float:right;">{{#if updateAvailable}}<div class="badge wpe-update"><a href="<?php echo esc_url( $update_url ); ?>">Update Available</a></div>{{/if}}<div class="badge warnings">{{warnings}} Warnings</div><div class="badge errors">{{errors}} Errors</div></div>
+				<div style="float:right;">{{#if updateAvailable}}<div class="badge wpe-update"><a href="<?php echo esc_url( $update_url ); ?>">Update Available</a></div>{{/if}}{{#if warnings}}<div class="badge warnings">{{warnings}} Warnings</div>{{/if}}{{#if errors}}<div class="badge errors">{{errors}} Errors</div>{{/if}}</div>
 			</div>
 		</script>
 		<?php
