@@ -4,7 +4,7 @@ require_once( __DIR__ . '/../vendor/autoload.php' );
 /**
  * PHPCompat WP-CLI command.
  *
- * Description.
+ * Test compatibility with different PHP versions.
  *
  * @since 1.0.0
  */
@@ -13,31 +13,18 @@ class PHPCompat_Command extends WP_CLI_Command {
 	/**
 	 * Test compatibility with different PHP versions.
 	 *
-	 * ## OPTIONS
-	 *
-	 * <version>
-	 * : PHP version to test.
-	 *
-	 * [--scan=<scan>]
-	 * : Whether to scan only active plugins and themes or all of them.
-	 * ---
-	 * default: active
-	 * options:
-	 *   - active
-	 *   - all
-	 * ---
-	 *
 	 * ## EXAMPLES
 	 *
 	 *     wp phpcompat 5.5 --scan=active
-	 *
 	 */
 	function __invoke( $args, $assoc_args ) {
 
 		// Get the PHP test version.
 		$test_version = $args[0];
 
-		WP_CLI::line( 'Testing compatibility with PHP ' . $test_version . '.' );
+		WP_CLI::log( 'Testing compatibility with PHP ' . $test_version . '.' );
+		// Add empty line.
+		WP_CLI::log( '' );
 
 		$root_dir = realpath( __DIR__ . '/../' );
 
@@ -54,7 +41,7 @@ class PHPCompat_Command extends WP_CLI_Command {
 
 		$results = $wpephpc->start_test();
 
-		echo esc_html( $results );
+		WP_CLI::log( $results );
 
 		$wpephpc->clean_after_scan();
 
@@ -67,4 +54,25 @@ class PHPCompat_Command extends WP_CLI_Command {
 	}
 }
 
-WP_CLI::add_command( 'phpcompat', 'PHPCompat_Command' );
+/**
+ *  Using this for now since there are issues with the PHPDoc syntax.
+ *  TODO: Use PHPDoc syntax.
+ */
+WP_CLI::add_command( 'phpcompat', 'PHPCompat_Command', array(
+	'shortdesc' => 'Test compatibility with different PHP versions.',
+	'synopsis' => array(
+		array(
+			'type'     => 'positional',
+			'name'     => 'version',
+			'optional' => false,
+			'multiple' => false,
+		),
+		array(
+			'type'     => 'assoc',
+			'name'     => 'scan',
+			'optional' => true,
+			'default'  => 'active',
+			'options'  => array( 'active', 'all' ),
+		),
+	)
+));
