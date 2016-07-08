@@ -73,7 +73,7 @@ class WPEngine_PHPCompat {
 	 * @return null
 	 */
 	function start_test() {
-		if ( current_user_can( 'manage_options' ) ) {
+		if ( current_user_can( 'manage_options' ) || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
 			global $wpdb;
 
 			$wpephpc = new \WPEPHPCompat( __DIR__ );
@@ -101,7 +101,7 @@ class WPEngine_PHPCompat {
 	 * @return null
 	 */
 	function check_status() {
-		if ( current_user_can( 'manage_options' ) ) {
+		if ( current_user_can( 'manage_options' ) || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
 			$scan_status = get_option( 'wpephpcompat.status' );
 			$count_jobs = wp_count_posts( 'wpephpcompat_jobs' );
 			$total_jobs = get_option( 'wpephpcompat.numdirs' );
