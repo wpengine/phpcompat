@@ -187,7 +187,7 @@ class WPEngine_PHPCompat {
 	 */
 	function create_menu() {
 		// Create Tools sub-menu.
-		$this->page = add_submenu_page( 'tools.php', 'PHP Compatibility', 'PHP Compatibility', 'administrator', __FILE__, array( self::instance(), 'settings_page' ) );
+		$this->page = add_submenu_page( 'tools.php', 'PHP Compatibility', 'PHP Compatibility', 'manage_options', __FILE__, array( self::instance(), 'settings_page' ) );
 	}
 
 	/**
