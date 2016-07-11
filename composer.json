@@ -1,5 +1,6 @@
 {
 	"name": "wpengine/phpcompat",
+	"type": "wordpress-plugin",
 	"description": "Test PHP Compatibility.",
 	"authors": [{
 		"name": "Jason Stallings",
