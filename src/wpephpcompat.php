@@ -58,6 +58,20 @@ class WPEPHPCompat {
 	public $base = null;
 
 	/**
+	 *  Array of "directory name" => "latest PHP version it's compatible with".
+	 *
+	 *  @todo Using the directory name is brittle, we shouldn't use it.
+	 *  @since 1.0.3
+	 *  @var array
+	 */
+	public $whitelist = array(
+		'*/jetpack/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#jetpack
+		'*/wordfence/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#wordfence-security
+		'*/woocommerce/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#woocommerce
+		'*/wp-migrate-db/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#wp-migrate-db
+	);
+
+	/**
 	 * @param string $dir Base plugin directory.
 	 */
 	function __construct( $dir ) {
@@ -209,7 +223,9 @@ class WPEPHPCompat {
 		$this->values['standard']    = 'PHPCompatibility';
 		$this->values['reportWidth'] = '9999';
 		$this->values['extensions']  = array( 'php' );
-		$this->values['ignored'] = array( '*/tests/*', '*/jetpack/modules/*', '*/node_modules/*', '*/tmp/*' );
+
+		// Whitelist.
+		$this->values['ignored'] = $this->generate_ignored_list();
 
 		PHP_CodeSniffer::setConfigData( 'testVersion', $this->test_version, true );
 
@@ -220,6 +236,30 @@ class WPEPHPCompat {
 		$report = ob_get_clean();
 
 		return $this->clean_report( $report );
+	}
+	
+	/**
+	 * Generate a list of ignored files and directories.
+	 *
+	 * @since 1.0.3
+	 * @return array An array containing files and directories that should be ignored.
+	 */
+	public function generate_ignored_list() {
+		// Default ignored list.
+		$ignored = array(
+			'*/tests/*', // No reason to scan tests.
+			'*/node_modules/*', // Commonly used for development but not in production.
+			'*/tmp/*', // Temporary files.
+		);
+		
+		foreach ( $this->whitelist as $plugin => $version ) {
+			// Check to see if the plugin is compatible with the tested version.
+			if ( version_compare( $this->test_version, $version, '<=' ) ) {
+				array_push( $ignored, $plugin );
+			}
+		}
+		
+		return $ignored;
 	}
 
 	/**
