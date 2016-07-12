@@ -156,3 +156,36 @@ QUnit.test( 'Test checkStatus done', function( assert ) {
 
 	checkStatus();
 });
+
+QUnit.test( 'Test checkStatus fail JSON.parse', function( assert ) {
+	var done = assert.async();
+	var fixture = $( '#qunit-fixture' );
+	fixture.append( '<div id="wpe-progress"><div id="wpe-progress-count"></div></div>' );
+
+	ajaxurl = '/checkStatus/fail/json/';
+	var callCount = 0;
+	var alertText;
+	// Stub alert and keep track of the call count.
+	var oldAlert = window.alert;
+	window.alert = function (text) { callCount++; alertText = text; };
+	$.mockjax({
+		url: ajaxurl,
+		responseTime: 0,
+		responseText: '"status":"1","count":"17","total":"17","progress":100,"results":"done"}', // Broken JSON.
+		data: function (response) {
+			assert.ok( 'wpephpcompat_check_status' === response.action, 'Correct action called.' );
+			return true;
+		},
+		onAfterComplete: function() {
+			assert.ok(  $('#wpe-progress').is(':visible'), 'Progress div is visible.' );
+			// Ensure that an alert was popped with the JSON SyntaxError.
+			assert.ok( -1 !== alertText.toString().search( 'SyntaxError' ), 'Got JSON parse error in alert.' );
+			assert.ok( 1 === callCount, 'Alert was called.' );
+			clearTimeout( timer );
+			window.alert = oldAlert;
+			done();
+		}
+	});
+
+	checkStatus();
+});
