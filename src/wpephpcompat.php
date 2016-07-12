@@ -67,7 +67,8 @@ class WPEPHPCompat {
 	public $whitelist = array(
 		'*/jetpack/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#jetpack
 		'*/wordfence/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#wordfence-security
-		'*/woocommerce/*' => '7.0' // https://github.com/wpengine/phpcompat/wiki/Results#woocommerce
+		'*/woocommerce/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#woocommerce
+		'*/wp-migrate-db/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#wp-migrate-db
 	);
 
 	/**
