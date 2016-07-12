@@ -17,7 +17,7 @@ This plugin will lint theme and plugin code inside your WordPress file system an
 
 **This plugin does not execute your theme and plugin code, as such this plugin cannot detect runtime compatibility issues.**
 
-**Please note that linting code is not perfect. We are aware of a few infrequent false positives, we are continuously working to ensure the checker provides the most accurate results possible.**
+**Please note that linting code is not perfect. This plugin cannot detect unused codepaths that might be used for backwards compatibility, and thus might show false postiives. We maintain a [whitelist of plugins](https://github.com/wpengine/phpcompat/wiki/Results) that can cause false positives. We are continuously working to ensure the checker provides the most accurate results possible.**
 
 = Update to PHP 7 =
 * Use this plugin to check your site for compatibility for PHP 7! 
@@ -75,15 +75,19 @@ Example: `wp phpcompat 5.5 --scan=active`
 
     Yes, this plugin does extend WP-CLI and provide commands. See the [Other Notes](https://wordpress.org/plugins/php-compatibility-checker/other_notes/) tab for details.
 
-3. Can I use this to test non-WordPress PHP Projects? 
+3. A plugin I created is listed as not compatible, what should I do?
+
+    We maintain a [whitelist of plugins](https://github.com/wpengine/phpcompat/wiki/Results) that cause false positives. If your plugin shows up as incompatible but you think that is wrong, please open a [GitHub issue](https://github.com/wpengine/phpcompat/issues/new) on the project, or email wordpress@wpengine.com with info about your plugin and why you know it is compatbilite (you have automated tests, the failure is on backwards compatibility codepaths, etc). 
+
+4. Can I use this to test non-WordPress PHP Projects? 
   
     Yes! While you cannot use this WordPress plugin to test your non-WordPress projects, you can use the [Open Source PHPCompatibility Library](https://github.com/wimg/PHPCompatibility) that this plugin is built on.
 
-4. Why was my plugin/theme skipped?
+5. Why was my plugin/theme skipped?
 
     Some servers have timeouts to prevent long running queries, this is commonly 60 seconds. This can prevent the checker from being able to process large themes or plugins. You should check with your host to see if this timeout can be temporarily removed. The best way around this timeout issues is to run this plugin on a [local copy](https://make.wordpress.org/core/handbook/tutorials/installing-a-local-server/) of your site. 
 
-5. I found a bug, or have a suggestion, can I contribute back? 
+6. I found a bug, or have a suggestion, can I contribute back? 
 
     Yes! WP Engine has a public GitHub repo where you can contribute back to this plugin. Please open an issue on the [Plugin GitHub](https://github.com/wpengine/phpcompat). We actively develop this plugin, and are always happy to receive pull requests. 
 
