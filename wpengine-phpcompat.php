@@ -35,7 +35,7 @@ class WPEngine_PHPCompat {
 	 * @return self An instance of this class.
 	 */
 	public static function instance() {
-		if( ! self::$instance ) {
+		if ( ! self::$instance ) {
 			self::$instance = new self;
 			self::$instance->init();
 		}
@@ -106,11 +106,22 @@ class WPEngine_PHPCompat {
 			$count_jobs = wp_count_posts( 'wpephpcompat_jobs' );
 			$total_jobs = get_option( 'wpephpcompat.numdirs' );
 
+			$active_job = false;
+			$jobs = get_posts( array(
+				'posts_per_page'   => -1,
+				'post_type'        => 'wpephpcompat_jobs',
+			) );
+
+			if ( 0 < count( $jobs ) ) {
+				$active_job = $jobs[ 0 ]->post_title;
+			}
+
 			$to_encode = array(
-				'status'   => $scan_status,
-				'count'    => $count_jobs->publish,
-				'total'    => $total_jobs,
-				'progress' => 100 - ( ( $count_jobs->publish / $total_jobs ) * 100 )
+				'status'    => $scan_status,
+				'count'     => $count_jobs->publish,
+				'total'     => $total_jobs,
+				'progress'  => 100 - ( ( $count_jobs->publish / $total_jobs ) * 100 ),
+				'activeJob' => $active_job,
 			);
 
 			// If the scan is still running.
@@ -160,7 +171,7 @@ class WPEngine_PHPCompat {
 	function admin_enqueue( $hook ) {
 
 		// Only enqueue these assets on the settings page.
-		if( $this->page !== $hook ) {
+		if ( $this->page !== $hook ) {
 			return;
 		}
 
@@ -231,7 +242,7 @@ class WPEngine_PHPCompat {
 					<label for="">Progress</label>
 					<div id="progressbar"></div>
 					<div id="wpe-progress-count"></div>
-					<b>Please don't leave this page during the test.</b>
+					<div id="wpe-progress-active"></div>
 				</div>
 
 				<!-- Area for pretty results. -->
