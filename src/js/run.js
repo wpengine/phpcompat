@@ -135,6 +135,9 @@ function displayReport( response ) {
 	var warningRegex = /(\d*) WARNINGS?/g;
 	var updateVersionRegex = /e: (.*?);/g;
 	var currentVersionRegex = /n: (.*?);/g;
+	// Grab and compile our template.
+	var source = $( '#result-template' ).html();
+	var template = Handlebars.compile( source );
 	$( '#runButton' ).removeClass( 'button-primary-disabled' );
 	$( '.spinner' ).hide();
 	$( '#testResults' ).text( response );
@@ -174,8 +177,6 @@ function displayReport( response ) {
 			skipped = 1;
 		}
 		// Use handlebars to build our template.
-		var source = $( '#result-template' ).html();
-		var template = Handlebars.compile( source );
 		var context = {
 			plugin_name: name,
 			warnings: warnings,
