@@ -167,11 +167,6 @@ function displayReport( response ) {
 	var updateVersionRegex = /e: (.*?);/g;
 	var currentVersionRegex = /n: (.*?);/g;
 
-	/*
-	$( '#runButton' ).removeClass( 'button-primary-disabled' );
-	$( '#runButton' ).val( 'Re-run' );
-	$( '.spinner' ).hide();
-*/
 	$( '#testResults' ).text( response );
 	$( '#footer' ).show();
 
