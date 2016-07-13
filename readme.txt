@@ -3,7 +3,7 @@ Contributors: wpengine, octalmage, stevenkword, taylor4484
 Tags: php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine
 Requires at least: 3.0.1
 Tested up to: 4.5
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,7 +77,7 @@ Example: `wp phpcompat 5.5 --scan=active`
 
 3. A plugin I created is listed as not compatible, what should I do?
 
-    We maintain a [whitelist of plugins](https://github.com/wpengine/phpcompat/wiki/Results) that cause false positives. If your plugin shows up as incompatible but you think that is wrong, please open a [GitHub issue](https://github.com/wpengine/phpcompat/issues/new) on the project, or email wordpress@wpengine.com with info about your plugin and why you know it is compatbilite (you have automated tests, the failure is on backwards compatibility codepaths, etc). 
+    We maintain a [whitelist of plugins](https://github.com/wpengine/phpcompat/wiki/Results) that cause false positives. If your plugin shows up as incompatible but you think that is wrong, please open a [GitHub issue](https://github.com/wpengine/phpcompat/issues/new) on the project, or email wordpress@wpengine.com with info about your plugin and why you know it is compatible (you have automated tests, the failure is on backwards compatibility codepaths, etc). 
 
 4. Can I use this to test non-WordPress PHP Projects? 
   
@@ -102,6 +102,10 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 == Changelog ==
 
+= 1.0.3 =
+- Fixed a bug in the WP-CLI command
+- Added a handful of PHP 7 compatible plugins to the whitelist
+
 = 1.0.2 =
 - Added additional role protections
 - Changed the UI colors to better understand output at a glance
@@ -124,8 +128,6 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 == Upgrade Notice ==
 
-= 1.0.2 =
-- Added additional role protections
-- Changed the UI colors to better understand output at a glance
-- Exclude checking node_modules and tmp directories 
-- Added support for child theme's parent theme
+= 1.0.3 =
+- Fixed a bug in the WP-CLI command
+- Added a handful of PHP 7 compatible plugins to the whitelist
