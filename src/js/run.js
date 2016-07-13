@@ -131,6 +131,8 @@ function displayReport( response ) {
 	resetDisplay();
 	var $ = jQuery;
 	var compatible = 1;
+	// Keep track of the number of failed plugins/themes.
+	var failedCount = 0;
 	var errorsRegex = /(\d*) ERRORS?/g;
 	var warningRegex = /(\d*) WARNINGS?/g;
 	var updateVersionRegex = /e: (.*?);/g;
@@ -170,6 +172,7 @@ function displayReport( response ) {
 		if ( parseInt( errors ) > 0 ) {
 			compatible = 0;
 			passed = 0;
+			failedCount++;
 		}
 		// Trim whitespace and newlines from report.
 		log = log.replace( /^\s+|\s+$/g, '' );
@@ -191,10 +194,14 @@ function displayReport( response ) {
 		var html = template( context );
 		$('#standardMode').append( html );
 	}
+
 	// Display global compatibility status.
 	if ( compatible ) {
 		$( '#standardMode' ).prepend( '<h3>Your WordPress install is PHP ' + test_version + ' compatible.</h3>' );
 	} else {
+		// Display scan stats.
+		$( '#standardMode' ).prepend( '<p>' + failedCount + ' out of ' + plugins.length + ' plugins/themes are not compatible.</p>' );
+		
 		$( '#standardMode' ).prepend( '<h3>Your WordPress install is not PHP ' + test_version + ' compatible.</h3>' );
 	}
 }
