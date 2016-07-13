@@ -145,11 +145,12 @@ function displayReport( response ) {
 	$( '#runButton' ).val( 'Re-run' );
 	// Separate plugins/themes.
 	var plugins = response.replace( /^\s+|\s+$/g, '' ).split( 'Name: ' );
+	
+	// Remove the first item, it's empty.
+	plugins.shift();
+	
 	// Loop through them.
 	for ( var x in plugins ) {
-		if ( '' === plugins[x].trim() ) {
-			continue;
-		}
 		var updateVersion;
 		var updateAvailable = 0;
 		var passed = 1;
