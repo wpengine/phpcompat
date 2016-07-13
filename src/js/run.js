@@ -3,6 +3,7 @@ var test_version, only_active, timer;
 
 jQuery( document ).ready(function($) {
 
+	// Check the status immediately to reflect if tests are running.
 	checkStatus();
 
 	$( '#developermode' ).change(function() {
@@ -78,6 +79,11 @@ function checkStatus() {
 			return;
 		}
 
+		/*
+		 * Status false: the test is not running and has not been run yet
+		 * Status 1: the test is currently running
+		 * Status 0: the test as completed but is not currently running
+		 */
 		if ( false === obj.status ) {
 			jQuery( '#runButton' ).val( 'Run' );
 		} else {
@@ -91,7 +97,6 @@ function checkStatus() {
 			jQuery( '#runButton' ).removeClass( 'button-primary-disabled' );
 			jQuery( '.spinner' ).hide();
 		}
-
 
 		if ( '0' !== obj.results ) {
 			if( false !== obj.results ) {
