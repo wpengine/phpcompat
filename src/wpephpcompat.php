@@ -88,27 +88,45 @@ class WPEPHPCompat {
 	public function start_test() {
 
 		$this->debug_log( 'startScan: ' . isset( $_POST['startScan'] ) );
-		// Try to lock.
-		$lock_result = add_option( 'wpephpcompat.lock', time(), '', 'no' );
-
-		$this->debug_log( 'lock: ' . $lock_result );
-
-		if ( ! $lock_result ) {
-			$lock_result = get_option( 'wpephpcompat.lock' );
-
-			// Bail if we were unable to create a lock, or if the existing lock is still valid.
-			if ( ! $lock_result || ( $lock_result > ( time() - MINUTE_IN_SECONDS ) ) ) {
-				$this->debug_log( 'Process already running (locked), returning.' );
-
-				$timestamp = wp_next_scheduled( 'wpephpcompat_start_test_cron' );
-
-				if ( $timestamp == false ) {
-					wp_schedule_single_event( time() + ( MINUTE_IN_SECONDS ), 'wpephpcompat_start_test_cron' );
+		
+		/**
+		* Filters the scan timeout.
+		*
+		* Lets you change the timeout of the scan. The value is how long the scan 
+		* runs before dying and picking back up on a cron. You can set $timeout to 
+		* 0 to disable the timeout and the cron.
+		*
+		* @since 1.0.4
+		*
+		* @param int $timeout The timeout in seconds.
+		*/
+		$timeout = apply_filters( 'wpephpcompat_scan_timeout', MINUTE_IN_SECONDS );
+		$this->debug_log( 'timeout: ' . $timeout );
+		
+		// No reason to lock if there's no timeout.
+		if ( 0 !== $timeout ) {
+			// Try to lock.
+			$lock_result = add_option( 'wpephpcompat.lock', time(), '', 'no' );
+			
+			$this->debug_log( 'lock: ' . $lock_result );
+			
+			if ( ! $lock_result ) {
+				$lock_result = get_option( 'wpephpcompat.lock' );
+				
+				// Bail if we were unable to create a lock, or if the existing lock is still valid.
+				if ( ! $lock_result || ( $lock_result > ( time() - $timeout ) ) ) {
+					$this->debug_log( 'Process already running (locked), returning.' );
+					
+					$timestamp = wp_next_scheduled( 'wpephpcompat_start_test_cron' );
+					
+					if ( $timestamp == false ) {
+						wp_schedule_single_event( time() + $timeout, 'wpephpcompat_start_test_cron' );
+					}
+					return;
 				}
-				return;
 			}
+			update_option( 'wpephpcompat.lock', time(), false );
 		}
-		update_option( 'wpephpcompat.lock', time(), false );
 
 		// Check to see if scan has already started.
 		$scan_status = get_option( 'wpephpcompat.status' );
@@ -145,15 +163,16 @@ class WPEPHPCompat {
 
 			return;
 		}
-
-		wp_schedule_single_event( time() + ( MINUTE_IN_SECONDS ), 'wpephpcompat_start_test_cron' );
+		if ( 0 !== $timeout ) {
+			wp_schedule_single_event( time() + $timeout, 'wpephpcompat_start_test_cron' );
+		}
 
 		if ( ! $this->is_command_line() ) {
 			// Close the connection to the browser.
 			$this->close_connection("started");
 
-			// Kill cron after a minute.
-			set_time_limit( 55 );
+			// Kill cron after a configurable timeout.
+			set_time_limit( ( $timeout > 5 ? $timeout - 5 : $timeout ) );
 		}
 
 		$scan_results = get_option( 'wpephpcompat.scan_results' );
