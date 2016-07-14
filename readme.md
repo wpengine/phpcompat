@@ -1,4 +1,4 @@
-# PHP Compatibility Checker # <a href="https://travis-ci.org/wpengine/phpcompat"><img src="https://travis-ci.org/wpengine/phpcompat.svg?branch=master"></a>
+# PHP Compatibility Checker <a href="https://travis-ci.org/wpengine/phpcompat"><img src="https://travis-ci.org/wpengine/phpcompat.svg?branch=master"></a>
 **Contributors:** [wpengine](https://profiles.wordpress.org/wpengine), [octalmage](https://profiles.wordpress.org/octalmage), [stevenkword](https://profiles.wordpress.org/stevenkword), [taylor4484](https://profiles.wordpress.org/taylor4484)  
 **Tags:** php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine  
 **Requires at least:** 3.0.1  

@@ -25,5 +25,5 @@ module.exports = function(grunt) {
 function addBuildStatus(readme) {
 	var buildImage = '<a href="https://travis-ci.org/wpengine/phpcompat"><img src="https://travis-ci.org/wpengine/phpcompat.svg?branch=master"></a>';
 	
-	return readme.replace(/# PHP Compatibility Checker #/, '# PHP Compatibility Checker # ' + buildImage);
+	return readme.replace(/# PHP Compatibility Checker #/, '# PHP Compatibility Checker ' + buildImage);
 }
