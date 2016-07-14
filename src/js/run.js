@@ -99,9 +99,10 @@ function checkStatus() {
 		}
 
 		if ( '0' !== obj.results ) {
-			if( false !== obj.results ) {
+			//if( false !== obj.results ) {
+				test_version = obj.version;
 				displayReport( obj.results );
-			}
+			//}
 			jQuery( '#wpe-progress' ).hide();
 		} else {
 			jQuery( '#progressbar' ).progressbar({

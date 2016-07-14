@@ -105,6 +105,7 @@ class WPEngine_PHPCompat {
 			$scan_status = get_option( 'wpephpcompat.status' );
 			$count_jobs = wp_count_posts( 'wpephpcompat_jobs' );
 			$total_jobs = get_option( 'wpephpcompat.numdirs' );
+			$test_version = get_option( 'wpephpcompat.test_version' );
 
 			$active_job = false;
 			$jobs = get_posts( array(
@@ -122,6 +123,7 @@ class WPEngine_PHPCompat {
 				'total'     => $total_jobs,
 				'progress'  => 100 - ( ( $count_jobs->publish / $total_jobs ) * 100 ),
 				'activeJob' => $active_job,
+				'version'   => $test_version,
 			);
 
 			// If the scan is still running.

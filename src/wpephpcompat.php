@@ -87,6 +87,9 @@ class WPEPHPCompat {
 	 */
 	public function start_test() {
 
+		delete_option( 'wpephpcompat.scan_results' );
+		//delete_option( 'wpephpcompat.test_version' );
+
 		$this->debug_log( 'startScan: ' . isset( $_POST['startScan'] ) );
 		// Try to lock.
 		$lock_result = add_option( 'wpephpcompat.lock', time(), '', 'no' );
@@ -163,7 +166,7 @@ class WPEPHPCompat {
 
 			// Add the plugin/theme name to the results.
 			$scan_results .= 'Name: ' . $directory->post_title . "\n\n";
-			
+
 			// Keep track of the number of times we've attempted to scan the plugin.
 			$count = get_post_meta( $directory->ID, 'count', true ) ?: 1;
 			$this->debug_log( 'Attempted scan count: ' . $count );
@@ -177,7 +180,7 @@ class WPEPHPCompat {
 				continue;
 			}
 
-			// Increment and save the count. 
+			// Increment and save the count.
 			$count++;
 			update_post_meta( $directory->ID, 'count', $count );
 
@@ -237,7 +240,7 @@ class WPEPHPCompat {
 
 		return $this->clean_report( $report );
 	}
-	
+
 	/**
 	 * Generate a list of ignored files and directories.
 	 *
@@ -251,14 +254,14 @@ class WPEPHPCompat {
 			'*/node_modules/*', // Commonly used for development but not in production.
 			'*/tmp/*', // Temporary files.
 		);
-		
+
 		foreach ( $this->whitelist as $plugin => $version ) {
 			// Check to see if the plugin is compatible with the tested version.
 			if ( version_compare( $this->test_version, $version, '<=' ) ) {
 				array_push( $ignored, $plugin );
 			}
 		}
-		
+
 		return $ignored;
 	}
 
@@ -337,13 +340,13 @@ class WPEPHPCompat {
 
 			$this->add_directory( $all_themes[$k]->Name, $theme_path );
 		}
-		
+
 		// Add parent theme if the current theme is a child theme.
 		if ( 'yes' === $this->only_active && is_child_theme() ) {
 			$parent_theme_path = get_template_directory();
 			$theme_data        = wp_get_theme();
 			$parent_theme_name = $theme_data->parent()->Name;
-		
+
 			$this->add_directory( $parent_theme_name, $parent_theme_path );
 		}
 	}
@@ -374,8 +377,8 @@ class WPEPHPCompat {
 		// Delete options created during the scan.
 		delete_option( 'wpephpcompat.lock' );
 		delete_option( 'wpephpcompat.status' );
-		delete_option( 'wpephpcompat.scan_results' );
-		delete_option( 'wpephpcompat.test_version' );
+		//delete_option( 'wpephpcompat.scan_results' );
+		//delete_option( 'wpephpcompat.test_version' );
 		delete_option( 'wpephpcompat.only_active' );
 		delete_option( 'wpephpcompat.numdirs' );
 
