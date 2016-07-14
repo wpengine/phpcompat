@@ -1,4 +1,8 @@
 /* jshint esversion: 6 */
+
+// No document.ready event.
+$.holdReady( true );
+
 QUnit.module( 'findAll' );
 
 QUnit.test( 'no matches', function( assert ) {
