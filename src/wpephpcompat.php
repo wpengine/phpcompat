@@ -87,9 +87,6 @@ class WPEPHPCompat {
 	 */
 	public function start_test() {
 
-		delete_option( 'wpephpcompat.scan_results' );
-		//delete_option( 'wpephpcompat.test_version' );
-
 		$this->debug_log( 'startScan: ' . isset( $_POST['startScan'] ) );
 		// Try to lock.
 		$lock_result = add_option( 'wpephpcompat.lock', time(), '', 'no' );
@@ -117,6 +114,9 @@ class WPEPHPCompat {
 		$scan_status = get_option( 'wpephpcompat.status' );
 		$this->debug_log( 'scan status: ' . $scan_status );
 		if ( ! $scan_status ) {
+
+			// Clear the previous results.
+			delete_option( 'wpephpcompat.scan_results' );
 
 			update_option( 'wpephpcompat.status', '1', false );
 			update_option( 'wpephpcompat.test_version', $this->test_version, false );
