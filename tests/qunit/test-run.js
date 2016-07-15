@@ -57,9 +57,9 @@ QUnit.test( 'Render test pass', function( assert ) {
 	assert.ok( $('#footer').is(':visible'), 'Footer is visible' );
 	assert.ok( ! $('#runButton').hasClass('button-primary-disabled'), "Run button isn't disabled" );
 	assert.ok( $('.wpe-results-card').length == 2, 'There are 2 results.' );
-	assert.ok( $('#standardMode').text().includes( 'Your WordPress install is PHP 5.5 compatible.' ), 'Test did pass.' );
+	assert.ok( $('#standardMode').text().indexOf( 'Your WordPress install is PHP 5.5 compatible.' ) !== -1, 'Test did pass.' );
 	assert.ok( '#038103' === helpers.rgb2hex( $( ".wpe-results-card" ).eq( 0 ).css( 'border-left-color' ) ), 'First plugin marked as passed.' );
-	assert.ok( ! $( '#standardMode' ).text().includes( '0 out of 2' ), 'No scan stats are shown.' );
+	assert.ok( $( '#standardMode' ).text().indexOf( '0 out of 2' ) === -1, 'No scan stats are shown.' );
 });
 
 QUnit.test( 'Render test fail', function( assert ) {
@@ -79,8 +79,8 @@ QUnit.test( 'Render test fail', function( assert ) {
 	assert.ok( $('#footer').is(':visible'), 'Footer is visible' );
 	assert.ok( ! $('#runButton').hasClass('button-primary-disabled'), "Run button isn't disabled" );
 	assert.ok( $('.wpe-results-card').length == 7, 'There are 7 results.' );
-	assert.ok( $('#standardMode').text().includes( 'Your WordPress install is not PHP 5.5 compatible.' ), 'Test did not pass.' );
-	assert.ok( $( '#standardMode' ).text().includes( '1 out of 7' ), 'Scan stats are correct' );
+	assert.ok( $('#standardMode').text().indexOf( 'Your WordPress install is not PHP 5.5 compatible.' ) !== -1, 'Test did not pass.' );
+	assert.ok( $( '#standardMode' ).text().indexOf( '1 out of 7' ) !== -1, 'Scan stats are correct' );
 });
 
 QUnit.test( 'Render test skip', function( assert ) {

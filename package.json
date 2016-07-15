@@ -2,6 +2,10 @@
   "name": "php-compatibility-checker",
   "devDependencies": {
     "grunt": "^1.0.1",
-    "grunt-wp-readme-to-markdown": "^2.0.0"
+    "grunt-wp-readme-to-markdown": "^2.0.0",
+    "node-qunit-phantomjs": "^1.4.0"
+  },
+  "scripts": {
+    "test": "node-qunit-phantomjs tests/qunit/index.html --verbose"
   }
 }
