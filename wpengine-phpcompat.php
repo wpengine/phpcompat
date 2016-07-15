@@ -212,8 +212,13 @@ class WPEngine_PHPCompat {
 	 * @return null
 	 */
 	function settings_page() {
+		// Discovers last options used.
 		$test_version = get_option( 'wpephpcompat.test_version' );
 		$only_active = get_option( 'wpephpcompat.only_active' );
+
+		// Assigns defaults for the scan if none are found in the database.
+		$test_version = ( false !== $test_version ) ? $test_version : '7.0';
+		$only_active = ( false !== $only_active ) ? $only_active : 'yes';
 		?>
 		<div class="wrap">
 			<div style="float: left;">
