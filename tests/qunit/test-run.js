@@ -124,7 +124,7 @@ QUnit.test( 'Test checkStatus progress', function( assert ) {
 			return true;
 		},
 		onAfterComplete: function() { // Check the results of checkStatus();
-			assert.ok( $( '#wpe-progress-count' ).text() === '16/17', 'Progress count is correct.' );
+			assert.ok( $( '#wpe-progress-count' ).text() === '17/17', 'Progress count is correct.' );
 			assert.ok( $( '#progressbar' ).progressbar( 'value' ) === 94.1176470588 , 'Progress bar is correct.' );
 
 			// Clear the next queued checkStatus call.
