@@ -88,12 +88,12 @@ class WPEPHPCompat {
 	public function start_test() {
 
 		$this->debug_log( 'startScan: ' . isset( $_POST['startScan'] ) );
-		
+
 		/**
 		* Filters the scan timeout.
 		*
-		* Lets you change the timeout of the scan. The value is how long the scan 
-		* runs before dying and picking back up on a cron. You can set $timeout to 
+		* Lets you change the timeout of the scan. The value is how long the scan
+		* runs before dying and picking back up on a cron. You can set $timeout to
 		* 0 to disable the timeout and the cron.
 		*
 		* @since 1.0.4
@@ -102,23 +102,23 @@ class WPEPHPCompat {
 		*/
 		$timeout = apply_filters( 'wpephpcompat_scan_timeout', MINUTE_IN_SECONDS );
 		$this->debug_log( 'timeout: ' . $timeout );
-		
+
 		// No reason to lock if there's no timeout.
 		if ( 0 !== $timeout ) {
 			// Try to lock.
 			$lock_result = add_option( 'wpephpcompat.lock', time(), '', 'no' );
-			
+
 			$this->debug_log( 'lock: ' . $lock_result );
-			
+
 			if ( ! $lock_result ) {
 				$lock_result = get_option( 'wpephpcompat.lock' );
-				
+
 				// Bail if we were unable to create a lock, or if the existing lock is still valid.
 				if ( ! $lock_result || ( $lock_result > ( time() - $timeout ) ) ) {
 					$this->debug_log( 'Process already running (locked), returning.' );
-					
+
 					$timestamp = wp_next_scheduled( 'wpephpcompat_start_test_cron' );
-					
+
 					if ( $timestamp == false ) {
 						wp_schedule_single_event( time() + $timeout, 'wpephpcompat_start_test_cron' );
 					}
@@ -132,6 +132,9 @@ class WPEPHPCompat {
 		$scan_status = get_option( 'wpephpcompat.status' );
 		$this->debug_log( 'scan status: ' . $scan_status );
 		if ( ! $scan_status ) {
+
+			// Clear the previous results.
+			delete_option( 'wpephpcompat.scan_results' );
 
 			update_option( 'wpephpcompat.status', '1', false );
 			update_option( 'wpephpcompat.test_version', $this->test_version, false );
@@ -182,7 +185,7 @@ class WPEPHPCompat {
 
 			// Add the plugin/theme name to the results.
 			$scan_results .= 'Name: ' . $directory->post_title . "\n\n";
-			
+
 			// Keep track of the number of times we've attempted to scan the plugin.
 			$count = get_post_meta( $directory->ID, 'count', true ) ?: 1;
 			$this->debug_log( 'Attempted scan count: ' . $count );
@@ -196,7 +199,7 @@ class WPEPHPCompat {
 				continue;
 			}
 
-			// Increment and save the count. 
+			// Increment and save the count.
 			$count++;
 			update_post_meta( $directory->ID, 'count', $count );
 
@@ -256,7 +259,7 @@ class WPEPHPCompat {
 
 		return $this->clean_report( $report );
 	}
-	
+
 	/**
 	 * Generate a list of ignored files and directories.
 	 *
@@ -270,14 +273,14 @@ class WPEPHPCompat {
 			'*/node_modules/*', // Commonly used for development but not in production.
 			'*/tmp/*', // Temporary files.
 		);
-		
+
 		foreach ( $this->whitelist as $plugin => $version ) {
 			// Check to see if the plugin is compatible with the tested version.
 			if ( version_compare( $this->test_version, $version, '<=' ) ) {
 				array_push( $ignored, $plugin );
 			}
 		}
-		
+
 		return $ignored;
 	}
 
@@ -356,13 +359,13 @@ class WPEPHPCompat {
 
 			$this->add_directory( $all_themes[$k]->Name, $theme_path );
 		}
-		
+
 		// Add parent theme if the current theme is a child theme.
 		if ( 'yes' === $this->only_active && is_child_theme() ) {
 			$parent_theme_path = get_template_directory();
 			$theme_data        = wp_get_theme();
 			$parent_theme_name = $theme_data->parent()->Name;
-		
+
 			$this->add_directory( $parent_theme_name, $parent_theme_path );
 		}
 	}
@@ -393,9 +396,6 @@ class WPEPHPCompat {
 		// Delete options created during the scan.
 		delete_option( 'wpephpcompat.lock' );
 		delete_option( 'wpephpcompat.status' );
-		delete_option( 'wpephpcompat.scan_results' );
-		delete_option( 'wpephpcompat.test_version' );
-		delete_option( 'wpephpcompat.only_active' );
 		delete_option( 'wpephpcompat.numdirs' );
 
 		// Clear scheduled cron.

@@ -35,7 +35,7 @@ class WPEngine_PHPCompat {
 	 * @return self An instance of this class.
 	 */
 	public static function instance() {
-		if( ! self::$instance ) {
+		if ( ! self::$instance ) {
 			self::$instance = new self;
 			self::$instance->init();
 		}
@@ -105,12 +105,27 @@ class WPEngine_PHPCompat {
 			$scan_status = get_option( 'wpephpcompat.status' );
 			$count_jobs = wp_count_posts( 'wpephpcompat_jobs' );
 			$total_jobs = get_option( 'wpephpcompat.numdirs' );
+			$test_version = get_option( 'wpephpcompat.test_version' );
+			$only_active = get_option( 'wpephpcompat.only_active' );
+
+			$active_job = false;
+			$jobs = get_posts( array(
+				'posts_per_page'   => -1,
+				'post_type'        => 'wpephpcompat_jobs',
+			) );
+
+			if ( 0 < count( $jobs ) ) {
+				$active_job = $jobs[ 0 ]->post_title;
+			}
 
 			$to_encode = array(
-				'status'   => $scan_status,
-				'count'    => $count_jobs->publish,
-				'total'    => $total_jobs,
-				'progress' => 100 - ( ( $count_jobs->publish / $total_jobs ) * 100 )
+				'status'     => $scan_status,
+				'count'      => $count_jobs->publish,
+				'total'      => $total_jobs,
+				'progress'   => 100 - ( ( $count_jobs->publish / $total_jobs ) * 100 ),
+				'activeJob'  => $active_job,
+				'version'    => $test_version,
+				'onlyActive' => $only_active,
 			);
 
 			// If the scan is still running.
@@ -160,7 +175,7 @@ class WPEngine_PHPCompat {
 	function admin_enqueue( $hook ) {
 
 		// Only enqueue these assets on the settings page.
-		if( $this->page !== $hook ) {
+		if ( $this->page !== $hook ) {
 			return;
 		}
 
@@ -197,6 +212,13 @@ class WPEngine_PHPCompat {
 	 * @return null
 	 */
 	function settings_page() {
+		// Discovers last options used.
+		$test_version = get_option( 'wpephpcompat.test_version' );
+		$only_active = get_option( 'wpephpcompat.only_active' );
+
+		// Assigns defaults for the scan if none are found in the database.
+		$test_version = ( false !== $test_version ) ? $test_version : '7.0';
+		$only_active = ( false !== $only_active ) ? $only_active : 'yes';
 		?>
 		<div class="wrap">
 			<div style="float: left;">
@@ -212,16 +234,16 @@ class WPEngine_PHPCompat {
 					<tr>
 						<th scope="row"><label for="phptest_version">PHP Version</label></th>
 						<td>
-							<label><input type="radio" name="phptest_version" value="7.0" checked="checked"> PHP 7.0</label><br>
-							<label><input type="radio" name="phptest_version" value="5.5"> PHP 5.5</label><br>
-							<label><input type="radio" name="phptest_version" value="5.4"> PHP 5.4</label><br>
-							<label><input type="radio" name="phptest_version" value="5.3"> PHP 5.3</label>
+							<label><input type="radio" name="phptest_version" value="7.0" <?php checked( $test_version, '7.0', true ); ?>> PHP 7.0</label><br>
+							<label><input type="radio" name="phptest_version" value="5.5" <?php checked( $test_version, '5.5', true ); ?>> PHP 5.5</label><br>
+							<label><input type="radio" name="phptest_version" value="5.4" <?php checked( $test_version, '5.4', true ); ?>> PHP 5.4</label><br>
+							<label><input type="radio" name="phptest_version" value="5.3" <?php checked( $test_version, '5.3', true ); ?>> PHP 5.3</label>
 						</td>
 					</tr>
 					<tr>
 						<th scope="row"><label for="active_plugins">Only Active</label></th>
-						<td><label><input type="radio" name="active_plugins" value="yes" checked="checked"> Only scan active plugins and themes</label><br>
-							<label><input type="radio" name="active_plugins" value="no"> Scan all plugins and themes</label>
+						<td><label><input type="radio" name="active_plugins" value="yes" <?php checked( $only_active, 'yes', true ); ?>> Only scan active plugins and themes</label><br>
+							<label><input type="radio" name="active_plugins" value="no" <?php checked( $only_active, 'no', true ); ?>> Scan all plugins and themes</label>
 						</td>
 					</tr>
 				</tbody>
@@ -231,7 +253,7 @@ class WPEngine_PHPCompat {
 					<label for="">Progress</label>
 					<div id="progressbar"></div>
 					<div id="wpe-progress-count"></div>
-					<b>Please don't leave this page during the test.</b>
+					<div id="wpe-progress-active"></div>
 				</div>
 
 				<!-- Area for pretty results. -->

@@ -3,6 +3,9 @@ var test_version, only_active, timer;
 
 jQuery( document ).ready(function($) {
 
+	// Check the status immediately to reflect if tests are running.
+	checkStatus();
+
 	$( '#developermode' ).change(function() {
 		if ( $(this).is( ':checked' ) ) {
 			$( '#developerMode' ).show();
@@ -75,16 +78,44 @@ function checkStatus() {
 			alert(e);
 			return;
 		}
+
+		/*
+		 * Status false: the test is not running and has not been run yet
+		 * Status 1: the test is currently running
+		 * Status 0: the test as completed but is not currently running
+		 */
+		if ( false === obj.results ) {
+			jQuery( '#runButton' ).val( 'Run' );
+		} else {
+			jQuery( '#runButton' ).val( 'Re-run' );
+		}
+
+		if ( '1' === obj.status ) {
+			jQuery( '#runButton' ).addClass( 'button-primary-disabled' );
+			jQuery( '.spinner' ).show();
+		} else {
+			jQuery( '#runButton' ).removeClass( 'button-primary-disabled' );
+			jQuery( '.spinner' ).hide();
+		}
+
 		if ( '0' !== obj.results ) {
-			displayReport( obj.results );
+			if( false !== obj.results ) {
+				test_version = obj.version;
+				displayReport( obj.results );
+			}
 			jQuery( '#wpe-progress' ).hide();
 		} else {
 			jQuery( '#progressbar' ).progressbar({
 				value: obj.progress
 			});
+			jQuery( '#wpe-progress' ).show();
 
 			// Display the current plugin count.
-			jQuery( '#wpe-progress-count' ).text( ( obj.total - obj.count ) + '/' + obj.total );
+			jQuery( '#wpe-progress-count' ).text( ( obj.total - obj.count + 1 ) + '/' + obj.total );
+
+			// Display the object being scanned.
+			jQuery( '#wpe-progress-active' ).text( obj.activeJob );
+
 			// Requeue the checkStatus call.
 			timer = setTimeout(function() {
 				checkStatus();
@@ -102,6 +133,7 @@ function resetDisplay() {
 	jQuery( '#testResults' ).text('');
 	jQuery( '#standardMode' ).html('');
 	jQuery( '#wpe-progress-count' ).text('');
+	jQuery( '#wpe-progress-active' ).text('');
 }
 /**
  * Loop through a string and count the total matches.
@@ -131,26 +163,27 @@ function displayReport( response ) {
 	resetDisplay();
 	var $ = jQuery;
 	var compatible = 1;
+
 	// Keep track of the number of failed plugins/themes.
 	var failedCount = 0;
 	var errorsRegex = /(\d*) ERRORS?/g;
 	var warningRegex = /(\d*) WARNINGS?/g;
 	var updateVersionRegex = /e: (.*?);/g;
 	var currentVersionRegex = /n: (.*?);/g;
+
 	// Grab and compile our template.
 	var source = $( '#result-template' ).html();
 	var template = Handlebars.compile( source );
-	$( '#runButton' ).removeClass( 'button-primary-disabled' );
-	$( '.spinner' ).hide();
+
 	$( '#testResults' ).text( response );
 	$( '#footer' ).show();
-	$( '#runButton' ).val( 'Re-run' );
+
 	// Separate plugins/themes.
 	var plugins = response.replace( /^\s+|\s+$/g, '' ).split( 'Name: ' );
-	
+
 	// Remove the first item, it's empty.
 	plugins.shift();
-	
+
 	// Loop through them.
 	for ( var x in plugins ) {
 		var updateVersion;
@@ -176,7 +209,7 @@ function displayReport( response ) {
 		}
 		// Trim whitespace and newlines from report.
 		log = log.replace( /^\s+|\s+$/g, '' );
-		
+
 		if ( log.search('skipped') !== -1 ) {
 			skipped = 1;
 		}
@@ -201,7 +234,7 @@ function displayReport( response ) {
 	} else {
 		// Display scan stats.
 		$( '#standardMode' ).prepend( '<p>' + failedCount + ' out of ' + plugins.length + ' plugins/themes are not compatible.</p>' );
-		
+
 		$( '#standardMode' ).prepend( '<h3>Your WordPress install is not PHP ' + test_version + ' compatible.</h3>' );
 	}
 }
