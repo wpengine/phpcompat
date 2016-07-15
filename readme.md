@@ -3,7 +3,7 @@
 **Tags:** php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine  
 **Requires at least:** 3.0.1  
 **Tested up to:** 4.5  
-**Stable tag:** 1.0.3  
+**Stable tag:** 1.1.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -41,7 +41,7 @@ To manually install:
 1. Upload `phpcompat` to the `/wpengine-wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
-You will find the plugin options in the WP Admin `Tools => PHP Compatibility` menu. Once you click `run` it will take a few minutes to conduct the test. While the test is running, you cannot navigate away from the page. 
+You will find the plugin options in the WP Admin `Tools => PHP Compatibility` menu. Once you click `run` it will take a few minutes to conduct the test. Feel free to navigate away from the page and check back later.
 
 There are WP-CLI commands available see the [Other Notes](https://wordpress.org/plugins/php-compatibility-checker/other_notes/) tab for details.
 
@@ -110,6 +110,11 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 ## Changelog ##
 
+### 1.1.0 ###
+- Test results now persist page reloads.
+- Failed tests will show an overview of the results.
+- The scan timeout is now configurable using a filter. See the FAQ for more details.
+
 ### 1.0.3 ###
 - Fixed a bug in the WP-CLI command
 - Added a handful of PHP 7 compatible plugins to the whitelist
@@ -136,6 +141,7 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 ## Upgrade Notice ##
 
-### 1.0.3 ###
-- Fixed a bug in the WP-CLI command
-- Added a handful of PHP 7 compatible plugins to the whitelist
+### 1.1.0 ###
+- Test results now persist page reloads.
+- Failed tests will show an overview of the results.
+- The scan timeout is now configurable using a filter. See the FAQ for more details.
