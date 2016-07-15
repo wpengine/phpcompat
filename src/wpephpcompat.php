@@ -396,7 +396,6 @@ class WPEPHPCompat {
 		// Delete options created during the scan.
 		delete_option( 'wpephpcompat.lock' );
 		delete_option( 'wpephpcompat.status' );
-		delete_option( 'wpephpcompat.only_active' );
 		delete_option( 'wpephpcompat.numdirs' );
 
 		// Clear scheduled cron.

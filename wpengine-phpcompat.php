@@ -106,6 +106,7 @@ class WPEngine_PHPCompat {
 			$count_jobs = wp_count_posts( 'wpephpcompat_jobs' );
 			$total_jobs = get_option( 'wpephpcompat.numdirs' );
 			$test_version = get_option( 'wpephpcompat.test_version' );
+			$only_active = get_option( 'wpephpcompat.only_active' );
 
 			$active_job = false;
 			$jobs = get_posts( array(
@@ -118,12 +119,13 @@ class WPEngine_PHPCompat {
 			}
 
 			$to_encode = array(
-				'status'    => $scan_status,
-				'count'     => $count_jobs->publish,
-				'total'     => $total_jobs,
-				'progress'  => 100 - ( ( $count_jobs->publish / $total_jobs ) * 100 ),
-				'activeJob' => $active_job,
-				'version'   => $test_version,
+				'status'     => $scan_status,
+				'count'      => $count_jobs->publish,
+				'total'      => $total_jobs,
+				'progress'   => 100 - ( ( $count_jobs->publish / $total_jobs ) * 100 ),
+				'activeJob'  => $active_job,
+				'version'    => $test_version,
+				'onlyActive' => $only_active,
 			);
 
 			// If the scan is still running.
@@ -210,6 +212,8 @@ class WPEngine_PHPCompat {
 	 * @return null
 	 */
 	function settings_page() {
+		$test_version = get_option( 'wpephpcompat.test_version' );
+		$only_active = get_option( 'wpephpcompat.only_active' );
 		?>
 		<div class="wrap">
 			<div style="float: left;">
@@ -225,16 +229,16 @@ class WPEngine_PHPCompat {
 					<tr>
 						<th scope="row"><label for="phptest_version">PHP Version</label></th>
 						<td>
-							<label><input type="radio" name="phptest_version" value="7.0" checked="checked"> PHP 7.0</label><br>
-							<label><input type="radio" name="phptest_version" value="5.5"> PHP 5.5</label><br>
-							<label><input type="radio" name="phptest_version" value="5.4"> PHP 5.4</label><br>
-							<label><input type="radio" name="phptest_version" value="5.3"> PHP 5.3</label>
+							<label><input type="radio" name="phptest_version" value="7.0" <?php checked( $test_version, '7.0', true ); ?>> PHP 7.0</label><br>
+							<label><input type="radio" name="phptest_version" value="5.5" <?php checked( $test_version, '5.5', true ); ?>> PHP 5.5</label><br>
+							<label><input type="radio" name="phptest_version" value="5.4" <?php checked( $test_version, '5.4', true ); ?>> PHP 5.4</label><br>
+							<label><input type="radio" name="phptest_version" value="5.3" <?php checked( $test_version, '5.3', true ); ?>> PHP 5.3</label>
 						</td>
 					</tr>
 					<tr>
 						<th scope="row"><label for="active_plugins">Only Active</label></th>
-						<td><label><input type="radio" name="active_plugins" value="yes" checked="checked"> Only scan active plugins and themes</label><br>
-							<label><input type="radio" name="active_plugins" value="no"> Scan all plugins and themes</label>
+						<td><label><input type="radio" name="active_plugins" value="yes" <?php checked( $only_active, 'yes', true ); ?>> Only scan active plugins and themes</label><br>
+							<label><input type="radio" name="active_plugins" value="no" <?php checked( $only_active, 'no', true ); ?>> Scan all plugins and themes</label>
 						</td>
 					</tr>
 				</tbody>
