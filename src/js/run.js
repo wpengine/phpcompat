@@ -75,7 +75,7 @@ function checkStatus() {
 			obj = JSON.parse( response );
 		} catch(e) {
 			// If response wasn't JSON something is wrong.
-			alert(e);
+			alert( "Error: " + e + "\nResponse: " + response );
 			return;
 		}
 
