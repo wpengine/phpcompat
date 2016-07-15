@@ -373,7 +373,7 @@ class WPEPHPCompat {
 	 * @param  string $report The full report.
 	 * @return string         The cleaned report.
 	 */
-	private function clean_report( $report ) {
+	public function clean_report( $report ) {
 		// Remove unnecessary overview.
 		$report = preg_replace ( '/Time:.+\n/si', '', $report );
 
