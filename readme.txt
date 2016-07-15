@@ -85,7 +85,11 @@ Example: `wp phpcompat 5.5 --scan=active`
 
 5. Why was my plugin/theme skipped?
 
-    Some servers have timeouts to prevent long running queries, this is commonly 60 seconds. This can prevent the checker from being able to process large themes or plugins. You should check with your host to see if this timeout can be temporarily removed. The best way around this timeout issues is to run this plugin on a [local copy](https://make.wordpress.org/core/handbook/tutorials/installing-a-local-server/) of your site. 
+    Some servers have timeouts to prevent long running queries, this is commonly 60 seconds. This can prevent the checker from being able to process large themes or plugins. You should check with your host to see if this timeout can be temporarily removed. The best way around this timeout issue is to run this plugin on a [local copy](https://make.wordpress.org/core/handbook/tutorials/installing-a-local-server/) of your site, or you can use the WP-CLI command. 
+    
+    You can use the filter `wpephpcompat_scan_timeout` to customize the scan timeout. See [this](https://gist.github.com/octalmage/07f26e0d1f25cea9a8ca92ebc67a3a14) for an example.
+    
+    Setting the timeout to 0 disables the cron/timeout.
 
 6. I found a bug, or have a suggestion, can I contribute back? 
 
