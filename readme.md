@@ -90,8 +90,14 @@ Example: `wp phpcompat 5.5 --scan=active`
     You can use the filter `wpephpcompat_scan_timeout` to customize the scan timeout. See [this](https://gist.github.com/octalmage/07f26e0d1f25cea9a8ca92ebc67a3a14) for an example.
     
     Setting the timeout to 0 disables the cron/timeout.
+    
+6. The scan is stuck, what can I do?
 
-6. I found a bug, or have a suggestion, can I contribute back? 
+    The PHP Compatibility Checker relies on WP-Cron to process plugins/themes in batches, this is necessary to avoid server timeouts. The scan will get stuck if your site's WP-Cron isn't functioning. You can look into this using [WP Crontrol](https://wordpress.org/plugins/wp-crontrol/). The cron is called `wpephpcompat_start_test_cron`. 
+
+    You can also use the [WP-CLI command](https://wordpress.org/plugins/php-compatibility-checker/other_notes/) or disable the timeout to avoid using WP-Cron.
+
+7. I found a bug, or have a suggestion, can I contribute back?
 
     Yes! WP Engine has a public GitHub repo where you can contribute back to this plugin. Please open an issue on the [Plugin GitHub](https://github.com/wpengine/phpcompat). We actively develop this plugin, and are always happy to receive pull requests. 
 
