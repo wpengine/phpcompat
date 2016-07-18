@@ -122,7 +122,6 @@ class WPEngine_PHPCompat {
 				'status'     => $scan_status,
 				'count'      => $count_jobs->publish,
 				'total'      => $total_jobs,
-				'progress'   => 100 - ( ( $count_jobs->publish / $total_jobs ) * 100 ),
 				'activeJob'  => $active_job,
 				'version'    => $test_version,
 				'onlyActive' => $only_active,
@@ -131,6 +130,8 @@ class WPEngine_PHPCompat {
 			// If the scan is still running.
 			if ( $scan_status ) {
 				$to_encode['results'] = '0';
+				// Adding one because we don't remove an item until it's done processing.
+				$to_encode['progress']   = 100 - ( ( ( $count_jobs->publish + 1 ) / $total_jobs ) * 100 );
 			} else {
 				// Else return the results and clean up!
 				$scan_results = get_option( 'wpephpcompat.scan_results' );
