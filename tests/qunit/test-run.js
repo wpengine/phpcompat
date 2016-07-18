@@ -189,3 +189,32 @@ QUnit.test( 'Test checkStatus fail JSON.parse', function( assert ) {
 
 	checkStatus();
 });
+
+QUnit.module( 'fixJSONResponse' );
+
+QUnit.test( 'Test fixJSONResponse with errors.', function( assert ) {
+	assert.expect( 1 );
+	var json = '{"status":"1","count":"17","total":"17","progress":100,"results":"done"}';
+	var response = "Error: This is an error\n\n\n\n\r\r\tNotice: This is a notice\n\n\r" + json;
+	
+	try {
+		obj = JSON.parse( fixJSONResponse( response ) );
+		assert.strictEqual( typeof obj, 'object', 'Response was parsed.');
+	} catch(e) {
+		
+	}
+});
+
+QUnit.test( 'Test fixJSONResponse with no errors.', function( assert ) {
+	assert.expect( 2 );
+	var json = '{"status":"1","count":"17","total":"17","progress":100,"results":"done"}';
+	
+	try {
+		response = fixJSONResponse( json );
+		obj = JSON.parse( fixJSONResponse( response ) );
+		assert.strictEqual( typeof obj, 'object', 'Response was parsed.');
+		assert.strictEqual( json, response, 'Response is equal to json.');
+	} catch(e) {
+		
+	}
+});

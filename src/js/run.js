@@ -72,7 +72,7 @@ function checkStatus() {
 	var obj;
 	jQuery.post( ajaxurl, data, function( response ) {
 		try {
-			obj = JSON.parse( response );
+			obj = JSON.parse( fixJSONResponse( response ) );
 		} catch(e) {
 			// If response wasn't JSON something is wrong.
 			alert( "Error: " + e + "\nResponse: " + response );
@@ -237,4 +237,17 @@ function displayReport( response ) {
 
 		$( '#standardMode' ).prepend( '<h3>Your WordPress install is not PHP ' + test_version + ' compatible.</h3>' );
 	}
+}
+
+
+/**
+ * Strip elements from an Ajax call to help with JSON parsing.
+ *
+ * @param {string} string Ajax response to attempt to fix.
+ * @returns {string} Fixed Ajax response.
+ */
+function fixJSONResponse( response ) {
+	
+	// The goal here is to match anything before the opening {", and remove it.
+	return response.replace( /((.|\n|\r)+?){"/gm, "{\"" );
 }
