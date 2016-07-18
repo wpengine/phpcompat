@@ -110,8 +110,10 @@ class WPEngine_PHPCompat {
 
 			$active_job = false;
 			$jobs = get_posts( array(
-				'posts_per_page'   => -1,
-				'post_type'        => 'wpephpcompat_jobs',
+				'posts_per_page' => -1,
+				'post_type'      => 'wpephpcompat_jobs',
+				'orderby'        => 'title',
+				'order'          => 'ASC',
 			) );
 
 			if ( 0 < count( $jobs ) ) {
