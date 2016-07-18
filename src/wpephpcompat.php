@@ -155,7 +155,9 @@ class WPEPHPCompat {
 
 		$args = array(
 			'posts_per_page' => -1,
-			'post_type'      => 'wpephpcompat_jobs'
+			'post_type'      => 'wpephpcompat_jobs',
+			'orderby'        => 'title',
+			'order'          => 'ASC',
 		);
 		$directories = get_posts( $args );
 		$this->debug_log( count( $directories ) . ' plugins left to process.' );
