@@ -3,7 +3,7 @@ Contributors: wpengine, octalmage, stevenkword, taylor4484
 Tags: php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine
 Requires at least: 3.0.1
 Tested up to: 4.5
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -112,6 +112,10 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 == Changelog ==
 
+= 1.1.1 =
+- Fixed bug with active job display.
+- Updated progress bar calculation.
+
 = 1.1.0 =
 - Test results now persist page reloads.
 - Failed tests will show an overview of the results.
@@ -143,7 +147,6 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 == Upgrade Notice ==
 
-= 1.1.0 =
-- Test results now persist page reloads.
-- Failed tests will show an overview of the results.
-- The scan timeout is now configurable using a filter. See the FAQ for more details.
+= 1.1.1 =
+- Fixed bug with active job display.
+- Updated progress bar calculation.
