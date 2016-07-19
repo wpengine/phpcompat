@@ -177,7 +177,10 @@ class WPEPHPCompat {
 			// Close the connection to the browser.
 			$this->close_connection("started");
 
-			// Kill cron after a configurable timeout.
+			/**
+			 * Kill cron after a configurable timeout.
+			 * Subtract 5 from the timeout if we can to avoid race conditions.
+			 */
 			set_time_limit( ( $timeout > 5 ? $timeout - 5 : $timeout ) );
 		}
 
