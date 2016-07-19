@@ -40,7 +40,7 @@ class WPEPHPCompat {
 	public $test_version = null;
 
 	/**
-	 * Summary.
+	 * Scan only active plugins or all?
 	 *
 	 * @since 1.0.0
 	 * @access public
@@ -49,7 +49,7 @@ class WPEPHPCompat {
 	public $only_active = null;
 
 	/**
-	 * Summary.
+	 * The base directory for the plugin.
 	 *
 	 * @since 1.0.0
 	 * @access public
