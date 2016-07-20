@@ -230,7 +230,7 @@ class WPEngine_PHPCompat {
 				<input type="checkbox" id="developermode" name="developermode" value="yes">Developer mode
 			</div>
 			<br><br>
-			<h3 class="title">Scan Options</h3>
+			<h3 class="title clear">Scan Options</h3>
 			<table class="form-table">
 				<tbody>
 					<tr>
@@ -300,4 +300,3 @@ class WPEngine_PHPCompat {
 }
 // Register the WPEngine_PHPCompat instance
 WPEngine_PHPCompat::init();
-
