@@ -179,7 +179,7 @@ function displayReport( response ) {
 	$( '#footer' ).show();
 
 	// Separate plugins/themes.
-	var plugins = response.replace( /^\s+|\s+$/g, '' ).split( 'Name: ' );
+	var plugins = response.replace( /^\s+|\s+$/g, '' ).split( window.wpephpcompat.name + ':' );
 
 	// Remove the first item, it's empty.
 	plugins.shift();

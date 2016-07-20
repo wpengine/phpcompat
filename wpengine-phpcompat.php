@@ -193,6 +193,12 @@ class WPEngine_PHPCompat {
 		wp_enqueue_script( 'jquery-ui-progressbar' );
 		wp_enqueue_style( 'jquery-style', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
 
+		// i18n strings
+		$strings = array(
+			'name' => __( 'Name', 'php-compatibility-checker' )
+		);
+
+		wp_localize_script( 'wpephpcompat', 'wpephpcompat', $strings );
 	}
 
 	/**
@@ -224,17 +230,17 @@ class WPEngine_PHPCompat {
 		?>
 		<div class="wrap">
 			<div style="float: left;">
-				<h2>WP Engine PHP Compatibility Checker</h2>
+				<h2><?php esc_attr_e( 'WP Engine PHP Compatibility Checker', 'php-compatibility-checker' ); ?></h2>
 			</div>
 			<div style="float: right; margin-top: 10px; text-align: right;">
-				<input type="checkbox" id="developermode" name="developermode" value="yes">Developer mode
+				<input type="checkbox" id="developermode" name="developermode" value="yes" /><?php esc_attr_e( 'Developer mode', 'php-compatibility-checker' ); ?>
 			</div>
 			<br><br>
-			<h3 class="title clear">Scan Options</h3>
+			<h3 class="title clear"><?php esc_attr_e( 'Scan Options', 'php-compatibility-checker' ); ?></h3>
 			<table class="form-table">
 				<tbody>
 					<tr>
-						<th scope="row"><label for="phptest_version">PHP Version</label></th>
+						<th scope="row"><label for="phptest_version"><?php esc_attr_e( 'PHP Version', 'php-compatibility-checker' ); ?></label></th>
 						<td>
 							<label><input type="radio" name="phptest_version" value="7.0" <?php checked( $test_version, '7.0', true ); ?>> PHP 7.0</label><br>
 							<label><input type="radio" name="phptest_version" value="5.5" <?php checked( $test_version, '5.5', true ); ?>> PHP 5.5</label><br>
@@ -243,16 +249,16 @@ class WPEngine_PHPCompat {
 						</td>
 					</tr>
 					<tr>
-						<th scope="row"><label for="active_plugins">Only Active</label></th>
-						<td><label><input type="radio" name="active_plugins" value="yes" <?php checked( $only_active, 'yes', true ); ?>> Only scan active plugins and themes</label><br>
-							<label><input type="radio" name="active_plugins" value="no" <?php checked( $only_active, 'no', true ); ?>> Scan all plugins and themes</label>
+						<th scope="row"><label for="active_plugins"><?php esc_attr_e( 'Only Active', 'php-compatibility-checker' ); ?></label></th>
+						<td><label><input type="radio" name="active_plugins" value="yes" <?php checked( $only_active, 'yes', true ); ?> /> <?php esc_attr_e( 'Only scan active plugins and themes', 'php-compatibility-checker'); ?></label><br>
+							<label><input type="radio" name="active_plugins" value="no" <?php checked( $only_active, 'no', true ); ?> /> <?php esc_attr_e( 'Scan all plugins and themes', 'php-compatibility-checker' ); ?></label>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 			<p>
 				<div style="display: none;" id="wpe-progress">
-					<label for="">Progress</label>
+					<label for=""><?php esc_attr_e( 'Progress', 'php-compatibility-checker' ); ?></label>
 					<div id="progressbar"></div>
 					<div id="wpe-progress-count"></div>
 					<div id="wpe-progress-active"></div>
@@ -263,17 +269,17 @@ class WPEngine_PHPCompat {
 
 				<!-- Area for developer results. -->
 				<div style="display: none;" id="developerMode">
-					<b>Test Results:</b>
+					<b><?php esc_attr_e( 'Test Results:', 'php-compatibility-checker' ); ?></b>
 					<textarea readonly="readonly" id="testResults"></textarea>
 				</div>
 
 				<div id="footer" style="display: none;">
-					Note: Warnings are not currently an issue, but they could be in the future.<br>
-					<a id="downloadReport" href="#">Download Report</a>
+					<?php esc_attr_e( 'Note: Warnings are not currently an issue, but they could be in the future.', 'php-compatibility-checker' ); ?><br>
+					<a id="downloadReport" href="#"><?php esc_attr_e( 'Download Report', 'php-compatibility-checker' ); ?></a>
 				</div>
 			</p>
 			<p>
-				<input style="float: left;" name="run" id="runButton" type="button" value="Run" class="button-primary" />
+				<input style="float: left;" name="run" id="runButton" type="button" value="<?php esc_attr_e( 'Run', 'php-compatibility-checker' ); ?>" class="button-primary" />
 				<div style="display:none; visibility: visible; float: none;" class="spinner"></div>
 			</p>
 		</div>
@@ -286,12 +292,12 @@ class WPEngine_PHPCompat {
 				</div>
 				<div class="inner-right">
 					<h3 style="margin: 0px;">{{plugin_name}}</h3>
-					{{#if skipped}}Unknown{{else if passed}}PHP {{test_version}} compatible.{{else}}<b>Not</b> PHP {{test_version}} compatible.{{/if}}<br>
+					{{#if skipped}}<?php esc_attr_e( 'Unknown', 'php-compatibility-checker' ); ?>{{else if passed}}PHP {{test_version}} <?php esc_attr_e( 'compatible', 'php-compatibility-checker' ); ?>.{{else}}<b><?php esc_attr_e( 'Not', 'php-compatibility-checker' ); ?></b> PHP {{test_version}} <?php esc_attr_e( 'compatible', 'php-compatibility-checker' ); ?>.{{/if}}<br>
 					{{update}}<br>
-					<textarea style="display: none; white-space: pre;">{{logs}}</textarea><a class="view-details">view details</a>
+					<textarea style="display: none; white-space: pre;">{{logs}}</textarea><a class="view-details"><?php esc_attr_e( 'view details', 'php-compatibility-checker' ); ?></a>
 				</div>
 				<?php $update_url = site_url( 'wp-admin/update-core.php' , 'admin' ); ?>
-				<div style="float:right;">{{#if updateAvailable}}<div class="badge wpe-update"><a href="<?php echo esc_url( $update_url ); ?>">Update Available</a></div>{{/if}}{{#if warnings}}<div class="badge warnings">{{warnings}} Warnings</div>{{/if}}{{#if errors}}<div class="badge errors">{{errors}} Errors</div>{{/if}}</div>
+				<div style="float:right;">{{#if updateAvailable}}<div class="badge wpe-update"><a href="<?php echo esc_url( $update_url ); ?>"><?php esc_attr_e( 'Update Available', 'php-compatibility-checker' ); ?></a></div>{{/if}}{{#if warnings}}<div class="badge warnings">{{warnings}} Warnings</div>{{/if}}{{#if errors}}<div class="badge errors">{{errors}} <?php esc_attr_e( 'Errors', 'php-compatibility-checker' ); ?></div>{{/if}}</div>
 			</div>
 		</script>
 		<?php
