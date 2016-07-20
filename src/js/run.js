@@ -230,11 +230,11 @@ function displayReport( response ) {
 
 	// Display global compatibility status.
 	if ( compatible ) {
-		$( '#standardMode' ).prepend( '<h3>Your WordPress install is PHP ' + test_version + ' compatible.</h3>' );
+		$( '#standardMode' ).prepend( '<h3>Your WordPress install is PHP ' + test_version + ' ' + window.wpephpcompat.compatible + '.</h3>' );
 	} else {
 		// Display scan stats.
-		$( '#standardMode' ).prepend( '<p>' + failedCount + ' out of ' + plugins.length + ' plugins/themes are not compatible.</p>' );
+		$( '#standardMode' ).prepend( '<p>' + failedCount + ' ' + window.wpephpcompat.out_of + ' ' + plugins.length + ' ' + window.wpephpcompat.are_not + '.</p>' );
 
-		$( '#standardMode' ).prepend( '<h3>Your WordPress install is not PHP ' + test_version + ' compatible.</h3>' );
+		$( '#standardMode' ).prepend( '<h3>' + window.wpephpcompat.is_not + ' ' + test_version + ' ' + window.wpephpcompat.compatible + '.</h3>' );
 	}
 }

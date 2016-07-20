@@ -195,7 +195,11 @@ class WPEngine_PHPCompat {
 
 		// i18n strings
 		$strings = array(
-			'name' => __( 'Name', 'php-compatibility-checker' )
+			'name' => __( 'Name', 'php-compatibility-checker' ),
+			'compatible' => __( 'compatible', 'php-compatibility-checker' ),
+			'are_not' => __( 'plugins/themes are not compatible', 'php-compatibility-checker' ),
+			'is_not' => __( 'Your WordPress install is not PHP', 'php-compatibility-checker' ),
+			'out_of' => __( 'out of', 'php-compatibility-checker' ),
 		);
 
 		wp_localize_script( 'wpephpcompat', 'wpephpcompat', $strings );
