@@ -85,9 +85,9 @@ function checkStatus() {
 		 * Status 0: the test as completed but is not currently running
 		 */
 		if ( false === obj.results ) {
-			jQuery( '#runButton' ).val( 'Run' );
+			jQuery( '#runButton' ).val( window.wpephpcompat.run );
 		} else {
-			jQuery( '#runButton' ).val( 'Re-run' );
+			jQuery( '#runButton' ).val( window.wpephpcompat.rerun );
 		}
 
 		if ( '1' === obj.status ) {
