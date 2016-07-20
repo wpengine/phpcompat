@@ -92,3 +92,7 @@ var helpers = {
 '' +
 ''
 };
+/**
+ * Add our current translation strings as a window var
+ */
+window.wpephpcompat = {"name":"Name","compatible":"compatible","are_not":"plugins\/themes are not compatible","is_not":"Your WordPress install is not PHP","out_of":"out of","run":"Run","rerun":"Re-run"};
