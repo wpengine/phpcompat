@@ -193,13 +193,19 @@ class WPEngine_PHPCompat {
 		wp_enqueue_script( 'jquery-ui-progressbar' );
 		wp_enqueue_style( 'jquery-style', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
 
-		// i18n strings
+		/**
+		 * i18n strings
+		 *
+		 * These translated strings can be access in jquery with window.wpephpcompat object.
+		 */
 		$strings = array(
-			'name' => __( 'Name', 'php-compatibility-checker' ),
+			'name'       => __( 'Name', 'php-compatibility-checker' ),
 			'compatible' => __( 'compatible', 'php-compatibility-checker' ),
-			'are_not' => __( 'plugins/themes are not compatible', 'php-compatibility-checker' ),
-			'is_not' => __( 'Your WordPress install is not PHP', 'php-compatibility-checker' ),
-			'out_of' => __( 'out of', 'php-compatibility-checker' ),
+			'are_not'    => __( 'plugins/themes are not compatible', 'php-compatibility-checker' ),
+			'is_not'     => __( 'Your WordPress install is not PHP', 'php-compatibility-checker' ),
+			'out_of'     => __( 'out of', 'php-compatibility-checker' ),
+			'run'        => __( 'Run', 'php-compatibility-checker' ),
+			'rerun'      => __( 'Re-run', 'php-compatibility-checker' ),
 		);
 
 		wp_localize_script( 'wpephpcompat', 'wpephpcompat', $strings );
