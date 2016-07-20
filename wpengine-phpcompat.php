@@ -88,7 +88,7 @@ class WPEngine_PHPCompat {
 			}
 
 			$wpephpc->start_test();
-			wp_die();
+			exit();
 		}
 	}
 
@@ -144,7 +144,7 @@ class WPEngine_PHPCompat {
 			}
 
 			echo json_encode( $to_encode );
-			wp_die();
+			exit();
 		}
 	}
 
