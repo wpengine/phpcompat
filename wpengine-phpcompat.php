@@ -6,7 +6,8 @@ Description: Make sure your plugins and themes are compatible with newer PHP ver
 Author: WP Engine
 Version: 1.1.1
 Author URI: https://wpengine.com
- */
+Text Domain: php-compatibility-checker
+*/
 
 // Exit if this file is directly accessed
 if ( ! defined( 'ABSPATH' ) ) exit;
