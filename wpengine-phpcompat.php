@@ -207,6 +207,7 @@ class WPEngine_PHPCompat {
 			'out_of'     => __( 'out of', 'php-compatibility-checker' ),
 			'run'        => __( 'Run', 'php-compatibility-checker' ),
 			'rerun'      => __( 'Re-run', 'php-compatibility-checker' ),
+			'your_wp'    => __( 'Your WordPress install is', 'php-compatibility-checker' ),
 		);
 
 		wp_localize_script( 'wpephpcompat', 'wpephpcompat', $strings );
@@ -308,7 +309,7 @@ class WPEngine_PHPCompat {
 					<textarea style="display: none; white-space: pre;">{{logs}}</textarea><a class="view-details"><?php esc_attr_e( 'view details', 'php-compatibility-checker' ); ?></a>
 				</div>
 				<?php $update_url = site_url( 'wp-admin/update-core.php' , 'admin' ); ?>
-				<div style="float:right;">{{#if updateAvailable}}<div class="badge wpe-update"><a href="<?php echo esc_url( $update_url ); ?>"><?php esc_attr_e( 'Update Available', 'php-compatibility-checker' ); ?></a></div>{{/if}}{{#if warnings}}<div class="badge warnings">{{warnings}} Warnings</div>{{/if}}{{#if errors}}<div class="badge errors">{{errors}} <?php esc_attr_e( 'Errors', 'php-compatibility-checker' ); ?></div>{{/if}}</div>
+				<div style="float:right;">{{#if updateAvailable}}<div class="badge wpe-update"><a href="<?php echo esc_url( $update_url ); ?>"><?php esc_attr_e( 'Update Available', 'php-compatibility-checker' ); ?></a></div>{{/if}}{{#if warnings}}<div class="badge warnings">{{warnings}} <?php esc_attr_e( 'Warnings', 'php-compatibility-checker' ); ?></div>{{/if}}{{#if errors}}<div class="badge errors">{{errors}} <?php esc_attr_e( 'Errors', 'php-compatibility-checker' ); ?></div>{{/if}}</div>
 			</div>
 		</script>
 		<?php

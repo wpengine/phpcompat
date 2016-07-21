@@ -230,7 +230,7 @@ function displayReport( response ) {
 
 	// Display global compatibility status.
 	if ( compatible ) {
-		$( '#standardMode' ).prepend( '<h3>Your WordPress install is PHP ' + test_version + ' ' + window.wpephpcompat.compatible + '.</h3>' );
+		$( '#standardMode' ).prepend( '<h3>' + window.wpephpcompat.your_wp + ' PHP ' + test_version + ' ' + window.wpephpcompat.compatible + '.</h3>' );
 	} else {
 		// Display scan stats.
 		$( '#standardMode' ).prepend( '<p>' + failedCount + ' ' + window.wpephpcompat.out_of + ' ' + plugins.length + ' ' + window.wpephpcompat.are_not + '.</p>' );
