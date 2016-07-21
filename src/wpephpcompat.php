@@ -222,7 +222,7 @@ class WPEPHPCompat {
 
 			if ( ! empty( $update ) ) {
 				$version = get_post_meta( $directory->ID, 'version', true );
-				$scan_results .= __( 'Update Available: ', 'php-compatibility-checker' ) . $update . __( '; Current Version: ', 'php-compatibility-checker' ) . $version . ";\n";
+				$scan_results .= 'Update Available: ' . $update . '; Current Version: ' . $version . ";\n";
 			}
 
 			$scan_results .= "\n";
