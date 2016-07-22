@@ -142,9 +142,7 @@ class WPEngine_PHPCompat {
 				$wpephpc = new \WPEPHPCompat( __DIR__ );
 				$wpephpc->clean_after_scan();
 			}
-
-			echo json_encode( $to_encode );
-			wp_die();
+			wp_send_json( $to_encode );
 		}
 	}
 

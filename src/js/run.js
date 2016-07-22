@@ -70,15 +70,7 @@ function checkStatus() {
 	};
 
 	var obj;
-	jQuery.post( ajaxurl, data, function( response ) {
-		try {
-			obj = JSON.parse( response );
-		} catch(e) {
-			// If response wasn't JSON something is wrong.
-			alert( "Error: " + e + "\nResponse: " + response );
-			return;
-		}
-
+	jQuery.post( ajaxurl, data, function( obj ) {
 		/*
 		 * Status false: the test is not running and has not been run yet
 		 * Status 1: the test is currently running
@@ -120,6 +112,15 @@ function checkStatus() {
 			timer = setTimeout(function() {
 				checkStatus();
 			}, 5000);
+		}
+	}, 'json' ).fail(function ( xhr, status, error )
+	{
+		// Server responded correctly, but the response wasn't valid.
+		if ( 200 === xhr.status ) {
+			alert( "Error: " + error + "\nResponse: " + xhr.responseText );
+		} 
+		else { // Server didn't respond correctly.
+			alert( "Error: " + error + "\nStatus: " + xhr.status );
 		}
 	});
 }
