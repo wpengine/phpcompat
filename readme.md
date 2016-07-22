@@ -1,9 +1,9 @@
 # PHP Compatibility Checker <a href="https://travis-ci.org/wpengine/phpcompat"><img src="https://travis-ci.org/wpengine/phpcompat.svg?branch=master"></a>
-**Contributors:** [wpengine](https://profiles.wordpress.org/wpengine), [octalmage](https://profiles.wordpress.org/octalmage), [stevenkword](https://profiles.wordpress.org/stevenkword), [taylor4484](https://profiles.wordpress.org/taylor4484)  
+**Contributors:** [wpengine](https://profiles.wordpress.org/wpengine), [octalmage](https://profiles.wordpress.org/octalmage), [stevenkword](https://profiles.wordpress.org/stevenkword), [Taylor4484](https://profiles.wordpress.org/Taylor4484), [pross](https://profiles.wordpress.org/pross)  
 **Tags:** php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine  
-**Requires at least:** 3.0.1  
+**Requires at least:** 3.5  
 **Tested up to:** 4.5  
-**Stable tag:** 1.1.1  
+**Stable tag:** 1.1.2  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -116,6 +116,12 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 ## Changelog ##
 
+### 1.1.2 ###
+- Fixed issue with WordPress notices breaking the plugin header.
+- Changed the way we send and parse JSON.
+- You can now restart an in progress scan.
+- Updated download.js to v4.2 for better Safari compatibility.
+
 ### 1.1.1 ###
 - Fixed bug with active job display.
 - Updated progress bar calculation.
@@ -151,6 +157,8 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 ## Upgrade Notice ##
 
-### 1.1.1 ###
-- Fixed bug with active job display.
-- Updated progress bar calculation.
+### 1.1.2 ###
+- Fixed issue with WordPress notices breaking the plugin header.
+- Changed the way we send and parse JSON.
+- You can now restart an in progress scan.
+- Updated download.js to v4.2 for better Safari compatibility.
