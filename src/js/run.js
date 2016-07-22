@@ -30,14 +30,7 @@ jQuery( document ).ready(function($) {
 	$( '#runButton' ).on( 'click', function() {
 		// Unselect button so it's not highlighted.
 		$( '#runButton' ).blur();
-		// If run button is disabled, don't run test.
-		if ( $( '#runButton' ).hasClass( 'button-primary-disabled' ) ) {
-			alert( 'Scan is already running!' );
-			return;
-		}
 
-		// Disable run button.
-		$( '#runButton' ).addClass( 'button-primary-disabled' );
 		// Show the ajax spinner.
 		$( '.spinner' ).show();
 		// Empty the results textarea.
@@ -91,10 +84,8 @@ function checkStatus() {
 		}
 
 		if ( '1' === obj.status ) {
-			jQuery( '#runButton' ).addClass( 'button-primary-disabled' );
 			jQuery( '.spinner' ).show();
 		} else {
-			jQuery( '#runButton' ).removeClass( 'button-primary-disabled' );
 			jQuery( '.spinner' ).hide();
 		}
 
