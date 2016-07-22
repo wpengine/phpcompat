@@ -276,6 +276,7 @@ class WPEPHPCompat {
 		// Default ignored list.
 		$ignored = array(
 			'*/tests/*', // No reason to scan tests.
+			'*/test/*', // Another common test directory.
 			'*/node_modules/*', // Commonly used for development but not in production.
 			'*/tmp/*', // Temporary files.
 		);
