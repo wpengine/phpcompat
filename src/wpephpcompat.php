@@ -190,7 +190,7 @@ class WPEPHPCompat {
 			$this->debug_log( 'Processing: ' . $directory->post_title );
 
 			// Add the plugin/theme name to the results.
-			$scan_results .= __( 'Name: ', 'php-compatibility-checker' ) . $directory->post_title . "\n\n";
+			$scan_results .= __( 'Name', 'php-compatibility-checker' ) . ': ' . $directory->post_title . "\n\n";
 
 			// Keep track of the number of times we've attempted to scan the plugin.
 			$count = get_post_meta( $directory->ID, 'count', true ) ?: 1;
