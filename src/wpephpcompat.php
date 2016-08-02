@@ -190,14 +190,14 @@ class WPEPHPCompat {
 			$this->debug_log( 'Processing: ' . $directory->post_title );
 
 			// Add the plugin/theme name to the results.
-			$scan_results .= 'Name: ' . $directory->post_title . "\n\n";
+			$scan_results .= __( 'Name', 'php-compatibility-checker' ) . ': ' . $directory->post_title . "\n\n";
 
 			// Keep track of the number of times we've attempted to scan the plugin.
 			$count = get_post_meta( $directory->ID, 'count', true ) ?: 1;
 			$this->debug_log( 'Attempted scan count: ' . $count );
 
 			if ( $count > 2 ) { // If we've already tried twice, skip it.
-				$scan_results .= "The plugin/theme was skipped as it was too large to scan before the server killed the process.\n\n";
+				$scan_results .= __( "The plugin/theme was skipped as it was too large to scan before the server killed the process.", 'php-compatibility-checker' ) . "\n\n";
 				update_option( 'wpephpcompat.scan_results', $scan_results , false );
 				wp_delete_post( $directory->ID );
 				$count = 0;
@@ -213,7 +213,7 @@ class WPEPHPCompat {
 			$report = $this->process_file( $directory->post_content );
 
 			if ( ! $report ) {
-				$report = 'PHP ' . $this->test_version . ' compatible.';
+				$report = 'PHP ' . $this->test_version . __( ' compatible.', 'php-compatibility-checker' );
 			}
 
 			$scan_results .= $report . "\n";
