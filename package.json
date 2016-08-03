@@ -8,6 +8,6 @@
     "grunt-phplint": "0.0.8"
   },
   "scripts": {
-    "test": "node-qunit-phantomjs tests/qunit/index.html --verbose"
+    "test": "node-qunit-phantomjs tests/qunit/index.html --verbose && grunt"
   }
 }
