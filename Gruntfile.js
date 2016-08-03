@@ -1,5 +1,7 @@
+var phpPaths = ['wpengine-phpcompat.php', 'src/*.php'];
+
 module.exports = function(grunt) {
-	
+
 	grunt.initConfig({
 		wp_readme_to_markdown: {
 			options: {
@@ -12,18 +14,32 @@ module.exports = function(grunt) {
 				},
 			},
 		},
+		phplint: {
+			plugin: phpPaths
+		},
+		phpcs: {
+			plugin: {
+				src: phpPaths
+			},
+			options: {
+				bin: 'vendor/bin/phpcs',
+				standard: 'src/ruleset-wordpress.xml'
+			}
+		}
 	});
-	
+
 	grunt.loadNpmTasks('grunt-wp-readme-to-markdown');
-	
-	grunt.registerTask('default', [
-		'wp_readme_to_markdown'
-	]); 
+	grunt.loadNpmTasks('grunt-phplint');
+	grunt.loadNpmTasks('grunt-phpcs');
+
+	grunt.registerTask('default', ['phplint', 'phpcs']);
+
+	grunt.registerTask('readme', ['wp_readme_to_markdown']);
 };
 
 // Add build status image to GitHub readme.
 function addBuildStatus(readme) {
 	var buildImage = '<a href="https://travis-ci.org/wpengine/phpcompat"><img src="https://travis-ci.org/wpengine/phpcompat.svg?branch=master"></a>';
-	
+
 	return readme.replace(/# PHP Compatibility Checker #/, '# PHP Compatibility Checker ' + buildImage);
 }

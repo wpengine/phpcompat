@@ -1,8 +1,8 @@
 <?php
 // Exit if this file is directly accessed
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-require_once ( __DIR__ . '/../vendor/autoload.php' );
+require_once( __DIR__ . '/../vendor/autoload.php' );
 
 /**
  * Summary.
@@ -120,7 +120,7 @@ class WPEPHPCompat {
 
 					$timestamp = wp_next_scheduled( 'wpephpcompat_start_test_cron' );
 
-					if ( $timestamp == false ) {
+					if ( false == $timestamp ) {
 						wp_schedule_single_event( time() + $timeout, 'wpephpcompat_start_test_cron' );
 					}
 					return;
@@ -175,7 +175,7 @@ class WPEPHPCompat {
 
 		if ( ! $this->is_command_line() ) {
 			// Close the connection to the browser.
-			$this->close_connection("started");
+			$this->close_connection( 'started' );
 
 			/**
 			 * Kill cron after a configurable timeout.
@@ -197,7 +197,7 @@ class WPEPHPCompat {
 			$this->debug_log( 'Attempted scan count: ' . $count );
 
 			if ( $count > 2 ) { // If we've already tried twice, skip it.
-				$scan_results .= __( "The plugin/theme was skipped as it was too large to scan before the server killed the process.", 'php-compatibility-checker' ) . "\n\n";
+				$scan_results .= __( 'The plugin/theme was skipped as it was too large to scan before the server killed the process.', 'php-compatibility-checker' ) . "\n\n";
 				update_option( 'wpephpcompat.scan_results', $scan_results , false );
 				wp_delete_post( $directory->ID );
 				$count = 0;
@@ -311,12 +311,12 @@ class WPEPHPCompat {
 
 		foreach ( $all_plugins as $k => $v ) {
 			//Exclude our plugin.
-			if ( $v['Name'] === 'PHP Compatibility Checker' ) {
+			if ( 'PHP Compatibility Checker' === $v['Name'] ) {
 				continue;
 			}
 
 			// Exclude active plugins if only_active = "yes".
-			if ( $this->only_active === 'yes' ) {
+			if ( 'yes' === $this->only_active ) {
 				// Get array of active plugins.
 				$active_plugins = get_option( 'active_plugins' );
 
@@ -330,8 +330,7 @@ class WPEPHPCompat {
 			// Plugin in root directory (like Hello Dolly).
 			if ( './' === $plugin_file ) {
 				$plugin_path = $plugin_base . $k;
-			}
-			else {
+			} else {
 				$plugin_path = $plugin_base . $plugin_file;
 			}
 
@@ -356,15 +355,16 @@ class WPEPHPCompat {
 		$all_themes = wp_get_themes();
 
 		foreach ( $all_themes as $k => $v ) {
-			if ( $this->only_active === 'yes' ) {
+			if ( 'yes' === $this->only_active ) {
 				$current_theme = wp_get_theme();
-				if ($all_themes[$k]->Name != $current_theme->Name)
-				continue;
+				if ( $all_themes[ $k ]->Name != $current_theme->Name ) {
+					continue;
+				}
 			}
 
-			$theme_path = $all_themes[$k]->theme_root . DIRECTORY_SEPARATOR . $k . DIRECTORY_SEPARATOR;
+			$theme_path = $all_themes[ $k ]->theme_root . DIRECTORY_SEPARATOR . $k . DIRECTORY_SEPARATOR;
 
-			$this->add_directory( $all_themes[$k]->Name, $theme_path );
+			$this->add_directory( $all_themes[ $k ]->Name, $theme_path );
 		}
 
 		// Add parent theme if the current theme is a child theme.
@@ -385,7 +385,7 @@ class WPEPHPCompat {
 	 */
 	public function clean_report( $report ) {
 		// Remove unnecessary overview.
-		$report = preg_replace ( '/Time:.+\n/si', '', $report );
+		$report = preg_replace( '/Time:.+\n/si', '', $report );
 
 		// Remove whitespace.
 		$report = trim( $report );
@@ -411,7 +411,7 @@ class WPEPHPCompat {
 		//Make sure all directories are removed from the queue.
 		$args = array(
 			'posts_per_page' => -1,
-			'post_type'      => 'wpephpcompat_jobs'
+			'post_type'      => 'wpephpcompat_jobs',
 		);
 		$directories = get_posts( $args );
 
@@ -433,7 +433,7 @@ class WPEPHPCompat {
 			'post_content'  => $path,
 			'post_status'   => 'publish',
 			'post_author'   => 1,
-			'post_type'     => 'wpephpcompat_jobs'
+			'post_type'     => 'wpephpcompat_jobs',
 		);
 
 		return wp_insert_post( $dir );
@@ -446,12 +446,11 @@ class WPEPHPCompat {
 	 * @param  string $message Message to log.
 	 * @return null
 	 */
-	private function debug_log( $message ){
+	private function debug_log( $message ) {
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG === true && ! $this->is_command_line() ) {
 			if ( is_array( $message ) || is_object( $message ) ) {
 				error_log( print_r( $message , true ) );
-			}
-			else {
+			} else {
 				error_log( 'WPE PHP Compatibility: ' . $message );
 			}
 		}
@@ -463,8 +462,7 @@ class WPEPHPCompat {
 	 * @since  1.0.0
 	 * @return boolean Returns true if the request came from the command line.
 	 */
-	private function is_command_line()
-	{
+	private function is_command_line() {
 		return defined( 'WP_CLI' ) || defined( 'PHPUNIT_TEST' );
 	}
 
@@ -476,7 +474,7 @@ class WPEPHPCompat {
 	*/
 	private function close_connection( $body ) {
 		ignore_user_abort( true );
-		if (ob_get_length()) ob_end_clean();
+		if ( ob_get_length() ) { ob_end_clean(); }
 		// Start buffering.
 		ob_start();
 		// Echo our response.
