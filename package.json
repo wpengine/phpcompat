@@ -3,7 +3,9 @@
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-wp-readme-to-markdown": "^2.0.0",
-    "node-qunit-phantomjs": "^1.4.0"
+    "node-qunit-phantomjs": "^1.4.0",
+    "grunt-phpcs": "^0.4.0",
+    "grunt-phplint": "0.0.8"
   },
   "scripts": {
     "test": "node-qunit-phantomjs tests/qunit/index.html --verbose"
