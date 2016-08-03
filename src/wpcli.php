@@ -47,8 +47,7 @@ class PHPCompat_Command extends WP_CLI_Command {
 
 		if ( preg_match( '/(\d*) ERRORS?/i', $results ) ) {
 			WP_CLI::error( 'Your WordPress install is not compatible.' );
-		}
-		else {
+		} else {
 			WP_CLI::success( 'Your WordPress install is compatible.' );
 		}
 	}
@@ -74,5 +73,5 @@ WP_CLI::add_command( 'phpcompat', 'PHPCompat_Command', array(
 			'default'  => 'active',
 			'options'  => array( 'active', 'all' ),
 		),
-	)
+	),
 ));

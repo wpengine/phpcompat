@@ -10,7 +10,7 @@ Text Domain: php-compatibility-checker
 */
 
 // Exit if this file is directly accessed
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 require_once( __DIR__ . '/vendor/autoload.php' );
 
@@ -118,7 +118,7 @@ class WPEngine_PHPCompat {
 			) );
 
 			if ( 0 < count( $jobs ) ) {
-				$active_job = $jobs[ 0 ]->post_title;
+				$active_job = $jobs[0]->post_title;
 			}
 
 			$to_encode = array(
@@ -158,7 +158,7 @@ class WPEngine_PHPCompat {
 			array(
 				'labels' => array(
 					'name' => __( 'Jobs' ),
-					'singular_name' => __( 'Job' )
+					'singular_name' => __( 'Job' ),
 				),
 			'public' => false,
 			'has_archive' => false,
@@ -186,7 +186,7 @@ class WPEngine_PHPCompat {
 		// Scripts
 		wp_enqueue_script( 'wpephpcompat-handlebars', plugins_url( '/src/js/handlebars.js', __FILE__ ), array( 'jquery' ) );
 		wp_enqueue_script( 'wpephpcompat-download', plugins_url( '/src/js/download.min.js', __FILE__ ) );
-		wp_enqueue_script( 'wpephpcompat', plugins_url( '/src/js/run.js', __FILE__ ), array('jquery', 'wpephpcompat-handlebars', 'wpephpcompat-download') );
+		wp_enqueue_script( 'wpephpcompat', plugins_url( '/src/js/run.js', __FILE__ ), array( 'jquery', 'wpephpcompat-handlebars', 'wpephpcompat-download' ) );
 
 		// Progress Bar
 		wp_enqueue_script( 'jquery-ui-progressbar' );
@@ -260,7 +260,7 @@ class WPEngine_PHPCompat {
 					</tr>
 					<tr>
 						<th scope="row"><label for="active_plugins"><?php esc_attr_e( 'Only Active', 'php-compatibility-checker' ); ?></label></th>
-						<td><label><input type="radio" name="active_plugins" value="yes" <?php checked( $only_active, 'yes', true ); ?> /> <?php esc_attr_e( 'Only scan active plugins and themes', 'php-compatibility-checker'); ?></label><br>
+						<td><label><input type="radio" name="active_plugins" value="yes" <?php checked( $only_active, 'yes', true ); ?> /> <?php esc_attr_e( 'Only scan active plugins and themes', 'php-compatibility-checker' ); ?></label><br>
 							<label><input type="radio" name="active_plugins" value="no" <?php checked( $only_active, 'no', true ); ?> /> <?php esc_attr_e( 'Scan all plugins and themes', 'php-compatibility-checker' ); ?></label>
 						</td>
 					</tr>
@@ -312,7 +312,6 @@ class WPEngine_PHPCompat {
 		</script>
 		<?php
 	}
-
 }
 // Register the WPEngine_PHPCompat instance
 WPEngine_PHPCompat::init();
