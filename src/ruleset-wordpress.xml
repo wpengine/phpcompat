@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress-Core Custom">
+
+	<description>WordPress-Core Custom</description>
+
+	<!-- Include WordPress-Core standards. -->
+	<rule ref="WordPress-Core"/>
+
+	<!-- Whitelist member variables from core. -->
+	<rule ref="WordPress.NamingConventions.ValidVariableName">
+		<properties>
+			<property name="whitelisted_mixed_case_member_var_names" value="Name,ID" type="array"/>
+		</properties>
+	</rule>
+
+</ruleset>
