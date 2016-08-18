@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b9ee6476d1762338889b03b0e4cbec8d",
-    "content-hash": "76ac7641baa01da8e6fef0b4b0b610cf",
+    "hash": "825eb05a423f2198dc6ba3edab9b8a90",
+    "content-hash": "b619faca99011b13200eb285642e4302",
     "packages": [
         {
             "name": "simplyadmire/composer-plugins",
@@ -143,12 +143,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wimg/PHPCompatibility.git",
-                "reference": "344e9ad4fa592da95d20a69165d61fe5bcf41656"
+                "reference": "caf3dfa912f2a75f75b4c8b7158b513d1544c6fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wimg/PHPCompatibility/zipball/344e9ad4fa592da95d20a69165d61fe5bcf41656",
-                "reference": "344e9ad4fa592da95d20a69165d61fe5bcf41656",
+                "url": "https://api.github.com/repos/wimg/PHPCompatibility/zipball/caf3dfa912f2a75f75b4c8b7158b513d1544c6fd",
+                "reference": "caf3dfa912f2a75f75b4c8b7158b513d1544c6fd",
                 "shasum": ""
             },
             "require": {
@@ -167,7 +167,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL"
+                "LGPL-3.0"
             ],
             "authors": [
                 {
@@ -182,10 +182,60 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2016-08-02 23:37:07"
+            "time": "2016-08-18 09:41:13"
         }
     ],
     "packages-dev": [
+        {
+            "name": "neronmoon/scriptsdev",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neronmoon/scriptsdev.git",
+                "reference": "ab5cec346cab353500b957de8c7e6548961d35fe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neronmoon/scriptsdev/zipball/ab5cec346cab353500b957de8c7e6548961d35fe",
+                "reference": "ab5cec346cab353500b957de8c7e6548961d35fe",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0"
+            },
+            "require-dev": {
+                "composer/composer": "~1.0@dev"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "\\Plugin"
+            },
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vitaliy Krasnoperov",
+                    "email": "alistar.neron@gmail.com"
+                }
+            ],
+            "description": "Scripts-dev behaviour for Composer",
+            "homepage": "https://github.com/neronmoon/scriptsdev",
+            "keywords": [
+                "commands",
+                "commands execution",
+                "composer",
+                "dev",
+                "scripts"
+            ],
+            "time": "2015-11-12 17:00:24"
+        },
         {
             "name": "wp-coding-standards/wpcs",
             "version": "dev-master",
