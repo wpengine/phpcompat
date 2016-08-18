@@ -2,8 +2,8 @@
 Contributors: wpengine, octalmage, stevenkword, Taylor4484, pross
 Tags: php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine
 Requires at least: 3.5
-Tested up to: 4.5
-Stable tag: 1.1.2
+Tested up to: 4.6
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,9 +21,9 @@ This plugin will lint theme and plugin code inside your WordPress file system an
 
 = Update to PHP 7 =
 * Use this plugin to check your site for compatibility for PHP 7! 
-* As of July 2016, 59.3% of WordPress websites run a PHP version less PHP 5.5.
+* As of [August 2016](https://wordpress.org/about/stats/), 57.1% of WordPress websites run a PHP version less PHP 5.5.
 * These versions of PHP have been deprecated and unsupported for over 9 months.
-* Only 1.8% of WordPress websites run PHP 7, the current main version of PHP. 
+* Only 2.2% of WordPress websites run PHP 7, the current main version of PHP. 
 
 
 = Disclaimer =
@@ -62,7 +62,7 @@ PHP Compatibility Checker includes WP-CLI command support:
     - active
     - all
 `
-Example: `wp phpcompat 5.5 --scan=active`
+Example: `wp phpcompat 7.0 --scan=active`
 
 
 == Frequently Asked Questions ==
@@ -111,6 +111,10 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 2. Compatibility results screen
 
 == Changelog ==
+
+= 1.2 =
+- Updated the PHPCompatibility library to latest version
+- Added support for PHP 5.6
 
 = 1.1.2 =
 - Fixed issue with WordPress notices breaking the plugin header.
