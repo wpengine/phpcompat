@@ -253,6 +253,7 @@ class WPEngine_PHPCompat {
 						<th scope="row"><label for="phptest_version"><?php esc_attr_e( 'PHP Version', 'php-compatibility-checker' ); ?></label></th>
 						<td>
 							<label><input type="radio" name="phptest_version" value="7.0" <?php checked( $test_version, '7.0', true ); ?>> PHP 7.0</label><br>
+							<label><input type="radio" name="phptest_version" value="5.6" <?php checked( $test_version, '5.6', true ); ?>> PHP 5.6</label><br>
 							<label><input type="radio" name="phptest_version" value="5.5" <?php checked( $test_version, '5.5', true ); ?>> PHP 5.5</label><br>
 							<label><input type="radio" name="phptest_version" value="5.4" <?php checked( $test_version, '5.4', true ); ?>> PHP 5.4</label><br>
 							<label><input type="radio" name="phptest_version" value="5.3" <?php checked( $test_version, '5.3', true ); ?>> PHP 5.3</label>
