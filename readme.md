@@ -93,7 +93,7 @@ Example: `wp phpcompat 7.0 --scan=active`
     
 6. The scan is stuck, what can I do?
 
-    The PHP Compatibility Checker relies on WP-Cron to process plugins/themes in batches, this is necessary to avoid server timeouts. The scan will get stuck if your site's WP-Cron isn't functioning. You can look into this using [WP Crontrol](https://wordpress.org/plugins/wp-crontrol/). The cron is called `wpephpcompat_start_test_cron`. 
+    The PHP Compatibility Checker relies on WP-Cron to process plugins/themes in batches, this is necessary to avoid server timeouts. The scan will get stuck if your site's WP-Cron isn't functioning. You can look into this using [WP Crontrol](https://wordpress.org/plugins/wp-crontrol/). The cron is called `wpephpcompat_start_test_cron`. This could also be an issue if your site is using basic authentication.
 
     You can also use the [WP-CLI command](https://wordpress.org/plugins/php-compatibility-checker/other_notes/) or disable the timeout to avoid using WP-Cron.
 
