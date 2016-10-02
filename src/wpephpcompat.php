@@ -201,7 +201,7 @@ class WPEPHPCompat {
 				update_option( 'wpephpcompat.scan_results', $scan_results , false );
 				wp_delete_post( $directory->ID );
 				$count = 0;
-				$this->debug_log( 'Skipped: ' .$directory->post_title );
+				$this->debug_log( 'Skipped: ' . $directory->post_title );
 				continue;
 			}
 
