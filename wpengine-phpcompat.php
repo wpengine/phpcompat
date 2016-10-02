@@ -220,7 +220,7 @@ class WPEngine_PHPCompat {
 	 */
 	function create_menu() {
 		// Create Tools sub-menu.
-		$this->page = add_submenu_page( 'tools.php', __( 'PHP Compatibility', 'php-compatibility-checker' ), __( 'PHP Compatibility', 'php-compatibility-checker' ), 'manage_options', __FILE__, array( self::instance(), 'settings_page' ) );
+		$this->page = add_submenu_page( 'tools.php', __( 'PHP Compatibility', 'php-compatibility-checker' ), __( 'PHP Compatibility', 'php-compatibility-checker' ), 'manage_options', 'php-compatibility-checker', array( self::instance(), 'settings_page' ) );
 	}
 
 	/**
