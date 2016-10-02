@@ -143,12 +143,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wimg/PHPCompatibility.git",
-                "reference": "caf3dfa912f2a75f75b4c8b7158b513d1544c6fd"
+                "reference": "8476da120b919d837b61d862c2b7b697837c2955"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wimg/PHPCompatibility/zipball/caf3dfa912f2a75f75b4c8b7158b513d1544c6fd",
-                "reference": "caf3dfa912f2a75f75b4c8b7158b513d1544c6fd",
+                "url": "https://api.github.com/repos/wimg/PHPCompatibility/zipball/8476da120b919d837b61d862c2b7b697837c2955",
+                "reference": "8476da120b919d837b61d862c2b7b697837c2955",
                 "shasum": ""
             },
             "require": {
@@ -182,7 +182,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2016-08-18 09:41:13"
+            "time": "2016-10-01 14:19:52"
         }
     ],
     "packages-dev": [
@@ -242,16 +242,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git",
-                "reference": "f50ccffe5ef3a77e84b3be9487cb7a477248a8ea"
+                "reference": "b39490465f6fd7375743a395019cd597e12119c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress-Coding-Standards/WordPress-Coding-Standards/zipball/f50ccffe5ef3a77e84b3be9487cb7a477248a8ea",
-                "reference": "f50ccffe5ef3a77e84b3be9487cb7a477248a8ea",
+                "url": "https://api.github.com/repos/WordPress-Coding-Standards/WordPress-Coding-Standards/zipball/b39490465f6fd7375743a395019cd597e12119c9",
+                "reference": "b39490465f6fd7375743a395019cd597e12119c9",
                 "shasum": ""
             },
             "require": {
-                "squizlabs/php_codesniffer": "~2.2"
+                "squizlabs/php_codesniffer": "^2.6"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -270,7 +270,7 @@
                 "standards",
                 "wordpress"
             ],
-            "time": "2016-05-02 03:33:03"
+            "time": "2016-08-29 20:04:47"
         }
     ],
     "aliases": [],
