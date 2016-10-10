@@ -463,7 +463,7 @@ class WPEPHPCompat {
 	 * @return boolean Returns true if the request came from the command line.
 	 */
 	private function is_command_line() {
-		return defined( 'WP_CLI' ) || defined( 'PHPUNIT_TEST' );
+		return defined( 'WP_CLI' ) || defined( 'PHPUNIT_TEST' )  || php_sapi_name() == ‘cli’;
 	}
 
 	/**
