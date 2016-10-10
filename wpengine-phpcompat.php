@@ -4,7 +4,7 @@ Plugin Name: PHP Compatibility Checker
 Plugin URI: https://wpengine.com
 Description: Make sure your plugins and themes are compatible with newer PHP versions.
 Author: WP Engine
-Version: 1.2.1
+Version: 1.2.2
 Author URI: https://wpengine.com
 Text Domain: php-compatibility-checker
 */
