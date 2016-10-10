@@ -70,6 +70,8 @@ class WPEPHPCompat {
 		'*/woocommerce/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#woocommerce
 		'*/wp-migrate-db/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#wp-migrate-db
 		'*/easy-digital-downloads/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#easy-digital-downloads
+		'*/updraftplus/*' => '7.0',
+		'*/megamenu/*' => '7.0',
 	);
 
 	/**
