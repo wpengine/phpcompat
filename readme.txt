@@ -3,7 +3,7 @@ Contributors: wpengine, octalmage, stevenkword, Taylor4484, pross
 Tags: php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine
 Requires at least: 3.5
 Tested up to: 4.6
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -114,6 +114,9 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 == Changelog ==
 
+= 1.2.4 =
+- Fixed Composer issue.
+
 = 1.2.3 =
 - Updated the PHPCompatibility library to latest version.
 - Whitelisted TablePress.
@@ -169,6 +172,5 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 == Upgrade Notice ==
 
-= 1.2.3 =
-- Updated the PHPCompatibility library to latest version.
-- Whitelisted TablePress.
+= 1.2.4 =
+- Fixed Composer issue.
