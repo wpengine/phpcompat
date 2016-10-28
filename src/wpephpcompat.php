@@ -72,6 +72,7 @@ class WPEPHPCompat {
 		'*/easy-digital-downloads/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#easy-digital-downloads
 		'*/updraftplus/*' => '7.0',
 		'*/megamenu/*' => '7.0',
+		'*/tablepress/*' => '7.0',
 	);
 
 	/**
