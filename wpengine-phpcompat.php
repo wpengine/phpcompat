@@ -250,9 +250,9 @@ class WPEngine_PHPCompat {
 								<p><b><?php esc_attr_e( 'This plugin does not execute your theme and plugin code, as such this plugin cannot detect runtime compatibility issues.', 'php-compatibility-checker' ); ?></b></p>
 
 
-<p><?php printf( __('Please note that linting code is not perfect. This plugin cannot detect unused code paths that might be used for backwards compatibility, and thus might show false positives. You can <a href="%1$s">report false positives on our GitHub repo</a>.', 'php-compatibility-checker'), "https://github.com/wpengine/phpcompat/wiki/Results" ); ?></p>
+<p><?php printf( __( 'Please note that linting code is not perfect. This plugin cannot detect unused code paths that might be used for backwards compatibility, and thus might show false positives. You can <a href="%1$s">report false positives on our GitHub repo</a>.', 'php-compatibility-checker' ), 'https://github.com/wpengine/phpcompat/wiki/Results' ); ?></p>
 
-<p><?php printf( __('This plugin relies on WP-Cron to scan files in the background. The scan will get stuck if the site&#39s WP-Cron is not running correctly. Please <a href="%1$s">see the FAQ</a> for more information.', 'php-compatibility-checker'), "https://wordpress.org/plugins/php-compatibility-checker/faq/" ); ?></p>
+<p><?php printf( __( 'This plugin relies on WP-Cron to scan files in the background. The scan will get stuck if the site&#39s WP-Cron is not running correctly. Please <a href="%1$s">see the FAQ</a> for more information.', 'php-compatibility-checker' ), 'https://wordpress.org/plugins/php-compatibility-checker/faq/' ); ?></p>
 			</div>
 			<hr>
 			<h3 class="title clear"><?php esc_attr_e( 'Scan Options', 'php-compatibility-checker' ); ?></h3>
