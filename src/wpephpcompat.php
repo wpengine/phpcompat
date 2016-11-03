@@ -73,6 +73,8 @@ class WPEPHPCompat {
 		'*/updraftplus/*' => '7.0',
 		'*/megamenu/*' => '7.0',
 		'*/tablepress/*' => '7.0',
+		'*/myMail/*' => '7.0',
+		'*/wp-spamshield/*' => '7.0',
 	);
 
 	/**
