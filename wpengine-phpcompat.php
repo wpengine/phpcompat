@@ -4,7 +4,7 @@ Plugin Name: PHP Compatibility Checker
 Plugin URI: https://wpengine.com
 Description: Make sure your plugins and themes are compatible with newer PHP versions.
 Author: WP Engine
-Version: 1.2.4
+Version: 1.3
 Author URI: https://wpengine.com
 Text Domain: php-compatibility-checker
 */
@@ -200,12 +200,12 @@ class WPEngine_PHPCompat {
 		$strings = array(
 			'name'       => __( 'Name', 'php-compatibility-checker' ),
 			'compatible' => __( 'compatible', 'php-compatibility-checker' ),
-			'are_not'    => __( 'plugins/themes are not compatible', 'php-compatibility-checker' ),
-			'is_not'     => __( 'Your WordPress install is not PHP', 'php-compatibility-checker' ),
+			'are_not'    => __( 'plugins/themes are possibly not compatible', 'php-compatibility-checker' ),
+			'is_not'     => __( 'Your WordPress site is possibly not PHP', 'php-compatibility-checker' ),
 			'out_of'     => __( 'out of', 'php-compatibility-checker' ),
 			'run'        => __( 'Run', 'php-compatibility-checker' ),
 			'rerun'      => __( 'Re-run', 'php-compatibility-checker' ),
-			'your_wp'    => __( 'Your WordPress install is', 'php-compatibility-checker' ),
+			'your_wp'    => __( 'Your WordPress site is', 'php-compatibility-checker' ),
 		);
 
 		wp_localize_script( 'wpephpcompat', 'wpephpcompat', $strings );
@@ -245,7 +245,16 @@ class WPEngine_PHPCompat {
 			<div style="float: right; margin-top: 10px; text-align: right;">
 				<input type="checkbox" id="developermode" name="developermode" value="yes" /><?php esc_attr_e( 'Developer mode', 'php-compatibility-checker' ); ?>
 			</div>
-			<br><br>
+			<div class="clear">
+				<p><?php esc_attr_e( 'This plugin will lint theme and plugin code inside your WordPress file system and give you back a report of compatibility issues for you to fix. Compatibility issues are categorized into errors and warnings and will list the file and line number of the offending code, as well as the info about why that line of code is incompatible with the chosen version of PHP. The plugin will also suggest updates to themes and plugins, as a new version may offer compatible code.', 'php-compatibility-checker' ); ?></p>
+								<p><b><?php esc_attr_e( 'This plugin does not execute your theme and plugin code, as such this plugin cannot detect runtime compatibility issues.', 'php-compatibility-checker' ); ?></b></p>
+
+
+<p><?php printf( __('Please note that linting code is not perfect. This plugin cannot detect unused code paths that might be used for backwards compatibility, and thus might show false positives. You can <a href="%1$s">report false positives on our GitHub repo</a>.', 'php-compatibility-checker'), "https://github.com/wpengine/phpcompat/wiki/Results" ); ?></p>
+
+<p><?php printf( __('This plugin relies on WP-Cron to scan files in the background. The scan will get stuck if the site&#39s WP-Cron is not running correctly. Please <a href="%1$s">see the FAQ</a> for more information.', 'php-compatibility-checker'), "https://wordpress.org/plugins/php-compatibility-checker/faq/" ); ?></p>
+			</div>
+			<hr>
 			<h3 class="title clear"><?php esc_attr_e( 'Scan Options', 'php-compatibility-checker' ); ?></h3>
 			<table class="form-table">
 				<tbody>
@@ -267,6 +276,7 @@ class WPEngine_PHPCompat {
 					</tr>
 				</tbody>
 			</table>
+			<hr />
 			<p>
 				<div style="display: none;" id="wpe-progress">
 					<label for=""><?php esc_attr_e( 'Progress', 'php-compatibility-checker' ); ?></label>
@@ -285,7 +295,7 @@ class WPEngine_PHPCompat {
 				</div>
 
 				<div id="footer" style="display: none;">
-					<?php esc_attr_e( 'Note: Warnings are not currently an issue, but they could be in the future.', 'php-compatibility-checker' ); ?><br>
+					<?php esc_attr_e( 'Note: PHP Warnings will not cause errors, but could cause compatibility issues with future PHP versions, and could spam your PHP logs.', 'php-compatibility-checker' ); ?><br>
 					<a id="downloadReport" href="#"><?php esc_attr_e( 'Download Report', 'php-compatibility-checker' ); ?></a>
 				</div>
 			</p>
@@ -303,7 +313,7 @@ class WPEngine_PHPCompat {
 				</div>
 				<div class="inner-right">
 					<h3 style="margin: 0px;">{{plugin_name}}</h3>
-					{{#if skipped}}<?php esc_attr_e( 'Unknown', 'php-compatibility-checker' ); ?>{{else if passed}}PHP {{test_version}} <?php esc_attr_e( 'compatible', 'php-compatibility-checker' ); ?>.{{else}}<b><?php esc_attr_e( 'Not', 'php-compatibility-checker' ); ?></b> PHP {{test_version}} <?php esc_attr_e( 'compatible', 'php-compatibility-checker' ); ?>.{{/if}}<br>
+					{{#if skipped}}<?php esc_attr_e( 'Unknown', 'php-compatibility-checker' ); ?>{{else if passed}}PHP {{test_version}} <?php esc_attr_e( 'compatible', 'php-compatibility-checker' ); ?>.{{else}}<b><?php esc_attr_e( 'Possibly not', 'php-compatibility-checker' ); ?></b> PHP {{test_version}} <?php esc_attr_e( 'compatible', 'php-compatibility-checker' ); ?>.{{/if}}<br>
 					{{update}}<br>
 					<textarea style="display: none; white-space: pre;">{{logs}}</textarea><a class="view-details"><?php esc_attr_e( 'view details', 'php-compatibility-checker' ); ?></a>
 				</div>
