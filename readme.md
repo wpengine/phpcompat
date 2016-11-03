@@ -3,7 +3,7 @@
 **Tags:** php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine  
 **Requires at least:** 3.5  
 **Tested up to:** 4.6  
-**Stable tag:** 1.2.4  
+**Stable tag:** 1.3.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -17,15 +17,15 @@ This plugin will lint theme and plugin code inside your WordPress file system an
 
 **This plugin does not execute your theme and plugin code, as such this plugin cannot detect runtime compatibility issues.**
 
-**Please note that linting code is not perfect. This plugin cannot detect unused codepaths that might be used for backwards compatibility, and thus might show false postiives. We maintain a [whitelist of plugins](https://github.com/wpengine/phpcompat/wiki/Results) that can cause false positives. We are continuously working to ensure the checker provides the most accurate results possible.**
+**Please note that linting code is not perfect. This plugin cannot detect unused code-paths that might be used for backwards compatibility, and thus might show false positives. We maintain a [whitelist of plugins](https://github.com/wpengine/phpcompat/wiki/Results) that can cause false positives. We are continuously working to ensure the checker provides the most accurate results possible.**
 
 **This plugin relies on WP-Cron to scan files in the background. The scan will get stuck if the site's WP-Cron isn't running correctly. Please see the [FAQ](https://wordpress.org/plugins/php-compatibility-checker/faq/) for more information.**
 
 ### Update to PHP 7 ###
 * Use this plugin to check your site for compatibility for PHP 7!
-* As of [August 2016](https://wordpress.org/about/stats/), 57.1% of WordPress websites run a PHP version less PHP 5.5.
+* As of [November 2016](https://wordpress.org/about/stats/), 52.9% of WordPress websites run a PHP version less PHP 5.5.
 * These versions of PHP have been deprecated and unsupported for over 9 months.
-* Only 2.2% of WordPress websites run PHP 7, the current main version of PHP.
+* Only 3.4% of WordPress websites run PHP 7, the current main version of PHP.
 
 
 ### Disclaimer ###
@@ -79,7 +79,7 @@ Example: `wp phpcompat 7.0 --scan=active`
 
 3. A plugin I created is listed as not compatible, what should I do?
 
-    We maintain a [whitelist of plugins](https://github.com/wpengine/phpcompat/wiki/Results) that cause false positives. If your plugin shows up as incompatible but you think that is wrong, please open a [GitHub issue](https://github.com/wpengine/phpcompat/issues/new) on the project, or email wordpress@wpengine.com with info about your plugin and why you know it is compatible (you have automated tests, the failure is on backwards compatibility codepaths, etc).
+    We maintain a [whitelist of plugins](https://github.com/wpengine/phpcompat/wiki/Results) that cause false positives. If your plugin shows up as incompatible but you think that is wrong, please open a [GitHub issue](https://github.com/wpengine/phpcompat/issues/new) on the project, or email wordpress@wpengine.com with info about your plugin and why you know it is compatible (you have automated tests, the failure is on backwards compatibility code paths, etc).
 
 4. Can I use this to test non-WordPress PHP Projects?
 
@@ -117,6 +117,10 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 
 ## Changelog ##
+
+### 1.3.0 ###
+- Updated the PHPCompatibility library to latest version. Should fix many false positives.
+- Changed language and added help text to Admin UI.
 
 ### 1.2.4 ###
 - Fixed Composer issue.
@@ -176,5 +180,6 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 ## Upgrade Notice ##
 
-### 1.2.4 ###
-- Fixed Composer issue.
+### 1.3.0 ###
+- Updated the PHPCompatibility library to latest version. Should fix many false positives.
+- Changed language and added help text to Admin UI.
