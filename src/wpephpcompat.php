@@ -75,6 +75,7 @@ class WPEPHPCompat {
 		'*/tablepress/*' => '7.0',
 		'*/myMail/*' => '7.0',
 		'*/wp-spamshield/*' => '7.0',
+		'*/vendor/stripe/stripe-php/lib/StripeObject.php' => '7.0', // https://github.com/wpengine/phpcompat/issues/89
 	);
 
 	/**
