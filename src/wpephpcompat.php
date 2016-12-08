@@ -296,7 +296,7 @@ class WPEPHPCompat {
 			}
 		}
 
-		return $ignored;
+		return apply_filters( 'phpcompat_whitelist', $ignored );
 	}
 
 	/**
