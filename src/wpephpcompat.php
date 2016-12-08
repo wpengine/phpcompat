@@ -78,6 +78,7 @@ class WPEPHPCompat {
 		'*/vendor/stripe/stripe-php/lib/StripeObject.php' => '7.0', // https://github.com/wpengine/phpcompat/issues/89
 		'*/gravityforms/*' => '7.0', // https://github.com/wpengine/phpcompat/issues/85
 		'*/download-monitor/*' => '7.0', // https://github.com/wpengine/phpcompat/issues/84
+		'*/query-monitor/*' => '7.0', // https://wordpress.org/support/topic/false-positive-showing-query-monitor-as-not-php-7-compatible/
 	);
 
 	/**
