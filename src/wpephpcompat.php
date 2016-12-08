@@ -79,6 +79,7 @@ class WPEPHPCompat {
 		'*/gravityforms/*' => '7.0', // https://github.com/wpengine/phpcompat/issues/85
 		'*/download-monitor/*' => '7.0', // https://github.com/wpengine/phpcompat/issues/84
 		'*/query-monitor/*' => '7.0', // https://wordpress.org/support/topic/false-positive-showing-query-monitor-as-not-php-7-compatible/
+		'*/bbpress/*' => '7.0', // https://wordpress.org/support/topic/false-positive-showing-bbpress-as-not-php-7-compatible/
 	);
 
 	/**
