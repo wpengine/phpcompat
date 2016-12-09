@@ -81,6 +81,7 @@ class WPEPHPCompat {
 		'*/query-monitor/*' => '7.0', // https://wordpress.org/support/topic/false-positive-showing-query-monitor-as-not-php-7-compatible/
 		'*/bbpress/*' => '7.0', // https://wordpress.org/support/topic/false-positive-showing-bbpress-as-not-php-7-compatible/
 		'*/comet-cache/*' => '7.0', // https://wordpress.org/support/topic/false-positive-comet-cache/
+		'*/comment-mail/*' => '7.0', // https://wordpress.org/support/topic/false-positive-comment-mail/
 	);
 
 	/**
