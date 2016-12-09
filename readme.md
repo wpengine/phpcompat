@@ -3,7 +3,7 @@
 **Tags:** php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine  
 **Requires at least:** 3.5  
 **Tested up to:** 4.6  
-**Stable tag:** 1.3.0  
+**Stable tag:** 1.3.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -118,6 +118,9 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 ## Changelog ##
 
+### 1.3.1 ###
+- Whitelisted a number of plugins.
+
 ### 1.3.0 ###
 - Updated the PHPCompatibility library to latest version. Should fix many false positives.
 - Changed language and added help text to Admin UI.
@@ -180,6 +183,5 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 ## Upgrade Notice ##
 
-### 1.3.0 ###
-- Updated the PHPCompatibility library to latest version. Should fix many false positives.
-- Changed language and added help text to Admin UI.
+### 1.3.1 ###
+- Whitelisted a number of plugins.
