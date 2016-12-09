@@ -75,6 +75,15 @@ class WPEPHPCompat {
 		'*/tablepress/*' => '7.0',
 		'*/myMail/*' => '7.0',
 		'*/wp-spamshield/*' => '7.0',
+		'*/vendor/stripe/stripe-php/lib/StripeObject.php' => '7.0', // https://github.com/wpengine/phpcompat/issues/89
+		'*/gravityforms/*' => '7.0', // https://github.com/wpengine/phpcompat/issues/85
+		'*/download-monitor/*' => '7.0', // https://github.com/wpengine/phpcompat/issues/84
+		'*/query-monitor/*' => '7.0', // https://wordpress.org/support/topic/false-positive-showing-query-monitor-as-not-php-7-compatible/
+		'*/bbpress/*' => '7.0', // https://wordpress.org/support/topic/false-positive-showing-bbpress-as-not-php-7-compatible/
+		'*/comet-cache/*' => '7.0', // https://wordpress.org/support/topic/false-positive-comet-cache/
+		'*/comment-mail/*' => '7.0', // https://wordpress.org/support/topic/false-positive-comment-mail/
+		'*/social-networks-auto-poster-facebook-twitter-g/*' => '7.0', // https://wordpress.org/plugins/social-networks-auto-poster-facebook-twitter-g/
+		'*/mailpoet/*' => '7.0', // https://wordpress.org/support/topic/false-positive-mailpoet-3-not-compatible-with-php7/
 	);
 
 	/**
@@ -293,7 +302,7 @@ class WPEPHPCompat {
 			}
 		}
 
-		return $ignored;
+		return apply_filters( 'phpcompat_whitelist', $ignored );
 	}
 
 	/**

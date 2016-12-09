@@ -2,11 +2,6 @@
 class TestScan extends WP_UnitTestCase {
 
 	function test_scan_default_PHP_55() {
-		$expected_results = "Name: Twenty Sixteen
-
-PHP 5.5 compatible.
-
-";
 		$root_dir = realpath( __DIR__ . '/../../' );
 
 		$wpephpc = new \WPEPHPCompat( $root_dir );
@@ -19,15 +14,10 @@ PHP 5.5 compatible.
 
 		$results = $wpephpc->start_test();
 
-		$this->assertEquals( $expected_results, $results );
+		$this->assertContains( 'PHP 5.5 compatible.', $results );
 	}
 
 	function test_scan_default_PHP_70() {
-		$expected_results = "Name: Twenty Sixteen
-
-PHP 7.0 compatible.
-
-";
 		$root_dir = realpath( __DIR__ . '/../../' );
 
 		$wpephpc = new \WPEPHPCompat( $root_dir );
@@ -40,6 +30,6 @@ PHP 7.0 compatible.
 
 		$results = $wpephpc->start_test();
 
-		$this->assertEquals( $expected_results, $results );
+		$this->assertContains( 'PHP 7.0 compatible.', $results );
 	}
 }

@@ -70,4 +70,14 @@ class TestGenerateIgnoredList extends WP_UnitTestCase {
 		$this->assertNotContains( '*/fakeplugin/*', $ignored );
 		$this->assertNotContains( '*/oldplugin/*', $ignored );
 	}
+
+	function test_filter_ignored_list() {
+		tests_add_filter( 'phpcompat_whitelist', function( $whitelist ) {
+			return array_merge( $whitelist, array( '*/filterplugin/*') );
+		} );
+
+		$ignored = $this->wpephpc->generate_ignored_list();
+		
+		$this->assertContains( '*/filterplugin/*', $ignored );
+	}
 }
