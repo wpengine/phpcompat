@@ -94,7 +94,9 @@ function checkStatus() {
 			jQuery( '#wpe-progress' ).show();
 
 			// Display the current plugin count.
-			jQuery( '#wpe-progress-count' ).text( ( obj.total - obj.count + 1 ) + '/' + obj.total );
+			if ( obj.total ) {
+				jQuery( '#wpe-progress-count' ).text( ( obj.total - obj.count + 1 ) + '/' + obj.total );
+			}
 
 			// Display the object being scanned.
 			jQuery( '#wpe-progress-active' ).text( obj.activeJob );

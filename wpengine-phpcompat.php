@@ -157,7 +157,7 @@ class WPEngine_PHPCompat {
 			wp_send_json( $to_encode );
 		}
 	}
-	
+
 	/**
 	 * Make an Ajax call to start the scan in the background.
 	 *
@@ -170,13 +170,13 @@ class WPEngine_PHPCompat {
 		$query = array(
 			'action' => 'wpephpcompat_start_test',
 		);
-		
+
 		// Keep track of these variables.
 		$body = array(
 			'test_version'=> $test_version,
 			'only_active'=> $only_active,
 		);
-		
+
 		// Instantly return!
 		$args = array(
 			'timeout'   => 0.01,
@@ -188,7 +188,7 @@ class WPEngine_PHPCompat {
 
 		// Build our URL.
 		$url = add_query_arg( $query, admin_url( 'admin-ajax.php' ) );
-		
+		$url = str_replace( '8081', '80', $url );
 		// POST.
 		wp_remote_post( esc_url_raw( $url ), $args );
 	}
