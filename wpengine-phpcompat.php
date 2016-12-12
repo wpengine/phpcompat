@@ -161,7 +161,7 @@ class WPEngine_PHPCompat {
 	/**
 	 * Make an Ajax call to start the scan in the background.
 	 *
-	 * @since 1.1.2
+	 * @since 1.3.2
 	 * @param  string $test_version Version of PHP to test.
 	 * @param  string $only_active  Scan only active plugins or all?
 	 * @return null
