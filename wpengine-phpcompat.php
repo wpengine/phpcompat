@@ -4,12 +4,13 @@ Plugin Name: PHP Compatibility Checker
 Plugin URI: https://wpengine.com
 Description: Make sure your plugins and themes are compatible with newer PHP versions.
 Author: WP Engine
-Version: 1.1.1
+Version: 1.3.1
 Author URI: https://wpengine.com
- */
+Text Domain: php-compatibility-checker
+*/
 
 // Exit if this file is directly accessed
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 require_once( __DIR__ . '/vendor/autoload.php' );
 
@@ -128,7 +129,7 @@ class WPEngine_PHPCompat {
 			) );
 
 			if ( 0 < count( $jobs ) ) {
-				$active_job = $jobs[ 0 ]->post_title;
+				$active_job = $jobs[0]->post_title;
 			}
 
 			$to_encode = array(
@@ -153,9 +154,7 @@ class WPEngine_PHPCompat {
 				$wpephpc = new \WPEPHPCompat( __DIR__ );
 				$wpephpc->clean_after_scan();
 			}
-
-			echo json_encode( $to_encode );
-			wp_die();
+			wp_send_json( $to_encode );
 		}
 	}
 	
@@ -205,7 +204,7 @@ class WPEngine_PHPCompat {
 			array(
 				'labels' => array(
 					'name' => __( 'Jobs' ),
-					'singular_name' => __( 'Job' )
+					'singular_name' => __( 'Job' ),
 				),
 			'public' => false,
 			'has_archive' => false,
@@ -233,12 +232,29 @@ class WPEngine_PHPCompat {
 		// Scripts
 		wp_enqueue_script( 'wpephpcompat-handlebars', plugins_url( '/src/js/handlebars.js', __FILE__ ), array( 'jquery' ) );
 		wp_enqueue_script( 'wpephpcompat-download', plugins_url( '/src/js/download.min.js', __FILE__ ) );
-		wp_enqueue_script( 'wpephpcompat', plugins_url( '/src/js/run.js', __FILE__ ), array('jquery', 'wpephpcompat-handlebars', 'wpephpcompat-download') );
+		wp_enqueue_script( 'wpephpcompat', plugins_url( '/src/js/run.js', __FILE__ ), array( 'jquery', 'wpephpcompat-handlebars', 'wpephpcompat-download' ) );
 
 		// Progress Bar
 		wp_enqueue_script( 'jquery-ui-progressbar' );
 		wp_enqueue_style( 'jquery-style', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
 
+		/**
+		 * i18n strings
+		 *
+		 * These translated strings can be access in jquery with window.wpephpcompat object.
+		 */
+		$strings = array(
+			'name'       => __( 'Name', 'php-compatibility-checker' ),
+			'compatible' => __( 'compatible', 'php-compatibility-checker' ),
+			'are_not'    => __( 'plugins/themes are possibly not compatible', 'php-compatibility-checker' ),
+			'is_not'     => __( 'Your WordPress site is possibly not PHP', 'php-compatibility-checker' ),
+			'out_of'     => __( 'out of', 'php-compatibility-checker' ),
+			'run'        => __( 'Run', 'php-compatibility-checker' ),
+			'rerun'      => __( 'Re-run', 'php-compatibility-checker' ),
+			'your_wp'    => __( 'Your WordPress site is', 'php-compatibility-checker' ),
+		);
+
+		wp_localize_script( 'wpephpcompat', 'wpephpcompat', $strings );
 	}
 
 	/**
@@ -250,7 +266,7 @@ class WPEngine_PHPCompat {
 	 */
 	function create_menu() {
 		// Create Tools sub-menu.
-		$this->page = add_submenu_page( 'tools.php', 'PHP Compatibility', 'PHP Compatibility', 'manage_options', __FILE__, array( self::instance(), 'settings_page' ) );
+		$this->page = add_submenu_page( 'tools.php', __( 'PHP Compatibility', 'php-compatibility-checker' ), __( 'PHP Compatibility', 'php-compatibility-checker' ), 'manage_options', 'php-compatibility-checker', array( self::instance(), 'settings_page' ) );
 	}
 
 	/**
@@ -270,35 +286,46 @@ class WPEngine_PHPCompat {
 		?>
 		<div class="wrap">
 			<div style="float: left;">
-				<h2>WP Engine PHP Compatibility Checker</h2>
+				<h2><?php esc_attr_e( 'WP Engine PHP Compatibility Checker', 'php-compatibility-checker' ); ?></h2>
 			</div>
 			<div style="float: right; margin-top: 10px; text-align: right;">
-				<input type="checkbox" id="developermode" name="developermode" value="yes">Developer mode
+				<input type="checkbox" id="developermode" name="developermode" value="yes" /><?php esc_attr_e( 'Developer mode', 'php-compatibility-checker' ); ?>
 			</div>
-			<br><br>
-			<h3 class="title">Scan Options</h3>
+			<div class="clear">
+				<p><?php esc_attr_e( 'This plugin will lint theme and plugin code inside your WordPress file system and give you back a report of compatibility issues for you to fix. Compatibility issues are categorized into errors and warnings and will list the file and line number of the offending code, as well as the info about why that line of code is incompatible with the chosen version of PHP. The plugin will also suggest updates to themes and plugins, as a new version may offer compatible code.', 'php-compatibility-checker' ); ?></p>
+								<p><b><?php esc_attr_e( 'This plugin does not execute your theme and plugin code, as such this plugin cannot detect runtime compatibility issues.', 'php-compatibility-checker' ); ?></b></p>
+
+
+<p><?php printf( __( 'Please note that linting code is not perfect. This plugin cannot detect unused code paths that might be used for backwards compatibility, and thus might show false positives. You can <a href="%1$s">report false positives on our GitHub repo</a>.', 'php-compatibility-checker' ), 'https://github.com/wpengine/phpcompat/wiki/Results' ); ?></p>
+
+<p><?php printf( __( 'This plugin relies on WP-Cron to scan files in the background. The scan will get stuck if the site&#39s WP-Cron is not running correctly. Please <a href="%1$s">see the FAQ</a> for more information.', 'php-compatibility-checker' ), 'https://wordpress.org/plugins/php-compatibility-checker/faq/' ); ?></p>
+			</div>
+			<hr>
+			<h3 class="title clear"><?php esc_attr_e( 'Scan Options', 'php-compatibility-checker' ); ?></h3>
 			<table class="form-table">
 				<tbody>
 					<tr>
-						<th scope="row"><label for="phptest_version">PHP Version</label></th>
+						<th scope="row"><label for="phptest_version"><?php esc_attr_e( 'PHP Version', 'php-compatibility-checker' ); ?></label></th>
 						<td>
 							<label><input type="radio" name="phptest_version" value="7.0" <?php checked( $test_version, '7.0', true ); ?>> PHP 7.0</label><br>
+							<label><input type="radio" name="phptest_version" value="5.6" <?php checked( $test_version, '5.6', true ); ?>> PHP 5.6</label><br>
 							<label><input type="radio" name="phptest_version" value="5.5" <?php checked( $test_version, '5.5', true ); ?>> PHP 5.5</label><br>
 							<label><input type="radio" name="phptest_version" value="5.4" <?php checked( $test_version, '5.4', true ); ?>> PHP 5.4</label><br>
 							<label><input type="radio" name="phptest_version" value="5.3" <?php checked( $test_version, '5.3', true ); ?>> PHP 5.3</label>
 						</td>
 					</tr>
 					<tr>
-						<th scope="row"><label for="active_plugins">Only Active</label></th>
-						<td><label><input type="radio" name="active_plugins" value="yes" <?php checked( $only_active, 'yes', true ); ?>> Only scan active plugins and themes</label><br>
-							<label><input type="radio" name="active_plugins" value="no" <?php checked( $only_active, 'no', true ); ?>> Scan all plugins and themes</label>
+						<th scope="row"><label for="active_plugins"><?php esc_attr_e( 'Only Active', 'php-compatibility-checker' ); ?></label></th>
+						<td><label><input type="radio" name="active_plugins" value="yes" <?php checked( $only_active, 'yes', true ); ?> /> <?php esc_attr_e( 'Only scan active plugins and themes', 'php-compatibility-checker' ); ?></label><br>
+							<label><input type="radio" name="active_plugins" value="no" <?php checked( $only_active, 'no', true ); ?> /> <?php esc_attr_e( 'Scan all plugins and themes', 'php-compatibility-checker' ); ?></label>
 						</td>
 					</tr>
 				</tbody>
 			</table>
+			<hr />
 			<p>
 				<div style="display: none;" id="wpe-progress">
-					<label for="">Progress</label>
+					<label for=""><?php esc_attr_e( 'Progress', 'php-compatibility-checker' ); ?></label>
 					<div id="progressbar"></div>
 					<div id="wpe-progress-count"></div>
 					<div id="wpe-progress-active"></div>
@@ -309,17 +336,17 @@ class WPEngine_PHPCompat {
 
 				<!-- Area for developer results. -->
 				<div style="display: none;" id="developerMode">
-					<b>Test Results:</b>
+					<b><?php esc_attr_e( 'Test Results:', 'php-compatibility-checker' ); ?></b>
 					<textarea readonly="readonly" id="testResults"></textarea>
 				</div>
 
 				<div id="footer" style="display: none;">
-					Note: Warnings are not currently an issue, but they could be in the future.<br>
-					<a id="downloadReport" href="#">Download Report</a>
+					<?php esc_attr_e( 'Note: PHP Warnings will not cause errors, but could cause compatibility issues with future PHP versions, and could spam your PHP logs.', 'php-compatibility-checker' ); ?><br>
+					<a id="downloadReport" href="#"><?php esc_attr_e( 'Download Report', 'php-compatibility-checker' ); ?></a>
 				</div>
 			</p>
 			<p>
-				<input style="float: left;" name="run" id="runButton" type="button" value="Run" class="button-primary" />
+				<input style="float: left;" name="run" id="runButton" type="button" value="<?php esc_attr_e( 'Run', 'php-compatibility-checker' ); ?>" class="button-primary" />
 				<div style="display:none; visibility: visible; float: none;" class="spinner"></div>
 			</p>
 		</div>
@@ -332,18 +359,16 @@ class WPEngine_PHPCompat {
 				</div>
 				<div class="inner-right">
 					<h3 style="margin: 0px;">{{plugin_name}}</h3>
-					{{#if skipped}}Unknown{{else if passed}}PHP {{test_version}} compatible.{{else}}<b>Not</b> PHP {{test_version}} compatible.{{/if}}<br>
+					{{#if skipped}}<?php esc_attr_e( 'Unknown', 'php-compatibility-checker' ); ?>{{else if passed}}PHP {{test_version}} <?php esc_attr_e( 'compatible', 'php-compatibility-checker' ); ?>.{{else}}<b><?php esc_attr_e( 'Possibly not', 'php-compatibility-checker' ); ?></b> PHP {{test_version}} <?php esc_attr_e( 'compatible', 'php-compatibility-checker' ); ?>.{{/if}}<br>
 					{{update}}<br>
-					<textarea style="display: none; white-space: pre;">{{logs}}</textarea><a class="view-details">view details</a>
+					<textarea style="display: none; white-space: pre;">{{logs}}</textarea><a class="view-details"><?php esc_attr_e( 'view details', 'php-compatibility-checker' ); ?></a>
 				</div>
 				<?php $update_url = site_url( 'wp-admin/update-core.php' , 'admin' ); ?>
-				<div style="float:right;">{{#if updateAvailable}}<div class="badge wpe-update"><a href="<?php echo esc_url( $update_url ); ?>">Update Available</a></div>{{/if}}{{#if warnings}}<div class="badge warnings">{{warnings}} Warnings</div>{{/if}}{{#if errors}}<div class="badge errors">{{errors}} Errors</div>{{/if}}</div>
+				<div style="float:right;">{{#if updateAvailable}}<div class="badge wpe-update"><a href="<?php echo esc_url( $update_url ); ?>"><?php esc_attr_e( 'Update Available', 'php-compatibility-checker' ); ?></a></div>{{/if}}{{#if warnings}}<div class="badge warnings">{{warnings}} <?php esc_attr_e( 'Warnings', 'php-compatibility-checker' ); ?></div>{{/if}}{{#if errors}}<div class="badge errors">{{errors}} <?php esc_attr_e( 'Errors', 'php-compatibility-checker' ); ?></div>{{/if}}</div>
 			</div>
 		</script>
 		<?php
 	}
-
 }
 // Register the WPEngine_PHPCompat instance
 WPEngine_PHPCompat::init();
-

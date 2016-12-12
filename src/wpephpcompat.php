@@ -1,8 +1,8 @@
 <?php
 // Exit if this file is directly accessed
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-require_once ( __DIR__ . '/../vendor/autoload.php' );
+require_once( __DIR__ . '/../vendor/autoload.php' );
 
 /**
  * Summary.
@@ -40,7 +40,7 @@ class WPEPHPCompat {
 	public $test_version = null;
 
 	/**
-	 * Summary.
+	 * Scan only active plugins or all?
 	 *
 	 * @since 1.0.0
 	 * @access public
@@ -49,7 +49,7 @@ class WPEPHPCompat {
 	public $only_active = null;
 
 	/**
-	 * Summary.
+	 * The base directory for the plugin.
 	 *
 	 * @since 1.0.0
 	 * @access public
@@ -70,6 +70,20 @@ class WPEPHPCompat {
 		'*/woocommerce/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#woocommerce
 		'*/wp-migrate-db/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#wp-migrate-db
 		'*/easy-digital-downloads/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#easy-digital-downloads
+		'*/updraftplus/*' => '7.0',
+		'*/megamenu/*' => '7.0',
+		'*/tablepress/*' => '7.0',
+		'*/myMail/*' => '7.0',
+		'*/wp-spamshield/*' => '7.0',
+		'*/vendor/stripe/stripe-php/lib/StripeObject.php' => '7.0', // https://github.com/wpengine/phpcompat/issues/89
+		'*/gravityforms/*' => '7.0', // https://github.com/wpengine/phpcompat/issues/85
+		'*/download-monitor/*' => '7.0', // https://github.com/wpengine/phpcompat/issues/84
+		'*/query-monitor/*' => '7.0', // https://wordpress.org/support/topic/false-positive-showing-query-monitor-as-not-php-7-compatible/
+		'*/bbpress/*' => '7.0', // https://wordpress.org/support/topic/false-positive-showing-bbpress-as-not-php-7-compatible/
+		'*/comet-cache/*' => '7.0', // https://wordpress.org/support/topic/false-positive-comet-cache/
+		'*/comment-mail/*' => '7.0', // https://wordpress.org/support/topic/false-positive-comment-mail/
+		'*/social-networks-auto-poster-facebook-twitter-g/*' => '7.0', // https://wordpress.org/plugins/social-networks-auto-poster-facebook-twitter-g/
+		'*/mailpoet/*' => '7.0', // https://wordpress.org/support/topic/false-positive-mailpoet-3-not-compatible-with-php7/
 	);
 
 	/**
@@ -120,7 +134,7 @@ class WPEPHPCompat {
 
 					$timestamp = wp_next_scheduled( 'wpephpcompat_start_test_cron' );
 
-					if ( $timestamp == false ) {
+					if ( false == $timestamp ) {
 						wp_schedule_single_event( time() + $timeout, 'wpephpcompat_start_test_cron' );
 					}
 					return;
@@ -174,6 +188,12 @@ class WPEPHPCompat {
 		}
 
 		if ( ! $this->is_command_line() ) {
+<<<<<<< HEAD
+=======
+			// Close the connection to the browser.
+			$this->close_connection( 'started' );
+
+>>>>>>> master
 			/**
 			 * Kill cron after a configurable timeout.
 			 * Subtract 5 from the timeout if we can to avoid race conditions.
@@ -187,18 +207,18 @@ class WPEPHPCompat {
 			$this->debug_log( 'Processing: ' . $directory->post_title );
 
 			// Add the plugin/theme name to the results.
-			$scan_results .= 'Name: ' . $directory->post_title . "\n\n";
+			$scan_results .= __( 'Name', 'php-compatibility-checker' ) . ': ' . $directory->post_title . "\n\n";
 
 			// Keep track of the number of times we've attempted to scan the plugin.
 			$count = get_post_meta( $directory->ID, 'count', true ) ?: 1;
 			$this->debug_log( 'Attempted scan count: ' . $count );
 
 			if ( $count > 2 ) { // If we've already tried twice, skip it.
-				$scan_results .= "The plugin/theme was skipped as it was too large to scan before the server killed the process.\n\n";
+				$scan_results .= __( 'The plugin/theme was skipped as it was too large to scan before the server killed the process.', 'php-compatibility-checker' ) . "\n\n";
 				update_option( 'wpephpcompat.scan_results', $scan_results , false );
 				wp_delete_post( $directory->ID );
 				$count = 0;
-				$this->debug_log( 'Skipped: ' .$directory->post_title );
+				$this->debug_log( 'Skipped: ' . $directory->post_title );
 				continue;
 			}
 
@@ -210,7 +230,7 @@ class WPEPHPCompat {
 			$report = $this->process_file( $directory->post_content );
 
 			if ( ! $report ) {
-				$report = 'PHP ' . $this->test_version . ' compatible.';
+				$report = 'PHP ' . $this->test_version . __( ' compatible.', 'php-compatibility-checker' );
 			}
 
 			$scan_results .= $report . "\n";
@@ -273,6 +293,7 @@ class WPEPHPCompat {
 		// Default ignored list.
 		$ignored = array(
 			'*/tests/*', // No reason to scan tests.
+			'*/test/*', // Another common test directory.
 			'*/node_modules/*', // Commonly used for development but not in production.
 			'*/tmp/*', // Temporary files.
 		);
@@ -284,7 +305,7 @@ class WPEPHPCompat {
 			}
 		}
 
-		return $ignored;
+		return apply_filters( 'phpcompat_whitelist', $ignored );
 	}
 
 	/**
@@ -307,12 +328,12 @@ class WPEPHPCompat {
 
 		foreach ( $all_plugins as $k => $v ) {
 			//Exclude our plugin.
-			if ( $v['Name'] === 'PHP Compatibility Checker' ) {
+			if ( 'PHP Compatibility Checker' === $v['Name'] ) {
 				continue;
 			}
 
 			// Exclude active plugins if only_active = "yes".
-			if ( $this->only_active === 'yes' ) {
+			if ( 'yes' === $this->only_active ) {
 				// Get array of active plugins.
 				$active_plugins = get_option( 'active_plugins' );
 
@@ -326,8 +347,7 @@ class WPEPHPCompat {
 			// Plugin in root directory (like Hello Dolly).
 			if ( './' === $plugin_file ) {
 				$plugin_path = $plugin_base . $k;
-			}
-			else {
+			} else {
 				$plugin_path = $plugin_base . $plugin_file;
 			}
 
@@ -352,15 +372,16 @@ class WPEPHPCompat {
 		$all_themes = wp_get_themes();
 
 		foreach ( $all_themes as $k => $v ) {
-			if ( $this->only_active === 'yes' ) {
+			if ( 'yes' === $this->only_active ) {
 				$current_theme = wp_get_theme();
-				if ($all_themes[$k]->Name != $current_theme->Name)
-				continue;
+				if ( $all_themes[ $k ]->Name != $current_theme->Name ) {
+					continue;
+				}
 			}
 
-			$theme_path = $all_themes[$k]->theme_root . DIRECTORY_SEPARATOR . $k . DIRECTORY_SEPARATOR;
+			$theme_path = $all_themes[ $k ]->theme_root . DIRECTORY_SEPARATOR . $k . DIRECTORY_SEPARATOR;
 
-			$this->add_directory( $all_themes[$k]->Name, $theme_path );
+			$this->add_directory( $all_themes[ $k ]->Name, $theme_path );
 		}
 
 		// Add parent theme if the current theme is a child theme.
@@ -381,7 +402,7 @@ class WPEPHPCompat {
 	 */
 	public function clean_report( $report ) {
 		// Remove unnecessary overview.
-		$report = preg_replace ( '/Time:.+\n/si', '', $report );
+		$report = preg_replace( '/Time:.+\n/si', '', $report );
 
 		// Remove whitespace.
 		$report = trim( $report );
@@ -407,7 +428,7 @@ class WPEPHPCompat {
 		//Make sure all directories are removed from the queue.
 		$args = array(
 			'posts_per_page' => -1,
-			'post_type'      => 'wpephpcompat_jobs'
+			'post_type'      => 'wpephpcompat_jobs',
 		);
 		$directories = get_posts( $args );
 
@@ -429,7 +450,7 @@ class WPEPHPCompat {
 			'post_content'  => $path,
 			'post_status'   => 'publish',
 			'post_author'   => 1,
-			'post_type'     => 'wpephpcompat_jobs'
+			'post_type'     => 'wpephpcompat_jobs',
 		);
 
 		return wp_insert_post( $dir );
@@ -442,12 +463,11 @@ class WPEPHPCompat {
 	 * @param  string $message Message to log.
 	 * @return null
 	 */
-	private function debug_log( $message ){
+	private function debug_log( $message ) {
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG === true && ! $this->is_command_line() ) {
 			if ( is_array( $message ) || is_object( $message ) ) {
 				error_log( print_r( $message , true ) );
-			}
-			else {
+			} else {
 				error_log( 'WPE PHP Compatibility: ' . $message );
 			}
 		}
@@ -459,8 +479,7 @@ class WPEPHPCompat {
 	 * @since  1.0.0
 	 * @return boolean Returns true if the request came from the command line.
 	 */
-	private function is_command_line()
-	{
-		return defined( 'WP_CLI' ) || defined( 'PHPUNIT_TEST' );
+	private function is_command_line() {
+		return defined( 'WP_CLI' ) || defined( 'PHPUNIT_TEST' ) || php_sapi_name() == 'cli';
 	}
 }

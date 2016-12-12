@@ -30,14 +30,7 @@ jQuery( document ).ready(function($) {
 	$( '#runButton' ).on( 'click', function() {
 		// Unselect button so it's not highlighted.
 		$( '#runButton' ).blur();
-		// If run button is disabled, don't run test.
-		if ( $( '#runButton' ).hasClass( 'button-primary-disabled' ) ) {
-			alert( 'Scan is already running!' );
-			return;
-		}
 
-		// Disable run button.
-		$( '#runButton' ).addClass( 'button-primary-disabled' );
 		// Show the ajax spinner.
 		$( '.spinner' ).show();
 		// Empty the results textarea.
@@ -70,31 +63,21 @@ function checkStatus() {
 	};
 
 	var obj;
-	jQuery.post( ajaxurl, data, function( response ) {
-		try {
-			obj = JSON.parse( response );
-		} catch(e) {
-			// If response wasn't JSON something is wrong.
-			alert( "Error: " + e + "\nResponse: " + response );
-			return;
-		}
-
+	jQuery.post( ajaxurl, data, function( obj ) {
 		/*
 		 * Status false: the test is not running and has not been run yet
 		 * Status 1: the test is currently running
 		 * Status 0: the test as completed but is not currently running
 		 */
 		if ( false === obj.results ) {
-			jQuery( '#runButton' ).val( 'Run' );
+			jQuery( '#runButton' ).val( window.wpephpcompat.run );
 		} else {
-			jQuery( '#runButton' ).val( 'Re-run' );
+			jQuery( '#runButton' ).val( window.wpephpcompat.rerun );
 		}
 
 		if ( '1' === obj.status ) {
-			jQuery( '#runButton' ).addClass( 'button-primary-disabled' );
 			jQuery( '.spinner' ).show();
 		} else {
-			jQuery( '#runButton' ).removeClass( 'button-primary-disabled' );
 			jQuery( '.spinner' ).hide();
 		}
 
@@ -120,6 +103,15 @@ function checkStatus() {
 			timer = setTimeout(function() {
 				checkStatus();
 			}, 5000);
+		}
+	}, 'json' ).fail(function ( xhr, status, error )
+	{
+		// Server responded correctly, but the response wasn't valid.
+		if ( 200 === xhr.status ) {
+			alert( "Error: " + error + "\nResponse: " + xhr.responseText );
+		} 
+		else { // Server didn't respond correctly.
+			alert( "Error: " + error + "\nStatus: " + xhr.status );
 		}
 	});
 }
@@ -179,7 +171,7 @@ function displayReport( response ) {
 	$( '#footer' ).show();
 
 	// Separate plugins/themes.
-	var plugins = response.replace( /^\s+|\s+$/g, '' ).split( 'Name: ' );
+	var plugins = response.replace( /^\s+|\s+$/g, '' ).split( window.wpephpcompat.name + ':' );
 
 	// Remove the first item, it's empty.
 	plugins.shift();
@@ -230,11 +222,11 @@ function displayReport( response ) {
 
 	// Display global compatibility status.
 	if ( compatible ) {
-		$( '#standardMode' ).prepend( '<h3>Your WordPress install is PHP ' + test_version + ' compatible.</h3>' );
+		$( '#standardMode' ).prepend( '<h3>' + window.wpephpcompat.your_wp + ' PHP ' + test_version + ' ' + window.wpephpcompat.compatible + '.</h3>' );
 	} else {
 		// Display scan stats.
-		$( '#standardMode' ).prepend( '<p>' + failedCount + ' out of ' + plugins.length + ' plugins/themes are not compatible.</p>' );
+		$( '#standardMode' ).prepend( '<p>' + failedCount + ' ' + window.wpephpcompat.out_of + ' ' + plugins.length + ' ' + window.wpephpcompat.are_not + '.</p>' );
 
-		$( '#standardMode' ).prepend( '<h3>Your WordPress install is not PHP ' + test_version + ' compatible.</h3>' );
+		$( '#standardMode' ).prepend( '<h3>' + window.wpephpcompat.is_not + ' ' + test_version + ' ' + window.wpephpcompat.compatible + '.</h3>' );
 	}
 }
