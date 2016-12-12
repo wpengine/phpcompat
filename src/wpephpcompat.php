@@ -188,12 +188,6 @@ class WPEPHPCompat {
 		}
 
 		if ( ! $this->is_command_line() ) {
-<<<<<<< HEAD
-=======
-			// Close the connection to the browser.
-			$this->close_connection( 'started' );
-
->>>>>>> master
 			/**
 			 * Kill cron after a configurable timeout.
 			 * Subtract 5 from the timeout if we can to avoid race conditions.
