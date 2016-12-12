@@ -188,7 +188,6 @@ class WPEngine_PHPCompat {
 
 		// Build our URL.
 		$url = add_query_arg( $query, admin_url( 'admin-ajax.php' ) );
-		$url = str_replace( '8081', '80', $url );
 		// POST.
 		wp_remote_post( esc_url_raw( $url ), $args );
 	}
