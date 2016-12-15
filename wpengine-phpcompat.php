@@ -248,6 +248,8 @@ class WPEngine_PHPCompat {
 		$test_version = get_option( 'wpephpcompat.test_version' );
 		$only_active = get_option( 'wpephpcompat.only_active' );
 
+		$phpversions = $this->get_phpversions();
+
 		// Assigns defaults for the scan if none are found in the database.
 		$test_version = ( false !== $test_version ) ? $test_version : '7.0';
 		$only_active = ( false !== $only_active ) ? $only_active : 'yes';
