@@ -66,6 +66,20 @@ class WPEngine_PHPCompat {
 	}
 
 	/**
+	 * Return an array of available PHP versions to test.
+	 */
+	function get_phpversions() {
+
+		return apply_filters( 'phpcompat_phpversions', array(
+			'PHP 7.0' => '7.0',
+			'PHP 5.6' => '5.6',
+			'PHP 5.5' => '5.5',
+			'PHP 5.4' => '5.4',
+			'PHP 5.3' => '5.3',
+		));
+	}
+
+	/**
 	 * Start the test!
 	 *
 	 * @since  1.0.0
