@@ -277,7 +277,8 @@ class WPEngine_PHPCompat {
 					<tr>
 						<th scope="row"><label for="phptest_version"><?php esc_attr_e( 'PHP Version', 'php-compatibility-checker' ); ?></label></th>
 						<td>
-							<?php foreach( $phpversions as $name => $version ) {
+							<?php
+							foreach ( $phpversions as $name => $version ) {
 								printf( '<label><input type="radio" name="phptest_version" value="%s" %s /> %s</label><br>', $version, checked( $test_version, $version, false ), $name );
 							}
 							?>
