@@ -92,8 +92,7 @@ class WPEngine_PHPCompat {
 
 				// Fork so we can close the connection.
 				$this->fork_scan( $test_version, $only_active );
-			}
-			else {
+			} else {
 				$wpephpc->test_version = $test_version;
 				$wpephpc->only_active = $only_active;
 
@@ -173,8 +172,8 @@ class WPEngine_PHPCompat {
 
 		// Keep track of these variables.
 		$body = array(
-			'test_version'=> $test_version,
-			'only_active'=> $only_active,
+			'test_version' => $test_version,
+			'only_active' => $only_active,
 		);
 
 		// Instantly return!
