@@ -35,7 +35,6 @@ jQuery( document ).ready(function($) {
 		$( '.spinner' ).show();
 		// Empty the results textarea.
 		resetDisplay();
-		$( '#footer' ).hide();
 		test_version = $( 'input[name=phptest_version]:checked' ).val();
 		only_active = $( 'input[name=active_plugins]:checked' ).val();
 		var data = {
@@ -53,6 +52,15 @@ jQuery( document ).ready(function($) {
 			checkStatus();
 		});
 	});
+
+	$( '#cleanupButton' ).on( 'click', function() {
+		clearTimeout( timer );
+		jQuery.get( ajaxurl,  { 'action': 'wpephpcompat_clean_up' }, function() {
+			resetDisplay();
+			checkStatus();
+		});
+	});
+
 });
 /**
  * Check the scan status and display results if scan is done.
@@ -111,7 +119,7 @@ function checkStatus() {
 		// Server responded correctly, but the response wasn't valid.
 		if ( 200 === xhr.status ) {
 			alert( "Error: " + error + "\nResponse: " + xhr.responseText );
-		} 
+		}
 		else { // Server didn't respond correctly.
 			alert( "Error: " + error + "\nStatus: " + xhr.status );
 		}
@@ -128,6 +136,7 @@ function resetDisplay() {
 	jQuery( '#standardMode' ).html('');
 	jQuery( '#wpe-progress-count' ).text('');
 	jQuery( '#wpe-progress-active' ).text('');
+	jQuery( '#footer' ).hide();
 }
 /**
  * Loop through a string and count the total matches.

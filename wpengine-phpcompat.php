@@ -60,6 +60,7 @@ class WPEngine_PHPCompat {
 		add_action( 'wp_ajax_wpephpcompat_start_test', array( self::instance(), 'start_test' ) );
 		add_action( 'wp_ajax_wpephpcompat_check_status', array( self::instance(), 'check_status' ) );
 		add_action( 'wpephpcompat_start_test_cron', array( self::instance(), 'start_test' ) );
+		add_action( 'wp_ajax_wpephpcompat_clean_up', array( self::instance(), 'clean_up' ) );
 
 		// Create custom post type.
 		add_action( 'init', array( self::instance(), 'create_job_queue' ) );
@@ -189,6 +190,21 @@ class WPEngine_PHPCompat {
 		$url = add_query_arg( $query, admin_url( 'admin-ajax.php' ) );
 		// POST.
 		wp_remote_post( esc_url_raw( $url ), $args );
+	}
+
+	/**
+	 * Remove all database options from the database.
+	 *
+	 * @since 1.3.2
+	 * @action wp_ajax_wpephpcompat_clean_up
+	 */
+	function clean_up() {
+		if ( current_user_can( 'manage_options' ) || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
+			$wpephpc = new \WPEPHPCompat( __DIR__ );
+			$wpephpc->clean_after_scan();
+			delete_option( 'wpephpcompat.scan_results' );
+			wp_send_json( 'success' );
+		}
 	}
 
 	/**
@@ -345,7 +361,9 @@ class WPEngine_PHPCompat {
 			</p>
 			<p>
 				<input style="float: left;" name="run" id="runButton" type="button" value="<?php esc_attr_e( 'Run', 'php-compatibility-checker' ); ?>" class="button-primary" />
-				<div style="display:none; visibility: visible; float: none;" class="spinner"></div>
+				<div class="wpe-tooltip"><input style="float: left; margin-left: 5px;" name="run" id="cleanupButton" type="button" value="<?php esc_attr_e( 'Clean up', 'php-compatibility-checker' ); ?>" class="button" />
+				<span class="wpe-tooltiptext">This will remove all database options related to this plugin, but it will not stop a scan in progress. If you'd like to completly remove all data wait for the scan to finish before hitting this button.</span></div>
+				<div style="display:none; visibility: visible; float: left;" class="spinner"></div>
 			</p>
 		</div>
 
