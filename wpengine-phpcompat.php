@@ -67,6 +67,20 @@ class WPEngine_PHPCompat {
 	}
 
 	/**
+	 * Return an array of available PHP versions to test.
+	 */
+	function get_phpversions() {
+
+		return apply_filters( 'phpcompat_phpversions', array(
+			'PHP 7.0' => '7.0',
+			'PHP 5.6' => '5.6',
+			'PHP 5.5' => '5.5',
+			'PHP 5.4' => '5.4',
+			'PHP 5.3' => '5.3',
+		));
+	}
+
+	/**
 	 * Start the test!
 	 *
 	 * @since  1.0.0
@@ -250,6 +264,8 @@ class WPEngine_PHPCompat {
 		$test_version = get_option( 'wpephpcompat.test_version' );
 		$only_active = get_option( 'wpephpcompat.only_active' );
 
+		$phpversions = $this->get_phpversions();
+
 		// Assigns defaults for the scan if none are found in the database.
 		$test_version = ( false !== $test_version ) ? $test_version : '7.0';
 		$only_active = ( false !== $only_active ) ? $only_active : 'yes';
@@ -277,11 +293,11 @@ class WPEngine_PHPCompat {
 					<tr>
 						<th scope="row"><label for="phptest_version"><?php esc_attr_e( 'PHP Version', 'php-compatibility-checker' ); ?></label></th>
 						<td>
-							<label><input type="radio" name="phptest_version" value="7.0" <?php checked( $test_version, '7.0', true ); ?>> PHP 7.0</label><br>
-							<label><input type="radio" name="phptest_version" value="5.6" <?php checked( $test_version, '5.6', true ); ?>> PHP 5.6</label><br>
-							<label><input type="radio" name="phptest_version" value="5.5" <?php checked( $test_version, '5.5', true ); ?>> PHP 5.5</label><br>
-							<label><input type="radio" name="phptest_version" value="5.4" <?php checked( $test_version, '5.4', true ); ?>> PHP 5.4</label><br>
-							<label><input type="radio" name="phptest_version" value="5.3" <?php checked( $test_version, '5.3', true ); ?>> PHP 5.3</label>
+							<?php
+							foreach ( $phpversions as $name => $version ) {
+								printf( '<label><input type="radio" name="phptest_version" value="%s" %s /> %s</label><br>', $version, checked( $test_version, $version, false ), $name );
+							}
+							?>
 						</td>
 					</tr>
 					<tr>
