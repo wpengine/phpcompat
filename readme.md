@@ -3,7 +3,7 @@
 **Tags:** php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine  
 **Requires at least:** 3.5  
 **Tested up to:** 4.6  
-**Stable tag:** 1.3.1  
+**Stable tag:** 1.3.2  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -118,6 +118,10 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 ## Changelog ##
 
+### 1.3.2 ###
+- Added a "Clean up" button and uninstall.php.
+- Added phpcompat_phpversions filter.
+
 ### 1.3.1 ###
 - Whitelisted a number of plugins.
 
@@ -183,5 +187,6 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 ## Upgrade Notice ##
 
-### 1.3.1 ###
-- Whitelisted a number of plugins.
+### 1.3.2 ###
+- Added a "Clean up" button and uninstall.php.
+- Added phpcompat_phpversions filter.
