@@ -326,7 +326,7 @@ class WPEngine_PHPCompat {
 						<textarea readonly="readonly" id="testResults"></textarea>
 					</div>
 
-					<p><?php printf( __( 'This plugin relies on WP-Cron to scan files in the background. The scan will get stuck if the site&#39s WP-Cron is not running correctly. Please <a href="%1$s">see the FAQ</a> for more information.', 'php-compatibility-checker' ), 'https://wordpress.org/plugins/php-compatibility-checker/faq/' ); ?></p>
+					<p><?php printf( __( '<strong>Note:</strong> This plugin relies on WP-Cron to scan files in the background. The scan will get stuck if the site&#39s WP-Cron is not running correctly. Please <a href="%1$s">see the FAQ</a> for more information.', 'php-compatibility-checker' ), 'https://wordpress.org/plugins/php-compatibility-checker/faq/' ); ?></p>
 					<p><?php printf( __( 'Report false positives <a href="%1$s">on our GitHub repo</a>.', 'php-compatibility-checker' ), 'https://github.com/wpengine/phpcompat/wiki/Results' ); ?></p>
 				</div> <!-- /wpe-pcc-results -->
 			</div> <!-- /wpe-pcc-main -->
@@ -364,6 +364,42 @@ class WPEngine_PHPCompat {
 
 		<!-- Results template -->
 		<script id="result-template" type="text/x-handlebars-template">
+			<div class="wpe-pcc-alert wpe-pcc-alert-{{#if skipped}}skipped{{else if passed}}passed{{else}}error{{/if}}">
+				<p>
+					<!-- Appropriate icon, based on status -->
+					<span class="dashicons-before dashicons-{{#if skipped}}editor-help{{else if passed}}yes{{else}}no{{/if}}"></span>
+					<!-- Name of plugin/theme being tested -->
+					<strong>{{plugin_name}} </strong> -
+					<!-- Results status -->
+					<span class="wpe-pcc-alert-status">
+						{{#if passed}}
+							<?php esc_attr_e( 'Compatible', 'php-compatibility-checker' ); ?>
+						{{/if}}
+						{{#if skipped}}
+							<?php esc_attr_e( 'Unknown', 'php-compatibility-checker' ); ?>
+						{{/if}}
+						{{#if warnings}}
+							{{warnings}} <?php esc_attr_e( 'warning(s)', 'php-compatibility-checker' ); ?>
+						{{/if}}
+						{{#if errors}}
+							{{errors}} <?php esc_attr_e( 'error(s)', 'php-compatibility-checker' ); ?>
+						{{/if}}
+					</span>
+					<!-- Check if plugin/theme has an update available -->
+					<?php $update_url = site_url( 'wp-admin/update-core.php' , 'admin' ); ?>
+					{{#if updateAvailable}}
+						(<a href="<?php echo esc_url( $update_url ); ?>"><?php esc_attr_e( 'Update Available', 'php-compatibility-checker' ); ?></a>)
+					{{/if}}
+					<!-- View details link -->
+					<a class="wpe-pcc-alert-details" href="#"><?php esc_attr_e( 'toggle details', 'php-compatibility-checker' ); ?></a>
+					<textarea class="wpe-pcc-alert-logs hide">{{logs}}</textarea>
+				</p>
+			</div> <!-- /wpe-pcc-alert -->
+
+
+
+			<!-- Old markup -->
+			<?php /* ?>
 			<div style="border-left-color: {{#if skipped}}#999999{{else if passed}}#038103{{else}}#e74c3c{{/if}};" class="wpe-results-card">
 				<div class="inner-left">
 					{{#if skipped}}<img src="<?php echo esc_url( plugins_url( '/src/images/question.png', __FILE__ ) ); ?>">{{else if passed}}<img src="<?php echo esc_url( plugins_url( '/src/images/check.png', __FILE__ ) ); ?>">{{else}}<img src="<?php echo esc_url( plugins_url( '/src/images/x.png', __FILE__ ) ); ?>">{{/if}}
@@ -375,8 +411,18 @@ class WPEngine_PHPCompat {
 					<textarea style="display: none; white-space: pre;">{{logs}}</textarea><a class="view-details"><?php esc_attr_e( 'view details', 'php-compatibility-checker' ); ?></a>
 				</div>
 				<?php $update_url = site_url( 'wp-admin/update-core.php' , 'admin' ); ?>
-				<div style="float:right;">{{#if updateAvailable}}<div class="badge wpe-update"><a href="<?php echo esc_url( $update_url ); ?>"><?php esc_attr_e( 'Update Available', 'php-compatibility-checker' ); ?></a></div>{{/if}}{{#if warnings}}<div class="badge warnings">{{warnings}} <?php esc_attr_e( 'Warnings', 'php-compatibility-checker' ); ?></div>{{/if}}{{#if errors}}<div class="badge errors">{{errors}} <?php esc_attr_e( 'Errors', 'php-compatibility-checker' ); ?></div>{{/if}}</div>
+				<div style="float:right;">{{#if updateAvailable}}<div class="badge wpe-update"><a href="<?php echo esc_url( $update_url ); ?>"><?php esc_attr_e( 'Update Available', 'php-compatibility-checker' ); ?></a></div>{{/if}}
+
+
+				{{#if warnings}}<div class="badge warnings">{{warnings}} <?php esc_attr_e( 'Warnings', 'php-compatibility-checker' ); ?>
+
+				</div>{{/if}}
+
+				{{#if errors}}<div class="badge errors">{{errors}} <?php esc_attr_e( 'Errors', 'php-compatibility-checker' ); ?></div>{{/if}}</div>
+
+
 			</div>
+		<?php */ ?>
 		</script>
 		<?php
 	}

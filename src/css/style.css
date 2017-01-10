@@ -16,6 +16,7 @@
 	padding-top: 0;
 }
 
+/* Main container */
 .wpe-pcc-main {
 	padding-right: 40px;
 }
@@ -35,6 +36,7 @@
 	padding-top: 20px;
 }
 
+/* Sidebar container*/
 .wpe-pcc-aside {
 	width: 277px;
 }
@@ -98,6 +100,70 @@
 	background: #162a33;
 	color: #fff;
 }
+
+/* Alerts */
+.wpe-pcc-alert {
+	background: #fff;
+	padding: 10px 20px;
+	border-left: 5px solid #fff;
+	margin: 5px 0;
+	clear: both;
+}
+.wpe-pcc-alert p {
+	margin: 0;
+	padding: 0;
+}
+.wpe-pcc-alert-details {
+	float: right;
+	text-decoration: none;
+}
+.wpe-pcc-alert-details:hover, .wpe-pcc-alert-details:focus {
+	text-decoration: underline;
+	cursor: pointer;
+}
+.wpe-pcc-alert-logs {
+	display: block;
+	white-space: pre;
+	clear: both;
+	width: 100%;
+	resize: vertical;
+	min-height: 250px;
+	margin-top: 20px;
+}
+.hide {
+	display: none !important;
+}
+
+/* skipped */
+.wpe-pcc-alert.wpe-pcc-alert-skipped {
+	border-color: #999;
+}
+/* passed */
+.wpe-pcc-alert.wpe-pcc-alert-passed {
+	border-color: #038103;
+}
+.wpe-pcc-alert-passed .dashicons-before {
+	color: #038103;
+}
+/* error */
+.wpe-pcc-alert.wpe-pcc-alert-error {
+	border-color: #e74c3c;
+}
+.wpe-pcc-alert-error .wpe-pcc-alert-status, .wpe-pcc-alert-error .dashicons-before {
+	color: #e74c3c;
+}
+/* warning */
+.wpe-pcc-alert.wpe-pcc-alert-warning {
+	border-color: yellow;
+}
+.wpe-pcc-alert-warning .wpe-pcc-alert-status, .wpe-pcc-alert-warning .dashicons-before {
+	color: yellow;
+}
+
+
+
+
+
 
 
 

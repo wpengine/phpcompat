@@ -18,14 +18,11 @@ jQuery( document ).ready(function($) {
 	$( '#downloadReport' ).on( 'click', function() {
 		download( $( '#testResults' ).val(), 'report.txt', 'text/plain' );
 	});
-	$( document ).on( 'click', '.view-details', function() {
+	$( document ).on( 'click', '.wpe-pcc-alert-details', function() {
 		// Get the textarea with is on the same (dom) level.
 		var textarea = $( this ).siblings( 'textarea' );
-		if ( 'none' === textarea.css( 'display' ) ) {
-			textarea.css( 'display' , '' );
-		} else {
-			textarea.css( 'display', 'none' );
-		}
+		textarea.toggleClass( 'hide' );
+		return false;
 	});
 	$( '#runButton' ).on( 'click', function() {
 		// Unselect button so it's not highlighted.
