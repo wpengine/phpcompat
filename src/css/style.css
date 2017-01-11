@@ -23,6 +23,8 @@
 
 .wpe-pcc-spinner {
 	margin-left: 0 !important;
+	padding: 4px 10px !important;
+	float: none !important;
 }
 
 .wpe-pcc-form-table th {

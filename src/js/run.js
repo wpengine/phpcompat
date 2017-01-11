@@ -9,10 +9,10 @@ jQuery( document ).ready(function($) {
 	$( '#developermode' ).change(function() {
 		if ( $(this).is( ':checked' ) ) {
 			$( '#developerMode' ).show();
-			$( '#standardMode' ).hide();
+			$( '#wpe-pcc-standardMode' ).hide();
 		} else {
 			$( '#developerMode' ).hide();
-			$( '#standardMode' ).show();
+			$( '#wpe-pcc-standardMode' ).show();
 		}
 	});
 	$( '#downloadReport' ).on( 'click', function() {
@@ -128,10 +128,10 @@ function resetDisplay() {
 		value: 0
 	});
 	jQuery( '#testResults' ).text('');
-	jQuery( '#standardMode' ).html('');
+	jQuery( '#wpe-pcc-standardMode' ).html('');
 	jQuery( '#wpe-progress-count' ).text('');
 	jQuery( '#wpe-progress-active' ).text('');
-	jQuery( '#footer' ).hide();
+	jQuery( '.wpe-pcc-clear-results' ).hide();
 }
 /**
  * Loop through a string and count the total matches.
@@ -174,7 +174,6 @@ function displayReport( response ) {
 	var template = Handlebars.compile( source );
 
 	$( '#testResults' ).text( response );
-	$( '#footer' ).show();
 
 	// Separate plugins/themes.
 	var plugins = response.replace( /^\s+|\s+$/g, '' ).split( window.wpephpcompat.name + ':' );
@@ -223,16 +222,18 @@ function displayReport( response ) {
 			updateAvailable: updateAvailable
 		};
 		var html = template( context );
-		$('#standardMode').append( html );
+		$('#wpe-pcc-standardMode').append( html );
 	}
 
 	// Display global compatibility status.
 	if ( compatible ) {
-		$( '#standardMode' ).prepend( '<h3>' + window.wpephpcompat.your_wp + ' PHP ' + test_version + ' ' + window.wpephpcompat.compatible + '.</h3>' );
+		jQuery( '.wpe-pcc-clear-results' ).show();
+		// $( '#wpe-pcc-standardMode' ).prepend( '<h3>' + window.wpephpcompat.your_wp + ' PHP ' + test_version + ' ' + window.wpephpcompat.compatible + '.</h3>' );
 	} else {
 		// Display scan stats.
-		$( '#standardMode' ).prepend( '<p>' + failedCount + ' ' + window.wpephpcompat.out_of + ' ' + plugins.length + ' ' + window.wpephpcompat.are_not + '.</p>' );
+		jQuery( '.wpe-pcc-clear-results' ).show();
+		$( '#wpe-pcc-standardMode' ).prepend( '<p>' + failedCount + ' ' + window.wpephpcompat.out_of + ' ' + plugins.length + ' ' + window.wpephpcompat.are_not + '.</p>' );
 
-		$( '#standardMode' ).prepend( '<h3>' + window.wpephpcompat.is_not + ' ' + test_version + ' ' + window.wpephpcompat.compatible + '.</h3>' );
+		// $( '#wpe-pcc-standardMode' ).prepend( '<h3>' + window.wpephpcompat.is_not + ' ' + test_version + ' ' + window.wpephpcompat.compatible + '.</h3>' );
 	}
 }
