@@ -281,56 +281,75 @@ class WPEngine_PHPCompat {
 					<table class="form-table wpe-pcc-form-table">
 						<tbody>
 							<tr>
-								<th scope="row"><label for="phptest_version"><?php _e( '1. What version of PHP do you want to test?', 'php-compatibility-checker' ); ?></label></th>
+								<th scope="row"><label for="phptest_version"><?php _e( 'PHP Version', 'php-compatibility-checker' ); ?></label></th>
 								<td>
-									<?php
-									foreach ( $phpversions as $name => $version ) {
-										printf( '<label><input type="radio" name="phptest_version" value="%s" %s /> %s</label><br>', $version, checked( $test_version, $version, false ), $name );
-									} ?>
+									<fieldset>
+										<?php
+										foreach ( $phpversions as $name => $version ) {
+											printf( '<label><input type="radio" name="phptest_version" value="%s" %s /> %s</label><br>', $version, checked( $test_version, $version, false ), $name );
+										} ?>
+									</fieldset>
 								</td>
 							</tr>
 							<tr>
-								<th scope="row"><label for="active_plugins"><?php _e( '2. What plugins/themes do you want to scan?', 'php-compatibility-checker' ); ?></label></th>
-								<td><label><input type="radio" name="active_plugins" value="yes" <?php checked( $only_active, 'yes', true ); ?> /> <?php _e( 'Only scan active plugins and themes', 'php-compatibility-checker' ); ?></label><br>
-									<label><input type="radio" name="active_plugins" value="no" <?php checked( $only_active, 'no', true ); ?> /> <?php _e( 'Scan all plugins and themes', 'php-compatibility-checker' ); ?></label>
+								<th scope="row"><label for="active_plugins"><?php _e( 'Plugin / Theme Status', 'php-compatibility-checker' ); ?></label></th>
+								<td>
+									<fieldset>
+										<label><input type="radio" name="active_plugins" value="yes" <?php checked( $only_active, 'yes', true ); ?> /> <?php _e( 'Only scan active plugins and themes', 'php-compatibility-checker' ); ?></label><br>
+										<label><input type="radio" name="active_plugins" value="no" <?php checked( $only_active, 'no', true ); ?> /> <?php _e( 'Scan all plugins and themes', 'php-compatibility-checker' ); ?></label>
+									</fieldset>
 								</td>
+							</tr>
+							<tr>
+								<th scope="row"></th>
+									<td>
+										<div class="wpe-pcc-run-scan">
+						<input name="run" id="runButton" type="button" value="<?php _e( 'Scan', 'php-compatibility-checker' ); ?>" class="button-secondary" />
+						<span style="display:none; visibility:visible;" class="spinner wpe-pcc-spinner"></span>
+					</div> <!-- /wpe-pcc-run-scan -->
+									</td>
+								</th>
 							</tr>
 						</tbody>
 					</table>
 
-					<div class="wpe-pcc-run-scan">
-						<input name="run" id="runButton" type="button" value="<?php _e( 'Scan', 'php-compatibility-checker' ); ?>" class="button-primary" />
-						<span style="display:none; visibility:visible;" class="spinner wpe-pcc-spinner"></span>
-					</div> <!-- /wpe-pcc-run-scan -->
+
 
 				</div> <!-- /wpe-pcc-scan-options -->
 				<hr>
 				<div class="wpe-pcc-results">
 					<h2><?php _e( 'Scan Results', 'php-compatibility-checker' ); ?></h2>
 
-					<!-- Progress bar -->
+					<?php /* Progress bar */ ?>
 					<div style="display:none;" id="wpe-progress">
 						<p><?php printf( '<strong>Scan progress</strong> - <span id="wpe-progress-count"></span> <span id="wpe-progress-active"></span>', 'php-compatibility-checker' ); ?></p>
 						<div id="progressbar"></div>
 					</div>
 
-					<a class="wpe-pcc-clear-results" name="run" id="cleanupButton" style="display:none;"><?php _e( 'Clear results', 'php-compatibility-checker' ); ?></a>
-
-					<!-- Area for pretty results. -->
+					<?php /* Area for pretty results. */ ?>
 					<div id="wpe-pcc-standardMode"></div>
 
-					<!-- Area for developer results. -->
+					<?php /* Area for developer results. */ ?>
 					<div style="display:none;" id="developerMode">
-						<b><?php _e( 'Test Results:', 'php-compatibility-checker' ); ?></b>
 						<textarea readonly="readonly" id="testResults"></textarea>
 					</div>
 
-					<p><?php printf( __( '<strong>Note:</strong> This plugin relies on WP-Cron to scan files in the background. The scan will get stuck if the site&#39s WP-Cron is not running correctly. Please <a href="%1$s">see the FAQ</a> for more information.', 'php-compatibility-checker' ), 'https://wordpress.org/plugins/php-compatibility-checker/faq/' ); ?></p>
+					<?php /* Download report */ ?>
+					<div class="wpe-pcc-download-report" style="display:none;">
+						<hr>
+						<a id="downloadReport" class="button-primary" href="#"><span class="dashicons dashicons-download"></span> <?php _e( 'Download Report', 'php-compatibility-checker' ); ?></a>
+						<a class="wpe-pcc-clear-results" name="run" id="cleanupButton"><?php _e( 'Clear results', 'php-compatibility-checker' ); ?></a>
+					</div> <!-- /wpe-pcc-download-report -->
+
+					<p><?php printf( __( '<strong>Note:</strong> PHP Warnings will not cause errors, but could cause compatibility issues with future PHP versions, and could spam your PHP logs. This plugin relies on WP-Cron to scan files in the background. The scan will get stuck if the site&#39s WP-Cron is not running correctly. Please <a href="%1$s">see the FAQ</a> for more information.', 'php-compatibility-checker' ), 'https://wordpress.org/plugins/php-compatibility-checker/faq/' ); ?></p>
 					<p><?php printf( __( 'Report false positives <a href="%1$s">on our GitHub repo</a>.', 'php-compatibility-checker' ), 'https://github.com/wpengine/phpcompat/wiki/Results' ); ?></p>
 				</div> <!-- /wpe-pcc-results -->
 			</div> <!-- /wpe-pcc-main -->
 			<div class="wpe-pcc-aside">
 				<p class="wpe-pcc-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 268.3 51"><g fill="#40BAC8"><path d="M17.4 51h16.4V38.6l-4-4h-8.5l-3.9 4zM38.6 17.3l-3.9 3.9v8.6l3.9 3.9h12.5V17.3zM33.8 0H17.4v12.5l3.9 3.9h8.5l4-3.9zM51.1 51V38.6l-3.9-4H34.7V51zM4 0L.1 3.9v12.5h16.4V0zM34.7 0v12.5l3.9 3.9h12.5V0zM25.6 27.9c-1.3 0-2.3-1.1-2.3-2.3 0-1.3 1.1-2.3 2.3-2.3 1.3 0 2.3 1.1 2.3 2.3 0 1.2-1 2.3-2.3 2.3zM16.5 17.3H.1v16.4h12.4l4-3.9zM16.5 38.6l-4-4H.1V51h12.4l4-3.9z"/></g><g fill="#162A33"><path d="M86.2 38.6c-.3 0-.4-.1-.5-.4l-4.1-14.5h-.1l-4.1 14.5c-.1.3-.2.4-.5.4h-4.8c-.3 0-.4-.1-.5-.4l-7-25.2c0-.2 0-.4.3-.4h6.3c.3 0 .5.2.5.4L75 28.1h.1l4-15.1c.1-.3.2-.4.5-.4h3.9c.3 0 .4.1.5.4l4.2 15.1h.1L91.5 13c0-.2.2-.4.5-.4h6.3c.2 0 .3.2.3.4l-7 25.2c-.1.3-.2.4-.5.4h-4.9zM103.6 38.6c-.2 0-.4-.2-.4-.4V13c0-.2.2-.4.4-.4H114c6.3 0 9.6 3.6 9.6 8.6s-3.3 8.7-9.6 8.7h-3.8c-.2 0-.2.1-.2.2v8c0 .2-.2.4-.4.4h-6zm13.3-17.3c0-1.8-1.2-2.9-3.3-2.9h-3.4c-.2 0-.2.1-.2.2V24c0 .2.1.2.2.2h3.4c2.1 0 3.3-1.2 3.3-2.9zM132.5 32.2c-.5-1.4-.7-3.1-.7-6.5 0-3.3.3-5.1.7-6.5 1.3-4.1 4.5-6.2 8.6-6.2 4.2 0 7.3 2.1 8.6 6.2.5 1.4.7 3 .7 6.1 0 .3-.2.5-.6.5h-16.3c-.2 0-.3.2-.3.4 0 2.7.2 4.2.6 5.5 1.2 3.7 3.9 5.3 7.5 5.3 3.4 0 5.9-1.5 7.4-3.5.2-.3.5-.3.7-.1l.3.3c.3.2.3.5.1.7-1.7 2.4-4.6 4.1-8.4 4.1-4.5 0-7.5-2.1-8.9-6.3zm16.2-7.8c.2 0 .3-.1.3-.3 0-1.7-.2-3.1-.6-4.3-1.1-3.5-3.7-5.3-7.2-5.3s-6.1 1.7-7.2 5.3c-.4 1.2-.6 2.5-.6 4.3 0 .2.1.3.3.3h15zM173.6 38c-.3 0-.5-.2-.5-.5V22.9c0-5.8-2.4-8.3-7.1-8.3-4.1 0-7.5 2.8-7.5 7.6v15.4c0 .3-.2.5-.5.5h-.5c-.3 0-.5-.2-.5-.5V14.2c0-.3.2-.5.5-.5h.5c.3 0 .5.2.5.5v3.4h.1c1.2-2.8 4-4.5 7.5-4.5 5.5 0 8.6 3.1 8.6 9.4v15c0 .3-.2.5-.5.5h-.6zM182 44.3c-.2-.3-.2-.6.1-.7l.4-.3c.3-.2.5-.1.7.2 1.4 1.8 3.5 2.9 6.5 2.9 4.6 0 7.6-2.3 7.6-8.3V34h-.1c-1.2 2.7-3.3 4.6-7.6 4.6-4.1 0-6.9-2.2-8.1-5.8-.6-1.7-.8-3.9-.8-6.9 0-3 .3-5.2.8-6.9 1.2-3.6 4-5.8 8.1-5.8 4.3 0 6.4 1.9 7.6 4.6h.1v-3.5c0-.3.2-.5.5-.5h.5c.3 0 .5.2.5.5v23.9c0 6.7-3.6 9.7-9.2 9.7-3.5-.1-6.4-1.7-7.6-3.6zm14.6-12.1c.5-1.5.7-3.3.7-6.4 0-3-.2-4.9-.7-6.4-1.2-3.6-3.8-4.9-6.8-4.9-3.3 0-5.7 1.6-6.7 4.8-.5 1.5-.8 3.6-.8 6.4 0 2.8.3 4.9.8 6.4 1.1 3.2 3.4 4.8 6.7 4.8 3 .2 5.7-1.1 6.8-4.7zM207.2 6.1c-.3 0-.5-.2-.5-.5v-2c0-.3.2-.5.5-.5h1.2c.3 0 .5.2.5.5v2.1c0 .3-.2.5-.5.5h-1.2zm.4 31.9c-.3 0-.5-.2-.5-.5V14.2c0-.3.2-.5.5-.5h.5c.3 0 .5.2.5.5v23.3c0 .3-.2.5-.5.5h-.5zM233.5 38c-.3 0-.5-.2-.5-.5V22.9c0-5.8-2.4-8.3-7.1-8.3-4.1 0-7.5 2.8-7.5 7.6v15.4c0 .3-.2.5-.5.5h-.5c-.3 0-.5-.2-.5-.5V14.2c0-.3.2-.5.5-.5h.5c.3 0 .5.2.5.5v3.4h.1c1.2-2.8 4-4.5 7.5-4.5 5.5 0 8.6 3.1 8.6 9.4v15c0 .3-.2.5-.5.5h-.6zM241.4 32.2c-.5-1.4-.7-3.1-.7-6.5 0-3.3.3-5.1.7-6.5 1.3-4.1 4.5-6.2 8.6-6.2 4.2 0 7.3 2.1 8.6 6.2.5 1.4.7 3 .7 6.1 0 .3-.2.5-.6.5h-16.3c-.2 0-.3.2-.3.4 0 2.7.2 4.2.6 5.5 1.2 3.7 3.9 5.3 7.5 5.3 3.4 0 5.9-1.5 7.4-3.5.2-.3.5-.3.7-.1l.3.3c.3.2.3.5.1.7-1.7 2.4-4.6 4.1-8.4 4.1-4.5 0-7.6-2.1-8.9-6.3zm16.1-7.8c.2 0 .3-.1.3-.3 0-1.7-.2-3.1-.6-4.3-1.1-3.5-3.7-5.3-7.2-5.3s-6.1 1.7-7.2 5.3c-.4 1.2-.6 2.5-.6 4.3 0 .2.1.3.3.3h15z"/></g><g><path fill="#162A33" d="M262.3 16.1c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3-3-1.3-3-3zm5.5 0c0-1.5-1.1-2.5-2.5-2.5-1.5 0-2.5 1.1-2.5 2.5 0 1.5 1.1 2.5 2.5 2.5s2.5-1 2.5-2.5zm-3.5 1.7c-.1 0-.1 0-.1-.1v-3.1c0-.1 0-.1.1-.1h1.2c.7 0 1.1.4 1.1 1 0 .4-.2.8-.7.9l.7 1.3c.1.1 0 .2-.1.2h-.3c-.1 0-.1-.1-.2-.1l-.7-1.3h-.7v1.2c0 .1-.1.1-.1.1h-.2zm1.8-2.4c0-.3-.2-.5-.6-.5h-.8v1h.8c.4 0 .6-.2.6-.5z"/></g></svg></p>
+
+
+				<?php /* Begin sidebar */ ?>
 				<div class="wpe-pcc-aside-content">
 					<h2><?php _e( 'Launch this site in a PHP7 hosting environment and double your site speed!', 'php-compatibility-checker' ); ?></h2>
 					<p><?php _e( 'Easily test your site on a PHP7 server or launch your new PHP7 site now!', 'php-compatibility-checker' ); ?></p>
@@ -372,22 +391,25 @@ class WPEngine_PHPCompat {
 					</div> <!-- /wpe-pcc-information -->
 
 				</div> <!-- /wpe-pcc-aside-content -->
-				<input type="checkbox" id="developermode" name="developermode" value="yes" /><?php _e( 'Developer mode', 'php-compatibility-checker' ); ?>
+
+				<?php /* Toggle developer mode */ ?>
+				<label>
+					<input type="checkbox" id="developermode" name="developermode" value="yes" />
+					<?php _e( 'Developer mode', 'php-compatibility-checker' ); ?>
+				</label>
 			</div> <!-- /wpe-pcc-aside -->
 		</div> <!-- /wpe-pcc-wrap -->
 		<!-- // end new markup -->
 
-		<!-- Results template -->
+		<?php /* Results template */ ?>
 		<script id="result-template" type="text/x-handlebars-template">
 			<div class="wpe-pcc-alert wpe-pcc-alert-{{#if skipped}}skipped{{else if passed}}passed{{else}}error{{/if}}">
 				<p>
-					<!-- Appropriate icon, based on status -->
+					<?php /* Appropriate icon, based on status */ ?>
 					<span class="dashicons-before dashicons-{{#if skipped}}editor-help{{else if passed}}yes{{else}}no{{/if}}"></span>
-					<!-- Name of plugin/theme being tested -->
+					<?php /* Name of plugin/theme being tested */ ?>
 					<strong>{{plugin_name}} </strong> -
-					<!-- Update??? Don't know what this does -->
-					<span class="wpe-pcc-update">{{update}}</span>
-					<!-- Results status -->
+					<?php /* Results status */ ?>
 					<span class="wpe-pcc-alert-status">
 						{{#if passed}}
 							<span class="badge badge-passed"><?php _e( 'Compatible', 'php-compatibility-checker' ); ?></span>
@@ -402,12 +424,12 @@ class WPEngine_PHPCompat {
 							<span class="badge badge-errors"><?php _e( 'Errors:', 'php-compatibility-checker' ); ?> <strong>{{errors}}</strong></span>
 						{{/if}}
 					</span>
-					<!-- Check if plugin/theme has an update available -->
+					<?php /* Check if plugin/theme has an update available */ ?>
 					<?php $update_url = site_url( 'wp-admin/update-core.php' , 'admin' ); ?>
 					{{#if updateAvailable}}
 						(<a href="<?php echo esc_url( $update_url ); ?>"><?php _e( 'Update Available', 'php-compatibility-checker' ); ?></a>)
 					{{/if}}
-					<!-- View details link -->
+					<?php /* View details link */ ?>
 					<a class="wpe-pcc-alert-details" href="#"><?php _e( 'toggle details', 'php-compatibility-checker' ); ?></a>
 					<textarea class="wpe-pcc-alert-logs hide">{{logs}}</textarea>
 				</p>

@@ -17,6 +17,7 @@ jQuery( document ).ready(function($) {
 	});
 	$( '#downloadReport' ).on( 'click', function() {
 		download( $( '#testResults' ).val(), 'report.txt', 'text/plain' );
+		return false;
 	});
 	$( document ).on( 'click', '.wpe-pcc-alert-details', function() {
 		// Get the textarea with is on the same (dom) level.
@@ -131,7 +132,7 @@ function resetDisplay() {
 	jQuery( '#wpe-pcc-standardMode' ).html('');
 	jQuery( '#wpe-progress-count' ).text('');
 	jQuery( '#wpe-progress-active' ).text('');
-	jQuery( '.wpe-pcc-clear-results' ).hide();
+	jQuery( '.wpe-pcc-download-report' ).hide();
 }
 /**
  * Loop through a string and count the total matches.
@@ -227,12 +228,12 @@ function displayReport( response ) {
 
 	// Display global compatibility status.
 	if ( compatible ) {
-		jQuery( '.wpe-pcc-clear-results' ).show();
+		jQuery( '.wpe-pcc-download-report' ).show();
 		jQuery( '.wpe-pcc-information-passed' ).show();
 		// $( '#wpe-pcc-standardMode' ).prepend( '<h3>' + window.wpephpcompat.your_wp + ' PHP ' + test_version + ' ' + window.wpephpcompat.compatible + '.</h3>' );
 	} else {
 		// Display scan stats.
-		jQuery( '.wpe-pcc-clear-results' ).show();
+		jQuery( '.wpe-pcc-download-report' ).show();
 		$( '#wpe-pcc-standardMode' ).prepend( '<p>' + failedCount + ' ' + window.wpephpcompat.out_of + ' ' + plugins.length + ' ' + window.wpephpcompat.are_not + '.</p>' );
 		jQuery( '.wpe-pcc-information-failed' ).show();
 
