@@ -228,11 +228,13 @@ function displayReport( response ) {
 	// Display global compatibility status.
 	if ( compatible ) {
 		jQuery( '.wpe-pcc-clear-results' ).show();
+		jQuery( '.wpe-pcc-information-passed' ).show();
 		// $( '#wpe-pcc-standardMode' ).prepend( '<h3>' + window.wpephpcompat.your_wp + ' PHP ' + test_version + ' ' + window.wpephpcompat.compatible + '.</h3>' );
 	} else {
 		// Display scan stats.
 		jQuery( '.wpe-pcc-clear-results' ).show();
 		$( '#wpe-pcc-standardMode' ).prepend( '<p>' + failedCount + ' ' + window.wpephpcompat.out_of + ' ' + plugins.length + ' ' + window.wpephpcompat.are_not + '.</p>' );
+		jQuery( '.wpe-pcc-information-failed' ).show();
 
 		// $( '#wpe-pcc-standardMode' ).prepend( '<h3>' + window.wpephpcompat.is_not + ' ' + test_version + ' ' + window.wpephpcompat.compatible + '.</h3>' );
 	}

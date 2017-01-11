@@ -309,18 +309,18 @@ class WPEngine_PHPCompat {
 					<h2><?php _e( 'Scan Results', 'php-compatibility-checker' ); ?></h2>
 
 					<!-- Progress bar -->
-					<div style="display: none;" id="wpe-progress">
+					<div style="display:none;" id="wpe-progress">
 						<p><?php printf( '<strong>Scan progress</strong> - <span id="wpe-progress-count"></span> <span id="wpe-progress-active"></span>', 'php-compatibility-checker' ); ?></p>
 						<div id="progressbar"></div>
 					</div>
 
-					<a class="wpe-pcc-clear-results" name="run" id="cleanupButton"><?php _e( 'Clear results', 'php-compatibility-checker' ); ?></a>
+					<a class="wpe-pcc-clear-results" name="run" id="cleanupButton" style="display:none;"><?php _e( 'Clear results', 'php-compatibility-checker' ); ?></a>
 
 					<!-- Area for pretty results. -->
 					<div id="wpe-pcc-standardMode"></div>
 
 					<!-- Area for developer results. -->
-					<div style="display: none;" id="developerMode">
+					<div style="display:none;" id="developerMode">
 						<b><?php _e( 'Test Results:', 'php-compatibility-checker' ); ?></b>
 						<textarea readonly="readonly" id="testResults"></textarea>
 					</div>
@@ -334,23 +334,42 @@ class WPEngine_PHPCompat {
 				<div class="wpe-pcc-aside-content">
 					<h2><?php _e( 'Launch this site in a PHP7 hosting environment and double your site speed!', 'php-compatibility-checker' ); ?></h2>
 					<p><?php _e( 'Easily test your site on a PHP7 server or launch your new PHP7 site now!', 'php-compatibility-checker' ); ?></p>
-					<a class="wpe-pcc-button" href="https://wpengine.com/plans/"><?php _e( 'Get PHP7 Hosting!', 'php-compatibility-checker' ); ?></a>
+					<a class="wpe-pcc-button wpe-pcc-button-primary" href="https://wpengine.com/plans/"><?php _e( 'Get PHP7 Hosting!', 'php-compatibility-checker' ); ?></a>
 
-					<hr>
+					<div style="display:none;" class="wpe-pcc-information wpe-pcc-information-passed">
+						<h2><?php _e( 'You passed!', 'php-compatibility-checker' ); ?></h2>
+						<div class="wpe-pcc-dev-helper">
+							<p class="title"><strong><?php _e( 'Some title because you passed', 'php-compatibility-checker' ); ?></strong></p>
+							<div class="wpe-pcc-button-with-image">
+								<img src="<?php echo esc_url( plugins_url( '/src/images/WPE-IMAGE-Sidebar-WPEPartners.jpg', __FILE__ ) ); ?>" />
+								<a class="wpe-pcc-button" href="#"><?php _e( 'Some button', 'php-compatibility-checker' ); ?></a>
+								<p><?php _e( 'We partner with the brightest agency minds that are dedicated to delivering enterprise grade solutions in WordPress.', 'php-compatibility-checker' ); ?></p>
+							</div> <!-- wpe-pcc-button-with-image -->
+						</div> <!-- /wpe-pcc-dev-helper -->
+					</div> <!-- /wpe-pcc-information-passed -->
 
-					<h2><?php _e( 'Need help making this site PHP7 compatible?', 'php-compatibility-checker' ); ?></h2>
-					<p class="wpe-pcc-attention"><?php _e( '<strong>Attention:</strong> Not all errors are show-stoppers. <a href="https://wpengine.com/plans/">Test this site in PHP7</a> to see if just works.', 'php-compatibility-checker' ); ?></p>
-					<div class="wpe-pcc-dev-helper">
-						<p class="title"><strong><?php _e( 'Get help from WP Engine partners', 'php-compatibility-checker' ); ?></strong></p>
-						<img src="http://placehold.it/233x105" />
-						<p><?php _e( 'We partner with the brightest agency minds that are dedicated to delivering enterprise grade solutions in WordPress.', 'php-compatibility-checker' ); ?></p>
-					</div> <!-- /wpe-pcc-dev-helper -->
+					<div style="display:none;" class="wpe-pcc-information wpe-pcc-information-failed">
+						<hr>
+						<h2><?php _e( 'Need help making this site PHP7 compatible?', 'php-compatibility-checker' ); ?></h2>
+						<p class="wpe-pcc-attention"><?php _e( '<strong>Attention:</strong> Not all errors are show-stoppers. <a href="https://wpengine.com/plans/">Test this site in PHP7</a> to see if just works.', 'php-compatibility-checker' ); ?></p>
+						<div class="wpe-pcc-dev-helper">
+							<p class="title"><strong><?php _e( 'Get help from WP Engine partners', 'php-compatibility-checker' ); ?></strong></p>
+							<div class="wpe-pcc-button-with-image">
+								<img src="<?php echo esc_url( plugins_url( '/src/images/WPE-IMAGE-Sidebar-WPEPartners.jpg', __FILE__ ) ); ?>" />
+								<a class="wpe-pcc-button" href="#"><?php _e( 'Find a WP Engine Partner', 'php-compatibility-checker' ); ?></a>
+								<p><?php _e( 'We partner with the brightest agency minds that are dedicated to delivering enterprise grade solutions in WordPress.', 'php-compatibility-checker' ); ?></p>
+							</div> <!-- wpe-pcc-button-with-image -->
+						</div> <!-- /wpe-pcc-dev-helper -->
 
-					<div class="wpe-pcc-dev-helper">
-						<p class="title"><strong><?php _e( 'Get a fast quote from Codeable', 'php-compatibility-checker' ); ?></strong></p>
-						<img src="http://placehold.it/233x105" />
-						<p><?php _e( 'Here is some text about this thing right here that could be a few lines long.', 'php-compatibility-checker' ); ?></p>
-					</div> <!-- /wpe-pcc-dev-helper -->
+						<div class="wpe-pcc-dev-helper">
+							<p class="title"><strong><?php _e( 'Get a fast quote from Codeable', 'php-compatibility-checker' ); ?></strong></p>
+							<div class="wpe-pcc-button-with-image">
+								<img src="<?php echo esc_url( plugins_url( '/src/images/WPE-IMAGE-Sidebar-Codeable.jpg', __FILE__ ) ); ?>" />
+								<a class="wpe-pcc-button" href="#"><?php _e( 'Submit to Codeable', 'php-compatibility-checker' ); ?></a>
+								<p><?php _e( 'Here is some text about this thing right here that could be a few lines long.', 'php-compatibility-checker' ); ?></p>
+							</div> <!-- wpe-pcc-button-with-image -->
+						</div> <!-- /wpe-pcc-dev-helper -->
+					</div> <!-- /wpe-pcc-information -->
 
 				</div> <!-- /wpe-pcc-aside-content -->
 				<input type="checkbox" id="developermode" name="developermode" value="yes" /><?php _e( 'Developer mode', 'php-compatibility-checker' ); ?>
