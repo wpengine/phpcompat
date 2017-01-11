@@ -390,16 +390,16 @@ class WPEngine_PHPCompat {
 					<!-- Results status -->
 					<span class="wpe-pcc-alert-status">
 						{{#if passed}}
-							<?php _e( 'Compatible', 'php-compatibility-checker' ); ?>
+							<span class="badge badge-passed"><?php _e( 'Compatible', 'php-compatibility-checker' ); ?></span>
 						{{/if}}
 						{{#if skipped}}
-							<?php _e( 'Unknown', 'php-compatibility-checker' ); ?>
+							<span class="badge badge-skipped"><?php _e( 'Unknown', 'php-compatibility-checker' ); ?></span>
 						{{/if}}
 						{{#if warnings}}
-							{{warnings}} <?php _e( 'warning(s)', 'php-compatibility-checker' ); ?>
+							<span class="badge badge-warnings"><?php _e( 'Warnings:', 'php-compatibility-checker' ); ?> <strong>{{warnings}}</strong></span>
 						{{/if}}
 						{{#if errors}}
-							{{errors}} <?php _e( 'error(s)', 'php-compatibility-checker' ); ?>
+							<span class="badge badge-errors"><?php _e( 'Errors:', 'php-compatibility-checker' ); ?> <strong>{{errors}}</strong></span>
 						{{/if}}
 					</span>
 					<!-- Check if plugin/theme has an update available -->

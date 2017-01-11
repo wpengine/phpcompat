@@ -169,19 +169,38 @@
 .wpe-pcc-alert.wpe-pcc-alert-error {
 	border-color: #e74c3c;
 }
-.wpe-pcc-alert-error .wpe-pcc-alert-status, .wpe-pcc-alert-error .dashicons-before {
+.wpe-pcc-alert-error .dashicons-before {
 	color: #e74c3c;
 }
 /* warning */
 .wpe-pcc-alert.wpe-pcc-alert-warning {
-	border-color: yellow;
+	border-color: #e8ba1b;
 }
-.wpe-pcc-alert-warning .wpe-pcc-alert-status, .wpe-pcc-alert-warning .dashicons-before {
-	color: yellow;
+.wpe-pcc-alert-warning .dashicons-before {
+	color: #e8ba1b;
 }
 
-
-
+/* Badges */
+.badge {
+	display: inline-block;
+	margin-right: 5px;
+	padding: 2px 7px 5px 7px;
+	color: #fff;
+	border-radius: 3px;
+	line-height: 1em;
+}
+.badge-passed {
+	background-color: #038103;
+}
+.badge-skipped {
+	background-color: #e74c3c;
+}
+.badge-warnings {
+	background-color: #e8ba1b;
+}
+.badge-errors {
+	background-color: #e74c3c;
+}
 
 
 
