@@ -133,6 +133,7 @@ function resetDisplay() {
 	jQuery( '#wpe-progress-count' ).text('');
 	jQuery( '#wpe-progress-active' ).text('');
 	jQuery( '.wpe-pcc-download-report' ).hide();
+	jQuery( '.wpe-pcc-results' ).hide();
 }
 /**
  * Loop through a string and count the total matches.
@@ -230,13 +231,12 @@ function displayReport( response ) {
 	if ( compatible ) {
 		jQuery( '.wpe-pcc-download-report' ).show();
 		jQuery( '.wpe-pcc-information-passed' ).show();
-		// $( '#wpe-pcc-standardMode' ).prepend( '<h3>' + window.wpephpcompat.your_wp + ' PHP ' + test_version + ' ' + window.wpephpcompat.compatible + '.</h3>' );
+		jQuery( '.wpe-pcc-results' ).show();
 	} else {
 		// Display scan stats.
 		jQuery( '.wpe-pcc-download-report' ).show();
 		$( '#wpe-pcc-standardMode' ).prepend( '<p>' + failedCount + ' ' + window.wpephpcompat.out_of + ' ' + plugins.length + ' ' + window.wpephpcompat.are_not + '.</p>' );
 		jQuery( '.wpe-pcc-information-failed' ).show();
-
-		// $( '#wpe-pcc-standardMode' ).prepend( '<h3>' + window.wpephpcompat.is_not + ' ' + test_version + ' ' + window.wpephpcompat.compatible + '.</h3>' );
+		jQuery( '.wpe-pcc-results' ).show();
 	}
 }

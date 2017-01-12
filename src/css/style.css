@@ -177,7 +177,7 @@
 }
 
 /* Badges */
-.badge {
+.wpe-pcc-badge {
 	display: inline-block;
 	margin-right: 5px;
 	padding: 2px 7px 5px 7px;
@@ -185,35 +185,35 @@
 	border-radius: 3px;
 	line-height: 1em;
 }
-.badge-passed {
+.wpe-pcc-badge-passed {
 	background-color: #038103;
 }
-.badge-skipped {
+.wpe-pcc-badge-skipped {
 	background-color: #e74c3c;
 }
-.badge-warnings {
+.wpe-pcc-badge-warnings {
 	background-color: #e8ba1b;
 }
-.badge-errors {
+.wpe-pcc-badge-errors {
 	background-color: #e74c3c;
+}
+
+/* Misc */
+a:active {
+	box-shadow: none !important;
+	-webkit-box-shadow: none !important;
 }
 
 
 
-
-
-
-#developerMode textarea
-{
+#developerMode textarea {
 	width: 100%; height: 500px; background: #FFF; color: #000;
 }
 
-#progressbar .ui-progressbar-value
-{
+#progressbar .ui-progressbar-value {
 	background: #0085ba;
 }
 
-#wpe-progress-count, #wpe-progress-active
-{
+#wpe-progress-count, #wpe-progress-active {
 	display: inline;
 }
