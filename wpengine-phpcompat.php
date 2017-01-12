@@ -268,8 +268,8 @@ class WPEngine_PHPCompat {
 		$phpversions = $this->get_phpversions();
 
 		// Assigns defaults for the scan if none are found in the database.
-		$test_version = ( !empty($test_version) ) ? $test_version : '7.0';
-		$only_active = ( !empty($only_active) ) ? $only_active : 'yes';
+		$test_version = ( ! empty( $test_version ) ) ? $test_version : '7.0';
+		$only_active = ( ! empty( $only_active ) ) ? $only_active : 'yes';
 
 		?>
 		<div class="wrap wpe-pcc-wrap">
@@ -281,9 +281,6 @@ class WPEngine_PHPCompat {
 				<div class="wpe-pcc-scan-options">
 					<h2><?php _e( 'Scan Options' ); ?></h2>
 					<p>
-						<?php if( PHP_MAJOR_VERSION ): ?>
-							<?php _e( 'This site is currently running on PHP ' . PHP_MAJOR_VERSION . '. ' ) ?>
-						<?php endif; ?>
 						<?php _e( 'Choose which version of PHP to test this site against.' ); ?>
 					</p>
 					<table class="form-table wpe-pcc-form-table">
@@ -325,10 +322,10 @@ class WPEngine_PHPCompat {
 				<?php /* Scan results */ ?>
 				<div class="wpe-pcc-results" style="display:none;">
 					<hr>
-					<h2><?php _e( 'Scan Results for PHP '. $test_version, 'php-compatibility-checker' ); ?></h2>
+					<h2><?php printf( 'Scan Results for PHP' . $test_version ); ?></h2>
 					<?php /* Progress bar */ ?>
 					<div style="display:none;" id="wpe-progress">
-						<p><?php printf( '<strong>Scan progress</strong> - <span id="wpe-progress-count"></span> <span id="wpe-progress-active"></span>', 'php-compatibility-checker' ); ?></p>
+						<p><?php printf( '<strong>Scan progress</strong> - <span id="wpe-progress-count"></span> <span id="wpe-progress-active"></span>' ); ?></p>
 						<div id="progressbar"></div>
 					</div>
 
@@ -375,14 +372,12 @@ class WPEngine_PHPCompat {
 						<hr>
 						<h2><?php _e( 'This site looks PHP 7 ready! Still nervous about site launch?', 'php-compatibility-checker' ); ?></h2>
 						<div class="wpe-pcc-dev-helper">
-							<!-- <p class="title"><strong><?php _e( 'Launch on PHP 7 with Codeable', 'php-compatibility-checker' ); ?></strong></p> -->
 							<p><?php _e( 'Our agency partners can manage your upgrade process to PHP 7.', 'php-compatibility-checker' ); ?></p>
-							<a target="_blank" class="wpe-pcc-button" href="<?php echo esc_url('https://wpengine.com/partners/agencies/'); ?>"><?php _e( 'Find a WP Engine Partner', 'php-compatibility-checker' ); ?></a>
+							<a target="_blank" class="wpe-pcc-button" href="<?php echo esc_url( 'https://wpengine.com/partners/agencies/' ); ?>"><?php _e( 'Find a WP Engine Partner' , 'php-compatibility-checker' ); ?></a>
 						</div> <!-- /wpe-pcc-dev-helper -->
 						<div class="wpe-pcc-dev-helper">
-							<!-- <p class="title"><strong><?php _e( 'Launch on PHP 7 with Codeable', 'php-compatibility-checker' ); ?></strong></p> -->
 							<p><?php _e( 'Create a Codeable project to connect with full stack WordPress developers who can walk you through the upgrade process to PHP 7.', 'php-compatibility-checker' ); ?></p>
-							<a target="_blank" class="wpe-pcc-button" href="#"><?php _e( 'Submit to Codeable', 'php-compatibility-checker' ); ?></a>
+							<a target="_blank" class="wpe-pcc-button" href="#"><?php _e( 'Submit to Codeable' , 'php-compatibility-checker' ); ?></a>
 						</div> <!-- /wpe-pcc-dev-helper -->
 					</div> <!-- /wpe-pcc-information-passed -->
 
@@ -392,12 +387,12 @@ class WPEngine_PHPCompat {
 						<div class="wpe-pcc-dev-helper">
 							<p class="title"><strong><?php _e( 'Get help from WP Engine partners', 'php-compatibility-checker' ); ?></strong></p>
 							<p><?php _e( 'We partner with the brightest agency minds that are dedicated to delivering enterprise grade solutions in WordPress.', 'php-compatibility-checker' ); ?></p>
-							<a target="_blank" class="wpe-pcc-button" href="<?php echo esc_url('https://wpengine.com/partners/agencies/'); ?>"><?php _e( 'Find a WP Engine Partner', 'php-compatibility-checker' ); ?></a>
+							<a target="_blank" class="wpe-pcc-button" href="<?php echo esc_url( 'https://wpengine.com/partners/agencies/' ); ?>"><?php _e( 'Find a WP Engine Partner' , 'php-compatibility-checker' ); ?></a>
 						</div> <!-- /wpe-pcc-dev-helper -->
 
 						<div class="wpe-pcc-dev-helper">
 							<p class="title"><strong><?php _e( 'Get PHP 7 ready with Codeable', 'php-compatibility-checker' ); ?></strong></p>
-							<p><?php _e( 'Create a Codeable project to connect with full stack WordPress developers who can make your site PHP 7 compatible.', 'php-compatibility-checker' ); ?></p>
+							<p><?php _e( 'Create a Codeable project to connect with full stack WordPress developers who can make your site PHP 7 compatible.' , 'php-compatibility-checker' ); ?></p>
 							<a target="_blank" class="wpe-pcc-button" href="#"><?php _e( 'Submit to Codeable', 'php-compatibility-checker' ); ?></a>
 						</div> <!-- /wpe-pcc-dev-helper -->
 					</div> <!-- /wpe-pcc-information -->
