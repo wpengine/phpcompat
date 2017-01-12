@@ -228,10 +228,16 @@ function displayReport( response ) {
 	}
 
 	// Display global compatibility status.
-	if ( compatible ) {
+	if ( test_version == '7.0' &&  compatible ) {
+		// php 7 ready, and user tested version 7
 		jQuery( '.wpe-pcc-download-report' ).show();
-		jQuery( '.wpe-pcc-information-passed' ).show();
 		jQuery( '.wpe-pcc-results' ).show();
+		jQuery( '.wpe-pcc-information-passed' ).show();
+
+	} else if ( compatible ) {
+		jQuery( '.wpe-pcc-download-report' ).show();
+		jQuery( '.wpe-pcc-results' ).show();
+		jQuery( '.wpe-pcc-information-failed' ).show();
 	} else {
 		// Display scan stats.
 		jQuery( '.wpe-pcc-download-report' ).show();

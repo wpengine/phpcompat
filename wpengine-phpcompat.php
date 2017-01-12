@@ -231,7 +231,7 @@ class WPEngine_PHPCompat {
 		$strings = array(
 			'name'       => __( 'Name', 'php-compatibility-checker' ),
 			'compatible' => __( 'compatible', 'php-compatibility-checker' ),
-			'are_not'    => __( 'plugins/themes are possibly not compatible', 'php-compatibility-checker' ),
+			'are_not'    => __( 'items may not be compatible', 'php-compatibility-checker' ),
 			'is_not'     => __( 'Your WordPress site is possibly not PHP', 'php-compatibility-checker' ),
 			'out_of'     => __( 'out of', 'php-compatibility-checker' ),
 			'run'        => __( 'Scan site', 'php-compatibility-checker' ),
@@ -279,7 +279,13 @@ class WPEngine_PHPCompat {
 				<p><?php _e( 'This plugin will lint theme and plugin code inside your WordPress file system and give you back a report of compatibility issues for you to fix. Compatibility issues are categorized into errors and warnings and will list the file and line number of the offending code, as well as the info about why that line of code is incompatible with the chosen version of PHP. The plugin will also suggest updates to themes and plugins, as a new version may offer compatible code.', 'php-compatibility-checker' ); ?></p>
 				<hr>
 				<div class="wpe-pcc-scan-options">
-					<h2><?php printf( 'Scan Options' ); ?></h2>
+					<h2><?php _e( 'Scan Options' ); ?></h2>
+					<p>
+						<?php if( PHP_MAJOR_VERSION ): ?>
+							<?php _e( 'This site is currently running on PHP ' . PHP_MAJOR_VERSION . '. ' ) ?>
+						<?php endif; ?>
+						<?php _e( 'Choose which version of PHP to test this site against.' ); ?>
+					</p>
 					<table class="form-table wpe-pcc-form-table">
 						<tbody>
 							<tr>
@@ -320,7 +326,6 @@ class WPEngine_PHPCompat {
 				<div class="wpe-pcc-results" style="display:none;">
 					<hr>
 					<h2><?php _e( 'Scan Results for PHP '. $test_version, 'php-compatibility-checker' ); ?></h2>
-
 					<?php /* Progress bar */ ?>
 					<div style="display:none;" id="wpe-progress">
 						<p><?php printf( '<strong>Scan progress</strong> - <span id="wpe-progress-count"></span> <span id="wpe-progress-active"></span>', 'php-compatibility-checker' ); ?></p>
@@ -337,7 +342,7 @@ class WPEngine_PHPCompat {
 
 					<?php /* Download report */ ?>
 					<div class="wpe-pcc-download-report" style="display:none;">
-						<p class="wpe-pcc-attention"><?php _e( '<strong>Attention:</strong> Not all errors are show-stoppers. <a target="_blank" href="https://wpengine.com/plans/">Test this site in PHP7</a> to see if just works.', 'php-compatibility-checker' ); ?></p>
+						<p class="wpe-pcc-attention"><?php _e( '<strong>Attention:</strong> Not all errors or warnings are show-stoppers. <a target="_blank" href="https://wpengine.com/plans/">Test this site in PHP7</a> to see if just works.', 'php-compatibility-checker' ); ?></p>
 						<hr>
 						<a id="downloadReport" class="button-primary" href="#"><span class="dashicons dashicons-download"></span> <?php _e( 'Download Report', 'php-compatibility-checker' ); ?></a>
 						<a class="wpe-pcc-clear-results" name="run" id="cleanupButton"><?php _e( 'Clear results', 'php-compatibility-checker' ); ?></a>
@@ -346,11 +351,12 @@ class WPEngine_PHPCompat {
 
 				<div class="wpe-pcc-footer">
 					<hr>
-					<strong><?php _e( 'Limitations' ); ?></strong>
-					<ul>
-						<li><?php _e( 'This plugin does not execute your theme and plugin code, as such this plugin cannot detect runtime compatibility issues.' ); ?></li>
-						<li><?php _e( 'Please note that linting code is not perfect. This plugin cannot detect unused code-paths that might be used for backwards compatibility, and thus might show false positives. We maintain <a href="https://github.com/wpengine/phpcompat/wiki/Results">a whitelist of plugins</a> that can cause false positives.' ); ?></li>
-						<li><?php printf( __( '<strong>Note:</strong> PHP Warnings will not cause errors, but could cause compatibility issues with future PHP versions, and could spam your PHP logs. This plugin relies on WP-Cron to scan files in the background. The scan will get stuck if the site&#39s WP-Cron is not running correctly. Please <a href="%1$s">see the FAQ</a> for more information.', 'php-compatibility-checker' ), 'https://wordpress.org/plugins/php-compatibility-checker/faq/' ); ?></li>
+					<strong><?php _e( 'Limitations &amp; Caveats' ); ?></strong>
+					<ul class="wpe-pcc-bullets">
+						<li><?php _e( 'This plugin cannot detect unused code-paths that might be used for backwards compatibility, and thus might show false positives. We maintain <a target="_blank" href="https://github.com/wpengine/phpcompat/wiki/Results">a whitelist of plugins</a> that can cause false positives.' ); ?></li>
+						<li><?php _e( 'This plugin does not execute your theme and plugin code, so it cannot detect runtime compatibility issues.' ); ?></li>
+						<li><?php _e( 'PHP Warnings could cause compatibility issues with future PHP versions and/or spam your logs.', 'php-compatibility-checker' ); ?></li>
+						<li><?php printf( __( 'The scan will get stuck if WP-Cron is not running correctly. Please <a href="%1$s">see the FAQ</a> for more information.', 'php-compatibility-checker' ), 'https://wordpress.org/plugins/php-compatibility-checker/faq/' ); ?></li>
 					</ul>
 					<p><?php printf( __( 'Report false positives <a href="%1$s">on our GitHub repo</a>.', 'php-compatibility-checker' ), 'https://github.com/wpengine/phpcompat/wiki/Results' ); ?></p>
 				</div> <!-- /wpe-pcc-footer -->
@@ -361,19 +367,22 @@ class WPEngine_PHPCompat {
 
 				<?php /* Begin sidebar */ ?>
 				<div class="wpe-pcc-aside-content">
-					<h2><?php _e( 'Launch this site in a PHP7 hosting environment and double your site speed!', 'php-compatibility-checker' ); ?></h2>
-					<p><?php _e( 'Easily test your site on a PHP7 server or launch your new PHP7 site now!', 'php-compatibility-checker' ); ?></p>
-					<a target="_blank" class="wpe-pcc-button wpe-pcc-button-primary" href="https://wpengine.com/plans/"><?php _e( 'Get PHP7 Hosting!', 'php-compatibility-checker' ); ?></a>
+					<h2><?php _e( 'Make your site 2x faster with PHP 7 WordPress hosting', 'php-compatibility-checker' ); ?></h2>
+					<p><?php _e( 'PHP 7 on WP Engine makes it easy to speed up your site, increase your conversion rates, and improve your SEO.', 'php-compatibility-checker' ); ?></p>
+					<a target="_blank" class="wpe-pcc-button wpe-pcc-button-primary" href="https://wpengine.com/plans/"><?php _e( 'Get PHP 7 Hosting', 'php-compatibility-checker' ); ?></a>
 
 					<div style="display:none;" class="wpe-pcc-information wpe-pcc-information-passed">
-						<h2><?php _e( 'You passed!', 'php-compatibility-checker' ); ?></h2>
+						<hr>
+						<h2><?php _e( 'This site looks PHP 7 ready! Still nervous about site launch?', 'php-compatibility-checker' ); ?></h2>
 						<div class="wpe-pcc-dev-helper">
-							<p class="title"><strong><?php _e( 'Some title because you passed', 'php-compatibility-checker' ); ?></strong></p>
-							<div class="wpe-pcc-button-with-image">
-								<img src="<?php echo esc_url( plugins_url( '/src/images/WPE-IMAGE-Sidebar-WPEPartners.jpg', __FILE__ ) ); ?>" />
-								<a target="_blank" class="wpe-pcc-button" href="<?php echo esc_url('https://wpengine.com/'); ?>"><?php _e( 'Some button', 'php-compatibility-checker' ); ?></a>
-								<p><?php _e( 'We partner with the brightest agency minds that are dedicated to delivering enterprise grade solutions in WordPress.', 'php-compatibility-checker' ); ?></p>
-							</div> <!-- wpe-pcc-button-with-image -->
+							<!-- <p class="title"><strong><?php _e( 'Launch on PHP 7 with Codeable', 'php-compatibility-checker' ); ?></strong></p> -->
+							<p><?php _e( 'Our agency partners can manage your upgrade process to PHP 7.', 'php-compatibility-checker' ); ?></p>
+							<a target="_blank" class="wpe-pcc-button" href="<?php echo esc_url('https://wpengine.com/partners/agencies/'); ?>"><?php _e( 'Find a WP Engine Partner', 'php-compatibility-checker' ); ?></a>
+						</div> <!-- /wpe-pcc-dev-helper -->
+						<div class="wpe-pcc-dev-helper">
+							<!-- <p class="title"><strong><?php _e( 'Launch on PHP 7 with Codeable', 'php-compatibility-checker' ); ?></strong></p> -->
+							<p><?php _e( 'Create a Codeable project to connect with full stack WordPress developers who can walk you through the upgrade process to PHP 7.', 'php-compatibility-checker' ); ?></p>
+							<a target="_blank" class="wpe-pcc-button" href="#"><?php _e( 'Submit to Codeable', 'php-compatibility-checker' ); ?></a>
 						</div> <!-- /wpe-pcc-dev-helper -->
 					</div> <!-- /wpe-pcc-information-passed -->
 
@@ -382,20 +391,14 @@ class WPEngine_PHPCompat {
 						<h2><?php _e( 'Need help making this site PHP7 compatible?', 'php-compatibility-checker' ); ?></h2>
 						<div class="wpe-pcc-dev-helper">
 							<p class="title"><strong><?php _e( 'Get help from WP Engine partners', 'php-compatibility-checker' ); ?></strong></p>
-							<div class="wpe-pcc-button-with-image">
-								<img src="<?php echo esc_url( plugins_url( '/src/images/WPE-IMAGE-Sidebar-WPEPartners.jpg', __FILE__ ) ); ?>" />
-								<a target="_blank" class="wpe-pcc-button" href="<?php echo esc_url('https://wpengine.com/partners/agencies/'); ?>"><?php _e( 'Find a WP Engine Partner', 'php-compatibility-checker' ); ?></a>
-								<p><?php _e( 'We partner with the brightest agency minds that are dedicated to delivering enterprise grade solutions in WordPress.', 'php-compatibility-checker' ); ?></p>
-							</div> <!-- wpe-pcc-button-with-image -->
+							<p><?php _e( 'We partner with the brightest agency minds that are dedicated to delivering enterprise grade solutions in WordPress.', 'php-compatibility-checker' ); ?></p>
+							<a target="_blank" class="wpe-pcc-button" href="<?php echo esc_url('https://wpengine.com/partners/agencies/'); ?>"><?php _e( 'Find a WP Engine Partner', 'php-compatibility-checker' ); ?></a>
 						</div> <!-- /wpe-pcc-dev-helper -->
 
 						<div class="wpe-pcc-dev-helper">
-							<p class="title"><strong><?php _e( 'Get a fast quote from Codeable', 'php-compatibility-checker' ); ?></strong></p>
-							<div class="wpe-pcc-button-with-image">
-								<img src="<?php echo esc_url( plugins_url( '/src/images/WPE-IMAGE-Sidebar-Codeable.jpg', __FILE__ ) ); ?>" />
-								<a target="_blank" class="wpe-pcc-button" href="#"><?php _e( 'Submit to Codeable', 'php-compatibility-checker' ); ?></a>
-								<p><?php _e( 'Here is some text about this thing right here that could be a few lines long.', 'php-compatibility-checker' ); ?></p>
-							</div> <!-- wpe-pcc-button-with-image -->
+							<p class="title"><strong><?php _e( 'Get PHP 7 ready with Codeable', 'php-compatibility-checker' ); ?></strong></p>
+							<p><?php _e( 'Create a Codeable project to connect with full stack WordPress developers who can make your site PHP 7 compatible.', 'php-compatibility-checker' ); ?></p>
+							<a target="_blank" class="wpe-pcc-button" href="#"><?php _e( 'Submit to Codeable', 'php-compatibility-checker' ); ?></a>
 						</div> <!-- /wpe-pcc-dev-helper -->
 					</div> <!-- /wpe-pcc-information -->
 
@@ -415,7 +418,7 @@ class WPEngine_PHPCompat {
 			<div class="wpe-pcc-alert wpe-pcc-alert-{{#if skipped}}skipped{{else if passed}}passed{{else}}error{{/if}}">
 				<p>
 					<?php /* Appropriate icon, based on status */ ?>
-					<span class="dashicons-before dashicons-{{#if skipped}}editor-help{{else if passed}}yes{{else}}no{{/if}}"></span>
+					<span class="dashicons-before dashicons-{{#if errors}}no{{else if skipped}}editor-help{{else}}yes{{/if}}"></span>
 					<?php /* Name of plugin/theme being tested */ ?>
 					<strong>{{plugin_name}} </strong> -
 					<?php /* Results status */ ?>
