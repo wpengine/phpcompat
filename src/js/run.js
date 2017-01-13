@@ -28,7 +28,6 @@ jQuery( document ).ready(function($) {
 	$( '#runButton' ).on( 'click', function() {
 		// Unselect button so it's not highlighted.
 		$( '#runButton' ).blur();
-		$( '.wpe-pcc-test-version' ).replaceWith(test_version);
 
 		// Show the ajax spinner.
 		$( '.spinner' ).show();
@@ -42,6 +41,7 @@ jQuery( document ).ready(function($) {
 			'only_active': only_active,
 			'startScan': 1
 		};
+		$( '.wpe-pcc-test-version' ).text(test_version);
 		// Init and show the Progress Bar
 		jQuery( '#wpe-progress' ).show();
 
