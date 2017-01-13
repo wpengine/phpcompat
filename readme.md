@@ -2,8 +2,8 @@
 **Contributors:** [wpengine](https://profiles.wordpress.org/wpengine), [octalmage](https://profiles.wordpress.org/octalmage), [stevenkword](https://profiles.wordpress.org/stevenkword), [Taylor4484](https://profiles.wordpress.org/Taylor4484), [pross](https://profiles.wordpress.org/pross), [jcross](https://profiles.wordpress.org/jcross)  
 **Tags:** php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine  
 **Requires at least:** 3.5  
-**Tested up to:** 4.6  
-**Stable tag:** 1.3.2  
+**Tested up to:** 4.7.1  
+**Stable tag:** 1.4.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -118,6 +118,10 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 ## Changelog ##
 
+### 1.4.0 ###
+- Added suggestions for assistance with PHP 7 upgrade.
+- Updated user interface.
+
 ### 1.3.2 ###
 - Added a "Clean up" button and uninstall.php.
 - Added phpcompat_phpversions filter.
@@ -186,6 +190,10 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 - Basic WP-CLI Commands
 
 ## Upgrade Notice ##
+
+### 1.4.0 ###
+- Added suggestions for assistance with PHP 7 upgrade.
+- Updated user interface.
 
 ### 1.3.2 ###
 - Added a "Clean up" button and uninstall.php.
