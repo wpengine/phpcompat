@@ -51,6 +51,10 @@
 	margin-top: 0;
 }
 
+.wpe-pcc-aside-content .wpe-pcc-button {
+	margin-bottom: 0;
+}
+
 .wpe-pcc-attention {
 	background: #e7e7e7;
 	border: 1px dashed #babec3;
@@ -127,6 +131,9 @@
 .wpe-pcc-download-report {
 	clear: both;
 }
+.wpe-pcc-developer-mode {
+	float: right;
+}
 
 /* Alerts */
 .wpe-pcc-alert {
@@ -165,6 +172,9 @@
 .wpe-pcc-alert.wpe-pcc-alert-skipped {
 	border-color: #999;
 }
+.wpe-pcc-alert-skipped .dashicons-before {
+	color: #999;
+}
 /* passed */
 .wpe-pcc-alert.wpe-pcc-alert-passed {
 	border-color: #038103;
@@ -200,7 +210,7 @@
 	background-color: #038103;
 }
 .wpe-pcc-badge-skipped {
-	background-color: #e74c3c;
+	background-color: #999;
 }
 .wpe-pcc-badge-warnings {
 	background-color: #e8ba1b;

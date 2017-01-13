@@ -323,9 +323,23 @@ class WPEngine_PHPCompat {
 				<div class="wpe-pcc-results" style="display:none;">
 					<hr>
 					<h2><?php printf( 'Scan Results for PHP' . $test_version ); ?></h2>
+
+					<?php /* Download report */ ?>
+					<div class="wpe-pcc-download-report" style="display:none;">
+						<a id="downloadReport" class="button-primary" href="#"><span class="dashicons dashicons-download"></span> <?php _e( 'Download Report', 'php-compatibility-checker' ); ?></a>
+						<a class="wpe-pcc-clear-results" name="run" id="cleanupButton"><?php _e( 'Clear results', 'php-compatibility-checker' ); ?></a>
+						<?php /* Toggle developer mode */ ?>
+						<label class="wpe-pcc-developer-mode">
+							<input type="checkbox" id="developermode" name="developermode" value="yes" />
+							<?php _e( 'View results as raw text', 'php-compatibility-checker' ); ?>
+						</label>
+						<hr>
+					</div> <!-- /wpe-pcc-download-report -->
+
 					<?php /* Progress bar */ ?>
 					<div style="display:none;" id="wpe-progress">
 						<p><?php printf( '<strong>Scan progress</strong> - <span id="wpe-progress-count"></span> <span id="wpe-progress-active"></span>' ); ?></p>
+
 						<div id="progressbar"></div>
 					</div>
 
@@ -337,13 +351,8 @@ class WPEngine_PHPCompat {
 						<textarea readonly="readonly" id="testResults"></textarea>
 					</div>
 
-					<?php /* Download report */ ?>
-					<div class="wpe-pcc-download-report" style="display:none;">
-						<p class="wpe-pcc-attention"><?php _e( '<strong>Attention:</strong> Not all errors or warnings are show-stoppers. <a target="_blank" href="https://wpengine.com/plans/">Test this site in PHP7</a> to see if just works.', 'php-compatibility-checker' ); ?></p>
-						<hr>
-						<a id="downloadReport" class="button-primary" href="#"><span class="dashicons dashicons-download"></span> <?php _e( 'Download Report', 'php-compatibility-checker' ); ?></a>
-						<a class="wpe-pcc-clear-results" name="run" id="cleanupButton"><?php _e( 'Clear results', 'php-compatibility-checker' ); ?></a>
-					</div> <!-- /wpe-pcc-download-report -->
+					<p class="wpe-pcc-attention"><?php _e( '<strong>Attention:</strong> Not all errors or warnings are show-stoppers. <a target="_blank" href="https://wpengine.com/plans/">Test this site in PHP7</a> to see if just works.', 'php-compatibility-checker' ); ?></p>
+
 				</div> <!-- /wpe-pcc-results -->
 
 				<div class="wpe-pcc-footer">
@@ -399,11 +408,6 @@ class WPEngine_PHPCompat {
 
 				</div> <!-- /wpe-pcc-aside-content -->
 
-				<?php /* Toggle developer mode */ ?>
-				<label>
-					<input type="checkbox" id="developermode" name="developermode" value="yes" />
-					<?php _e( 'Developer mode', 'php-compatibility-checker' ); ?>
-				</label>
 			</div> <!-- /wpe-pcc-aside -->
 		</div> <!-- /wpe-pcc-wrap -->
 		<!-- // end new markup -->
@@ -418,24 +422,25 @@ class WPEngine_PHPCompat {
 					<strong>{{plugin_name}} </strong> -
 					<?php /* Results status */ ?>
 					<span class="wpe-pcc-alert-status">
-						{{#if passed}}
-							<span class="wpe-pcc-badge wpe-pcc-badge-passed"><?php _e( 'Compatible', 'php-compatibility-checker' ); ?></span>
-						{{/if}}
 						{{#if skipped}}
 							<span class="wpe-pcc-badge wpe-pcc-badge-skipped"><?php _e( 'Unknown', 'php-compatibility-checker' ); ?></span>
+						{{else}}
+							{{#if passed}}
+								<span class="wpe-pcc-badge wpe-pcc-badge-passed"><?php _e( 'Compatible', 'php-compatibility-checker' ); ?></span>
+							{{/if}}
+							{{#if warnings}}
+								<span class="wpe-pcc-badge wpe-pcc-badge-warnings"><?php _e( 'Warnings:', 'php-compatibility-checker' ); ?> <strong>{{warnings}}</strong></span>
+							{{/if}}
+							{{#if errors}}
+								<span class="wpe-pcc-badge wpe-pcc-badge-errors"><?php _e( 'Errors:', 'php-compatibility-checker' ); ?> <strong>{{errors}}</strong></span>
+							{{/if}}
 						{{/if}}
-						{{#if warnings}}
-							<span class="wpe-pcc-badge wpe-pcc-badge-warnings"><?php _e( 'Warnings:', 'php-compatibility-checker' ); ?> <strong>{{warnings}}</strong></span>
+						</span>
+						<?php /* Check if plugin/theme has an update available */ ?>
+						<?php $update_url = site_url( 'wp-admin/update-core.php' , 'admin' ); ?>
+						{{#if updateAvailable}}
+							(<a href="<?php echo esc_url( $update_url ); ?>"><?php _e( 'Update Available', 'php-compatibility-checker' ); ?></a>)
 						{{/if}}
-						{{#if errors}}
-							<span class="wpe-pcc-badge wpe-pcc-badge-errors"><?php _e( 'Errors:', 'php-compatibility-checker' ); ?> <strong>{{errors}}</strong></span>
-						{{/if}}
-					</span>
-					<?php /* Check if plugin/theme has an update available */ ?>
-					<?php $update_url = site_url( 'wp-admin/update-core.php' , 'admin' ); ?>
-					{{#if updateAvailable}}
-						(<a href="<?php echo esc_url( $update_url ); ?>"><?php _e( 'Update Available', 'php-compatibility-checker' ); ?></a>)
-					{{/if}}
 					<?php /* View details link */ ?>
 					<a class="wpe-pcc-alert-details" href="#"><?php _e( 'toggle details', 'php-compatibility-checker' ); ?></a>
 					<textarea class="wpe-pcc-alert-logs hide">{{logs}}</textarea>
