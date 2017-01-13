@@ -1,5 +1,5 @@
 === PHP Compatibility Checker ===
-Contributors: wpengine, octalmage, stevenkword, Taylor4484, pross
+Contributors: wpengine, octalmage, stevenkword, Taylor4484, pross, jcross
 Tags: php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine
 Requires at least: 3.5
 Tested up to: 4.6
