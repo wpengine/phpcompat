@@ -313,7 +313,7 @@ class WPEngine_PHPCompat {
 								<th scope="row"></th>
 									<td>
 										<div class="wpe-pcc-run-scan">
-											<input name="run" id="runButton" type="button" value="<?php _e( 'Scan', 'php-compatibility-checker' ); ?>" class="button-secondary" />
+											<input name="run" id="runButton" type="button" value="<?php _e( 'Scan site', 'php-compatibility-checker' ); ?>" class="button-secondary" />
 											<span style="display:none; visibility:visible;" class="spinner wpe-pcc-spinner"></span>
 										</div> <!-- /wpe-pcc-run-scan -->
 									</td>
@@ -326,7 +326,7 @@ class WPEngine_PHPCompat {
 				<?php /* Scan results */ ?>
 				<div class="wpe-pcc-results" style="display:none;">
 					<hr>
-					<h2><?php printf( 'Scan Results for PHP <span class="wpe-pcc-test-version">' . $test_version . '</span>' ); ?></h2>
+					<h2><?php printf( 'Scan Results for PHP <span class="wpe-pcc-test-version">' . $test_version . '</span> Compatibility' ); ?></h2>
 
 					<?php /* Download report */ ?>
 					<div class="wpe-pcc-download-report" style="display:none;">
@@ -385,20 +385,12 @@ class WPEngine_PHPCompat {
 					</div> <!-- /wpe-pcc-aside-content -->
 				</div> <!-- /wpe-pcc-get-hosting -->
 
-				<?php /* Status: Passed, php7 */ ?>
-				<div style="display:none;" class="wpe-pcc-information wpe-pcc-information-passed">
-					<div class="wpe-pcc-aside-content">
-					<h2><?php _e( 'Still nervous about site launch?', 'php-compatibility-checker' ); ?></h2>
-					<p><strong><?php _e( 'Congratulations, this site looks PHP 7 ready!' ); ?></strong><?php _e( ' Things and stuff ' ); ?><a href="#"><?php _e ( 'link here' ); ?></a></p>
-					</div> <!-- /wpe-pcc-aside-content -->
-				</div> <!-- /wpe-pcc-information-passed -->
-
 				<?php /* Status: Errors */ ?>
 				<div style="display:none;" class="wpe-pcc-information wpe-pcc-information-errors">
 					<div class="wpe-pcc-aside-content">
 						<h2><?php _e( 'Need help making this site PHP7 compatible?', 'php-compatibility-checker' ); ?></h2>
 						<div class="wpe-pcc-dev-helper">
-							<p class="title"><strong><?php _e( 'Get help from WP Engine partners', 'php-compatibility-checker' ); ?></strong></p>
+							<p class="title"><strong><?php _e( 'Gets help from WP Engine partners', 'php-compatibility-checker' ); ?></strong></p>
 							<p><?php _e( 'We have created a directory of some of the most well known names in the WordPress industry who can help make your site PHP 7 compatible.', 'php-compatibility-checker' ); ?></p>
 							<a target="_blank" class="wpe-pcc-button" href="<?php echo $url_wpe_agency_partners; ?>"><?php _e( 'Find a WP Engine Partner' , 'php-compatibility-checker' ); ?></a>
 						</div> <!-- /wpe-pcc-dev-helper -->

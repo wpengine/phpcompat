@@ -234,7 +234,6 @@ function displayReport( response ) {
 		// php 7 ready, and user tested version 7
 		jQuery( '.wpe-pcc-download-report' ).show();
 		jQuery( '.wpe-pcc-results' ).show();
-		jQuery( '.wpe-pcc-information-passed' ).show();
 
 	} else if ( compatible ) {
 		jQuery( '.wpe-pcc-download-report' ).show();
