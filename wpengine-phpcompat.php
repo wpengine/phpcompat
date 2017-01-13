@@ -388,10 +388,10 @@ class WPEngine_PHPCompat {
 				<?php /* Status: Errors */ ?>
 				<div style="display:none;" class="wpe-pcc-information wpe-pcc-information-errors">
 					<div class="wpe-pcc-aside-content">
-						<h2><?php _e( 'Need help making this site PHP7 compatible?', 'php-compatibility-checker' ); ?></h2>
+						<h2><?php _e( 'Need help making this site PHP 7 compatible?', 'php-compatibility-checker' ); ?></h2>
 						<div class="wpe-pcc-dev-helper">
 							<p class="title"><strong><?php _e( 'Gets help from WP Engine partners', 'php-compatibility-checker' ); ?></strong></p>
-							<p><?php _e( 'We have created a directory of some of the most well known names in the WordPress industry who can help make your site PHP 7 compatible.', 'php-compatibility-checker' ); ?></p>
+							<p><?php _e( 'Our agency partners can help make your site PHP 7 compatible.', 'php-compatibility-checker' ); ?></p>
 							<a target="_blank" class="wpe-pcc-button" href="<?php echo $url_wpe_agency_partners; ?>"><?php _e( 'Find a WP Engine Partner' , 'php-compatibility-checker' ); ?></a>
 						</div> <!-- /wpe-pcc-dev-helper -->
 
