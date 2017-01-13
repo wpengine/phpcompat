@@ -188,9 +188,6 @@ class WPEPHPCompat {
 		}
 
 		if ( ! $this->is_command_line() ) {
-			// Close the connection to the browser.
-			$this->close_connection( 'started' );
-
 			/**
 			 * Kill cron after a configurable timeout.
 			 * Subtract 5 from the timeout if we can to avoid race conditions.
@@ -478,30 +475,5 @@ class WPEPHPCompat {
 	 */
 	private function is_command_line() {
 		return defined( 'WP_CLI' ) || defined( 'PHPUNIT_TEST' ) || php_sapi_name() == 'cli';
-	}
-
-	/**
-	* Close the connection to the browser but continue processing the operation.
-	* @since  1.0.0
-	* @param  string $body The message to send to the client.
-	* @return null
-	*/
-	private function close_connection( $body ) {
-		ignore_user_abort( true );
-		if ( ob_get_length() ) { ob_end_clean(); }
-		// Start buffering.
-		ob_start();
-		// Echo our response.
-		echo $body;
-		// Get the length of the buffer.
-		$size = ob_get_length();
-		// Close the connection.
-		header( 'Connection: close\r\n' );
-		header( 'Content-Encoding: none\r\n' );
-		header( 'Content-Length: $size' );
-		// Flush and close the buffer.
-		ob_end_flush();
-		// Flush the system output buffer.
-		flush();
 	}
 }

@@ -94,16 +94,26 @@ class WPEngine_PHPCompat {
 
 			$wpephpc = new \WPEPHPCompat( __DIR__ );
 
-			if ( isset( $_POST['startScan'] ) ) {
-				$test_version = sanitize_text_field( $_POST['test_version'] );
-				$only_active = sanitize_text_field( $_POST['only_active'] );
-
-				$wpephpc->test_version = $test_version;
-				$wpephpc->only_active = $only_active;
-				$wpephpc->clean_after_scan();
+			foreach ( array( 'test_version', 'only_active' ) as $key ) {
+				if ( isset( $_POST[ $key ] ) ) {
+					$$key = sanitize_text_field( $_POST[ $key ] );
+				}
 			}
 
-			$wpephpc->start_test();
+			// New scan!
+			if ( isset( $_POST['startScan'] ) ) {
+				// Make sure we clean up after the last test.
+				$wpephpc->clean_after_scan();
+
+				// Fork so we can close the connection.
+				$this->fork_scan( $test_version, $only_active );
+			} else {
+				$wpephpc->test_version = $test_version;
+				$wpephpc->only_active = $only_active;
+
+				$wpephpc->start_test();
+			}
+
 			wp_die();
 		}
 	}
@@ -160,6 +170,40 @@ class WPEngine_PHPCompat {
 			}
 			wp_send_json( $to_encode );
 		}
+	}
+
+	/**
+	 * Make an Ajax call to start the scan in the background.
+	 *
+	 * @since 1.3.2
+	 * @param  string $test_version Version of PHP to test.
+	 * @param  string $only_active  Scan only active plugins or all?
+	 * @return null
+	 */
+	function fork_scan( $test_version, $only_active ) {
+		$query = array(
+			'action' => 'wpephpcompat_start_test',
+		);
+
+		// Keep track of these variables.
+		$body = array(
+			'test_version' => $test_version,
+			'only_active' => $only_active,
+		);
+
+		// Instantly return!
+		$args = array(
+			'timeout'   => 0.01,
+			'blocking'  => false,
+			'body'      => $body,
+			'cookies'   => $_COOKIE,
+			'sslverify' => apply_filters( 'https_local_ssl_verify', false ),
+		);
+
+		// Build our URL.
+		$url = add_query_arg( $query, admin_url( 'admin-ajax.php' ) );
+		// POST.
+		wp_remote_post( esc_url_raw( $url ), $args );
 	}
 
 	/**
