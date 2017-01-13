@@ -28,6 +28,7 @@ jQuery( document ).ready(function($) {
 	$( '#runButton' ).on( 'click', function() {
 		// Unselect button so it's not highlighted.
 		$( '#runButton' ).blur();
+		$( '.wpe-pcc-test-version' ).replaceWith(test_version);
 
 		// Show the ajax spinner.
 		$( '.spinner' ).show();
@@ -134,6 +135,7 @@ function resetDisplay() {
 	jQuery( '#wpe-progress-active' ).text('');
 	jQuery( '.wpe-pcc-download-report' ).hide();
 	jQuery( '.wpe-pcc-results' ).hide();
+	jQuery( '.wpe-pcc-information' ).hide();
 }
 /**
  * Loop through a string and count the total matches.
@@ -237,12 +239,12 @@ function displayReport( response ) {
 	} else if ( compatible ) {
 		jQuery( '.wpe-pcc-download-report' ).show();
 		jQuery( '.wpe-pcc-results' ).show();
-		jQuery( '.wpe-pcc-information-failed' ).show();
+		jQuery( '.wpe-pcc-information-errors' ).show();
 	} else {
 		// Display scan stats.
 		jQuery( '.wpe-pcc-download-report' ).show();
 		$( '#wpe-pcc-standardMode' ).prepend( '<p>' + failedCount + ' ' + window.wpephpcompat.out_of + ' ' + plugins.length + ' ' + window.wpephpcompat.are_not + '.</p>' );
-		jQuery( '.wpe-pcc-information-failed' ).show();
+		jQuery( '.wpe-pcc-information-errors' ).show();
 		jQuery( '.wpe-pcc-results' ).show();
 	}
 }

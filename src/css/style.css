@@ -29,7 +29,7 @@
 	width: 277px;
 }
 
-.wpe-pcc-logo {
+.wpe-pcc-wrap .wpe-pcc-logo {
 	max-width: 182px;
 	text-align: center;
 	margin: 0 auto;
@@ -38,6 +38,11 @@
 .wpe-pcc-aside h2 {
 	line-height: 1.15em;
 	text-transform: capitalize;
+}
+
+.wpe-pcc-aside-content p {
+	margin: 0;
+	padding: 0;
 }
 
 .wpe-pcc-aside-content {
@@ -51,8 +56,18 @@
 	margin-top: 0;
 }
 
-.wpe-pcc-aside-content .wpe-pcc-button {
-	margin-bottom: 0;
+.wpe-pcc-get-hosting {
+	background: #e8e9ea;
+}
+
+.wpe-pcc-information .wpe-pcc-button {
+	background: #cacdd0;
+	color: #87898c;
+}
+.wpe-pcc-information .wpe-pcc-button:hover,
+.wpe-pcc-information .wpe-pcc-button:focus {
+	background: #40bac8;
+	color: #fff;
 }
 
 .wpe-pcc-attention {
@@ -76,9 +91,6 @@
 	padding-bottom: 10px;
 	text-transform: capitalize;
 }
-.wpe-pcc-dev-helper p {
-	margin: 0;
-}
 .wpe-pcc-dev-helper img+p {
 	margin-top: 0;
 }
@@ -91,7 +103,8 @@
 	line-height: 28px;
 	margin-left: 10px;
 }
-.wpe-pcc-clear-results:hover, .wpe-pcc-clear-results:focus {
+.wpe-pcc-clear-results:hover,
+.wpe-pcc-clear-results:focus {
 	color: #979ea5;
 	cursor: pointer;
 }

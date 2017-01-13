@@ -4,7 +4,7 @@ Plugin Name: PHP Compatibility Checker
 Plugin URI: https://wpengine.com
 Description: Make sure your plugins and themes are compatible with newer PHP versions.
 Author: WP Engine
-Version: 1.3.2
+Version: 1.4.0
 Author URI: https://wpengine.com
 Text Domain: php-compatibility-checker
 */
@@ -271,6 +271,10 @@ class WPEngine_PHPCompat {
 		$test_version = ( ! empty( $test_version ) ) ? $test_version : '7.0';
 		$only_active = ( ! empty( $only_active ) ) ? $only_active : 'yes';
 
+		// Content variables
+		$url_get_hosting = esc_url( 'https://wpeng.in/5a0336/' );
+		$url_wpe_agency_partners = esc_url( 'https://wpeng.in/fa14e4/' );
+		$url_wpe_customer_upgrade = esc_url( 'https://wpeng.in/407b79/' );
 		?>
 		<div class="wrap wpe-pcc-wrap">
 			<h1><?php _e( 'PHP Compatibility Checker' ) ?></h1>
@@ -309,9 +313,9 @@ class WPEngine_PHPCompat {
 								<th scope="row"></th>
 									<td>
 										<div class="wpe-pcc-run-scan">
-						<input name="run" id="runButton" type="button" value="<?php _e( 'Scan', 'php-compatibility-checker' ); ?>" class="button-secondary" />
-						<span style="display:none; visibility:visible;" class="spinner wpe-pcc-spinner"></span>
-					</div> <!-- /wpe-pcc-run-scan -->
+											<input name="run" id="runButton" type="button" value="<?php _e( 'Scan', 'php-compatibility-checker' ); ?>" class="button-secondary" />
+											<span style="display:none; visibility:visible;" class="spinner wpe-pcc-spinner"></span>
+										</div> <!-- /wpe-pcc-run-scan -->
 									</td>
 								</th>
 							</tr>
@@ -322,7 +326,7 @@ class WPEngine_PHPCompat {
 				<?php /* Scan results */ ?>
 				<div class="wpe-pcc-results" style="display:none;">
 					<hr>
-					<h2><?php printf( 'Scan Results for PHP' . $test_version ); ?></h2>
+					<h2><?php printf( 'Scan Results for PHP <span class="wpe-pcc-test-version">' . $test_version . '</span>' ); ?></h2>
 
 					<?php /* Download report */ ?>
 					<div class="wpe-pcc-download-report" style="display:none;">
@@ -351,7 +355,7 @@ class WPEngine_PHPCompat {
 						<textarea readonly="readonly" id="testResults"></textarea>
 					</div>
 
-					<p class="wpe-pcc-attention"><?php _e( '<strong>Attention:</strong> Not all errors or warnings are show-stoppers. <a target="_blank" href="https://wpengine.com/plans/">Test this site in PHP7</a> to see if just works.', 'php-compatibility-checker' ); ?></p>
+					<p class="wpe-pcc-attention"><?php _e( '<strong>Attention:</strong> Not all errors are show-stoppers. <a target="_blank" href="' . $url_get_hosting . '">Test this site in PHP7</a> to see if just works!', 'php-compatibility-checker' ); ?></p>
 
 				</div> <!-- /wpe-pcc-results -->
 
@@ -367,46 +371,45 @@ class WPEngine_PHPCompat {
 					<p><?php printf( __( 'Report false positives <a href="%1$s">on our GitHub repo</a>.', 'php-compatibility-checker' ), 'https://github.com/wpengine/phpcompat/wiki/Results' ); ?></p>
 				</div> <!-- /wpe-pcc-footer -->
 			</div> <!-- /wpe-pcc-main -->
+
+			<?php /* Begin sidebar */ ?>
 			<div class="wpe-pcc-aside">
 				<p class="wpe-pcc-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 268.3 51"><g fill="#40BAC8"><path d="M17.4 51h16.4V38.6l-4-4h-8.5l-3.9 4zM38.6 17.3l-3.9 3.9v8.6l3.9 3.9h12.5V17.3zM33.8 0H17.4v12.5l3.9 3.9h8.5l4-3.9zM51.1 51V38.6l-3.9-4H34.7V51zM4 0L.1 3.9v12.5h16.4V0zM34.7 0v12.5l3.9 3.9h12.5V0zM25.6 27.9c-1.3 0-2.3-1.1-2.3-2.3 0-1.3 1.1-2.3 2.3-2.3 1.3 0 2.3 1.1 2.3 2.3 0 1.2-1 2.3-2.3 2.3zM16.5 17.3H.1v16.4h12.4l4-3.9zM16.5 38.6l-4-4H.1V51h12.4l4-3.9z"/></g><g fill="#162A33"><path d="M86.2 38.6c-.3 0-.4-.1-.5-.4l-4.1-14.5h-.1l-4.1 14.5c-.1.3-.2.4-.5.4h-4.8c-.3 0-.4-.1-.5-.4l-7-25.2c0-.2 0-.4.3-.4h6.3c.3 0 .5.2.5.4L75 28.1h.1l4-15.1c.1-.3.2-.4.5-.4h3.9c.3 0 .4.1.5.4l4.2 15.1h.1L91.5 13c0-.2.2-.4.5-.4h6.3c.2 0 .3.2.3.4l-7 25.2c-.1.3-.2.4-.5.4h-4.9zM103.6 38.6c-.2 0-.4-.2-.4-.4V13c0-.2.2-.4.4-.4H114c6.3 0 9.6 3.6 9.6 8.6s-3.3 8.7-9.6 8.7h-3.8c-.2 0-.2.1-.2.2v8c0 .2-.2.4-.4.4h-6zm13.3-17.3c0-1.8-1.2-2.9-3.3-2.9h-3.4c-.2 0-.2.1-.2.2V24c0 .2.1.2.2.2h3.4c2.1 0 3.3-1.2 3.3-2.9zM132.5 32.2c-.5-1.4-.7-3.1-.7-6.5 0-3.3.3-5.1.7-6.5 1.3-4.1 4.5-6.2 8.6-6.2 4.2 0 7.3 2.1 8.6 6.2.5 1.4.7 3 .7 6.1 0 .3-.2.5-.6.5h-16.3c-.2 0-.3.2-.3.4 0 2.7.2 4.2.6 5.5 1.2 3.7 3.9 5.3 7.5 5.3 3.4 0 5.9-1.5 7.4-3.5.2-.3.5-.3.7-.1l.3.3c.3.2.3.5.1.7-1.7 2.4-4.6 4.1-8.4 4.1-4.5 0-7.5-2.1-8.9-6.3zm16.2-7.8c.2 0 .3-.1.3-.3 0-1.7-.2-3.1-.6-4.3-1.1-3.5-3.7-5.3-7.2-5.3s-6.1 1.7-7.2 5.3c-.4 1.2-.6 2.5-.6 4.3 0 .2.1.3.3.3h15zM173.6 38c-.3 0-.5-.2-.5-.5V22.9c0-5.8-2.4-8.3-7.1-8.3-4.1 0-7.5 2.8-7.5 7.6v15.4c0 .3-.2.5-.5.5h-.5c-.3 0-.5-.2-.5-.5V14.2c0-.3.2-.5.5-.5h.5c.3 0 .5.2.5.5v3.4h.1c1.2-2.8 4-4.5 7.5-4.5 5.5 0 8.6 3.1 8.6 9.4v15c0 .3-.2.5-.5.5h-.6zM182 44.3c-.2-.3-.2-.6.1-.7l.4-.3c.3-.2.5-.1.7.2 1.4 1.8 3.5 2.9 6.5 2.9 4.6 0 7.6-2.3 7.6-8.3V34h-.1c-1.2 2.7-3.3 4.6-7.6 4.6-4.1 0-6.9-2.2-8.1-5.8-.6-1.7-.8-3.9-.8-6.9 0-3 .3-5.2.8-6.9 1.2-3.6 4-5.8 8.1-5.8 4.3 0 6.4 1.9 7.6 4.6h.1v-3.5c0-.3.2-.5.5-.5h.5c.3 0 .5.2.5.5v23.9c0 6.7-3.6 9.7-9.2 9.7-3.5-.1-6.4-1.7-7.6-3.6zm14.6-12.1c.5-1.5.7-3.3.7-6.4 0-3-.2-4.9-.7-6.4-1.2-3.6-3.8-4.9-6.8-4.9-3.3 0-5.7 1.6-6.7 4.8-.5 1.5-.8 3.6-.8 6.4 0 2.8.3 4.9.8 6.4 1.1 3.2 3.4 4.8 6.7 4.8 3 .2 5.7-1.1 6.8-4.7zM207.2 6.1c-.3 0-.5-.2-.5-.5v-2c0-.3.2-.5.5-.5h1.2c.3 0 .5.2.5.5v2.1c0 .3-.2.5-.5.5h-1.2zm.4 31.9c-.3 0-.5-.2-.5-.5V14.2c0-.3.2-.5.5-.5h.5c.3 0 .5.2.5.5v23.3c0 .3-.2.5-.5.5h-.5zM233.5 38c-.3 0-.5-.2-.5-.5V22.9c0-5.8-2.4-8.3-7.1-8.3-4.1 0-7.5 2.8-7.5 7.6v15.4c0 .3-.2.5-.5.5h-.5c-.3 0-.5-.2-.5-.5V14.2c0-.3.2-.5.5-.5h.5c.3 0 .5.2.5.5v3.4h.1c1.2-2.8 4-4.5 7.5-4.5 5.5 0 8.6 3.1 8.6 9.4v15c0 .3-.2.5-.5.5h-.6zM241.4 32.2c-.5-1.4-.7-3.1-.7-6.5 0-3.3.3-5.1.7-6.5 1.3-4.1 4.5-6.2 8.6-6.2 4.2 0 7.3 2.1 8.6 6.2.5 1.4.7 3 .7 6.1 0 .3-.2.5-.6.5h-16.3c-.2 0-.3.2-.3.4 0 2.7.2 4.2.6 5.5 1.2 3.7 3.9 5.3 7.5 5.3 3.4 0 5.9-1.5 7.4-3.5.2-.3.5-.3.7-.1l.3.3c.3.2.3.5.1.7-1.7 2.4-4.6 4.1-8.4 4.1-4.5 0-7.6-2.1-8.9-6.3zm16.1-7.8c.2 0 .3-.1.3-.3 0-1.7-.2-3.1-.6-4.3-1.1-3.5-3.7-5.3-7.2-5.3s-6.1 1.7-7.2 5.3c-.4 1.2-.6 2.5-.6 4.3 0 .2.1.3.3.3h15z"/></g><g><path fill="#162A33" d="M262.3 16.1c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3-3-1.3-3-3zm5.5 0c0-1.5-1.1-2.5-2.5-2.5-1.5 0-2.5 1.1-2.5 2.5 0 1.5 1.1 2.5 2.5 2.5s2.5-1 2.5-2.5zm-3.5 1.7c-.1 0-.1 0-.1-.1v-3.1c0-.1 0-.1.1-.1h1.2c.7 0 1.1.4 1.1 1 0 .4-.2.8-.7.9l.7 1.3c.1.1 0 .2-.1.2h-.3c-.1 0-.1-.1-.2-.1l-.7-1.3h-.7v1.2c0 .1-.1.1-.1.1h-.2zm1.8-2.4c0-.3-.2-.5-.6-.5h-.8v1h.8c.4 0 .6-.2.6-.5z"/></g></svg></p>
 
+				<div class="wpe-pcc-get-hosting">
+					<div class="wpe-pcc-aside-content">
+						<h2><?php _e( 'Make your site 2x faster with PHP 7 WordPress hosting', 'php-compatibility-checker' ); ?></h2>
+						<p><?php _e( 'PHP 7 on WP Engine makes it easy to speed up your site, increase your conversion rates, and improve your SEO.', 'php-compatibility-checker' ); ?></p>
+						<a target="_blank" class="wpe-pcc-button wpe-pcc-button-primary" href="<?php echo $url_get_hosting; ?>"><?php _e( 'Get PHP 7 Hosting', 'php-compatibility-checker' ); ?></a>
+						<p><?php _e( 'Already a WP Engine customer?' ); ?> <a target="_blank" href="<?php echo $url_wpe_customer_upgrade; ?>"><?php _e( 'Click here to upgrade to PHP 7' ); ?></a></p>
+					</div> <!-- /wpe-pcc-aside-content -->
+				</div> <!-- /wpe-pcc-get-hosting -->
 
-				<?php /* Begin sidebar */ ?>
-				<div class="wpe-pcc-aside-content">
-					<h2><?php _e( 'Make your site 2x faster with PHP 7 WordPress hosting', 'php-compatibility-checker' ); ?></h2>
-					<p><?php _e( 'PHP 7 on WP Engine makes it easy to speed up your site, increase your conversion rates, and improve your SEO.', 'php-compatibility-checker' ); ?></p>
-					<a target="_blank" class="wpe-pcc-button wpe-pcc-button-primary" href="https://wpengine.com/plans/"><?php _e( 'Get PHP 7 Hosting', 'php-compatibility-checker' ); ?></a>
+				<?php /* Status: Passed, php7 */ ?>
+				<div style="display:none;" class="wpe-pcc-information wpe-pcc-information-passed">
+					<div class="wpe-pcc-aside-content">
+					<h2><?php _e( 'Still nervous about site launch?', 'php-compatibility-checker' ); ?></h2>
+					<p><strong><?php _e( 'Congratulations, this site looks PHP 7 ready!' ); ?></strong><?php _e( ' Things and stuff ' ); ?><a href="#"><?php _e ( 'link here' ); ?></a></p>
+					</div> <!-- /wpe-pcc-aside-content -->
+				</div> <!-- /wpe-pcc-information-passed -->
 
-					<div style="display:none;" class="wpe-pcc-information wpe-pcc-information-passed">
-						<hr>
-						<h2><?php _e( 'This site looks PHP 7 ready! Still nervous about site launch?', 'php-compatibility-checker' ); ?></h2>
-						<div class="wpe-pcc-dev-helper">
-							<p><?php _e( 'Our agency partners can manage your upgrade process to PHP 7.', 'php-compatibility-checker' ); ?></p>
-							<a target="_blank" class="wpe-pcc-button" href="<?php echo esc_url( 'https://wpengine.com/partners/agencies/' ); ?>"><?php _e( 'Find a WP Engine Partner' , 'php-compatibility-checker' ); ?></a>
-						</div> <!-- /wpe-pcc-dev-helper -->
-						<div class="wpe-pcc-dev-helper">
-							<p><?php _e( 'Create a Codeable project to connect with full stack WordPress developers who can walk you through the upgrade process to PHP 7.', 'php-compatibility-checker' ); ?></p>
-							<a target="_blank" class="wpe-pcc-button" href="#"><?php _e( 'Submit to Codeable' , 'php-compatibility-checker' ); ?></a>
-						</div> <!-- /wpe-pcc-dev-helper -->
-					</div> <!-- /wpe-pcc-information-passed -->
-
-					<div style="display:none;" class="wpe-pcc-information wpe-pcc-information-failed">
-						<hr>
+				<?php /* Status: Errors */ ?>
+				<div style="display:none;" class="wpe-pcc-information wpe-pcc-information-errors">
+					<div class="wpe-pcc-aside-content">
 						<h2><?php _e( 'Need help making this site PHP7 compatible?', 'php-compatibility-checker' ); ?></h2>
 						<div class="wpe-pcc-dev-helper">
 							<p class="title"><strong><?php _e( 'Get help from WP Engine partners', 'php-compatibility-checker' ); ?></strong></p>
-							<p><?php _e( 'We partner with the brightest agency minds that are dedicated to delivering enterprise grade solutions in WordPress.', 'php-compatibility-checker' ); ?></p>
-							<a target="_blank" class="wpe-pcc-button" href="<?php echo esc_url( 'https://wpengine.com/partners/agencies/' ); ?>"><?php _e( 'Find a WP Engine Partner' , 'php-compatibility-checker' ); ?></a>
+							<p><?php _e( 'We have created a directory of some of the most well known names in the WordPress industry who can help make your site PHP 7 compatible.', 'php-compatibility-checker' ); ?></p>
+							<a target="_blank" class="wpe-pcc-button" href="<?php echo $url_wpe_agency_partners; ?>"><?php _e( 'Find a WP Engine Partner' , 'php-compatibility-checker' ); ?></a>
 						</div> <!-- /wpe-pcc-dev-helper -->
 
 						<div class="wpe-pcc-dev-helper">
 							<p class="title"><strong><?php _e( 'Get PHP 7 ready with Codeable', 'php-compatibility-checker' ); ?></strong></p>
-							<p><?php _e( 'Create a Codeable project to connect with full stack WordPress developers who can make your site PHP 7 compatible.' , 'php-compatibility-checker' ); ?></p>
+							<p><?php _e( 'Automatically submit this error report to Codeable to get a quick quote from their vetted WordPress developers.' , 'php-compatibility-checker' ); ?></p>
 							<a target="_blank" class="wpe-pcc-button" href="#"><?php _e( 'Submit to Codeable', 'php-compatibility-checker' ); ?></a>
 						</div> <!-- /wpe-pcc-dev-helper -->
-					</div> <!-- /wpe-pcc-information -->
-
-				</div> <!-- /wpe-pcc-aside-content -->
+					</div> <!-- /wpe-pcc-aside-content -->
+				</div> <!-- /wpe-pcc-information -->
 
 			</div> <!-- /wpe-pcc-aside -->
 		</div> <!-- /wpe-pcc-wrap -->
