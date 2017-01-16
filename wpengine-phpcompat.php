@@ -279,14 +279,11 @@ class WPEngine_PHPCompat {
 		<div class="wrap wpe-pcc-wrap">
 			<h1><?php _e( 'PHP Compatibility Checker' ) ?></h1>
 			<div class="wpe-pcc-main">
-				<p><?php _e( 'The PHP Compatibility Checker can be used on any WordPress websites on any web host.', 'php-compatibility-checker' ); ?></p>
-				<p><?php _e( 'This plugin will lint theme and plugin code inside your WordPress file system and give you back a report of compatibility issues for you to fix. Compatibility issues are categorized into errors and warnings and will list the file and line number of the offending code, as well as the info about why that line of code is incompatible with the chosen version of PHP. The plugin will also suggest updates to themes and plugins, as a new version may offer compatible code.', 'php-compatibility-checker' ); ?></p>
+				<p><?php _e( 'The PHP Compatibility Checker can be used on any WordPress website on any web host.', 'php-compatibility-checker' ); ?></p>
+				<p><?php _e( 'This tool will lint your theme and plugin code on this site and provide you a report of compatibility issues. These issues are categorized into errors and warnings and will list the file and line number of the offending code, as well as the info about why that line of code is incompatible with the chosen version of PHP. This tool will also suggest updates to themes and plugins, as a new version may offer compatible code.', 'php-compatibility-checker' ); ?></p>
 				<hr>
 				<div class="wpe-pcc-scan-options">
 					<h2><?php _e( 'Scan Options' ); ?></h2>
-					<p>
-						<?php _e( 'Choose which version of PHP to test this site against.' ); ?>
-					</p>
 					<table class="form-table wpe-pcc-form-table">
 						<tbody>
 							<tr>
@@ -363,8 +360,8 @@ class WPEngine_PHPCompat {
 					<hr>
 					<strong><?php _e( 'Limitations &amp; Caveats' ); ?></strong>
 					<ul class="wpe-pcc-bullets">
-						<li><?php _e( 'This plugin cannot detect unused code-paths that might be used for backwards compatibility, and thus might show false positives. We maintain <a target="_blank" href="https://github.com/wpengine/phpcompat/wiki/Results">a whitelist of plugins</a> that can cause false positives.' ); ?></li>
-						<li><?php _e( 'This plugin does not execute your theme and plugin code, so it cannot detect runtime compatibility issues.' ); ?></li>
+						<li><?php _e( 'This tool cannot detect unused code paths that might be used for backwards compatibility, potentially showing false positives. We maintain <a target="_blank" href="https://github.com/wpengine/phpcompat/wiki/Results">a whitelist of plugins</a> that can cause false positives.' ); ?></li>
+						<li><?php _e( 'This tool does not execute your theme or plugin code, so it cannot detect runtime compatibility issues.' ); ?></li>
 						<li><?php _e( 'PHP Warnings could cause compatibility issues with future PHP versions and/or spam your logs.', 'php-compatibility-checker' ); ?></li>
 						<li><?php printf( __( 'The scan will get stuck if WP-Cron is not running correctly. Please <a href="%1$s">see the FAQ</a> for more information.', 'php-compatibility-checker' ), 'https://wordpress.org/plugins/php-compatibility-checker/faq/' ); ?></li>
 					</ul>
@@ -390,7 +387,7 @@ class WPEngine_PHPCompat {
 					<div class="wpe-pcc-aside-content">
 						<h2><?php _e( 'Need help making this site PHP 7 compatible?', 'php-compatibility-checker' ); ?></h2>
 						<div class="wpe-pcc-dev-helper">
-							<p class="title"><strong><?php _e( 'Gets help from WP Engine partners', 'php-compatibility-checker' ); ?></strong></p>
+							<p class="title"><strong><?php _e( 'Get help from WP Engine partners', 'php-compatibility-checker' ); ?></strong></p>
 							<p><?php _e( 'Our agency partners can help make your site PHP 7 compatible.', 'php-compatibility-checker' ); ?></p>
 							<a target="_blank" class="wpe-pcc-button" href="<?php echo $url_wpe_agency_partners; ?>"><?php _e( 'Find a WP Engine Partner' , 'php-compatibility-checker' ); ?></a>
 						</div> <!-- /wpe-pcc-dev-helper -->
