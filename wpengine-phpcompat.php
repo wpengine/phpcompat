@@ -19,6 +19,41 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	require_once( __DIR__ . '/src/wpcli.php' );
 }
 
+// Create a helper function for easy SDK access.
+function pcc_fs() {
+	global $pcc_fs;
+
+	if ( ! isset( $pcc_fs ) ) {
+		// Include Freemius SDK.
+		require_once dirname(__FILE__) . '/freemius/start.php';
+
+		$pcc_fs = fs_dynamic_init( array(
+			'id'                  => '698',
+			'slug'                => 'php-compatibility-checker',
+			'type'                => 'plugin',
+			'public_key'          => 'pk_c58176b353f6cf400bbcfec10f096',
+			'is_premium'          => false,
+			'has_premium_version' => false,
+			'has_addons'          => false,
+			'has_paid_plans'      => false,
+			'menu'                => array(
+				'slug'       => 'php-compatibility-checker',
+				'account'    => false,
+				'contact'    => false,
+				'support'    => false,
+				'parent'     => array(
+						'slug' => 'tools.php',
+				),
+			),
+		) );
+	}
+
+	return $pcc_fs;
+}
+
+// Init Freemius.
+pcc_fs();
+
 /**
  * This handles hooking into WordPress.
  */
