@@ -30,6 +30,7 @@
 }
 
 .wpe-pcc-wrap .wpe-pcc-logo {
+	display: block;
 	max-width: 182px;
 	text-align: center;
 	margin: 0 auto;
