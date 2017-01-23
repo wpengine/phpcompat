@@ -231,7 +231,7 @@ class WPEngine_PHPCompat {
 		$strings = array(
 			'name'       => __( 'Name', 'php-compatibility-checker' ),
 			'compatible' => __( 'compatible', 'php-compatibility-checker' ),
-			'are_not'    => __( 'items may not be compatible', 'php-compatibility-checker' ),
+			'are_not'    => __( 'plugins/themes may not be compatible', 'php-compatibility-checker' ),
 			'is_not'     => __( 'Your WordPress site is possibly not PHP', 'php-compatibility-checker' ),
 			'out_of'     => __( 'out of', 'php-compatibility-checker' ),
 			'run'        => __( 'Scan site', 'php-compatibility-checker' ),
@@ -265,6 +265,9 @@ class WPEngine_PHPCompat {
 		$test_version = get_option( 'wpephpcompat.test_version' );
 		$only_active = get_option( 'wpephpcompat.only_active' );
 
+		// Determine if current site is a WP Engine customer
+		$is_wpe_customer = ! empty( $_SERVER['IS_WPE'] ) && $_SERVER['IS_WPE'];
+
 		$phpversions = $this->get_phpversions();
 
 		// Assigns defaults for the scan if none are found in the database.
@@ -276,6 +279,7 @@ class WPEngine_PHPCompat {
 		$url_wpe_agency_partners = esc_url( 'https://wpeng.in/fa14e4/' );
 		$url_wpe_customer_upgrade = esc_url( 'https://wpeng.in/407b79/' );
 		$url_wpe_logo = esc_url( 'https://wpeng.in/22f22b/' );
+
 		?>
 		<div class="wrap wpe-pcc-wrap">
 			<h1><?php _e( 'PHP Compatibility Checker' ) ?></h1>
@@ -353,7 +357,7 @@ class WPEngine_PHPCompat {
 						<textarea readonly="readonly" id="testResults"></textarea>
 					</div>
 
-					<p class="wpe-pcc-attention"><?php _e( '<strong>Attention:</strong> Not all errors are show-stoppers. <a target="_blank" href="' . $url_get_hosting . '">Test this site in PHP7</a> to see if just works!', 'php-compatibility-checker' ); ?></p>
+					<p class="wpe-pcc-attention"><?php printf( __( '<strong>Attention:</strong> Not all errors are show-stoppers. <a target="_blank" href="' . $url_get_hosting . '">Test this site on PHP 7</a> to see if it just works!', 'php-compatibility-checker' ) ); ?></p>
 
 				</div> <!-- /wpe-pcc-results -->
 
@@ -376,10 +380,21 @@ class WPEngine_PHPCompat {
 
 				<div class="wpe-pcc-get-hosting">
 					<div class="wpe-pcc-aside-content">
-						<h2><?php _e( 'Make your site 2x faster with PHP 7 WordPress hosting', 'php-compatibility-checker' ); ?></h2>
+						<?php if ( $is_wpe_customer ) { ?>
+							<h2><?php _e( 'Make your site 2x faster by upgrading to PHP 7', 'php-compatibility-checker' ); ?></h2>
+						<?php } else { ?>
+							<h2><?php _e( 'Make your site 2x faster with PHP 7 WordPress hosting', 'php-compatibility-checker' ); ?></h2>
+						<?php } // endif?>
+
 						<p><?php _e( 'PHP 7 on WP Engine makes it easy to speed up your site, increase your conversion rates, and improve your SEO.', 'php-compatibility-checker' ); ?></p>
-						<a target="_blank" class="wpe-pcc-button wpe-pcc-button-primary" href="<?php echo $url_get_hosting; ?>"><?php _e( 'Get PHP 7 Hosting', 'php-compatibility-checker' ); ?></a>
-						<p><?php _e( 'Already a WP Engine customer?' ); ?> <a target="_blank" href="<?php echo $url_wpe_customer_upgrade; ?>"><?php _e( 'Click here to upgrade to PHP 7' ); ?></a></p>
+
+						<?php if ( $is_wpe_customer ) { ?>
+							<a target="_blank" class="wpe-pcc-button wpe-pcc-button-primary" href="<?php echo $url_wpe_customer_upgrade; ?>"><?php _e( 'Upgrade to PHP 7', 'php-compatibility-checker' ); ?></a>
+						<?php } else { ?>
+							<a target="_blank" class="wpe-pcc-button wpe-pcc-button-primary" href="<?php echo $url_get_hosting; ?>"><?php _e( 'Get PHP 7 Hosting', 'php-compatibility-checker' ); ?></a>
+							<p><?php _e( 'Already a WP Engine customer?' ); ?> <a target="_blank" href="<?php echo $url_wpe_customer_upgrade; ?>"><?php _e( 'Click here to upgrade to PHP 7' ); ?></a></p>
+						<?php } // endif?>
+
 					</div> <!-- /wpe-pcc-aside-content -->
 				</div> <!-- /wpe-pcc-get-hosting -->
 
