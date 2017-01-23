@@ -389,7 +389,7 @@ class WPEngine_PHPCompat {
 						<p><?php _e( 'PHP 7 on WP Engine makes it easy to speed up your site, increase your conversion rates, and improve your SEO.', 'php-compatibility-checker' ); ?></p>
 
 						<?php if ( $is_wpe_customer ) { ?>
-							<a target="_blank" class="wpe-pcc-button wpe-pcc-button-primary" href="<?php echo $url_wpe_customer_upgrade; ?>"><?php _e( 'Upgrade to PHP 7', 'php-compatibility-checker' ); ?></a>
+							<a target="_blank" class="wpe-pcc-button wpe-pcc-button-primary" href="<?php echo $url_wpe_customer_upgrade; ?>"><?php _e( 'Upgrade to PHP 7 for free', 'php-compatibility-checker' ); ?></a>
 						<?php } else { ?>
 							<a target="_blank" class="wpe-pcc-button wpe-pcc-button-primary" href="<?php echo $url_get_hosting; ?>"><?php _e( 'Get PHP 7 Hosting', 'php-compatibility-checker' ); ?></a>
 							<p><?php _e( 'Already a WP Engine customer?' ); ?> <a target="_blank" href="<?php echo $url_wpe_customer_upgrade; ?>"><?php _e( 'Click here to upgrade to PHP 7' ); ?></a></p>
