@@ -279,6 +279,7 @@ class WPEngine_PHPCompat {
 		$url_wpe_agency_partners = esc_url( 'https://wpeng.in/fa14e4/' );
 		$url_wpe_customer_upgrade = esc_url( 'https://wpeng.in/407b79/' );
 		$url_wpe_logo = esc_url( 'https://wpeng.in/22f22b/' );
+		$url_codeable_submit = esc_url( 'https://codeable.io/wp-admin/admin-ajax.php' );
 
 		?>
 		<div class="wrap wpe-pcc-wrap">
@@ -411,7 +412,10 @@ class WPEngine_PHPCompat {
 						<div class="wpe-pcc-dev-helper">
 							<p class="title"><strong><?php _e( 'Get PHP 7 ready with Codeable', 'php-compatibility-checker' ); ?></strong></p>
 							<p><?php _e( 'Automatically submit this error report to Codeable to get a quick quote from their vetted WordPress developers.' , 'php-compatibility-checker' ); ?></p>
-							<a target="_blank" class="wpe-pcc-button" href="#"><?php _e( 'Submit to Codeable', 'php-compatibility-checker' ); ?></a>
+							<form target="_blank" action="<?php echo add_query_arg( array( 'action' => 'wp_engine_phpcompat' ), $url_codeable_submit ); ?>" method="POST">
+								<input type="hidden" name="data" value="<?php echo base64_encode( get_option( 'wpephpcompat.scan_results' ) ); ?>" />
+								<input type="submit" class="wpe-pcc-button" value="<?php _e( 'Submit to Codeable', 'php-compatibility-checker' ); ?>" />
+							</form>
 						</div> <!-- /wpe-pcc-dev-helper -->
 					</div> <!-- /wpe-pcc-aside-content -->
 				</div> <!-- /wpe-pcc-information -->

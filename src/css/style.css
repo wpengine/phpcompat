@@ -71,6 +71,12 @@
 	color: #fff;
 }
 
+.wpe-pcc-information input.wpe-pcc-button {
+	display: block;
+	border: 0 none;
+	width: 100%;
+}
+
 .wpe-pcc-attention {
 	background: #e7e7e7;
 	border: 1px dashed #babec3;
