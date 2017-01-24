@@ -30,7 +30,7 @@ jQuery( document ).ready(function($) {
 		$( '#runButton' ).blur();
 
 		// Show the ajax spinner.
-		$( '.spinner' ).show();
+		$( '.wpe-pcc-spinner' ).show();
 		// Empty the results textarea.
 		resetDisplay();
 		test_version = $( 'input[name=phptest_version]:checked' ).val();
@@ -83,9 +83,9 @@ function checkStatus() {
 		}
 
 		if ( '1' === obj.status ) {
-			jQuery( '.spinner' ).show();
+			jQuery( '.wpe-pcc-spinner' ).show();
 		} else {
-			jQuery( '.spinner' ).hide();
+			jQuery( '.wpe-pcc-spinner' ).hide();
 		}
 
 		if ( '0' !== obj.results ) {
@@ -93,20 +93,16 @@ function checkStatus() {
 				test_version = obj.version;
 				displayReport( obj.results );
 			}
-			jQuery( '#wpe-progress' ).hide();
+			jQuery( '#wpe-pcc-progress-count' ).hide();
 		} else {
-			jQuery( '#progressbar' ).progressbar({
-				value: obj.progress
-			});
-			jQuery( '#wpe-progress' ).show();
-
 			// Display the current plugin count.
 			if ( obj.total ) {
-				jQuery( '#wpe-progress-count' ).text( ( obj.total - obj.count + 1 ) + '/' + obj.total );
+				jQuery( '#wpe-pcc-progress-count' ).show();
+				jQuery( '#wpe-pcc-progress-count' ).text( '(' + ( obj.total - obj.count + 1 ) + ' of ' + obj.total + ')' );
 			}
 
 			// Display the object being scanned.
-			jQuery( '#wpe-progress-active' ).text( obj.activeJob );
+			jQuery( '#wpe-progress-active' ).html( '<strong>Now scanning:</strong> ' + obj.activeJob );
 
 			// Requeue the checkStatus call.
 			timer = setTimeout(function() {
@@ -133,7 +129,7 @@ function resetDisplay() {
 	});
 	jQuery( '#testResults' ).text('');
 	jQuery( '#wpe-pcc-standardMode' ).html('');
-	jQuery( '#wpe-progress-count' ).text('');
+	jQuery( '#wpe-pcc-progress-count' ).text('');
 	jQuery( '#wpe-progress-active' ).text('');
 	jQuery( '.wpe-pcc-download-report' ).hide();
 	jQuery( '.wpe-pcc-results' ).hide();

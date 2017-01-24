@@ -265,10 +265,6 @@ class WPEngine_PHPCompat {
 		wp_enqueue_script( 'wpephpcompat-download', plugins_url( '/src/js/download.min.js', __FILE__ ) );
 		wp_enqueue_script( 'wpephpcompat', plugins_url( '/src/js/run.js', __FILE__ ), array( 'jquery', 'wpephpcompat-handlebars', 'wpephpcompat-download' ) );
 
-		// Progress Bar
-		wp_enqueue_script( 'jquery-ui-progressbar' );
-		wp_enqueue_style( 'jquery-style', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
-
 		/**
 		 * i18n strings
 		 *
@@ -363,7 +359,9 @@ class WPEngine_PHPCompat {
 									<td>
 										<div class="wpe-pcc-run-scan">
 											<input name="run" id="runButton" type="button" value="<?php _e( 'Scan site', 'php-compatibility-checker' ); ?>" class="button-secondary" />
-											<span style="display:none; visibility:visible;" class="spinner wpe-pcc-spinner"></span>
+                      <div class="wpe-pcc-scan-information">
+                        <span style="display:none; visibility:visible;" class="spinner wpe-pcc-spinner"></span> <span id="wpe-progress-active"></span> <span style="display:none;" id="wpe-pcc-progress-count"></span>
+                      </div> <!-- /wpe-pcc-scan-information -->
 										</div> <!-- /wpe-pcc-run-scan -->
 									</td>
 								</th>
@@ -388,13 +386,6 @@ class WPEngine_PHPCompat {
 						</label>
 						<hr>
 					</div> <!-- /wpe-pcc-download-report -->
-
-					<?php /* Progress bar */ ?>
-					<div style="display:none;" id="wpe-progress">
-						<p><?php printf( '<strong>Scan progress</strong> - <span id="wpe-progress-count"></span> <span id="wpe-progress-active"></span>' ); ?></p>
-
-						<div id="progressbar"></div>
-					</div>
 
 					<?php /* Area for pretty results. */ ?>
 					<div id="wpe-pcc-standardMode"></div>
