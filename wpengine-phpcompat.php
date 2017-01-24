@@ -404,7 +404,7 @@ class WPEngine_PHPCompat {
 						<textarea readonly="readonly" id="testResults"></textarea>
 					</div>
 
-					<p class="wpe-pcc-attention"><?php printf( __( '<strong>Attention:</strong> Not all errors are show-stoppers. <a target="_blank" href="' . $url_get_hosting . '">Test this site on PHP 7</a> to see if it just works!', 'php-compatibility-checker' ) ); ?></p>
+					<p class="wpe-pcc-attention"><?php printf( '<strong>Attention:</strong> Not all errors are show-stoppers. <a target="_blank" href="' . $url_get_hosting . '">Test this site on PHP 7</a> to see if it just works!' ); ?></p>
 
 				</div> <!-- /wpe-pcc-results -->
 
