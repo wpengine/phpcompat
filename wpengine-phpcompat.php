@@ -406,9 +406,9 @@ class WPEngine_PHPCompat {
 						<li><?php _e( 'This tool cannot detect unused code paths that might be used for backwards compatibility, potentially showing false positives. We maintain <a target="_blank" href="https://github.com/wpengine/phpcompat/wiki/Results">a whitelist of plugins</a> that can cause false positives.' ); ?></li>
 						<li><?php _e( 'This tool does not execute your theme or plugin code, so it cannot detect runtime compatibility issues.' ); ?></li>
 						<li><?php _e( 'PHP Warnings could cause compatibility issues with future PHP versions and/or spam your logs.', 'php-compatibility-checker' ); ?></li>
-						<li><?php printf( __( 'The scan will get stuck if WP-Cron is not running correctly. Please <a href="%1$s">see the FAQ</a> for more information.', 'php-compatibility-checker' ), 'https://wordpress.org/plugins/php-compatibility-checker/faq/' ); ?></li>
+						<li><?php printf( __( 'The scan will get stuck if WP-Cron is not running correctly. Please <a target="_blank" href="%1$s">see the FAQ</a> for more information.', 'php-compatibility-checker' ), 'https://wordpress.org/plugins/php-compatibility-checker/faq/' ); ?></li>
 					</ul>
-					<p><?php printf( __( 'Report false positives <a href="%1$s">on our GitHub repo</a>.', 'php-compatibility-checker' ), 'https://github.com/wpengine/phpcompat/wiki/Results' ); ?></p>
+					<p><?php printf( __( 'Report false positives <a target="_blank" href="%1$s">on our GitHub repo</a>.', 'php-compatibility-checker' ), 'https://github.com/wpengine/phpcompat/wiki/Results' ); ?></p>
 				</div> <!-- /wpe-pcc-footer -->
 			</div> <!-- /wpe-pcc-main -->
 
