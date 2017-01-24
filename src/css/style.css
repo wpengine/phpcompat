@@ -1,125 +1,266 @@
-
-.wpe-results-card
-{
-	background-color: #fff;
-	border-bottom-color: rgb(221, 221, 221);
-	border-bottom-style: solid;
-	border-bottom-width: 1px;
-	border-left-style: solid;
-	border-left-width: 6px;
-	width: 812px;
-	padding-bottom: 14px;
-	padding-left: 16px;
-	padding-right: 16px;
-	padding-top: 14px;
-	margin-bottom: 10px;
-	/*box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.12);*/
+.wpe-pcc-wrap .button-primary .dashicons,
+.wpe-pcc-wrap .button-secondary .dashicons {
+	line-height: 1.4em;
 }
 
-.wpe-results-card .inner-left
-{
-	display: inline-block;
-	letter-spacing: normal;
-	text-rendering: auto;
-	vertical-align: top;
-	width: 48px;
+.wpe-pcc-wrap hr {
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
-.wpe-results-card .inner-right
-{
-	color: rgb(51, 51, 51);
-	display: inline-block;
-	font-family: sans-serif;
-	letter-spacing: normal;
-	text-rendering: auto;
-	vertical-align: top;
-	width: 450px;
-	word-spacing: 0px;
+.wpe-pcc-main,
+.wpe-pcc-aside {
+	display: table-cell;
 }
 
-.wpe-results-card img
-{
-	width: 25px;
+/* Main container */
+.wpe-pcc-main {
+	padding-right: 40px;
 }
 
-.wpe-results-card textarea
-{
-	white-space: nowrap;
+.wpe-pcc-spinner {
+	margin-left: 0 !important;
+	padding: 4px 10px !important;
+	float: none !important;
+}
+
+/* Sidebar container*/
+.wpe-pcc-aside {
+	width: 277px;
+}
+
+.wpe-pcc-wrap .wpe-pcc-logo {
+	display: block;
+	max-width: 182px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.wpe-pcc-aside h2 {
+	line-height: 1.15em;
+	text-transform: capitalize;
+}
+
+.wpe-pcc-aside-content p {
+	margin: 0;
+	padding: 0;
+}
+
+.wpe-pcc-aside-content {
+	border: 1px solid #babec3;
+	padding: 20px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.wpe-pcc-aside-content h2:first-child {
+	margin-top: 0;
+}
+
+.wpe-pcc-get-hosting {
+	background: #e8e9ea;
+}
+
+.wpe-pcc-information .wpe-pcc-button {
+	background: #cacdd0;
+	color: #87898c;
+}
+.wpe-pcc-information .wpe-pcc-button:hover,
+.wpe-pcc-information .wpe-pcc-button:focus {
+	background: #40bac8;
+	color: #fff;
+}
+
+.wpe-pcc-information input.wpe-pcc-button {
+	display: block;
+	border: 0 none;
 	width: 100%;
-	height: 400px;
 }
 
-.wpe-results-card .view-details
-{
-	font-size: 12px;
-	color: #c0c0c0;
+.wpe-pcc-attention {
+	background: #e7e7e7;
+	border: 1px dashed #babec3;
+	padding: 5px 10px;
+}
+
+/* Dev help boxes */
+.wpe-pcc-dev-helper {
+	padding-bottom: 35px;
+}
+.wpe-pcc-dev-helper:last-child {
+	padding-bottom: 0;
+}
+.wpe-pcc-dev-helper :last-child {
+	margin-bottom: 0;
+}
+.wpe-pcc-dev-helper .title {
+	margin: 0;
+	padding-bottom: 10px;
+	text-transform: capitalize;
+}
+.wpe-pcc-dev-helper img+p {
+	margin-top: 0;
+}
+
+.wpe-pcc-clear-results {
+	border: 0 none;
+	color: #b4b9be;
+	background: none;
+	cursor: pointer;
+	line-height: 28px;
+	margin-left: 10px;
+}
+.wpe-pcc-clear-results:hover,
+.wpe-pcc-clear-results:focus {
+	color: #979ea5;
 	cursor: pointer;
 }
 
-.wpe-results-card .badge
-{
-	display: inline-block;
-	color: #fff;
+.wpe-pcc-button {
+	display: block;
+	padding: 15px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 14px;
 	text-align: center;
-	padding: 2px 10px;
+	background: #40bac8;
+	color: #fff;
+	text-decoration: none;
+}
+.wpe-pcc-button:hover, .wpe-pcc-button:focus {
+	text-decoration: none;
+	cursor: pointer;
+	background: #3199a5;
+	color: #fff;
 }
 
-.wpe-update a:link, .wpe-update a:visited, .wpe-update a:hover, .wpe-update a:active { color:#ffffff; cursor: pointer; text-decoration: none; }
-
-.wpe-results-card .wpe-update
-{
-	background-color: #0085ba;
+.wpe-pcc-button-primary {
+	background: #eb6126;
+}
+.wpe-pcc-button-primary:hover, .wpe-pcc-button-primary:focus {
+	background: #bf4a18;
 }
 
-.wpe-results-card .warnings
-{
-	margin-left: 5px;
-	background-color: #f1c40f;
+/* Buttons in sidebar */
+.wpe-pcc-aside-content .wpe-pcc-button {
+	max-width: 233px;
 }
 
-.wpe-results-card .errors
-{
-	margin-left: 5px;
+.wpe-pcc-download-report {
+	clear: both;
+}
+.wpe-pcc-developer-mode {
+	float: right;
+}
+
+/* Alerts */
+.wpe-pcc-alert {
+	background: #fff;
+	padding: 10px 20px;
+	border-left: 5px solid #fff;
+	margin: 5px 0;
+	clear: both;
+}
+.wpe-pcc-alert p {
+	margin: 0;
+	padding: 0;
+}
+.wpe-pcc-alert-details {
+	float: right;
+	text-decoration: none;
+}
+.wpe-pcc-alert-details:hover, .wpe-pcc-alert-details:focus {
+	text-decoration: underline;
+	cursor: pointer;
+}
+.wpe-pcc-alert-logs {
+	display: block;
+	white-space: pre;
+	clear: both;
+	width: 100%;
+	resize: vertical;
+	min-height: 250px;
+	margin-top: 20px;
+}
+.hide {
+	display: none !important;
+}
+
+/* skipped */
+.wpe-pcc-alert.wpe-pcc-alert-skipped {
+	border-color: #999;
+}
+.wpe-pcc-alert-skipped .dashicons-before {
+	color: #999;
+}
+/* passed */
+.wpe-pcc-alert.wpe-pcc-alert-passed {
+	border-color: #038103;
+}
+.wpe-pcc-alert-passed .dashicons-before {
+	color: #038103;
+}
+/* error */
+.wpe-pcc-alert.wpe-pcc-alert-error {
+	border-color: #e74c3c;
+}
+.wpe-pcc-alert-error .dashicons-before {
+	color: #e74c3c;
+}
+/* warning */
+.wpe-pcc-alert.wpe-pcc-alert-warning {
+	border-color: #e8ba1b;
+}
+.wpe-pcc-alert-warning .dashicons-before {
+	color: #e8ba1b;
+}
+
+/* Badges */
+.wpe-pcc-badge {
+	display: inline-block;
+	margin-right: 5px;
+	padding: 2px 7px 5px 7px;
+	color: #fff;
+	border-radius: 3px;
+	line-height: 1em;
+}
+.wpe-pcc-badge-passed {
+	background-color: #038103;
+}
+.wpe-pcc-badge-skipped {
+	background-color: #999;
+}
+.wpe-pcc-badge-warnings {
+	background-color: #e8ba1b;
+}
+.wpe-pcc-badge-errors {
 	background-color: #e74c3c;
 }
 
-#developerMode textarea
-{
+/* Misc */
+.wpe-pcc-wrap a:focus {
+	box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+}
+.wpe-pcc-bullets {
+	list-style: disc;
+	padding-left: 20px;
+}
+.wpe-pcc-bullets li {
+	margin: 10px 0;
+}
+
+
+#developerMode textarea {
 	width: 100%; height: 500px; background: #FFF; color: #000;
 }
 
-#progressbar .ui-progressbar-value
-{
+#progressbar .ui-progressbar-value {
 	background: #0085ba;
 }
 
-#wpe-progress-count, #wpe-progress-active
-{
+#wpe-progress-count, #wpe-progress-active {
 	display: inline;
-}
-
-/* Tooltip container */
-.wpe-tooltip {
-	position: relative;
-	display: inline-block;
-}
-
-/* Tooltip text */
-.wpe-tooltip .wpe-tooltiptext {
-	visibility: hidden;
-	width: 340px;
-	background-color: black;
-	color: #fff;
-	text-align: center;
-	padding: 5px 0;
-	border-radius: 6px;
-	position: absolute;
-	z-index: 1;
-	top: -25px;
-	left: 105%;
-}
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.wpe-tooltip:hover .wpe-tooltiptext {
-	visibility: visible;
 }
