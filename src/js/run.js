@@ -42,9 +42,6 @@ jQuery( document ).ready(function($) {
 			'startScan': 1
 		};
 		$( '.wpe-pcc-test-version' ).text(test_version);
-		// Init and show the Progress Bar
-		jQuery( '#wpe-progress' ).show();
-
 		// Start the test!
 		jQuery.post( ajaxurl, data ).always(function() {
 			// Start timer to check scan status.
@@ -124,9 +121,6 @@ function checkStatus() {
  * Clear previous results.
  */
 function resetDisplay() {
-	jQuery( '#progressbar' ).progressbar({
-		value: 0
-	});
 	jQuery( '#testResults' ).text('');
 	jQuery( '#wpe-pcc-standardMode' ).html('');
 	jQuery( '#wpe-pcc-progress-count' ).text('');
