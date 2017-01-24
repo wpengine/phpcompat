@@ -359,9 +359,9 @@ class WPEngine_PHPCompat {
 									<td>
 										<div class="wpe-pcc-run-scan">
 											<input name="run" id="runButton" type="button" value="<?php _e( 'Scan site', 'php-compatibility-checker' ); ?>" class="button-secondary" />
-                      <div class="wpe-pcc-scan-information">
-                        <span style="display:none; visibility:visible;" class="spinner wpe-pcc-spinner"></span> <span id="wpe-progress-active"></span> <span style="display:none;" id="wpe-pcc-progress-count"></span>
-                      </div> <!-- /wpe-pcc-scan-information -->
+											<div class="wpe-pcc-scan-information">
+												<span style="display:none; visibility:visible;" class="spinner wpe-pcc-spinner"></span> <span id="wpe-progress-active"></span> <span style="display:none;" id="wpe-pcc-progress-count"></span>
+											</div> <!-- /wpe-pcc-scan-information -->
 										</div> <!-- /wpe-pcc-run-scan -->
 									</td>
 								</th>

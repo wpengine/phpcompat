@@ -25,13 +25,13 @@
 }
 
 .wpe-pcc-scan-information {
-  display: inline-block;
+	display: inline-block;
 }
 
 #wpe-progress-count {
-  margin-left: 10px;
-  line-height: 1.8;
-  display: inline-block;
+	margin-left: 10px;
+	line-height: 1.8;
+	display: inline-block;
 }
 
 /* Sidebar container*/
@@ -235,7 +235,7 @@
 	color: #fff;
 	border-radius: 3px;
 	line-height: 1em;
-  background: #40bac8;
+	background: #40bac8;
 }
 .wpe-pcc-badge-passed {
 	background-color: #038103;
