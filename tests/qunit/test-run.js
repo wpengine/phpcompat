@@ -29,7 +29,6 @@ QUnit.test( 'reset elements', function( assert ) {
 	fixture.append( '<div id="wpe-pcc-standardMode">Hello this is text.</div>' );
 	fixture.append( '<textarea id="testResults">This is some more text!</textarea>' );
 	fixture.append( '<div id="wpe-progress-count"></div>' );
-	fixture.append( '<div id="progressbar"></div>' );
 
 	// Set the progress bar to a known state.
 	jQuery( '#progressbar' ).progressbar({ value: 5 });
@@ -39,7 +38,6 @@ QUnit.test( 'reset elements', function( assert ) {
 	assert.ok( '' === $( '#testResults' ).text(), 'testResults is empty' );
 	assert.ok( '' === $( '#wpe-pcc-standardMode' ).html(), 'wpe-pcc-standardMode is empty' );
 	assert.ok( '' === $( '#wpe-progress-count' ).text(), 'wpe-progress-count is empty' );
-	assert.ok( 0 === $( '#progressbar' ).progressbar( 'value' ), 'progressbar is set to 0' );
 });
 
 QUnit.module( 'displayReport' );
@@ -54,12 +52,9 @@ QUnit.test( 'Render test pass', function( assert ) {
 	displayReport(helpers.passResults);
 
 	var displayedResults = $('#testResults').text();
-
 	assert.ok( helpers.passResults === displayedResults, 'Text results are correct' );
-	// assert.ok( $('#footer').is(':visible'), 'Footer is visible' );
-	assert.ok( $('.wpe-pcc-alert').length == 2, 'There are 2 results.' );
-	assert.ok( $('#wpe-pcc-standardMode').text().indexOf( 'Your WordPress install is PHP 5.5 compatible.' ) !== -1, 'Test did pass.' );
-	assert.ok( '#038103' === helpers.rgb2hex( $( ".wpe-pcc-alert" ).eq( 0 ).css( 'border-left-color' ) ), 'First plugin marked as passed.' );
+	assert.ok( $( '.wpe-pcc-alert' ).length == 2, 'There are 2 results.' );
+	assert.ok( $( '.wpe-pcc-alert' ).eq(0).hasClass( 'wpe-pcc-alert-passed' ), 'First plugin marked as passed.' );
 	assert.ok( $( '#wpe-pcc-standardMode' ).text().indexOf( '0 out of 2' ) === -1, 'No scan stats are shown.' );
 });
 
@@ -75,9 +70,7 @@ QUnit.test( 'Render test fail', function( assert ) {
 	var displayedResults = $('#testResults').text();
 
 	assert.ok( helpers.failResults === displayedResults, 'Text results are correct' );
-	// assert.ok( $('#footer').is(':visible'), 'Footer is visible' );
 	assert.ok( $('.wpe-pcc-alert').length == 7, 'There are 7 results.' );
-	assert.ok( $('#wpe-pcc-standardMode').text().indexOf( 'Your WordPress install is not PHP 5.5 compatible.' ) !== -1, 'Test did not pass.' );
 	assert.ok( $( '#wpe-pcc-standardMode' ).text().indexOf( '1 out of 7' ) !== -1, 'Scan stats are correct' );
 });
 
@@ -92,8 +85,8 @@ QUnit.test( 'Render test skip', function( assert ) {
 
 	var displayedResults = $( '#testResults' ).text();
 
-	assert.ok( '#038103' === helpers.rgb2hex( $( ".wpe-pcc-alert" ).eq( 0 ).css( 'border-left-color' ) ), 'First plugin marked as passed.' );
-	assert.ok( '#999999' === helpers.rgb2hex( $( ".wpe-pcc-alert" ).eq( 1 ).css( 'border-left-color' ) ), 'Second plugin marked as skipped.' );
+	assert.ok( $( '.wpe-pcc-alert' ).eq(0).hasClass( 'wpe-pcc-alert-passed' ), 'First plugin marked as passed.' );
+	assert.ok( $( '.wpe-pcc-alert' ).eq(1).hasClass( 'wpe-pcc-alert-skipped' ), 'Second plugin marked as skipped.' );
 });
 
 QUnit.module( 'checkStatus' );
@@ -102,7 +95,7 @@ QUnit.test( 'Test checkStatus progress', function( assert ) {
 	// This will be an async test since it involves callbacks.
 	var done = assert.async();
 	var fixture = $( '#qunit-fixture' );
-	fixture.append( '<div id="wpe-progress-count"></div>' );
+	fixture.append( '<div id="wpe-pcc-progress-count"></div>' );
 	fixture.append( '<div id="progressbar"></div>' );
 
 	// Define our mock URL.
@@ -118,9 +111,7 @@ QUnit.test( 'Test checkStatus progress', function( assert ) {
 			return true;
 		},
 		onAfterComplete: function() { // Check the results of checkStatus();
-			assert.ok( $( '#wpe-progress-count' ).text() === '17/17', 'Progress count is correct.' );
-			assert.ok( $( '#progressbar' ).progressbar( 'value' ) === 94.1176470588 , 'Progress bar is correct.' );
-
+			assert.ok( $( '#wpe-pcc-progress-count' ).text() === '(17 of 17)', 'Progress count is correct.' );
 			// Clear the next queued checkStatus call.
 			clearTimeout( timer );
 			// End the test.
@@ -135,7 +126,7 @@ QUnit.test( 'Test checkStatus progress', function( assert ) {
 QUnit.test( 'Test checkStatus done', function( assert ) {
 	var done = assert.async();
 	var fixture = $( '#qunit-fixture' );
-	fixture.append( '<div id="wpe-progress"><div id="wpe-progress-count"></div></div>' );
+	fixture.append( '<div id="wpe-progress"><div id="wpe-pcc-progress-count"></div></div>' );
 
 	ajaxurl = '/checkStatus/done/';
 
@@ -148,7 +139,7 @@ QUnit.test( 'Test checkStatus done', function( assert ) {
 			return true;
 		},
 		onAfterComplete: function() {
-			assert.ok( ! $('#wpe-progress').is(':visible'), 'Progress div is hidden.' );
+			assert.ok( ! $('#wpe-pcc-progress-count').is(':visible'), 'Progress div is hidden.' );
 			clearTimeout( timer );
 			done();
 		}
@@ -160,7 +151,6 @@ QUnit.test( 'Test checkStatus done', function( assert ) {
 QUnit.test( 'Test checkStatus fail JSON.parse', function( assert ) {
 	var done = assert.async();
 	var fixture = $( '#qunit-fixture' );
-	fixture.append( '<div id="wpe-progress"><div id="wpe-progress-count"></div></div>' );
 
 	ajaxurl = '/checkStatus/fail/json/';
 	var callCount = 0;
@@ -177,7 +167,6 @@ QUnit.test( 'Test checkStatus fail JSON.parse', function( assert ) {
 			return true;
 		},
 		onAfterComplete: function() {
-			assert.ok(  $('#wpe-progress').is(':visible'), 'Progress div is visible.' );
 			// Ensure that an alert was popped with the JSON SyntaxError.
 			assert.ok( -1 !== alertText.toString().search( 'SyntaxError' ), 'Got JSON parse error in alert.' );
 			assert.ok( 1 === callCount, 'Alert was called.' );

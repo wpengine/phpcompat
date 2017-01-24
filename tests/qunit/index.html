@@ -20,19 +20,38 @@
 	<script src="test-run.js"></script>
 
 	<script id="result-template" type="text/x-handlebars-template">
-		<div style="border-left-color: {{#if skipped}}#999999{{else if passed}}#038103{{else}}#e74c3c{{/if}};" class="wpe-results-card">
-			<div class="inner-left">
-				{{#if skipped}}<img src="<?php echo esc_url( plugins_url( '/src/images/question.png', __FILE__ ) ); ?>">{{else if passed}}<img src="<?php echo esc_url( plugins_url( '/src/images/check.png', __FILE__ ) ); ?>">{{else}}<img src="<?php echo esc_url( plugins_url( '/src/images/x.png', __FILE__ ) ); ?>">{{/if}}
-			</div>
-			<div class="inner-right">
-				<h3 style="margin: 0px;">{{plugin_name}}</h3>
-				{{#if skipped}}Unknown{{else if passed}}PHP {{test_version}} compatible.{{else}}<b>Not</b> PHP {{test_version}} compatible.{{/if}}<br>
-				{{update}}<br>
-				<textarea style="display: none; white-space: pre;">{{logs}}</textarea><a class="view-details">view details</a>
-			</div>
-			<?php $update_url = site_url( 'wp-admin/update-core.php' , 'admin' ); ?>
-			<div style="float:right;">{{#if updateAvailable}}<div class="badge wpe-update"><a href="<?php echo esc_url( $update_url ); ?>">Update Available</a></div>{{/if}}<div class="badge warnings">{{warnings}} Warnings</div><div class="badge errors">{{errors}} Errors</div></div>
-		</div>
+		<div class="wpe-pcc-alert wpe-pcc-alert-{{#if skipped}}skipped{{else if passed}}passed{{else}}error{{/if}}">
+			<p>
+				<?php /* Appropriate icon, based on status */ ?>
+				<span class="dashicons-before dashicons-{{#if errors}}no{{else if skipped}}editor-help{{else}}yes{{/if}}"></span>
+				<?php /* Name of plugin/theme being tested */ ?>
+				<strong>{{plugin_name}} </strong> -
+				<?php /* Results status */ ?>
+				<span class="wpe-pcc-alert-status">
+					{{#if skipped}}
+						<span class="wpe-pcc-badge wpe-pcc-badge-skipped"><?php _e( 'Unknown', 'php-compatibility-checker' ); ?></span>
+					{{else}}
+						{{#if passed}}
+							<span class="wpe-pcc-badge wpe-pcc-badge-passed"><?php _e( 'Compatible', 'php-compatibility-checker' ); ?></span>
+						{{/if}}
+						{{#if warnings}}
+							<span class="wpe-pcc-badge wpe-pcc-badge-warnings"><?php _e( 'Warnings:', 'php-compatibility-checker' ); ?> <strong>{{warnings}}</strong></span>
+						{{/if}}
+						{{#if errors}}
+							<span class="wpe-pcc-badge wpe-pcc-badge-errors"><?php _e( 'Errors:', 'php-compatibility-checker' ); ?> <strong>{{errors}}</strong></span>
+						{{/if}}
+					{{/if}}
+					</span>
+					<?php /* Check if plugin/theme has an update available */ ?>
+					<?php $update_url = site_url( 'wp-admin/update-core.php' , 'admin' ); ?>
+					{{#if updateAvailable}}
+						(<a href="<?php echo esc_url( $update_url ); ?>"><?php _e( 'Update Available', 'php-compatibility-checker' ); ?></a>)
+					{{/if}}
+				<?php /* View details link */ ?>
+				<a class="wpe-pcc-alert-details" href="#"><?php _e( 'toggle details', 'php-compatibility-checker' ); ?></a>
+				<textarea class="wpe-pcc-alert-logs hide">{{logs}}</textarea>
+			</p>
+		</div> <!-- /wpe-pcc-alert -->
 	</script>
 </body>
 </html>
