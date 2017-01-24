@@ -26,7 +26,7 @@ QUnit.module( 'resetDisplay' );
 QUnit.test( 'reset elements', function( assert ) {
 	var fixture = $( '#qunit-fixture' );
 
-	fixture.append( '<div id="standardMode">Hello this is text.</div>' );
+	fixture.append( '<div id="wpe-pcc-standardMode">Hello this is text.</div>' );
 	fixture.append( '<textarea id="testResults">This is some more text!</textarea>' );
 	fixture.append( '<div id="wpe-progress-count"></div>' );
 	fixture.append( '<div id="progressbar"></div>' );
@@ -37,7 +37,7 @@ QUnit.test( 'reset elements', function( assert ) {
 	resetDisplay();
 
 	assert.ok( '' === $( '#testResults' ).text(), 'testResults is empty' );
-	assert.ok( '' === $( '#standardMode' ).html(), 'standardMode is empty' );
+	assert.ok( '' === $( '#wpe-pcc-standardMode' ).html(), 'wpe-pcc-standardMode is empty' );
 	assert.ok( '' === $( '#wpe-progress-count' ).text(), 'wpe-progress-count is empty' );
 	assert.ok( 0 === $( '#progressbar' ).progressbar( 'value' ), 'progressbar is set to 0' );
 });
@@ -56,11 +56,11 @@ QUnit.test( 'Render test pass', function( assert ) {
 	var displayedResults = $('#testResults').text();
 
 	assert.ok( helpers.passResults === displayedResults, 'Text results are correct' );
-	assert.ok( $('#footer').is(':visible'), 'Footer is visible' );
-	assert.ok( $('.wpe-results-card').length == 2, 'There are 2 results.' );
-	assert.ok( $('#standardMode').text().indexOf( 'Your WordPress install is PHP 5.5 compatible.' ) !== -1, 'Test did pass.' );
-	assert.ok( '#038103' === helpers.rgb2hex( $( ".wpe-results-card" ).eq( 0 ).css( 'border-left-color' ) ), 'First plugin marked as passed.' );
-	assert.ok( $( '#standardMode' ).text().indexOf( '0 out of 2' ) === -1, 'No scan stats are shown.' );
+	// assert.ok( $('#footer').is(':visible'), 'Footer is visible' );
+	assert.ok( $('.wpe-pcc-alert').length == 2, 'There are 2 results.' );
+	assert.ok( $('#wpe-pcc-standardMode').text().indexOf( 'Your WordPress install is PHP 5.5 compatible.' ) !== -1, 'Test did pass.' );
+	assert.ok( '#038103' === helpers.rgb2hex( $( ".wpe-pcc-alert" ).eq( 0 ).css( 'border-left-color' ) ), 'First plugin marked as passed.' );
+	assert.ok( $( '#wpe-pcc-standardMode' ).text().indexOf( '0 out of 2' ) === -1, 'No scan stats are shown.' );
 });
 
 QUnit.test( 'Render test fail', function( assert ) {
@@ -75,10 +75,10 @@ QUnit.test( 'Render test fail', function( assert ) {
 	var displayedResults = $('#testResults').text();
 
 	assert.ok( helpers.failResults === displayedResults, 'Text results are correct' );
-	assert.ok( $('#footer').is(':visible'), 'Footer is visible' );
-	assert.ok( $('.wpe-results-card').length == 7, 'There are 7 results.' );
-	assert.ok( $('#standardMode').text().indexOf( 'Your WordPress install is not PHP 5.5 compatible.' ) !== -1, 'Test did not pass.' );
-	assert.ok( $( '#standardMode' ).text().indexOf( '1 out of 7' ) !== -1, 'Scan stats are correct' );
+	// assert.ok( $('#footer').is(':visible'), 'Footer is visible' );
+	assert.ok( $('.wpe-pcc-alert').length == 7, 'There are 7 results.' );
+	assert.ok( $('#wpe-pcc-standardMode').text().indexOf( 'Your WordPress install is not PHP 5.5 compatible.' ) !== -1, 'Test did not pass.' );
+	assert.ok( $( '#wpe-pcc-standardMode' ).text().indexOf( '1 out of 7' ) !== -1, 'Scan stats are correct' );
 });
 
 QUnit.test( 'Render test skip', function( assert ) {
@@ -92,8 +92,8 @@ QUnit.test( 'Render test skip', function( assert ) {
 
 	var displayedResults = $( '#testResults' ).text();
 
-	assert.ok( '#038103' === helpers.rgb2hex( $( ".wpe-results-card" ).eq( 0 ).css( 'border-left-color' ) ), 'First plugin marked as passed.' );
-	assert.ok( '#999999' === helpers.rgb2hex( $( ".wpe-results-card" ).eq( 1 ).css( 'border-left-color' ) ), 'Second plugin marked as skipped.' );
+	assert.ok( '#038103' === helpers.rgb2hex( $( ".wpe-pcc-alert" ).eq( 0 ).css( 'border-left-color' ) ), 'First plugin marked as passed.' );
+	assert.ok( '#999999' === helpers.rgb2hex( $( ".wpe-pcc-alert" ).eq( 1 ).css( 'border-left-color' ) ), 'Second plugin marked as skipped.' );
 });
 
 QUnit.module( 'checkStatus' );
