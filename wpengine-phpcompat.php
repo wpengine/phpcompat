@@ -424,7 +424,7 @@ class WPEngine_PHPCompat {
 							<h2><?php _e( 'Make your site 2x faster with PHP 7 WordPress hosting', 'php-compatibility-checker' ); ?></h2>
 						<?php } // endif?>
 
-						<p><?php _e( 'PHP 7 on WP Engine makes it easy to speed up your site, increase your conversion rates, and improve your SEO.', 'php-compatibility-checker' ); ?></p>
+						<p><?php _e( 'PHP 7 on WP Engine makes it easy to speed up your site and helps increase your conversion rates and SEO.', 'php-compatibility-checker' ); ?></p>
 
 						<?php if ( $is_wpe_customer ) { ?>
 							<a target="_blank" class="wpe-pcc-button wpe-pcc-button-primary" href="<?php echo $url_wpe_customer_upgrade; ?>"><?php _e( 'Upgrade to PHP 7 for free', 'php-compatibility-checker' ); ?></a>
