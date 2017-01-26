@@ -119,8 +119,8 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 ## Changelog ##
 
 ### 1.4.0 ###
-- Added suggestions for assistance with PHP 7 upgrade.
-- Updated user interface.
+- Updated UX for viewing PHP errors to be more intuitive and require less scrolling.
+- Added links for non-technical users who need assistance from developers to fix PHP errors or to test their site in PHP 7 enabled hosting environments.
 
 ### 1.3.2 ###
 - Added a "Clean up" button and uninstall.php.
@@ -192,8 +192,8 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 ## Upgrade Notice ##
 
 ### 1.4.0 ###
-- Added suggestions for assistance with PHP 7 upgrade.
-- Updated user interface.
+- Updated UX for viewing PHP errors to be more intuitive and require less scrolling.
+- Added links for non-technical users who need assistance from developers to fix PHP errors or to test their site in PHP 7 enabled hosting environments.
 
 ### 1.3.2 ###
 - Added a "Clean up" button and uninstall.php.
