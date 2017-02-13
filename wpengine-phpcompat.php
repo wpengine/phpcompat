@@ -321,7 +321,7 @@ class WPEngine_PHPCompat {
 		$url_wpe_agency_partners = esc_url( 'https://wpeng.in/fa14e4/' );
 		$url_wpe_customer_upgrade = esc_url( 'https://wpeng.in/407b79/' );
 		$url_wpe_logo = esc_url( 'https://wpeng.in/22f22b/' );
-		$url_codeable_submit = esc_url( 'https://codeable.io/wp-admin/admin-ajax.php' );
+		$url_codeable_submit = esc_url( 'https://codeable.io/wpengine-phpcompat/' );
 
 		?>
 		<div class="wrap wpe-pcc-wrap">
