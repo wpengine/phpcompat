@@ -9,30 +9,28 @@ jQuery( document ).ready(function($) {
 	$( '#developermode' ).change(function() {
 		if ( $(this).is( ':checked' ) ) {
 			$( '#developerMode' ).show();
-			$( '#standardMode' ).hide();
+			$( '#wpe-pcc-standardMode' ).hide();
 		} else {
 			$( '#developerMode' ).hide();
-			$( '#standardMode' ).show();
+			$( '#wpe-pcc-standardMode' ).show();
 		}
 	});
 	$( '#downloadReport' ).on( 'click', function() {
 		download( $( '#testResults' ).val(), 'report.txt', 'text/plain' );
+		return false;
 	});
-	$( document ).on( 'click', '.view-details', function() {
+	$( document ).on( 'click', '.wpe-pcc-alert-details', function() {
 		// Get the textarea with is on the same (dom) level.
 		var textarea = $( this ).siblings( 'textarea' );
-		if ( 'none' === textarea.css( 'display' ) ) {
-			textarea.css( 'display' , '' );
-		} else {
-			textarea.css( 'display', 'none' );
-		}
+		textarea.toggleClass( 'hide' );
+		return false;
 	});
 	$( '#runButton' ).on( 'click', function() {
 		// Unselect button so it's not highlighted.
 		$( '#runButton' ).blur();
 
 		// Show the ajax spinner.
-		$( '.spinner' ).show();
+		$( '.wpe-pcc-spinner' ).show();
 		// Empty the results textarea.
 		resetDisplay();
 		test_version = $( 'input[name=phptest_version]:checked' ).val();
@@ -43,9 +41,7 @@ jQuery( document ).ready(function($) {
 			'only_active': only_active,
 			'startScan': 1
 		};
-		// Init and show the Progress Bar
-		jQuery( '#wpe-progress' ).show();
-
+		$( '.wpe-pcc-test-version' ).text(test_version);
 		// Start the test!
 		jQuery.post( ajaxurl, data ).always(function() {
 			// Start timer to check scan status.
@@ -84,9 +80,9 @@ function checkStatus() {
 		}
 
 		if ( '1' === obj.status ) {
-			jQuery( '.spinner' ).show();
+			jQuery( '.wpe-pcc-spinner' ).show();
 		} else {
-			jQuery( '.spinner' ).hide();
+			jQuery( '.wpe-pcc-spinner' ).hide();
 		}
 
 		if ( '0' !== obj.results ) {
@@ -94,20 +90,16 @@ function checkStatus() {
 				test_version = obj.version;
 				displayReport( obj.results );
 			}
-			jQuery( '#wpe-progress' ).hide();
+			jQuery( '#wpe-pcc-progress-count' ).hide();
 		} else {
-			jQuery( '#progressbar' ).progressbar({
-				value: obj.progress
-			});
-			jQuery( '#wpe-progress' ).show();
-
 			// Display the current plugin count.
 			if ( obj.total ) {
-				jQuery( '#wpe-progress-count' ).text( ( obj.total - obj.count + 1 ) + '/' + obj.total );
+				jQuery( '#wpe-pcc-progress-count' ).show();
+				jQuery( '#wpe-pcc-progress-count' ).text( '(' + ( obj.total - obj.count + 1 ) + ' of ' + obj.total + ')' );
 			}
 
 			// Display the object being scanned.
-			jQuery( '#wpe-progress-active' ).text( obj.activeJob );
+			jQuery( '#wpe-progress-active' ).html( '<strong>Now scanning:</strong> ' + obj.activeJob );
 
 			// Requeue the checkStatus call.
 			timer = setTimeout(function() {
@@ -129,14 +121,13 @@ function checkStatus() {
  * Clear previous results.
  */
 function resetDisplay() {
-	jQuery( '#progressbar' ).progressbar({
-		value: 0
-	});
 	jQuery( '#testResults' ).text('');
-	jQuery( '#standardMode' ).html('');
-	jQuery( '#wpe-progress-count' ).text('');
+	jQuery( '#wpe-pcc-standardMode' ).html('');
+	jQuery( '#wpe-pcc-progress-count' ).text('');
 	jQuery( '#wpe-progress-active' ).text('');
-	jQuery( '#footer' ).hide();
+	jQuery( '.wpe-pcc-download-report' ).hide();
+	jQuery( '.wpe-pcc-results' ).hide();
+	jQuery( '.wpe-pcc-information' ).hide();
 }
 /**
  * Loop through a string and count the total matches.
@@ -179,7 +170,6 @@ function displayReport( response ) {
 	var template = Handlebars.compile( source );
 
 	$( '#testResults' ).text( response );
-	$( '#footer' ).show();
 
 	// Separate plugins/themes.
 	var plugins = response.replace( /^\s+|\s+$/g, '' ).split( window.wpephpcompat.name + ':' );
@@ -228,16 +218,24 @@ function displayReport( response ) {
 			updateAvailable: updateAvailable
 		};
 		var html = template( context );
-		$('#standardMode').append( html );
+		$('#wpe-pcc-standardMode').append( html );
 	}
 
 	// Display global compatibility status.
-	if ( compatible ) {
-		$( '#standardMode' ).prepend( '<h3>' + window.wpephpcompat.your_wp + ' PHP ' + test_version + ' ' + window.wpephpcompat.compatible + '.</h3>' );
+	if ( test_version == '7.0' &&  compatible ) {
+		// php 7 ready, and user tested version 7
+		jQuery( '.wpe-pcc-download-report' ).show();
+		jQuery( '.wpe-pcc-results' ).show();
+
+	} else if ( compatible ) {
+		jQuery( '.wpe-pcc-download-report' ).show();
+		jQuery( '.wpe-pcc-results' ).show();
+		jQuery( '.wpe-pcc-information-errors' ).show();
 	} else {
 		// Display scan stats.
-		$( '#standardMode' ).prepend( '<p>' + failedCount + ' ' + window.wpephpcompat.out_of + ' ' + plugins.length + ' ' + window.wpephpcompat.are_not + '.</p>' );
-
-		$( '#standardMode' ).prepend( '<h3>' + window.wpephpcompat.is_not + ' ' + test_version + ' ' + window.wpephpcompat.compatible + '.</h3>' );
+		jQuery( '.wpe-pcc-download-report' ).show();
+		$( '#wpe-pcc-standardMode' ).prepend( '<p>' + failedCount + ' ' + window.wpephpcompat.out_of + ' ' + plugins.length + ' ' + window.wpephpcompat.are_not + '.</p>' );
+		jQuery( '.wpe-pcc-information-errors' ).show();
+		jQuery( '.wpe-pcc-results' ).show();
 	}
 }

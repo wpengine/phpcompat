@@ -6,7 +6,7 @@ var helpers = {
 		fixture.append( '<div class="spinner">Loading...</div>' );
 		fixture.append( '<textarea id="testResults"></textarea>' );
 		fixture.append( '<div id="footer" style="display: none;"></div>' );
-		fixture.append( '<div id="standardMode"></div>' );
+		fixture.append( '<div id="wpe-pcc-standardMode"></div>' );
 		fixture.append( '<input type="radio" name="phptest_version" value="' + version + '" checked="checked">' );
 	},
 	rgb2hex: function(rgb) {

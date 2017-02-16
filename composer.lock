@@ -57,6 +57,7 @@
                 "standards",
                 "typo3"
             ],
+            "abandoned": true,
             "time": "2016-05-12 11:58:38"
         },
         {
@@ -143,12 +144,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wimg/PHPCompatibility.git",
-                "reference": "a3263259daa3629d174d1ac25657466222d6607e"
+                "reference": "4853c6da08a6cb0f53029170e93c97120a6a2335"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wimg/PHPCompatibility/zipball/a3263259daa3629d174d1ac25657466222d6607e",
-                "reference": "a3263259daa3629d174d1ac25657466222d6607e",
+                "url": "https://api.github.com/repos/wimg/PHPCompatibility/zipball/4853c6da08a6cb0f53029170e93c97120a6a2335",
+                "reference": "4853c6da08a6cb0f53029170e93c97120a6a2335",
                 "shasum": ""
             },
             "require": {
@@ -182,7 +183,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2016-10-30 14:34:26"
+            "time": "2017-01-03 20:31:50"
         }
     ],
     "packages-dev": [
