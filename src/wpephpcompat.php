@@ -84,6 +84,7 @@ class WPEPHPCompat {
 		'*/comment-mail/*' => '7.0', // https://wordpress.org/support/topic/false-positive-comment-mail/
 		'*/social-networks-auto-poster-facebook-twitter-g/*' => '7.0', // https://wordpress.org/plugins/social-networks-auto-poster-facebook-twitter-g/
 		'*/mailpoet/*' => '7.0', // https://wordpress.org/support/topic/false-positive-mailpoet-3-not-compatible-with-php7/
+		'*/give/*' => '7.0', // https://github.com/wpengine/phpcompat/issues/148
 	);
 
 	/**
