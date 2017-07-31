@@ -3,7 +3,7 @@ Contributors: wpengine, octalmage, stevenkword, Taylor4484, pross, jcross
 Tags: php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine
 Requires at least: 3.5
 Tested up to: 4.7.2
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -114,6 +114,10 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 == Changelog ==
 
+= 1.4.1 =
+- Updated PHP_CodeSniffer to fix a security advisory.
+- Whitelisted a number of plugins.
+
 = 1.4.0 =
 - Updated UX for viewing PHP errors to be more intuitive and require less scrolling.
 - Added links for non-technical users who need assistance from developers to fix PHP errors or to test their site in PHP 7 enabled hosting environments.
@@ -187,10 +191,6 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 == Upgrade Notice ==
 
-= 1.4.0 =
-- Updated UX for viewing PHP errors to be more intuitive and require less scrolling.
-- Added links for non-technical users who need assistance from developers to fix PHP errors or to test their site in PHP 7 enabled hosting environments.
-
-= 1.3.2 =
-- Added a "Clean up" button and uninstall.php.
-- Added phpcompat_phpversions filter.
+= 1.4.1 =
+- Updated PHP_CodeSniffer to fix a security advisory.
+- Whitelisted a number of plugins.

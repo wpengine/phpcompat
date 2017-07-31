@@ -85,6 +85,8 @@ class WPEPHPCompat {
 		'*/social-networks-auto-poster-facebook-twitter-g/*' => '7.0', // https://wordpress.org/plugins/social-networks-auto-poster-facebook-twitter-g/
 		'*/mailpoet/*' => '7.0', // https://wordpress.org/support/topic/false-positive-mailpoet-3-not-compatible-with-php7/
 		'*/give/*' => '7.0', // https://github.com/wpengine/phpcompat/issues/148
+		'*/woocommerce-pdf-invoices-packing-slips/*' => '7.0', // https://github.com/wpengine/phpcompat/issues/160
+		'*/iwp-client/*' => '7.0', // https://wordpress.org/support/topic/iwp-client-and-php-7-compatibility/
 	);
 
 	/**
