@@ -3,7 +3,7 @@
 **Tags:** php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine  
 **Requires at least:** 3.5  
 **Tested up to:** 4.7.2  
-**Stable tag:** 1.4.1  
+**Stable tag:** 1.4.3  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -117,6 +117,9 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 
 ## Changelog ##
+
+### 1.4.3 ###
+- Fixed Composer issue.
 
 ### 1.4.1 ###
 - Updated PHP_CodeSniffer to fix a security advisory.
