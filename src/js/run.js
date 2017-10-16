@@ -230,7 +230,6 @@ function displayReport( response ) {
 	} else if ( compatible ) {
 		jQuery( '.wpe-pcc-download-report' ).show();
 		jQuery( '.wpe-pcc-results' ).show();
-		jQuery( '.wpe-pcc-information-errors' ).show();
 	} else {
 		// Display scan stats.
 		jQuery( '.wpe-pcc-download-report' ).show();
