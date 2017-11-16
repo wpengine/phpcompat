@@ -15,9 +15,6 @@
 		"wp-coding-standards/wpcs": "0.10",
 		"neronmoon/scriptsdev": "^0.1.0"
 	},
-	"autoload": {
-		"classmap": ["src/wpephpcompat.php"]
-	},
 	"scripts": {
 		"post-update-cmd": "vendor/bin/phpcs --config-delete installed_paths; rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility; cp -rp vendor/wimg/php-compatibility/PHPCompatibility vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility",
 		"post-install-cmd": "vendor/bin/phpcs --config-delete installed_paths; rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility; cp -rp vendor/wimg/php-compatibility/PHPCompatibility vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility"
