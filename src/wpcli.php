@@ -28,7 +28,7 @@ class PHPCompat_Command extends WP_CLI_Command {
 
 		$root_dir = realpath( __DIR__ . '/../' );
 
-		$wpephpc = new \WPEPHPCompat( $root_dir );
+		$wpephpc = new WPEPHPCompat( $root_dir );
 
 		$wpephpc->clean_after_scan();
 

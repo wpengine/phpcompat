@@ -7,6 +7,6 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 require_once( __DIR__ . '/src/wpephpcompat.php' );
 
-$wpephpc = new \WPEPHPCompat( __DIR__ );
+$wpephpc = new WPEPHPCompat( __DIR__ );
 $wpephpc->clean_after_scan();
 delete_option( 'wpephpcompat.scan_results' );
