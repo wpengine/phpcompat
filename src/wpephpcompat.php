@@ -2,7 +2,7 @@
 // Exit if this file is directly accessed
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-require_once( __DIR__ . '/../vendor/autoload.php' );
+require_once( dirname( dirname( __FILE__ ) ) . '/vendor/autoload.php' );
 
 /**
  * Summary.

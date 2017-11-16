@@ -1,5 +1,5 @@
 <?php
-require_once( __DIR__ . '/../vendor/autoload.php' );
+require_once( dirname( dirname( __FILE__ ) ) . '/vendor/autoload.php' );
 
 /**
  * PHPCompat WP-CLI command.
@@ -26,7 +26,7 @@ class PHPCompat_Command extends WP_CLI_Command {
 		// Add empty line.
 		WP_CLI::log( '' );
 
-		$root_dir = realpath( __DIR__ . '/../' );
+		$root_dir = realpath( dirname( dirname( __FILE__ ) ) . '/' );
 
 		$wpephpc = new WPEPHPCompat( $root_dir );
 

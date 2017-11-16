@@ -12,11 +12,11 @@ Text Domain: php-compatibility-checker
 // Exit if this file is directly accessed
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-require_once( __DIR__ . '/vendor/autoload.php' );
+require_once( dirname( __FILE__ ) . '/vendor/autoload.php' );
 
 // Add the phpcompat WP-CLI command.
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
-	require_once( __DIR__ . '/src/wpcli.php' );
+	require_once( dirname( __FILE__ ) . '/src/wpcli.php' );
 }
 
 /**
@@ -92,7 +92,7 @@ class WPEngine_PHPCompat {
 		if ( current_user_can( 'manage_options' ) || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
 			global $wpdb;
 
-			$wpephpc = new WPEPHPCompat( __DIR__ );
+			$wpephpc = new WPEPHPCompat( dirname( __FILE__ ) );
 
 			foreach ( array( 'test_version', 'only_active' ) as $key ) {
 				if ( isset( $_POST[ $key ] ) ) {
@@ -168,7 +168,7 @@ class WPEngine_PHPCompat {
 				// Not using esc_html since the results are shown in a textarea.
 				$to_encode['results'] = $scan_results;
 
-				$wpephpc = new WPEPHPCompat( __DIR__ );
+				$wpephpc = new WPEPHPCompat( dirname( __FILE__ ) );
 				$wpephpc->clean_after_scan();
 			}
 			wp_send_json( $to_encode );
@@ -217,7 +217,7 @@ class WPEngine_PHPCompat {
 	 */
 	function clean_up() {
 		if ( current_user_can( 'manage_options' ) || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
-			$wpephpc = new WPEPHPCompat( __DIR__ );
+			$wpephpc = new WPEPHPCompat( dirname( __FILE__ ) );
 			$wpephpc->clean_after_scan();
 			delete_option( 'wpephpcompat.scan_results' );
 			wp_send_json( 'success' );
