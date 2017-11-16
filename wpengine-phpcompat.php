@@ -95,9 +95,10 @@ class WPEngine_PHPCompat {
 
 			$wpephpc = new WPEPHPCompat( dirname( __FILE__ ) );
 
+			$test_data = array();
 			foreach ( array( 'test_version', 'only_active' ) as $key ) {
 				if ( isset( $_POST[ $key ] ) ) {
-					$$key = sanitize_text_field( $_POST[ $key ] );
+					$test_data[ $key ] = sanitize_text_field( $_POST[ $key ] );
 				}
 			}
 
@@ -106,14 +107,16 @@ class WPEngine_PHPCompat {
 				// Make sure we clean up after the last test.
 				$wpephpc->clean_after_scan();
 
-				$test_version = sanitize_text_field( $_POST['test_version'] );
-				$only_active = sanitize_text_field( $_POST['only_active'] );
-
 				// Fork so we can close the connection.
-				$this->fork_scan( $test_version, $only_active );
+				$this->fork_scan( $test_data['test_version'], $test_data['only_active'] );
 			} else {
-				$wpephpc->test_version = $test_version;
-				$wpephpc->only_active = $only_active;
+				if ( isset( $test_data['test_version'] ) ) {
+					$wpephpc->test_version = $test_data['test_version'];
+				}
+
+				if ( isset( $test_data['only_active'] ) ) {
+					$wpephpc->only_active = $test_data['only_active'];
+				}
 
 				$wpephpc->start_test();
 			}
