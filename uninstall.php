@@ -5,7 +5,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	die;
 }
 
-require_once( dirname( __FILE__ ) . '/src/wpephpcompat.php' );
+require_once dirname( __FILE__ ) . '/src/wpephpcompat.php';
 
 $wpephpc = new WPEPHPCompat( dirname( __FILE__ ) );
 $wpephpc->clean_after_scan();

@@ -2,7 +2,7 @@
 // Exit if this file is directly accessed
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-require_once( dirname( dirname( __FILE__ ) ) . '/vendor/autoload.php' );
+require_once dirname( dirname( __FILE__ ) ) . '/vendor/autoload.php';
 
 /**
  * Summary.
@@ -314,7 +314,7 @@ class WPEPHPCompat {
 	public function generate_directory_list() {
 		if ( ! function_exists( 'get_plugins' ) ) {
 
-			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 
 		$plugin_base = dirname( $this->base ) . DIRECTORY_SEPARATOR;
