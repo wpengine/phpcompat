@@ -8,11 +8,11 @@
 	}],
 	"require": {
 		"squizlabs/php_codesniffer": "2.8.*",
-		"wimg/php-compatibility": "dev-master",
+		"wimg/php-compatibility": "7.0.4",
 		"simplyadmire/composer-plugins" : "@dev"
 	},
 	"require-dev": {
-		"wp-coding-standards/wpcs": "dev-master",
+		"wp-coding-standards/wpcs": "0.10",
 		"neronmoon/scriptsdev": "^0.1.0"
 	},
 	"autoload": {

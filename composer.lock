@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "92c630099ff763fc107c4e9a552b0e66",
+    "content-hash": "aec016e05235ac6f8f626386ad594b6e",
     "packages": [
         {
             "name": "simplyadmire/composer-plugins",
@@ -57,7 +57,7 @@
                 "typo3"
             ],
             "abandoned": true,
-            "time": "2016-05-12T11:58:38+00:00"
+            "time": "2016-05-12 11:58:38"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -139,16 +139,16 @@
         },
         {
             "name": "wimg/php-compatibility",
-            "version": "dev-master",
+            "version": "7.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wimg/PHPCompatibility.git",
-                "reference": "4853c6da08a6cb0f53029170e93c97120a6a2335"
+                "reference": "bd0f665df4fb29e12dc8b24f1816dcaa68a96116"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wimg/PHPCompatibility/zipball/4853c6da08a6cb0f53029170e93c97120a6a2335",
-                "reference": "4853c6da08a6cb0f53029170e93c97120a6a2335",
+                "url": "https://api.github.com/repos/wimg/PHPCompatibility/zipball/bd0f665df4fb29e12dc8b24f1816dcaa68a96116",
+                "reference": "bd0f665df4fb29e12dc8b24f1816dcaa68a96116",
                 "shasum": ""
             },
             "require": {
@@ -182,22 +182,22 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2017-01-03T20:31:50+00:00"
+            "time": "2016-08-20T20:59:38+00:00"
         }
     ],
     "packages-dev": [
         {
             "name": "neronmoon/scriptsdev",
-            "version": "v0.1.0",
+            "version": "v0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neronmoon/scriptsdev.git",
-                "reference": "ab5cec346cab353500b957de8c7e6548961d35fe"
+                "reference": "2bda142b08900baa5476a40673f1465236831d1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neronmoon/scriptsdev/zipball/ab5cec346cab353500b957de8c7e6548961d35fe",
-                "reference": "ab5cec346cab353500b957de8c7e6548961d35fe",
+                "url": "https://api.github.com/repos/neronmoon/scriptsdev/zipball/2bda142b08900baa5476a40673f1465236831d1e",
+                "reference": "2bda142b08900baa5476a40673f1465236831d1e",
                 "shasum": ""
             },
             "require": {
@@ -208,11 +208,11 @@
             },
             "type": "composer-plugin",
             "extra": {
-                "class": "\\Plugin"
+                "class": "ScriptsDev\\Plugin"
             },
             "autoload": {
-                "psr-0": {
-                    "": "src/"
+                "psr-4": {
+                    "ScriptsDev\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -234,11 +234,11 @@
                 "dev",
                 "scripts"
             ],
-            "time": "2015-11-12T17:00:24+00:00"
+            "time": "2017-03-13T17:11:56+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
-            "version": "dev-master",
+            "version": "0.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git",
@@ -276,9 +276,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "wimg/php-compatibility": 20,
-        "simplyadmire/composer-plugins": 20,
-        "wp-coding-standards/wpcs": 20
+        "simplyadmire/composer-plugins": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
