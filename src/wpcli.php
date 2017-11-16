@@ -1,6 +1,5 @@
 <?php
-require_once dirname( dirname( __FILE__ ) ) . '/src/wpephpcompat.php';
-require_once dirname( dirname( __FILE__ ) ) . '/vendor/autoload.php';
+require_once dirname( dirname( __FILE__ ) ) . '/load-files.php';
 
 /**
  * PHPCompat WP-CLI command.
