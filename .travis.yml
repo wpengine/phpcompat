@@ -21,9 +21,7 @@ matrix:
     - php: 5.2
 
 before_script:
-  - curl -o ~/.nvm/nvm.sh https://raw.githubusercontent.com/creationix/nvm/v0.31.0/nvm.sh # update nvm
-  - bash -c "nvm use 8.9.1" || true
-  - bash -c "source ~/.nvm/nvm.sh; nvm install $NODE_JS_VERSION; node --version"
+  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8
   - composer install
   - npm install
   - bash tests/bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
