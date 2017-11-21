@@ -13,25 +13,25 @@ php:
   - 7.0
   - 7.1
 env:
-  - WP_VERSION=latest
+  - WP_VERSION=4.9
   - WP_VERSION=4.5
 dist: trusty
 matrix:
   include:
     - php: 5.2
-      env: WP_VERSION=latest
+      env: WP_VERSION=4.9
       dist: precise
     - php: 5.2
       env: WP_VERSION=4.5
       dist: precise
     - php: 5.3
-      env: WP_VERSION=latest
+      env: WP_VERSION=4.9
       dist: precise
     - php: 5.3
       env: WP_VERSION=4.5
       dist: precise
     - php: 5.6
-      env: WP_VERSION=latest WP_MULTISITE=1
+      env: WP_VERSION=4.9 WP_MULTISITE=1
     - php: 5.6
       env: WP_VERSION=4.5 WP_MULTISITE=1
   allow_failures:
