@@ -207,7 +207,11 @@ class WPEPHPCompat {
 			$scan_results .= __( 'Name', 'php-compatibility-checker' ) . ': ' . $directory->post_title . "\n\n";
 
 			// Keep track of the number of times we've attempted to scan the plugin.
-			$count = get_post_meta( $directory->ID, 'count', true ) ?: 1;
+			$count = (int) get_post_meta( $directory->ID, 'count', true );
+			if ( ! $count ) {
+				$count = 1;
+			}
+
 			$this->debug_log( 'Attempted scan count: ' . $count );
 
 			if ( $count > 2 ) { // If we've already tried twice, skip it.
