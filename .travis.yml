@@ -35,7 +35,7 @@ matrix:
     - php: 5.6
       env: WP_VERSION=4.5 WP_MULTISITE=1
     - php: 7.0
-      env: WP_VERSION=4.9 NPM_TESTS=1
+      env: NPM_TESTS=1
   allow_failures:
     - php: 5.2
 
@@ -51,12 +51,14 @@ before_script:
     if [[ "$NPM_TESTS" == "1" ]]; then
       rm -rf ~/.nvm
       git clone https://github.com/creationix/nvm.git ~/.nvm
-      cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
+      cd ~/.nvm
+      git checkout `git describe --abbrev=0 --tags`
+      cd $TRAVIS_BUILD_DIR
       source ~/.nvm/nvm.sh
       nvm install 8
       npm install
-      export PATH="$HOME/.composer/vendor/bin:$PATH"
     fi
+  - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - |
     case "$TRAVIS_PHP_VERSION" in
       5.6|5.5|5.4|5.3)
