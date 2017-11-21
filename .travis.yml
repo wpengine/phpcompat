@@ -9,7 +9,6 @@ cache:
 php:
   - 5.4
   - 5.5
-  - 5.6
   - 7.0
   - 7.1
 env:
@@ -34,6 +33,10 @@ matrix:
       env: WP_VERSION=4.9 WP_MULTISITE=1
     - php: 5.6
       env: WP_VERSION=4.5 WP_MULTISITE=1
+    - php: 5.6
+      env: WP_VERSION=4.9 NPM_TESTS=1
+    - php: 5.6
+      env: WP_VERSION=4.5 NPM_TESTS=1
   allow_failures:
     - php: 5.2
 
@@ -45,19 +48,6 @@ before_script:
         phpenv config-rm xdebug.ini
       fi
     fi
-  - PLUGIN_SLUG=$(basename $(pwd))
-  - export WP_DEVELOP_DIR=/tmp/wordpress/
-  - git clone --depth=50 --branch="$WP_VERSION" git://develop.git.wordpress.org/ /tmp/wordpress
-  - cd ..
-  - cp -r "$PLUGIN_SLUG" "/tmp/wordpress/src/wp-content/plugins/$PLUGIN_SLUG"
-  - cd /tmp/wordpress/
-  - cp wp-tests-config-sample.php wp-tests-config.php
-  - sed -i "s/youremptytestdbnamehere/wordpress_tests/" wp-tests-config.php
-  - sed -i "s/yourusernamehere/travis/" wp-tests-config.php
-  - sed -i "s/yourpasswordhere//" wp-tests-config.php
-  - mysql -e "CREATE DATABASE wordpress_tests;" -uroot
-  - cd "/tmp/wordpress/src/wp-content/plugins/$PLUGIN_SLUG"
-  - phpenv rehash
   - |
     case "$TRAVIS_PHP_VERSION" in
       5.6|5.5|5.4|5.3)
@@ -74,16 +64,31 @@ before_script:
   - cd php52
   - composer install
   - cd ..
+  - PLUGIN_SLUG=$(basename $(pwd))
+  - export WP_DEVELOP_DIR=/tmp/wordpress/
+  - git clone --depth=50 --branch="$WP_VERSION" git://develop.git.wordpress.org/ /tmp/wordpress
+  - cd ..
+  - cp -r "$PLUGIN_SLUG" "/tmp/wordpress/src/wp-content/plugins/$PLUGIN_SLUG"
+  - cd /tmp/wordpress/
+  - cp wp-tests-config-sample.php wp-tests-config.php
+  - sed -i "s/youremptytestdbnamehere/wordpress_tests/" wp-tests-config.php
+  - sed -i "s/yourusernamehere/travis/" wp-tests-config.php
+  - sed -i "s/yourpasswordhere//" wp-tests-config.php
+  - mysql -e "CREATE DATABASE wordpress_tests;" -uroot
+  - cd "/tmp/wordpress/src/wp-content/plugins/$PLUGIN_SLUG"
+  - phpenv rehash
   - |
-    rm -rf ~/.nvm
-    git clone https://github.com/creationix/nvm.git ~/.nvm
-    cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
-    source ~/.nvm/nvm.sh
-    nvm install 8
-  - npm install
+    if [[ "$NPM_TESTS" == "1" ]]; then
+      rm -rf ~/.nvm
+      git clone https://github.com/creationix/nvm.git ~/.nvm
+      cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
+      source ~/.nvm/nvm.sh
+      nvm install 8
+      npm install
+    fi
 script:
   - phpunit -c phpunit.xml
   - |
-    if [[ "$TRAVIS_PHP_VERSION" != "5.2" ]]; then
+    if [[ "$NPM_TESTS" == "1" ]]; then
       npm test
     fi
