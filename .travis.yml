@@ -13,25 +13,25 @@ php:
   - 7.0
   - 7.1
 env:
-  - WP_VERSION=4.9
+  - WP_VERSION=latest
   - WP_VERSION=4.5
 dist: trusty
 matrix:
   include:
     - php: 5.2
-      env: WP_VERSION=4.9
+      env: WP_VERSION=latest
       dist: precise
     - php: 5.2
       env: WP_VERSION=4.5
       dist: precise
     - php: 5.3
-      env: WP_VERSION=4.9
+      env: WP_VERSION=latest
       dist: precise
     - php: 5.3
       env: WP_VERSION=4.5
       dist: precise
     - php: 5.6
-      env: WP_VERSION=4.9 WP_MULTISITE=1
+      env: WP_VERSION=latest WP_MULTISITE=1
     - php: 5.6
       env: WP_VERSION=4.5 WP_MULTISITE=1
     - php: 7.0
@@ -77,6 +77,12 @@ before_script:
       phpenv global "$TRAVIS_PHP_VERSION"
     else
       composer install
+    fi
+  - |
+    if [[ "$WP_VERSION" == "latest" ]]; then
+      curl -s http://api.wordpress.org/core/version-check/1.7/ > /tmp/wp-latest.json
+      grep '[0-9]+\.[0-9]+(\.[0-9]+)?' /tmp/wp-latest.json
+      WP_VERSION=$(grep -o '"version":"[^"]*' /tmp/wp-latest.json | sed 's/"version":"//')
     fi
   - |
     if [[ "$NPM_TESTS" != "1" ]]; then
