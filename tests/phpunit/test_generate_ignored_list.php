@@ -5,9 +5,9 @@ class TestGenerateIgnoredList extends WP_UnitTestCase {
 	
 	public function setUp()
 	{
-		$root_dir = realpath( __DIR__ . '/../../' );
+		$root_dir = realpath( dirname( __FILE__ ) . '/../../' );
 
-		$this->wpephpc = new \WPEPHPCompat( $root_dir );
+		$this->wpephpc = new WPEPHPCompat( $root_dir );
 		
 		$this->wpephpc->whitelist = array(
 			'*/jetpack/*' => '7.0',

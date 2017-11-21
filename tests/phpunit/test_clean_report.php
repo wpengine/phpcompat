@@ -4,9 +4,9 @@ class TestCleanReport extends WP_UnitTestCase {
 	private $wpephpc;
 
 	public function setUp() {
-		$root_dir = realpath( __DIR__ . '/../../' );
+		$root_dir = realpath( dirname( __FILE__ ) . '/../../' );
 
-		$this->wpephpc = new \WPEPHPCompat( $root_dir );
+		$this->wpephpc = new WPEPHPCompat( $root_dir );
 	}
 
 	public function test_clean_report_time() {
