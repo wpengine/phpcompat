@@ -9,6 +9,7 @@ cache:
 php:
   - 5.4
   - 5.5
+  - 5.6
   - 7.0
   - 7.1
 env:
@@ -33,10 +34,8 @@ matrix:
       env: WP_VERSION=4.9 WP_MULTISITE=1
     - php: 5.6
       env: WP_VERSION=4.5 WP_MULTISITE=1
-    - php: 5.6
-      env: WP_VERSION=4.9 NPM_TESTS=1
-    - php: 5.6
-      env: WP_VERSION=4.5 NPM_TESTS=1
+    - php: 7.0
+      env: NPM_TESTS=1
   allow_failures:
     - php: 5.2
 
@@ -72,6 +71,15 @@ before_script:
       composer install
       cd ..
     fi
+  - |
+    if [[ "$NPM_TESTS" == "1" ]]; then
+      rm -rf ~/.nvm
+      git clone https://github.com/creationix/nvm.git ~/.nvm
+      cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
+      source ~/.nvm/nvm.sh
+      nvm install 8
+      npm install
+    fi
   - PLUGIN_SLUG=$(basename $(pwd))
   - export WP_DEVELOP_DIR=/tmp/wordpress/
   - git clone --depth=50 --branch="$WP_VERSION" git://develop.git.wordpress.org/ /tmp/wordpress
@@ -85,18 +93,10 @@ before_script:
   - mysql -e "CREATE DATABASE wordpress_tests;" -uroot
   - cd "/tmp/wordpress/src/wp-content/plugins/$PLUGIN_SLUG"
   - phpenv rehash
-  - |
-    if [[ "$NPM_TESTS" == "1" ]]; then
-      rm -rf ~/.nvm
-      git clone https://github.com/creationix/nvm.git ~/.nvm
-      cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
-      source ~/.nvm/nvm.sh
-      nvm install 8
-      npm install
-    fi
 script:
-  - phpunit -c phpunit.xml
   - |
     if [[ "$NPM_TESTS" == "1" ]]; then
       npm test
+    else
+      phpunit -c phpunit.xml
     fi
