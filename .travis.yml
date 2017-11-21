@@ -73,15 +73,10 @@ before_script:
   - |
     if [[ "$TRAVIS_PHP_VERSION" == "5.2" ]]; then
       phpenv global 5.4
-      cd php52
       composer install
-      cd ..
       phpenv global "$TRAVIS_PHP_VERSION"
     else
       composer install
-      cd php52
-      composer install
-      cd ..
     fi
   - |
     if [[ "$NPM_TESTS" != "1" ]]; then

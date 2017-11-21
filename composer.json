@@ -16,11 +16,23 @@
 		"neronmoon/scriptsdev": "^0.1.0"
 	},
 	"scripts": {
-		"post-update-cmd": "vendor/bin/phpcs --config-delete installed_paths; rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility; cp -rp vendor/wimg/php-compatibility/PHPCompatibility vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility",
-		"post-install-cmd": "vendor/bin/phpcs --config-delete installed_paths; rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility; cp -rp vendor/wimg/php-compatibility/PHPCompatibility vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility"
+		"post-update-cmd": [
+			"cd php52; composer update; cd ..",
+			"vendor/bin/phpcs --config-delete installed_paths; rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility; cp -rp vendor/wimg/php-compatibility/PHPCompatibility vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility"
+		],
+		"post-install-cmd": [
+			"cd php52; composer install; cd ..",
+			"vendor/bin/phpcs --config-delete installed_paths; rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility; cp -rp vendor/wimg/php-compatibility/PHPCompatibility vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility"
+		]
 	},
 	"scripts-dev": {
-		"post-update-cmd": "vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs/",
-		"post-install-cmd": "vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs/"
+		"post-update-cmd": [
+			"cd php52; composer update; cd ..",
+			"vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs/"
+		],
+		"post-install-cmd": [
+			"cd php52; composer install; cd ..",
+			"vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs/"
+		]
 	}
 }
