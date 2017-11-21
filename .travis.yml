@@ -35,7 +35,7 @@ matrix:
     - php: 5.6
       env: WP_VERSION=4.5 WP_MULTISITE=1
     - php: 7.0
-      env: NPM_TESTS=1
+      env: WP_VERSION=4.9 NPM_TESTS=1
   allow_failures:
     - php: 5.2
 
@@ -46,6 +46,16 @@ before_script:
       if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
         phpenv config-rm xdebug.ini
       fi
+    fi
+  - |
+    if [[ "$NPM_TESTS" == "1" ]]; then
+      rm -rf ~/.nvm
+      git clone https://github.com/creationix/nvm.git ~/.nvm
+      cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
+      source ~/.nvm/nvm.sh
+      nvm install 8
+      npm install
+      export PATH="$HOME/.composer/vendor/bin:$PATH"
     fi
   - |
     case "$TRAVIS_PHP_VERSION" in
@@ -70,15 +80,6 @@ before_script:
       cd php52
       composer install
       cd ..
-    fi
-  - |
-    if [[ "$NPM_TESTS" == "1" ]]; then
-      rm -rf ~/.nvm
-      git clone https://github.com/creationix/nvm.git ~/.nvm
-      cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
-      source ~/.nvm/nvm.sh
-      nvm install 8
-      npm install
     fi
   - PLUGIN_SLUG=$(basename $(pwd))
   - export WP_DEVELOP_DIR=/tmp/wordpress/
