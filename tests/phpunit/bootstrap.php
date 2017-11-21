@@ -22,7 +22,7 @@ if ( false !== getenv( 'WP_DEVELOP_DIR' ) ) {
 }
 
 // WordPress versions before 4.8 will be incompatible with newer PHPUnit versions.
-if ( version_compare( getenv( 'WP_VERSION' ), '4.8', '<' ) ) {
+if ( version_compare( getenv( 'WP_VERSION' ), '4.8', '<' ) && class_exists( 'PHPUnit\Runner\Version' ) ) {
 	require_once dirname( __FILE__ ) . '/phpunit6-compat.php';
 }
 
