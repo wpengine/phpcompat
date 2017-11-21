@@ -61,7 +61,7 @@ before_script:
     esac
   - |
     if [[ "$TRAVIS_PHP_VERSION" == "5.2" ]]; then
-      phpenv global 5.3
+      phpenv global 5.4
       cd php52
       composer install
       cd ..
