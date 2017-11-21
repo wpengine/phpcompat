@@ -21,4 +21,9 @@ if ( false !== getenv( 'WP_DEVELOP_DIR' ) ) {
 	$test_root = '../../../../../../../tests/phpunit';
 }
 
+// WordPress versions before 4.8 will be incompatible with newer PHPUnit versions.
+if ( version_compare( getenv( 'WP_VERSION' ), '4.8', '<' ) ) {
+	require_once dirname( __FILE__ ) . '/phpunit6-compat.php';
+}
+
 require $test_root . '/includes/bootstrap.php';
