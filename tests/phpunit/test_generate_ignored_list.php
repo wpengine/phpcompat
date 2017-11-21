@@ -72,12 +72,14 @@ class TestGenerateIgnoredList extends WP_UnitTestCase {
 	}
 
 	function test_filter_ignored_list() {
-		tests_add_filter( 'phpcompat_whitelist', function( $whitelist ) {
-			return array_merge( $whitelist, array( '*/filterplugin/*') );
-		} );
+		tests_add_filter( 'phpcompat_whitelist', array( $this, '_filter_whitelist' ) );
 
 		$ignored = $this->wpephpc->generate_ignored_list();
 		
 		$this->assertContains( '*/filterplugin/*', $ignored );
+	}
+
+	function _filter_whitelist( $whitelist ) {
+		return array_merge( $whitelist, array( '*/filterplugin/*') );
 	}
 }
