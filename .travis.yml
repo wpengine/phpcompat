@@ -18,9 +18,10 @@ matrix:
     - php: 5.6
       env: WP_VERSION=latest WP_MULTISITE=1
   allow_failures:
-    - php: 5.2 
-    
+    - php: 5.2
+
 before_script:
+  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8
   - composer install
   - cd php52
   - composer install
@@ -36,6 +37,6 @@ before_script:
     fi
 
 
-script: 
+script:
   - phpunit
   - npm test
