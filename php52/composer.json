@@ -7,11 +7,13 @@
 	"scripts": {
 		"post-update-cmd": [
 			"xrstf\\Composer52\\Generator::onPostInstallCmd",
-			"vendor/bin/phpcs --config-delete installed_paths; rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility; cp -rp vendor/wimg/php-compatibility vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility"
+			"vendor/bin/phpcs --config-delete installed_paths",
+			"rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility; cp -rp vendor/wimg/php-compatibility vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility"
 		],
 		"post-install-cmd": [
 			"xrstf\\Composer52\\Generator::onPostInstallCmd",
-			"vendor/bin/phpcs --config-delete installed_paths; rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility; cp -rp vendor/wimg/php-compatibility vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility"
+			"vendor/bin/phpcs --config-delete installed_paths",
+			"rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility; cp -rp vendor/wimg/php-compatibility vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility"
 		],
 		"post-autoload-dump": [
 			"xrstf\\Composer52\\Generator::onPostInstallCmd"
