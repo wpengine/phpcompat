@@ -2,10 +2,11 @@
   "name": "php-compatibility-checker",
   "devDependencies": {
     "grunt": "^0.4.5",
-    "grunt-wp-readme-to-markdown": "^2.0.0",
-    "node-qunit-phantomjs": "^1.4.0",
+    "grunt-cli": "^1.2.0",
     "grunt-phpcs": "^0.4.0",
-    "grunt-phplint": "0.0.8"
+    "grunt-phplint": "0.0.8",
+    "grunt-wp-readme-to-markdown": "^2.0.0",
+    "node-qunit-phantomjs": "^1.4.0"
   },
   "scripts": {
     "test": "npm run test:lint && npm run test:qunit",
