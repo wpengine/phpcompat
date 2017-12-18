@@ -12,18 +12,15 @@ Text Domain: php-compatibility-checker
 // Exit if this file is directly accessed
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
+define( 'WPEPHPCOMPAT_CAPABILITY', 'manage_options' );
+define( 'WPEPHPCOMPAT_ADMIN_PAGE_SLUG', 'php-compatibility-checker' );
+
 require_once dirname( __FILE__ ) . '/load-files.php';
 
 /**
  * This handles hooking into WordPress.
  */
 class WPEngine_PHPCompat {
-
-	/* Capability required to run the scanner and access the admin page */
-	const CAPABILITY = 'manage_options';
-
-	/* Slug for the admin page */
-	const ADMIN_PAGE_SLUG = 'php-compatibility-checker';
 
 	/* Define and register singleton */
 	private static $instance = false;
@@ -113,7 +110,7 @@ class WPEngine_PHPCompat {
 	 * @return null
 	 */
 	function start_test() {
-		if ( current_user_can( self::CAPABILITY ) || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
+		if ( current_user_can( WPEPHPCOMPAT_CAPABILITY ) || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
 			global $wpdb;
 
 			$wpephpc = new WPEPHPCompat( dirname( __FILE__ ) );
@@ -157,7 +154,7 @@ class WPEngine_PHPCompat {
 	 * @return null
 	 */
 	function check_status() {
-		if ( current_user_can( self::CAPABILITY ) || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
+		if ( current_user_can( WPEPHPCOMPAT_CAPABILITY ) || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
 			$scan_status = get_option( 'wpephpcompat.status' );
 			$count_jobs = wp_count_posts( 'wpephpcompat_jobs' );
 			$total_jobs = get_option( 'wpephpcompat.numdirs' );
@@ -243,7 +240,7 @@ class WPEngine_PHPCompat {
 	 * @action wp_ajax_wpephpcompat_clean_up
 	 */
 	function clean_up() {
-		if ( current_user_can( self::CAPABILITY ) || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
+		if ( current_user_can( WPEPHPCOMPAT_CAPABILITY ) || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
 			$wpephpc = new WPEPHPCompat( dirname( __FILE__ ) );
 			$wpephpc->clean_after_scan();
 			delete_option( 'wpephpcompat.scan_results' );
@@ -320,7 +317,7 @@ class WPEngine_PHPCompat {
 	 */
 	function create_menu() {
 		// Create Tools sub-menu.
-		$this->page = add_submenu_page( 'tools.php', __( 'PHP Compatibility', 'php-compatibility-checker' ), __( 'PHP Compatibility', 'php-compatibility-checker' ), self::CAPABILITY, self::ADMIN_PAGE_SLUG, array( self::instance(), 'settings_page' ) );
+		$this->page = add_submenu_page( 'tools.php', __( 'PHP Compatibility', 'php-compatibility-checker' ), __( 'PHP Compatibility', 'php-compatibility-checker' ), WPEPHPCOMPAT_CAPABILITY, WPEPHPCOMPAT_ADMIN_PAGE_SLUG, array( self::instance(), 'settings_page' ) );
 	}
 
 	/**
@@ -503,11 +500,11 @@ class WPEngine_PHPCompat {
 
 		delete_option( 'wpephpcompat.show_notice' );
 
-		if ( ! current_user_can( self::CAPABILITY ) ) {
+		if ( ! current_user_can( WPEPHPCOMPAT_CAPABILITY ) ) {
 			return;
 		}
 
-		$url = add_query_arg( 'page', self::ADMIN_PAGE_SLUG, admin_url( 'tools.php' ) );
+		$url = add_query_arg( 'page', WPEPHPCOMPAT_ADMIN_PAGE_SLUG, admin_url( 'tools.php' ) );
 
 		?>
 		<div class="notice updated is-dismissible">
@@ -533,8 +530,8 @@ class WPEngine_PHPCompat {
 	 * @return array Modified plugin action links.
 	 */
 	function filter_plugin_links( $links ) {
-		if ( current_user_can( self::CAPABILITY ) ) {
-			$url = add_query_arg( 'page', self::ADMIN_PAGE_SLUG, admin_url( 'tools.php' ) );
+		if ( current_user_can( WPEPHPCOMPAT_CAPABILITY ) ) {
+			$url = add_query_arg( 'page', WPEPHPCOMPAT_ADMIN_PAGE_SLUG, admin_url( 'tools.php' ) );
 
 			array_unshift( $links, '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Start Scan', 'php-compatibility-checker' ) . '</a>' );
 		}
