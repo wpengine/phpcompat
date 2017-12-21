@@ -103,5 +103,5 @@ script:
     if [[ "$NPM_TESTS" == "1" ]]; then
       npm test
     else
-      phpunit -c phpunit.xml
+      phpunit
     fi
