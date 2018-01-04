@@ -18,35 +18,21 @@
 	"scripts": {
 		"post-update-cmd": [
 			"cd php52; composer update; cd ..",
-			"vendor/bin/phpcs --config-delete installed_paths",
-			"rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility; cp -rp vendor/wimg/php-compatibility/PHPCompatibility vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility"
+			"vendor/bin/phpcs --config-set installed_paths ../../wimg/php-compatibility"
 		],
 		"post-install-cmd": [
 			"cd php52; composer install; cd ..",
-			"vendor/bin/phpcs --config-delete installed_paths",
-			"rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility; cp -rp vendor/wimg/php-compatibility/PHPCompatibility vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility"
+			"vendor/bin/phpcs --config-set installed_paths ../../wimg/php-compatibility"
 		]
 	},
 	"scripts-dev": {
 		"post-update-cmd": [
 			"cd php52; composer update; cd ..",
-			"vendor/bin/phpcs --config-delete installed_paths",
-			"rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility; cp -rp vendor/wimg/php-compatibility/PHPCompatibility vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility",
-			"rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress; cp -rp vendor/wp-coding-standards/wpcs/WordPress vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress",
-			"rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress-Core; cp -rp vendor/wp-coding-standards/wpcs/WordPress-Core vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress-Core",
-			"rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress-Docs; cp -rp vendor/wp-coding-standards/wpcs/WordPress-Docs vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress-Docs",
-			"rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress-Extra; cp -rp vendor/wp-coding-standards/wpcs/WordPress-Extra vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress-Extra",
-			"rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress-VIP; cp -rp vendor/wp-coding-standards/wpcs/WordPress-VIP vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress-VIP"
+			"vendor/bin/phpcs --config-set installed_paths ../../wimg/php-compatibility,../../wp-coding-standards/wpcs"
 		],
 		"post-install-cmd": [
 			"cd php52; composer install; cd ..",
-			"vendor/bin/phpcs --config-delete installed_paths",
-			"rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility; cp -rp vendor/wimg/php-compatibility/PHPCompatibility vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility",
-			"rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress; cp -rp vendor/wp-coding-standards/wpcs/WordPress vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress",
-			"rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress-Core; cp -rp vendor/wp-coding-standards/wpcs/WordPress-Core vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress-Core",
-			"rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress-Docs; cp -rp vendor/wp-coding-standards/wpcs/WordPress-Docs vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress-Docs",
-			"rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress-Extra; cp -rp vendor/wp-coding-standards/wpcs/WordPress-Extra vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress-Extra",
-			"rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress-VIP; cp -rp vendor/wp-coding-standards/wpcs/WordPress-VIP vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/WordPress-VIP"
+			"vendor/bin/phpcs --config-set installed_paths ../../wimg/php-compatibility,../../wp-coding-standards/wpcs"
 		]
 	}
 }
