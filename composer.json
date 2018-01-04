@@ -12,7 +12,7 @@
 		"simplyadmire/composer-plugins" : "@dev"
 	},
 	"require-dev": {
-		"wp-coding-standards/wpcs": "0.10",
+		"wp-coding-standards/wpcs": "dev-master",
 		"neronmoon/scriptsdev": "^0.1.0"
 	},
 	"scripts": {
