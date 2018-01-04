@@ -273,7 +273,11 @@ class WPEPHPCompat {
 		// Whitelist.
 		$this->values['ignored'] = $this->generate_ignored_list();
 
-		PHP_CodeSniffer::setConfigData( 'testVersion', $this->test_version, true );
+		if ( version_compare( phpversion(), '5.3', '>=' ) && class_exists( 'PHPCompatibility\PHPCSHelper' ) ) {
+			call_user_func( array( 'PHPCompatibility\PHPCSHelper', 'setConfigData' ), 'testVersion', $this->test_version, true );
+		} else {
+			PHP_CodeSniffer::setConfigData( 'testVersion', $this->test_version, true );
+		}
 
 		ob_start();
 
