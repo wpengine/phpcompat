@@ -1,11 +1,5 @@
 sudo: false
 language: php
-cache:
-  directories:
-    - node_modules
-    - vendor
-    - php52/vendor
-    - $HOME/.composer/cache
 php:
   - 5.4
   - 5.5
