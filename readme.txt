@@ -115,7 +115,7 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 == Changelog ==
 
 = 1.4.4 =
-- Removed call to action sidebar.
+- Updated call to action sidebar depending on platform.
 
 = 1.4.3 =
 - Fixed Composer issue.
