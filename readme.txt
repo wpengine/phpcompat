@@ -115,6 +115,7 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 == Changelog ==
 
 = 1.4.4 =
+- PHP 5.2 Support & PHP 7.1 and 7.2 Lints.
 - Updated call to action sidebar depending on platform.
 
 = 1.4.3 =
