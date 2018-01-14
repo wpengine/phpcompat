@@ -7,23 +7,32 @@
 		"email": "jason@stallin.gs"
 	}],
 	"require": {
-		"squizlabs/php_codesniffer": "2.8.*",
-		"wimg/php-compatibility": "dev-master",
+		"squizlabs/php_codesniffer": "2.9.*",
+		"wimg/php-compatibility": "^8",
 		"simplyadmire/composer-plugins" : "@dev"
 	},
 	"require-dev": {
 		"wp-coding-standards/wpcs": "dev-master",
 		"neronmoon/scriptsdev": "^0.1.0"
 	},
-	"autoload": {
-		"classmap": ["src/wpephpcompat.php"]
-	},
 	"scripts": {
-		"post-update-cmd": "vendor/bin/phpcs --config-delete installed_paths; rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility; cp -rp vendor/wimg/php-compatibility vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility",
-		"post-install-cmd": "vendor/bin/phpcs --config-delete installed_paths; rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility; cp -rp vendor/wimg/php-compatibility vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility"
+		"post-update-cmd": [
+			"cd php52; composer update; cd ..",
+			"vendor/bin/phpcs --config-set installed_paths ../../wimg/php-compatibility"
+		],
+		"post-install-cmd": [
+			"cd php52; composer install; cd ..",
+			"vendor/bin/phpcs --config-set installed_paths ../../wimg/php-compatibility"
+		]
 	},
 	"scripts-dev": {
-		"post-update-cmd": "vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs/;",
-		"post-install-cmd": "vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs/;"
+		"post-update-cmd": [
+			"cd php52; composer update; cd ..",
+			"vendor/bin/phpcs --config-set installed_paths ../../wimg/php-compatibility,../../wp-coding-standards/wpcs"
+		],
+		"post-install-cmd": [
+			"cd php52; composer install; cd ..",
+			"vendor/bin/phpcs --config-set installed_paths ../../wimg/php-compatibility,../../wp-coding-standards/wpcs"
+		]
 	}
 }

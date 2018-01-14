@@ -2,7 +2,7 @@
 // Exit if this file is directly accessed
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-require_once( __DIR__ . '/../vendor/autoload.php' );
+require_once dirname( dirname( __FILE__ ) ) . '/load-files.php';
 
 /**
  * Summary.
@@ -207,7 +207,11 @@ class WPEPHPCompat {
 			$scan_results .= __( 'Name', 'php-compatibility-checker' ) . ': ' . $directory->post_title . "\n\n";
 
 			// Keep track of the number of times we've attempted to scan the plugin.
-			$count = get_post_meta( $directory->ID, 'count', true ) ?: 1;
+			$count = (int) get_post_meta( $directory->ID, 'count', true );
+			if ( ! $count ) {
+				$count = 1;
+			}
+
 			$this->debug_log( 'Attempted scan count: ' . $count );
 
 			if ( $count > 2 ) { // If we've already tried twice, skip it.
@@ -269,7 +273,11 @@ class WPEPHPCompat {
 		// Whitelist.
 		$this->values['ignored'] = $this->generate_ignored_list();
 
-		PHP_CodeSniffer::setConfigData( 'testVersion', $this->test_version, true );
+		if ( version_compare( phpversion(), '5.3', '>=' ) && class_exists( 'PHPCompatibility\PHPCSHelper' ) ) {
+			call_user_func( array( 'PHPCompatibility\PHPCSHelper', 'setConfigData' ), 'testVersion', $this->test_version, true );
+		} else {
+			PHP_CodeSniffer::setConfigData( 'testVersion', $this->test_version, true );
+		}
 
 		ob_start();
 
@@ -314,7 +322,7 @@ class WPEPHPCompat {
 	public function generate_directory_list() {
 		if ( ! function_exists( 'get_plugins' ) ) {
 
-			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 
 		$plugin_base = dirname( $this->base ) . DIRECTORY_SEPARATOR;

@@ -230,10 +230,12 @@ function displayReport( response ) {
 	} else if ( compatible ) {
 		jQuery( '.wpe-pcc-download-report' ).show();
 		jQuery( '.wpe-pcc-results' ).show();
+		jQuery( '.wpe-pcc-information-errors' ).show();
 	} else {
 		// Display scan stats.
 		jQuery( '.wpe-pcc-download-report' ).show();
 		$( '#wpe-pcc-standardMode' ).prepend( '<p>' + failedCount + ' ' + window.wpephpcompat.out_of + ' ' + plugins.length + ' ' + window.wpephpcompat.are_not + '.</p>' );
+		jQuery( '.wpe-pcc-information-errors' ).show();
 		jQuery( '.wpe-pcc-results' ).show();
 	}
 }

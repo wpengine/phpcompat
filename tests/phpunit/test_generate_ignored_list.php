@@ -5,9 +5,9 @@ class TestGenerateIgnoredList extends WP_UnitTestCase {
 	
 	public function setUp()
 	{
-		$root_dir = realpath( __DIR__ . '/../../' );
+		$root_dir = realpath( dirname( __FILE__ ) . '/../../' );
 
-		$this->wpephpc = new \WPEPHPCompat( $root_dir );
+		$this->wpephpc = new WPEPHPCompat( $root_dir );
 		
 		$this->wpephpc->whitelist = array(
 			'*/jetpack/*' => '7.0',
@@ -72,12 +72,14 @@ class TestGenerateIgnoredList extends WP_UnitTestCase {
 	}
 
 	function test_filter_ignored_list() {
-		tests_add_filter( 'phpcompat_whitelist', function( $whitelist ) {
-			return array_merge( $whitelist, array( '*/filterplugin/*') );
-		} );
+		tests_add_filter( 'phpcompat_whitelist', array( $this, '_filter_whitelist' ) );
 
 		$ignored = $this->wpephpc->generate_ignored_list();
 		
 		$this->assertContains( '*/filterplugin/*', $ignored );
+	}
+
+	function _filter_whitelist( $whitelist ) {
+		return array_merge( $whitelist, array( '*/filterplugin/*') );
 	}
 }

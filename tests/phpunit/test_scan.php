@@ -2,9 +2,9 @@
 class TestScan extends WP_UnitTestCase {
 
 	function test_scan_default_PHP_55() {
-		$root_dir = realpath( __DIR__ . '/../../' );
+		$root_dir = realpath( dirname( __FILE__ ) . '/../../' );
 
-		$wpephpc = new \WPEPHPCompat( $root_dir );
+		$wpephpc = new WPEPHPCompat( $root_dir );
 
 		$wpephpc->clean_after_scan();
 
@@ -18,9 +18,9 @@ class TestScan extends WP_UnitTestCase {
 	}
 
 	function test_scan_default_PHP_70() {
-		$root_dir = realpath( __DIR__ . '/../../' );
+		$root_dir = realpath( dirname( __FILE__ ) . '/../../' );
 
-		$wpephpc = new \WPEPHPCompat( $root_dir );
+		$wpephpc = new WPEPHPCompat( $root_dir );
 
 		$wpephpc->clean_after_scan();
 
