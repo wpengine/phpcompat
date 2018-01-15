@@ -1,6 +1,15 @@
 <?php
-// Exit if this file is directly accessed
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+/**
+ * WPEPHPCompat class
+ *
+ * @package WPEngine\PHPCompat
+ * @since 1.0.0
+ */
+
+// Exit if this file is directly accessed.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 require_once dirname( dirname( __FILE__ ) ) . '/load-files.php';
 
@@ -16,7 +25,6 @@ class WPEPHPCompat {
 	 * The PHP_CodeSniffer_CLI object.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 * @var object
 	 */
 	public $cli = null;
@@ -25,7 +33,6 @@ class WPEPHPCompat {
 	 * Default values for PHP_CodeSniffer scan.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 * @var array
 	 */
 	public $values = array();
@@ -34,7 +41,6 @@ class WPEPHPCompat {
 	 * Version of PHP to test.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 * @var string
 	 */
 	public $test_version = null;
@@ -43,7 +49,6 @@ class WPEPHPCompat {
 	 * Scan only active plugins or all?
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 * @var string
 	 */
 	public $only_active = null;
@@ -52,7 +57,6 @@ class WPEPHPCompat {
 	 * The base directory for the plugin.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 * @var string
 	 */
 	public $base = null;
@@ -65,46 +69,48 @@ class WPEPHPCompat {
 	 *  @var array
 	 */
 	public $whitelist = array(
-		'*/jetpack/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#jetpack
-		'*/wordfence/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#wordfence-security
-		'*/woocommerce/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#woocommerce
-		'*/wp-migrate-db/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#wp-migrate-db
-		'*/easy-digital-downloads/*' => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#easy-digital-downloads
-		'*/updraftplus/*' => '7.0',
-		'*/megamenu/*' => '7.0',
-		'*/tablepress/*' => '7.0',
-		'*/myMail/*' => '7.0',
-		'*/wp-spamshield/*' => '7.0',
+		'*/jetpack/*'                                     => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#jetpack
+		'*/wordfence/*'                                   => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#wordfence-security
+		'*/woocommerce/*'                                 => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#woocommerce
+		'*/wp-migrate-db/*'                               => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#wp-migrate-db
+		'*/easy-digital-downloads/*'                      => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#easy-digital-downloads
+		'*/updraftplus/*'                                 => '7.0',
+		'*/megamenu/*'                                    => '7.0',
+		'*/tablepress/*'                                  => '7.0',
+		'*/myMail/*'                                      => '7.0',
+		'*/wp-spamshield/*'                               => '7.0',
 		'*/vendor/stripe/stripe-php/lib/StripeObject.php' => '7.0', // https://github.com/wpengine/phpcompat/issues/89
-		'*/gravityforms/*' => '7.0', // https://github.com/wpengine/phpcompat/issues/85
-		'*/download-monitor/*' => '7.0', // https://github.com/wpengine/phpcompat/issues/84
-		'*/query-monitor/*' => '7.0', // https://wordpress.org/support/topic/false-positive-showing-query-monitor-as-not-php-7-compatible/
-		'*/bbpress/*' => '7.0', // https://wordpress.org/support/topic/false-positive-showing-bbpress-as-not-php-7-compatible/
-		'*/comet-cache/*' => '7.0', // https://wordpress.org/support/topic/false-positive-comet-cache/
-		'*/comment-mail/*' => '7.0', // https://wordpress.org/support/topic/false-positive-comment-mail/
+		'*/gravityforms/*'                                => '7.0', // https://github.com/wpengine/phpcompat/issues/85
+		'*/download-monitor/*'                            => '7.0', // https://github.com/wpengine/phpcompat/issues/84
+		'*/query-monitor/*'                               => '7.0', // https://wordpress.org/support/topic/false-positive-showing-query-monitor-as-not-php-7-compatible/
+		'*/bbpress/*'                                     => '7.0', // https://wordpress.org/support/topic/false-positive-showing-bbpress-as-not-php-7-compatible/
+		'*/comet-cache/*'                                 => '7.0', // https://wordpress.org/support/topic/false-positive-comet-cache/
+		'*/comment-mail/*'                                => '7.0', // https://wordpress.org/support/topic/false-positive-comment-mail/
 		'*/social-networks-auto-poster-facebook-twitter-g/*' => '7.0', // https://wordpress.org/plugins/social-networks-auto-poster-facebook-twitter-g/
-		'*/mailpoet/*' => '7.0', // https://wordpress.org/support/topic/false-positive-mailpoet-3-not-compatible-with-php7/
-		'*/give/*' => '7.0', // https://github.com/wpengine/phpcompat/issues/148
-		'*/woocommerce-pdf-invoices-packing-slips/*' => '7.0', // https://github.com/wpengine/phpcompat/issues/160
-		'*/iwp-client/*' => '7.0', // https://wordpress.org/support/topic/iwp-client-and-php-7-compatibility/
+		'*/mailpoet/*'                                    => '7.0', // https://wordpress.org/support/topic/false-positive-mailpoet-3-not-compatible-with-php7/
+		'*/give/*'                                        => '7.0', // https://github.com/wpengine/phpcompat/issues/148
+		'*/woocommerce-pdf-invoices-packing-slips/*'      => '7.0', // https://github.com/wpengine/phpcompat/issues/160
+		'*/iwp-client/*'                                  => '7.0', // https://wordpress.org/support/topic/iwp-client-and-php-7-compatibility/
 	);
 
 	/**
+	 * Constructor.
+	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $dir Base plugin directory.
 	 */
-	function __construct( $dir ) {
+	public function __construct( $dir ) {
 		$this->base = $dir;
-		$this->cli = new PHP_CodeSniffer_CLI();
+		$this->cli  = new PHP_CodeSniffer_CLI();
 	}
 
 	/**
-	 * Start the testing process.
+	 * Starts the testing process.
 	 *
-	 * @since  1.0.0
-	 * @return  null
+	 * @since 1.0.0
 	 */
 	public function start_test() {
-
 		$this->debug_log( 'startScan: ' . isset( $_POST['startScan'] ) );
 
 		/**
@@ -137,7 +143,7 @@ class WPEPHPCompat {
 
 					$timestamp = wp_next_scheduled( 'wpephpcompat_start_test_cron' );
 
-					if ( false == $timestamp ) {
+					if ( false === (bool) $timestamp ) {
 						wp_schedule_single_event( time() + $timeout, 'wpephpcompat_start_test_cron' );
 					}
 					return;
@@ -159,7 +165,8 @@ class WPEPHPCompat {
 			update_option( 'wpephpcompat.only_active', $this->only_active, false );
 
 			$this->debug_log( 'Generating directory list.' );
-			//Add plugins and themes.
+
+			// Add plugins and themes.
 			$this->generate_directory_list();
 
 			$count_jobs = wp_count_posts( 'wpephpcompat_jobs' );
@@ -167,7 +174,7 @@ class WPEPHPCompat {
 		} else {
 			// Get scan settings from database.
 			$this->test_version = get_option( 'wpephpcompat.test_version' );
-			$this->only_active = get_option( 'wpephpcompat.only_active' );
+			$this->only_active  = get_option( 'wpephpcompat.only_active' );
 		}
 
 		$args = array(
@@ -176,6 +183,7 @@ class WPEPHPCompat {
 			'orderby'        => 'title',
 			'order'          => 'ASC',
 		);
+
 		$directories = get_posts( $args );
 		$this->debug_log( count( $directories ) . ' plugins left to process.' );
 
@@ -216,7 +224,7 @@ class WPEPHPCompat {
 
 			if ( $count > 2 ) { // If we've already tried twice, skip it.
 				$scan_results .= __( 'The plugin/theme was skipped as it was too large to scan before the server killed the process.', 'php-compatibility-checker' ) . "\n\n";
-				update_option( 'wpephpcompat.scan_results', $scan_results , false );
+				update_option( 'wpephpcompat.scan_results', $scan_results, false );
 				wp_delete_post( $directory->ID );
 				$count = 0;
 				$this->debug_log( 'Skipped: ' . $directory->post_title );
@@ -240,12 +248,13 @@ class WPEPHPCompat {
 
 			if ( ! empty( $update ) ) {
 				$version = get_post_meta( $directory->ID, 'version', true );
+
 				$scan_results .= 'Update Available: ' . $update . '; Current Version: ' . $version . ";\n";
 			}
 
 			$scan_results .= "\n";
 
-			update_option( 'wpephpcompat.scan_results', $scan_results , false );
+			update_option( 'wpephpcompat.scan_results', $scan_results, false );
 
 			wp_delete_post( $directory->ID );
 		}
@@ -258,11 +267,13 @@ class WPEPHPCompat {
 	}
 
 	/**
-	* Runs the actual PHPCompatibility test.
-	*
-	* @since  1.0.0
-	* @return string Scan results.
-	*/
+	 * Runs the actual PHPCompatibility test.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $dir Directory to scan.
+	 * @return string Scan results.
+	 */
 	public function process_file( $dir ) {
 		$this->values['files']       = $dir;
 		$this->values['testVersion'] = $this->test_version;
@@ -289,9 +300,10 @@ class WPEPHPCompat {
 	}
 
 	/**
-	 * Generate a list of ignored files and directories.
+	 * Generates a list of ignored files and directories.
 	 *
 	 * @since 1.0.3
+	 *
 	 * @return array An array containing files and directories that should be ignored.
 	 */
 	public function generate_ignored_list() {
@@ -314,11 +326,10 @@ class WPEPHPCompat {
 	}
 
 	/**
-	* Generate a list of directories to scan and populate the queue.
-	*
-	* @since  1.0.0
-	* @return null
-	*/
+	 * Generates a list of directories to scan and populate the queue.
+	 *
+	 * @since  1.0.0
+	 */
 	public function generate_directory_list() {
 		if ( ! function_exists( 'get_plugins' ) ) {
 
@@ -332,7 +343,7 @@ class WPEPHPCompat {
 		$update_plugins = get_site_transient( 'update_plugins' );
 
 		foreach ( $all_plugins as $k => $v ) {
-			//Exclude our plugin.
+			// Exclude our plugin.
 			if ( 'PHP Compatibility Checker' === $v['Name'] ) {
 				continue;
 			}
@@ -342,7 +353,7 @@ class WPEPHPCompat {
 				// Get array of active plugins.
 				$active_plugins = get_option( 'active_plugins' );
 
-				if ( ! in_array( $k, $active_plugins ) ) {
+				if ( ! in_array( $k, $active_plugins, true ) ) {
 					continue;
 				}
 			}
@@ -379,7 +390,7 @@ class WPEPHPCompat {
 		foreach ( $all_themes as $k => $v ) {
 			if ( 'yes' === $this->only_active ) {
 				$current_theme = wp_get_theme();
-				if ( $all_themes[ $k ]->Name != $current_theme->Name ) {
+				if ( $all_themes[ $k ]->Name !== $current_theme->Name ) {
 					continue;
 				}
 			}
@@ -416,10 +427,9 @@ class WPEPHPCompat {
 	}
 
 	/**
-	 * Remove all database entries created by the scan.
+	 * Removes all database entries created by the scan.
 	 *
-	 * @since  1.0.0
-	 * @return null
+	 * @since 1.0.0
 	 */
 	public function clean_after_scan() {
 		// Delete options created during the scan.
@@ -430,11 +440,12 @@ class WPEPHPCompat {
 		// Clear scheduled cron.
 		wp_clear_scheduled_hook( 'wpephpcompat_start_test_cron' );
 
-		//Make sure all directories are removed from the queue.
+		// Make sure all directories are removed from the queue.
 		$args = array(
 			'posts_per_page' => -1,
 			'post_type'      => 'wpephpcompat_jobs',
 		);
+
 		$directories = get_posts( $args );
 
 		foreach ( $directories as $directory ) {
@@ -443,7 +454,7 @@ class WPEPHPCompat {
 	}
 
 	/**
-	 * Add a path to the wpephpcompat_jobs custom post type.
+	 * Adds a path to the wpephpcompat_jobs custom post type.
 	 *
 	 * @param string $name Plugin or theme name.
 	 * @param string $path Full path to the plugin or theme directory.
@@ -451,27 +462,27 @@ class WPEPHPCompat {
 	 */
 	private function add_directory( $name, $path ) {
 		$dir = array(
-			'post_title'    => $name,
-			'post_content'  => $path,
-			'post_status'   => 'publish',
-			'post_author'   => 1,
-			'post_type'     => 'wpephpcompat_jobs',
+			'post_title'   => $name,
+			'post_content' => $path,
+			'post_status'  => 'publish',
+			'post_author'  => 1,
+			'post_type'    => 'wpephpcompat_jobs',
 		);
 
 		return wp_insert_post( $dir );
 	}
 
 	/**
-	 * Log to the error log if WP_DEBUG is enabled.
+	 * Logs to the error log if WP_DEBUG is enabled.
 	 *
-	 * @since  1.0.0
-	 * @param  string $message Message to log.
-	 * @return null
+	 * @since 1.0.0
+	 *
+	 * @param string $message Message to log.
 	 */
 	private function debug_log( $message ) {
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG === true && ! $this->is_command_line() ) {
 			if ( is_array( $message ) || is_object( $message ) ) {
-				error_log( print_r( $message , true ) );
+				error_log( print_r( $message, true ) );
 			} else {
 				error_log( 'WPE PHP Compatibility: ' . $message );
 			}
@@ -485,6 +496,6 @@ class WPEPHPCompat {
 	 * @return boolean Returns true if the request came from the command line.
 	 */
 	private function is_command_line() {
-		return defined( 'WP_CLI' ) || defined( 'PHPUNIT_TEST' ) || php_sapi_name() == 'cli';
+		return defined( 'WP_CLI' ) || defined( 'PHPUNIT_TEST' ) || php_sapi_name() === 'cli';
 	}
 }

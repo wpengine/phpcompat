@@ -1,4 +1,11 @@
 <?php
+/**
+ * PHPCompat_Command class
+ *
+ * @package WPEngine\PHPCompat
+ * @since 1.0.0
+ */
+
 require_once dirname( dirname( __FILE__ ) ) . '/load-files.php';
 
 /**
@@ -60,7 +67,7 @@ class PHPCompat_Command extends WP_CLI_Command {
  */
 WP_CLI::add_command( 'phpcompat', 'PHPCompat_Command', array(
 	'shortdesc' => 'Test compatibility with different PHP versions.',
-	'synopsis' => array(
+	'synopsis'  => array(
 		array(
 			'type'     => 'positional',
 			'name'     => 'version',

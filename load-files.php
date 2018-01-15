@@ -1,6 +1,15 @@
 <?php
-// Exit if this file is directly accessed
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+/**
+ * Dependency loader
+ *
+ * @package WPEngine\PHPCompat
+ * @since 1.0.0
+ */
+
+// Exit if this file is directly accessed.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Loads the plugin files.
