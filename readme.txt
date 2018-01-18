@@ -3,7 +3,7 @@ Contributors: wpengine, octalmage, stevenkword, Taylor4484, pross, jcross
 Tags: php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine
 Requires at least: 3.5
 Tested up to: 4.9
-Stable tag: 1.4.4
+Stable tag: 1.4.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,6 +113,9 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 2. Compatibility results screen
 
 == Changelog ==
+
+= 1.4.5 =
+- Use plugin version number to enqueue scripts and styles.
 
 = 1.4.4 =
 - PHP 5.2 Support & PHP 7.1 and 7.2 Lints.

@@ -56,7 +56,7 @@ PHP Compatibility Checker includes WP-CLI command support:
 
 	<version>
 	    PHP version to test.
-	
+
 	[--scan=<scan>]
 	  Whether to scan only active plugins and themes or all of them.
 	  default: active
@@ -117,6 +117,9 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 
 ## Changelog ##
+
+### 1.4.5 ###
+- Use plugin version number to enqueue scripts and styles.
 
 ### 1.4.4 ###
 - PHP 5.2 Support & PHP 7.1 and 7.2 Lints.
