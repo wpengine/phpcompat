@@ -1,5 +1,8 @@
 <?php
-if ( class_exists( 'PHPUnit\Runner\Version' ) && version_compare( PHPUnit\Runner\Version::id(), '6.0', '>=' ) ) {
+if (
+	class_exists( 'PHPUnit\Runner\Version' ) &&
+	version_compare( PHPUnit\Runner\Version::id(), '6.0', '>=' ) &&
+	! class_exists( 'PHPUnit_Framework_TestCase' ) ) {
 	class_alias( 'PHPUnit\Framework\TestCase',                   'PHPUnit_Framework_TestCase' );
 	class_alias( 'PHPUnit\Framework\Exception',                  'PHPUnit_Framework_Exception' );
 	class_alias( 'PHPUnit\Framework\ExpectationFailedException', 'PHPUnit_Framework_ExpectationFailedException' );
