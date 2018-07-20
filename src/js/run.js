@@ -58,6 +58,14 @@ jQuery( document ).ready(function($) {
 	});
 
 });
+
+function startTimer() {
+	// Requeue the checkStatus call.
+	timer = setTimeout(function() {
+		checkStatus();
+	}, 5000);
+}
+
 /**
  * Check the scan status and display results if scan is done.
  */
@@ -68,6 +76,10 @@ function checkStatus() {
 
 	var obj;
 	jQuery.post( ajaxurl, data, function( obj ) {
+		if ( !obj ) {
+			startTimer();
+			return;
+		}
 		/*
 		 * Status false: the test is not running and has not been run yet
 		 * Status 1: the test is currently running
@@ -101,10 +113,7 @@ function checkStatus() {
 			// Display the object being scanned.
 			jQuery( '#wpe-progress-active' ).html( '<strong>Now scanning:</strong> ' + obj.activeJob );
 
-			// Requeue the checkStatus call.
-			timer = setTimeout(function() {
-				checkStatus();
-			}, 5000);
+			startTimer();
 		}
 	}, 'json' ).fail(function ( xhr, status, error )
 	{

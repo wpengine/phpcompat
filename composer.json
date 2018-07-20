@@ -9,7 +9,7 @@
 	"require": {
 		"squizlabs/php_codesniffer": "^2.9.1",
 		"dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",
-		"phpcompatibility/php-compatibility": "^8"
+		"phpcompatibility/phpcompatibility-wp": "^1"
 	},
 	"require-dev": {
 		"wp-coding-standards/wpcs": "dev-master"
