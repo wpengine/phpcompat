@@ -1,4 +1,8 @@
-var phpPaths = ['wpengine-phpcompat.php', 'src/*.php'];
+var phpPaths = [
+	'wpengine-phpcompat.php',
+	'load-files.php',
+	'src/*.php',
+];
 
 module.exports = function(grunt) {
 

@@ -261,6 +261,13 @@ class WPEngine_PHPCompat {
 
 		// Build our URL.
 		$url = add_query_arg( $query, admin_url( 'admin-ajax.php' ) );
+
+		/**
+		 * [$url description]
+		 * @var [type]
+		 * TODO: DO THIS
+		 */
+		$url = apply_filters( 'wpephpcompat_fork_url', $url );
 		// POST.
 		wp_remote_post( esc_url_raw( $url ), $args );
 	}
