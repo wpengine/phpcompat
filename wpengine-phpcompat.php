@@ -263,11 +263,17 @@ class WPEngine_PHPCompat {
 		$url = add_query_arg( $query, admin_url( 'admin-ajax.php' ) );
 
 		/**
-		 * [$url description]
-		 * @var [type]
-		 * TODO: DO THIS
+		 * Modify the URL used to fork a request.
+		 *
+		 * When running in a Docker container the url used to access the site internally
+		 * can be different from the external url. For example internally the port
+		 * is 80, and externally it's 8081.
+		 *
+		 * @since 1.4.6
+		 *
+		 * @param string $url The url used to make the fork request.
 		 */
-		$url = apply_filters( 'wpephpcompat_fork_url', $url );
+		$url = apply_filters( 'phpcompat_fork_url', $url );
 		// POST.
 		wp_remote_post( esc_url_raw( $url ), $args );
 	}
