@@ -1,5 +1,7 @@
 <?php
+
 if ( class_exists( 'PHPUnit\Runner\Version' ) && version_compare( PHPUnit\Runner\Version::id(), '6.0', '>=' ) ) {
+
 	class_alias( 'PHPUnit\Framework\TestCase',                   'PHPUnit_Framework_TestCase' );
 	class_alias( 'PHPUnit\Framework\Exception',                  'PHPUnit_Framework_Exception' );
 	class_alias( 'PHPUnit\Framework\ExpectationFailedException', 'PHPUnit_Framework_ExpectationFailedException' );
@@ -12,17 +14,25 @@ if ( class_exists( 'PHPUnit\Runner\Version' ) && version_compare( PHPUnit\Runner
 	class_alias( 'PHPUnit\Framework\TestListener',               'PHPUnit_Framework_TestListener' );
 	class_alias( 'PHPUnit\Util\GlobalState',                     'PHPUnit_Util_GlobalState' );
 	class_alias( 'PHPUnit\Util\Getopt',                          'PHPUnit_Util_Getopt' );
+
 	class PHPUnit_Util_Test extends PHPUnit\Util\Test {
+
 		public static function getTickets( $className, $methodName ) {
 			$annotations = self::parseTestMethodAnnotations( $className, $methodName );
+
 			$tickets = array();
+
 			if ( isset( $annotations['class']['ticket'] ) ) {
 				$tickets = $annotations['class']['ticket'];
 			}
+
 			if ( isset( $annotations['method']['ticket'] ) ) {
 				$tickets = array_merge( $tickets, $annotations['method']['ticket'] );
 			}
+
 			return array_unique( $tickets );
 		}
+
 	}
+
 }
