@@ -7,7 +7,7 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x | bash
 # Install server dependencies.
 RUN apt-get update && apt-get install -qq -y nodejs build-essential pkg-config libcairo2-dev libjpeg-dev libgif-dev git subversion mysql-client zip unzip vim libyaml-dev --fix-missing --no-install-recommends
 
-# Setup phpunit dependencies (needed for coverage) and yaml (needed for contract tests).
+# Setup phpunit dependencies (needed for coverage).
 RUN pecl install xdebug && \
 		docker-php-ext-enable xdebug
 
