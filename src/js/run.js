@@ -76,6 +76,8 @@ function checkStatus() {
 
 	var obj;
 	jQuery.post( ajaxurl, data, function( obj ) {
+		// TODO: Without jQuery migrate an empty response can throw a JSON parse error.
+		// So we should do the parsing manually.
 		if ( !obj ) {
 			startTimer();
 			return;

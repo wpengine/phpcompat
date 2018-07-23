@@ -148,6 +148,7 @@ QUnit.test( 'Test checkStatus done', function( assert ) {
 	checkStatus();
 });
 
+// This happens when the test doesn't start before checkStatus is called.
 QUnit.test( 'Test checkStatus empty result', function( assert ) {
 	var done = assert.async();
 	var fixture = $( '#qunit-fixture' );
