@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 if [ ! -d "build" ]; then
   svn co https://plugins.svn.wordpress.org/php-compatibility-checker build
 else
