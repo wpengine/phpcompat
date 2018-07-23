@@ -12,6 +12,8 @@ services:
       - 8081:80
     volumes:
       - ./:/var/www/html/wp-content/plugins/phpcompat
+      - ./helpers/phpcompat_filters.php:/var/www/html/wp-content/mu-plugins/phpcompat_filters.php:ro
+
     environment:
       WORDPRESS_DB_PASSWORD: password
   db:
