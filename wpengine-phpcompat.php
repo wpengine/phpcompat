@@ -10,7 +10,7 @@
  * Plugin URI:  https://wpengine.com
  * Description: Make sure your plugins and themes are compatible with newer PHP versions.
  * Author:      WP Engine
- * Version:     1.4.5
+ * Version:     1.4.6
  * Author URI:  https://wpengine.com
  * Text Domain: php-compatibility-checker
  */
