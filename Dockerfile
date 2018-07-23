@@ -28,5 +28,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN composer global require "phpunit/phpunit:^6"
 
+# Install global grunt task runner.
+RUN npm install grunt-cli -g
+
 ENV PATH="/root/.composer/vendor/bin:${PATH}"
 ENV WP_VERSION="4.9.1"
