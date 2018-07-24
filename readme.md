@@ -3,7 +3,7 @@
 **Tags:** php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine  
 **Requires at least:** 3.5  
 **Tested up to:** 4.9  
-**Stable tag:** 1.4.4  
+**Stable tag:** 1.4.6  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -56,7 +56,7 @@ PHP Compatibility Checker includes WP-CLI command support:
 
 	<version>
 	    PHP version to test.
-
+	
 	[--scan=<scan>]
 	  Whether to scan only active plugins and themes or all of them.
 	  default: active
@@ -117,6 +117,9 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 
 ## Changelog ##
+
+### 1.4.6 ###
+- Switched to new PHPCompatibilityWP library to help prevent false positives.
 
 ### 1.4.5 ###
 - Use plugin version number to enqueue scripts and styles.
@@ -205,6 +208,5 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 ## Upgrade Notice ##
 
-### 1.4.1 ###
-- Updated PHP_CodeSniffer to fix a security advisory.
-- Whitelisted a number of plugins.
+### 1.4.6 ###
+- Switched to new PHPCompatibilityWP library to help prevent false positives.

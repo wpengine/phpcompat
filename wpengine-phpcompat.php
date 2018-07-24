@@ -10,7 +10,7 @@
  * Plugin URI:  https://wpengine.com
  * Description: Make sure your plugins and themes are compatible with newer PHP versions.
  * Author:      WP Engine
- * Version:     1.4.5
+ * Version:     1.4.6
  * Author URI:  https://wpengine.com
  * Text Domain: php-compatibility-checker
  */
@@ -261,6 +261,19 @@ class WPEngine_PHPCompat {
 
 		// Build our URL.
 		$url = add_query_arg( $query, admin_url( 'admin-ajax.php' ) );
+
+		/**
+		 * Modify the URL used to fork a request.
+		 *
+		 * When running in a Docker container the url used to access the site internally
+		 * can be different from the external url. For example internally the port
+		 * is 80, and externally it's 8081.
+		 *
+		 * @since 1.4.6
+		 *
+		 * @param string $url The url used to make the fork request.
+		 */
+		$url = apply_filters( 'phpcompat_fork_url', $url );
 		// POST.
 		wp_remote_post( esc_url_raw( $url ), $args );
 	}

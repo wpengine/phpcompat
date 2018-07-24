@@ -148,6 +148,28 @@ QUnit.test( 'Test checkStatus done', function( assert ) {
 	checkStatus();
 });
 
+// This happens when the test doesn't start before checkStatus is called.
+QUnit.test( 'Test checkStatus empty result', function( assert ) {
+	var done = assert.async();
+	var fixture = $( '#qunit-fixture' );
+	fixture.append( '<div id="wpe-progress"><div id="wpe-pcc-progress-count"></div></div>' );
+
+	ajaxurl = '/checkStatus/empty/';
+
+	$.mockjax({
+		url: ajaxurl,
+		responseTime: 0,
+		responseText: '',
+		onAfterComplete: function() {
+			assert.ok(true, 'Empty responseText does not throw an error.');
+			clearTimeout( timer );
+			done();
+		}
+	});
+
+	checkStatus();
+});
+
 QUnit.test( 'Test checkStatus fail JSON.parse', function( assert ) {
 	var done = assert.async();
 	var fixture = $( '#qunit-fixture' );

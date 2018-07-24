@@ -7,32 +7,19 @@
 		"email": "jason@stallin.gs"
 	}],
 	"require": {
-		"squizlabs/php_codesniffer": "2.9.*",
-		"wimg/php-compatibility": "^8",
-		"simplyadmire/composer-plugins" : "@dev"
+		"squizlabs/php_codesniffer": "^2.9.1",
+		"dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",
+		"phpcompatibility/phpcompatibility-wp": "^1"
 	},
 	"require-dev": {
-		"wp-coding-standards/wpcs": "dev-master",
-		"neronmoon/scriptsdev": "^0.1.0"
+		"wp-coding-standards/wpcs": "dev-master"
 	},
 	"scripts": {
 		"post-update-cmd": [
-			"cd php52; composer update; cd ..",
-			"vendor/bin/phpcs --config-set installed_paths ../../wimg/php-compatibility"
+			"cd php52; composer update; cd .."
 		],
 		"post-install-cmd": [
-			"cd php52; composer install; cd ..",
-			"vendor/bin/phpcs --config-set installed_paths ../../wimg/php-compatibility"
-		]
-	},
-	"scripts-dev": {
-		"post-update-cmd": [
-			"cd php52; composer update; cd ..",
-			"vendor/bin/phpcs --config-set installed_paths ../../wimg/php-compatibility,../../wp-coding-standards/wpcs"
-		],
-		"post-install-cmd": [
-			"cd php52; composer install; cd ..",
-			"vendor/bin/phpcs --config-set installed_paths ../../wimg/php-compatibility,../../wp-coding-standards/wpcs"
+			"cd php52; composer install; cd .."
 		]
 	}
 }
