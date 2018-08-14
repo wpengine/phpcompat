@@ -21,8 +21,8 @@ This plugin will lint theme and plugin code inside your WordPress file system an
 
 **This plugin relies on WP-Cron to scan files in the background. The scan will get stuck if the site's WP-Cron isn't running correctly. Please see the [FAQ](https://wordpress.org/plugins/php-compatibility-checker/faq/) for more information.**
 
-### Update to PHP 7 ###
-* Use this plugin to check your site for compatibility for PHP 7!
+### Update to PHP 7.2 ###
+* Use this plugin to check your site for compatibility up to PHP 7.2!
 * As of [November 2016](https://wordpress.org/about/stats/), 52.9% of WordPress websites run a PHP version less PHP 5.5.
 * These versions of PHP have been deprecated and unsupported for over 9 months.
 * Only 3.4% of WordPress websites run PHP 7, the current main version of PHP.
@@ -56,7 +56,7 @@ PHP Compatibility Checker includes WP-CLI command support:
 
 	<version>
 	    PHP version to test.
-	
+
 	[--scan=<scan>]
 	  Whether to scan only active plugins and themes or all of them.
 	  default: active
@@ -64,7 +64,7 @@ PHP Compatibility Checker includes WP-CLI command support:
 	    - active
 	    - all
 
-Example: `wp phpcompat 7.0 --scan=active`
+Example: `wp phpcompat 7.2 --scan=active`
 
 
 ## Frequently Asked Questions ##
