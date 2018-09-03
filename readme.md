@@ -47,6 +47,14 @@ You will find the plugin options in the WP Admin `Tools => PHP Compatibility` me
 
 There are WP-CLI commands available see the [Other Notes](https://wordpress.org/plugins/php-compatibility-checker/other_notes/) tab for details.
 
+## To Run Tests ##
+
+### PHPUnit Tests ###
+All phpunit tests are located in `/tests/phpunit`
+
+To run these tests in a Docker container, simply type ```make test```
+
+
 ## Other Notes ##
 
 PHP Compatibility Checker includes WP-CLI command support:
