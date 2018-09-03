@@ -387,7 +387,7 @@ class WPEngine_PHPCompat {
 		$phpversions = $this->get_phpversions();
 
 		// Assigns defaults for the scan if none are found in the database.
-		$test_version = ( ! empty( $test_version ) ) ? $test_version : '7.0';
+		$test_version = ( ! empty( $test_version ) ) ? $test_version : '7.2';
 		$only_active  = ( ! empty( $only_active ) ) ? $only_active : 'yes';
 
 		// Content variables.

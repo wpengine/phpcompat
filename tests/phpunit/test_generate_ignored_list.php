@@ -1,5 +1,7 @@
 <?php 
-class TestGenerateIgnoredList extends WP_UnitTestCase {
+use PHPUnit\Framework\TestCase as TestCase;
+
+class TestGenerateIgnoredList extends TestCase {
 	
 	private $wpephpc;
 	

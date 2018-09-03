@@ -1,5 +1,7 @@
 <?php
-class TestCleanReport extends WP_UnitTestCase {
+use PHPUnit\Framework\TestCase as TestCase;
+
+class TestCleanReport extends TestCase {
 
 	private $wpephpc;
 

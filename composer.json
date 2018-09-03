@@ -12,14 +12,7 @@
 		"phpcompatibility/phpcompatibility-wp": "^1"
 	},
 	"require-dev": {
-		"wp-coding-standards/wpcs": "dev-master"
-	},
-	"scripts": {
-		"post-update-cmd": [
-			"cd php52; composer update; cd .."
-		],
-		"post-install-cmd": [
-			"cd php52; composer install; cd .."
-		]
+		"wp-coding-standards/wpcs": "dev-master",
+		"phpunit/phpunit": "^6.0"
 	}
 }
