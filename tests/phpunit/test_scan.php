@@ -1,5 +1,7 @@
 <?php
-class TestScan extends WP_UnitTestCase {
+use PHPUnit\Framework\TestCase as TestCase;
+
+class TestScan extends TestCase {
 
 	function test_scan_default_PHP_55() {
 		$root_dir = realpath( dirname( __FILE__ ) . '/../../' );
