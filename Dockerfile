@@ -33,3 +33,7 @@ RUN npm install grunt-cli -g
 
 ENV PATH="/root/.composer/vendor/bin:${PATH}"
 ENV WP_VERSION="4.9.1"
+
+# DONT run as ROOT
+RUN useradd -ms /bin/bash phpcompat
+USER phpcompat
