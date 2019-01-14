@@ -321,7 +321,7 @@ class WPEngine_PHPCompat {
 	 * @action admin_init
 	 */
 	public function admin_init() {
-		load_plugin_textdomain( 'php-compatibility-checker', false, basename( dirname( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( 'php-compatibility-checker' );
 	}
 
 	/**
