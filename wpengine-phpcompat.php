@@ -320,7 +320,7 @@ class WPEngine_PHPCompat {
 	 *
 	 * @action admin_init
 	 */
-	public function admin_init() {
+	public function load_textdomain() {
 		load_plugin_textdomain( 'php-compatibility-checker' );
 	}
 
