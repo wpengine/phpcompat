@@ -1,11 +1,11 @@
 # PHP Compatibility Checker <a href="https://travis-ci.org/wpengine/phpcompat"><img src="https://travis-ci.org/wpengine/phpcompat.svg?branch=master"></a>
-**Contributors:** [wpengine](https://profiles.wordpress.org/wpengine), [octalmage](https://profiles.wordpress.org/octalmage), [stevenkword](https://profiles.wordpress.org/stevenkword), [Taylor4484](https://profiles.wordpress.org/Taylor4484), [pross](https://profiles.wordpress.org/pross), [jcross](https://profiles.wordpress.org/jcross)  
-**Tags:** php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine  
-**Requires at least:** 3.5  
-**Tested up to:** 4.9  
-**Stable tag:** 1.4.6  
-**License:** GPLv2 or later  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
+**Contributors:** [wpengine](https://profiles.wordpress.org/wpengine), [octalmage](https://profiles.wordpress.org/octalmage), [stevenkword](https://profiles.wordpress.org/stevenkword), [Taylor4484](https://profiles.wordpress.org/Taylor4484), [pross](https://profiles.wordpress.org/pross), [jcross](https://profiles.wordpress.org/jcross)
+**Tags:** php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine
+**Requires at least:** 3.5
+**Tested up to:** 5.0
+**Stable tag:** 1.4.7
+**License:** GPLv2 or later
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
 Make sure your plugins and themes are compatible with newer PHP versions.
 
@@ -117,6 +117,8 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 
 ## Changelog ##
+### 1.4.7 ###
+- Better translation support.
 
 ### 1.4.6 ###
 - Switched to new PHPCompatibilityWP library to help prevent false positives.
