@@ -206,5 +206,5 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 == Upgrade Notice ==
 
-= 1.4.6 =
-- Switched to new PHPCompatibilityWP library to help prevent false positives.
+= 1.4.7 =
+- Better translation support.
