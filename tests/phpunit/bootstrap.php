@@ -31,7 +31,7 @@ if ( file_exists( $test_root . '/includes/functions.php' ) ) {
 }
 
 // Core started including their own phpunit6-compat, so we should use that if we can.
-if ( ! file_exists( $test_root . '/includes/phpunit6-compat.php' ) ) {
+if ( ! file_exists( '/tmp/wordpress-tests-lib/includes/phpunit6/compat.php' ) ) {
 	// WordPress versions before 4.8 will be incompatible with newer PHPUnit versions.
 	if ( version_compare( getenv( 'WP_VERSION' ), '4.8', '<' ) && class_exists( 'PHPUnit\Runner\Version' ) ) {
 		require_once dirname( __FILE__ ) . '/phpunit6-compat.php';
