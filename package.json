@@ -6,6 +6,8 @@
     "grunt-phpcs": "^0.4.0",
     "grunt-phplint": "0.0.8",
     "grunt-wp-readme-to-markdown": "^2.0.0",
+    "lodash": "4.17.5",
+    "minimatch": "3.0.2",
     "node-qunit-phantomjs": "^1.4.0"
   },
   "scripts": {
