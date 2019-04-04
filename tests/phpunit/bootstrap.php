@@ -30,12 +30,4 @@ if ( file_exists( $test_root . '/includes/functions.php' ) ) {
 	tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 }
 
-// Core started including their own phpunit6-compat, so we should use that if we can.
-if ( ! file_exists( $test_root . '/includes/phpunit6-compat.php' ) ) {
-	// WordPress versions before 4.8 will be incompatible with newer PHPUnit versions.
-	if ( version_compare( getenv( 'WP_VERSION' ), '4.8', '<' ) && class_exists( 'PHPUnit\Runner\Version' ) ) {
-		require_once dirname( __FILE__ ) . '/phpunit6-compat.php';
-	}
-}
-
 require $test_root . '/includes/bootstrap.php';
