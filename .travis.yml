@@ -60,7 +60,7 @@ before_script:
       5.2)
         ;;
       *)
-        composer global require "phpunit/phpunit:6.*"
+        composer global require "phpunit/phpunit:6"
         ;;
     esac
   - |
