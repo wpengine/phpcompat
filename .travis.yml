@@ -60,7 +60,7 @@ before_script:
         cgr "phpunit/phpunit:^4"
         ;;
       5.2)
-      ;;
+        ;;
       *)
         composer global require consolidation/cgr
         PATH="$(composer config -g home)/vendor/bin:$PATH"
