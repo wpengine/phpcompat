@@ -464,9 +464,9 @@ class WPEPHPCompat {
 	 * @return null
 	 */
 	private function add_directory( $name, $path ) {
-		if (DIRECTORY_SEPARATOR == '\\') {
-    			$path = str_replace("\\","/", $path);
-    		}
+		if ( DIRECTORY_SEPARATOR == '\\' ) { 
+			$path = str_replace( '\\', '/', $path );
+		}
 
 		$dir = array(
 			'post_title'   => $name,
