@@ -1,6 +1,9 @@
 # Start with the latest WordPress image.
 FROM wordpress:4.9.1-php7.0-apache
 
+# Add Debian Jessie sources
+RUN sed -i '/jessie-updates/d' /etc/apt/sources.list  # Now archived
+
 # Set up nodejs PPA
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash
 
