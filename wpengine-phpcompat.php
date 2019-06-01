@@ -110,6 +110,7 @@ class WPEngine_PHPCompat {
 	 */
 	function get_phpversions() {
 		$versions = array(
+			'PHP 7.3' => '7.3',
 			'PHP 7.2' => '7.2',
 			'PHP 7.1' => '7.1',
 			'PHP 7.0' => '7.0',
