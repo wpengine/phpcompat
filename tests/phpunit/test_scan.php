@@ -48,4 +48,20 @@ class TestScan extends WP_UnitTestCase {
 
 		$this->assertContains( 'PHP 7.2 compatible.', $results );
 	}
+
+	function test_scan_default_PHP_73() {
+		$root_dir = realpath( dirname( __FILE__ ) . '/../../' );
+
+		$wpephpc = new WPEPHPCompat( $root_dir );
+
+		$wpephpc->clean_after_scan();
+
+		$wpephpc->test_version = '7.3';
+
+		$wpephpc->only_active = 'yes';
+
+		$results = $wpephpc->start_test();
+
+		$this->assertContains( 'PHP 7.3 compatible.', $results );
+	}
 }
