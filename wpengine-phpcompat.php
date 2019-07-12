@@ -109,12 +109,16 @@ class WPEngine_PHPCompat {
 	 * @return array Associative array of available PHP versions.
 	 */
 	function get_phpversions() {
+
 		$versions = array(
-			'PHP 7.3' => '7.3',
 			'PHP 7.2' => '7.2',
 			'PHP 7.1' => '7.1',
 			'PHP 7.0' => '7.0',
 		);
+
+		if ( version_compare( phpversion(), '5.3', '>=' ) ) {
+		    $versions = array( 'PHP 7.3' => '7.3') + $versions;
+		}
 
 		$old_versions = array( '5.6', '5.5', '5.4', '5.3' );
 
