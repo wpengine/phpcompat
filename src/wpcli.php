@@ -65,21 +65,25 @@ class PHPCompat_Command extends WP_CLI_Command {
  *  Using this for now since there are issues with the PHPDoc syntax.
  *  TODO: Use PHPDoc syntax.
  */
-WP_CLI::add_command( 'phpcompat', 'PHPCompat_Command', array(
-	'shortdesc' => 'Test compatibility with different PHP versions.',
-	'synopsis'  => array(
-		array(
-			'type'     => 'positional',
-			'name'     => 'version',
-			'optional' => false,
-			'multiple' => false,
+WP_CLI::add_command(
+	'phpcompat',
+	'PHPCompat_Command',
+	array(
+		'shortdesc' => 'Test compatibility with different PHP versions.',
+		'synopsis'  => array(
+			array(
+				'type'     => 'positional',
+				'name'     => 'version',
+				'optional' => false,
+				'multiple' => false,
+			),
+			array(
+				'type'     => 'assoc',
+				'name'     => 'scan',
+				'optional' => true,
+				'default'  => 'active',
+				'options'  => array( 'active', 'all' ),
+			),
 		),
-		array(
-			'type'     => 'assoc',
-			'name'     => 'scan',
-			'optional' => true,
-			'default'  => 'active',
-			'options'  => array( 'active', 'all' ),
-		),
-	),
-));
+	)
+);
