@@ -109,11 +109,16 @@ class WPEngine_PHPCompat {
 	 * @return array Associative array of available PHP versions.
 	 */
 	function get_phpversions() {
+
 		$versions = array(
 			'PHP 7.2' => '7.2',
 			'PHP 7.1' => '7.1',
 			'PHP 7.0' => '7.0',
 		);
+
+		if ( version_compare( phpversion(), '5.3', '>=' ) ) {
+			$versions = array( 'PHP 7.3' => '7.3' ) + $versions;
+		}
 
 		$old_versions = array( '5.6', '5.5', '5.4', '5.3' );
 
@@ -197,12 +202,14 @@ class WPEngine_PHPCompat {
 
 			$active_job = false;
 
-			$jobs = get_posts( array(
-				'posts_per_page' => -1,
-				'post_type'      => 'wpephpcompat_jobs',
-				'orderby'        => 'title',
-				'order'          => 'ASC',
-			) );
+			$jobs = get_posts(
+				array(
+					'posts_per_page' => -1,
+					'post_type'      => 'wpephpcompat_jobs',
+					'orderby'        => 'title',
+					'order'          => 'ASC',
+				)
+			);
 
 			if ( 0 < count( $jobs ) ) {
 				$active_job = $jobs[0]->post_title;
@@ -303,14 +310,17 @@ class WPEngine_PHPCompat {
 	 * @since 1.0.0
 	 */
 	public function create_job_queue() {
-		register_post_type( 'wpephpcompat_jobs', array(
-			'labels'      => array(
-				'name'          => __( 'Jobs', 'php-compatibility-checker' ),
-				'singular_name' => __( 'Job', 'php-compatibility-checker' ),
-			),
-			'public'      => false,
-			'has_archive' => false,
-		) );
+		register_post_type(
+			'wpephpcompat_jobs',
+			array(
+				'labels'      => array(
+					'name'          => __( 'Jobs', 'php-compatibility-checker' ),
+					'singular_name' => __( 'Job', 'php-compatibility-checker' ),
+				),
+				'public'      => false,
+				'has_archive' => false,
+			)
+		);
 	}
 
 	/**
