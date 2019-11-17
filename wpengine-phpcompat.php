@@ -118,6 +118,7 @@ class WPEngine_PHPCompat {
 
 		if ( version_compare( phpversion(), '5.3', '>=' ) ) {
 			$versions = array( 'PHP 7.3' => '7.3' ) + $versions;
+			$versions = array( 'PHP 7.4' => '7.4' ) + $versions;
 		}
 
 		$old_versions = array( '5.6', '5.5', '5.4', '5.3' );
