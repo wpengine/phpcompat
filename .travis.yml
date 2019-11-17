@@ -40,6 +40,8 @@ matrix:
   exclude:
     - php: 7.3
       env: WP_VERSION=4.5
+    - php: 7.4
+      env: WP_VERSION=4.5
 
 before_script:
   - |
