@@ -1,5 +1,5 @@
 # PHP Compatibility Checker <a href="https://travis-ci.org/wpengine/phpcompat"><img src="https://travis-ci.org/wpengine/phpcompat.svg?branch=master"></a>
-**Contributors:** [wpengine](https://profiles.wordpress.org/wpengine), [octalmage](https://profiles.wordpress.org/octalmage), [stevenkword](https://profiles.wordpress.org/stevenkword), [Taylor4484](https://profiles.wordpress.org/Taylor4484), [pross](https://profiles.wordpress.org/pross), [jcross](https://profiles.wordpress.org/jcross)
+**Contributors:** [wpengine](https://profiles.wordpress.org/wpengine), [octalmage](https://profiles.wordpress.org/octalmage), [stevenkword](https://profiles.wordpress.org/stevenkword), [Taylor4484](https://profiles.wordpress.org/Taylor4484), [pross](https://profiles.wordpress.org/pross), [jcross](https://profiles.wordpress.org/jcross), [shooper](https://profiles.wordpress.org/shooper)
 **Tags:** php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine
 **Requires at least:** 3.5
 **Tested up to:** 5.3.0
