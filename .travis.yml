@@ -31,16 +31,16 @@ matrix:
       env: WP_VERSION=5.2 WP_MULTISITE=1
     - php: 7.3
       env: WP_VERSION=latest WP_MULTISITE=1
-    - php: 7.4snapshot
-      env: WP_VERSION=5.2 WP_MULTISITE=1
-    - php: 7.4snapshot
+    - php: 7.4
+      env: WP_VERSION=5.3 WP_MULTISITE=1
+    - php: 7.4
       env: WP_VERSION=latest WP_MULTISITE=1
-    - php: 7.4snapshot
+    - php: 7.4
       env: NPM_TESTS=1
   exclude:
     - php: 7.3
       env: WP_VERSION=4.5
-    - php: 7.4snapshot
+    - php: 7.4
       env: WP_VERSION=4.5
 
 before_script:
