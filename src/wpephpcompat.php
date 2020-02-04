@@ -53,6 +53,15 @@ class WPEPHPCompat {
 	 */
 	public $only_active = null;
 
+    /**
+     * Skip some plugins by name, separated by `;`
+     *
+     * @since 1.5.0
+     * @var string
+     */
+    public $skip_list = null;
+
+
 	/**
 	 * The base directory for the plugin.
 	 *
@@ -166,6 +175,7 @@ class WPEPHPCompat {
 			update_option( 'wpephpcompat.status', '1', false );
 			update_option( 'wpephpcompat.test_version', $this->test_version, false );
 			update_option( 'wpephpcompat.only_active', $this->only_active, false );
+            update_option( 'wpephpcompat.skip_list', $this->skip_list, false );
 
 			$this->debug_log( 'Generating directory list.' );
 
@@ -345,7 +355,10 @@ class WPEPHPCompat {
 
 		$update_plugins = get_site_transient( 'update_plugins' );
 
+        $ignored_plugins = $this->skip_list ? explode(';', $this->skip_list) : [];
+
 		foreach ( $all_plugins as $k => $v ) {
+
 			// Exclude our plugin.
 			if ( 'PHP Compatibility Checker' === $v['Name'] ) {
 				continue;
@@ -360,6 +373,9 @@ class WPEPHPCompat {
 					continue;
 				}
 			}
+            if (in_array( $v['Name'], $ignored_plugins, true ) ) {
+                continue;
+            }
 
 			$plugin_file = plugin_dir_path( $k );
 

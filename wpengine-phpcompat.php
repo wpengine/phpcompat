@@ -155,7 +155,7 @@ class WPEngine_PHPCompat {
 			$wpephpc = new WPEPHPCompat( dirname( __FILE__ ) );
 
 			$test_data = array();
-			foreach ( array( 'test_version', 'only_active' ) as $key ) {
+			foreach ( array( 'test_version', 'only_active', 'skip_list' ) as $key ) {
 				if ( isset( $_POST[ $key ] ) ) {
 					$test_data[ $key ] = sanitize_text_field( $_POST[ $key ] );
 				}
@@ -167,7 +167,7 @@ class WPEngine_PHPCompat {
 				$wpephpc->clean_after_scan();
 
 				// Fork so we can close the connection.
-				$this->fork_scan( $test_data['test_version'], $test_data['only_active'] );
+				$this->fork_scan( $test_data['test_version'], $test_data['only_active'], $test_data['skip_list'] );
 			} else {
 				if ( isset( $test_data['test_version'] ) ) {
 					$wpephpc->test_version = $test_data['test_version'];
@@ -176,6 +176,10 @@ class WPEngine_PHPCompat {
 				if ( isset( $test_data['only_active'] ) ) {
 					$wpephpc->only_active = $test_data['only_active'];
 				}
+
+                if ( isset( $test_data['skip_list'] ) ) {
+                    $wpephpc->skip_list = $test_data['skip_list'];
+                }
 
 				$wpephpc->start_test();
 			}
@@ -199,6 +203,7 @@ class WPEngine_PHPCompat {
 			$total_jobs   = get_option( 'wpephpcompat.numdirs' );
 			$test_version = get_option( 'wpephpcompat.test_version' );
 			$only_active  = get_option( 'wpephpcompat.only_active' );
+            $skip_list    = get_option( 'wpephpcompat.skip_list' );
 
 			$active_job = false;
 
@@ -249,7 +254,7 @@ class WPEngine_PHPCompat {
 	 * @param string $test_version Version of PHP to test.
 	 * @param string $only_active  Whether to scan only active plugins or all.
 	 */
-	public function fork_scan( $test_version, $only_active ) {
+	public function fork_scan( $test_version, $only_active, $skip_list ) {
 		$query = array(
 			'action' => 'wpephpcompat_start_test',
 		);
@@ -258,6 +263,7 @@ class WPEngine_PHPCompat {
 		$body = array(
 			'test_version' => $test_version,
 			'only_active'  => $only_active,
+            'skip_list'    => $skip_list
 		);
 
 		// Instantly return!
@@ -404,6 +410,7 @@ class WPEngine_PHPCompat {
 		// Discover last options used.
 		$test_version = get_option( 'wpephpcompat.test_version' );
 		$only_active  = get_option( 'wpephpcompat.only_active' );
+        $skip_list    = get_option( 'wpephpcompat.skip_list' );
 
 		// Determine if current site is a WP Engine customer.
 		$is_wpe_customer = ! empty( $_SERVER['IS_WPE'] ) && $_SERVER['IS_WPE'];
@@ -413,6 +420,7 @@ class WPEngine_PHPCompat {
 		// Assigns defaults for the scan if none are found in the database.
 		$test_version = ( ! empty( $test_version ) ) ? $test_version : '7.0';
 		$only_active  = ( ! empty( $only_active ) ) ? $only_active : 'yes';
+        $skip_list  = ( ! empty( $skip_list ) ) ? $skip_list : 'FFATG Cookie Notice';
 
 		// Content variables.
 		$url_get_hosting          = esc_url( 'https://wpeng.in/5a0336/' );
@@ -455,6 +463,14 @@ class WPEngine_PHPCompat {
 									</fieldset>
 								</td>
 							</tr>
+                            <tr>
+                                <th scope="row"><label for="skip_list"><?php _e( 'Skip List', 'php-compatibility-checker' ); ?></label></th>
+                                <td>
+                                    <fieldset>
+                                        <label><?php _e( 'Optional list of Plugin Names separated by <code>;</code> that won\'t be checked', 'php-compatibility-checker' ); ?><br><br><input type="text" name="skip_list" style="width: 100%;" value="<?php echo $skip_list; ?>" /></label>
+                                    </fieldset>
+                                </td>
+                            </tr>
 							<tr>
 								<th scope="row"></th>
 									<td>
