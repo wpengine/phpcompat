@@ -355,7 +355,10 @@ class WPEPHPCompat {
 
 		$update_plugins = get_site_transient( 'update_plugins' );
 
-        $ignored_plugins = $this->skip_list ? explode(';', $this->skip_list) : [];
+		// strip newline for one line string
+        $this->skip_list = $this->skip_list ? str_replace(array("\r", "\n"), '', $this->skip_list) : '';
+        // split on ; to array, strip leading and trailing whitespace
+        $ignored_plugins = $this->skip_list ? array_map('trim', explode(';', $this->skip_list) ) : [];
 
 		foreach ( $all_plugins as $k => $v ) {
 
@@ -407,6 +410,7 @@ class WPEPHPCompat {
 		$all_themes = wp_get_themes();
 
 		foreach ( $all_themes as $k => $v ) {
+		    continue; // TODO: remove this - it's only for skipping all themes since ours already passed
 			if ( 'yes' === $this->only_active ) {
 				$current_theme = wp_get_theme();
 				if ( $all_themes[ $k ]->Name !== $current_theme->Name ) {

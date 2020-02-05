@@ -35,7 +35,7 @@ jQuery( document ).ready(function($) {
 		resetDisplay();
 		test_version = $( 'input[name=phptest_version]:checked' ).val();
 		only_active = $( 'input[name=active_plugins]:checked' ).val();
-		skip_list = $( 'input[name=skip_list]' ).val();
+		skip_list = $( 'textarea[name=skip_list]' ).val();
 		var data = {
 			'action': 'wpephpcompat_start_test',
 			'test_version': test_version,

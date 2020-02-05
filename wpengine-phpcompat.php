@@ -467,7 +467,16 @@ class WPEngine_PHPCompat {
                                 <th scope="row"><label for="skip_list"><?php _e( 'Skip List', 'php-compatibility-checker' ); ?></label></th>
                                 <td>
                                     <fieldset>
-                                        <label><?php _e( 'Optional list of Plugin Names separated by <code>;</code> that won\'t be checked', 'php-compatibility-checker' ); ?><br><br><input type="text" name="skip_list" style="width: 100%;" value="<?php echo $skip_list; ?>" /></label>
+                                        <label><?php _e( 'Optional list of Plugin Names separated by <code>;</code> that won\'t be checked', 'php-compatibility-checker' ); ?>
+                                            <br>
+                                            <br>
+                                            <textarea name="skip_list" style="width: 100%;"><?php echo $skip_list; ?></textarea></label>
+                                            <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/autoresize.jquery.js" ></script>
+                                            <script>
+                                                jQuery(document).ready(function(){
+                                                    jQuery('textarea').autoResize();
+                                                });
+                                            </script>
                                     </fieldset>
                                 </td>
                             </tr>
