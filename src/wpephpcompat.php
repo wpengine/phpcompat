@@ -53,13 +53,13 @@ class WPEPHPCompat {
 	 */
 	public $only_active = null;
 
-    /**
-     * Skip some plugins by name, separated by `;`
-     *
-     * @since 1.5.0
-     * @var string
-     */
-    public $skip_list = null;
+	/**
+	 * Skip some plugins by name, separated by `;`
+	 *
+	 * @since 1.5.0
+	 * @var string
+	 */
+	public $skip_list = null;
 
 
 	/**
@@ -78,31 +78,31 @@ class WPEPHPCompat {
 	 *  @var array
 	 */
 	public $whitelist = array(
-		'*/jetpack/*'                                     => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#jetpack
-		'*/wordfence/*'                                   => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#wordfence-security
-		'*/woocommerce/*'                                 => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#woocommerce
-		'*/wp-migrate-db/*'                               => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#wp-migrate-db
-		'*/easy-digital-downloads/*'                      => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#easy-digital-downloads
-		'*/updraftplus/*'                                 => '7.0',
-		'*/megamenu/*'                                    => '7.0',
-		'*/tablepress/*'                                  => '7.0',
-		'*/myMail/*'                                      => '7.0',
-		'*/wp-spamshield/*'                               => '7.0',
+		'*/jetpack/*'									 => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#jetpack
+		'*/wordfence/*'								   => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#wordfence-security
+		'*/woocommerce/*'								 => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#woocommerce
+		'*/wp-migrate-db/*'							   => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#wp-migrate-db
+		'*/easy-digital-downloads/*'					  => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#easy-digital-downloads
+		'*/updraftplus/*'								 => '7.0',
+		'*/megamenu/*'									=> '7.0',
+		'*/tablepress/*'								  => '7.0',
+		'*/myMail/*'									  => '7.0',
+		'*/wp-spamshield/*'							   => '7.0',
 		'*/vendor/stripe/stripe-php/lib/StripeObject.php' => '7.0', // https://github.com/wpengine/phpcompat/issues/89
-		'*/gravityforms/*'                                => '7.0', // https://github.com/wpengine/phpcompat/issues/85
-		'*/download-monitor/*'                            => '7.0', // https://github.com/wpengine/phpcompat/issues/84
-		'*/query-monitor/*'                               => '7.0', // https://wordpress.org/support/topic/false-positive-showing-query-monitor-as-not-php-7-compatible/
-		'*/bbpress/*'                                     => '7.0', // https://wordpress.org/support/topic/false-positive-showing-bbpress-as-not-php-7-compatible/
-		'*/comet-cache/*'                                 => '7.0', // https://wordpress.org/support/topic/false-positive-comet-cache/
-		'*/comment-mail/*'                                => '7.0', // https://wordpress.org/support/topic/false-positive-comment-mail/
+		'*/gravityforms/*'								=> '7.0', // https://github.com/wpengine/phpcompat/issues/85
+		'*/download-monitor/*'							=> '7.0', // https://github.com/wpengine/phpcompat/issues/84
+		'*/query-monitor/*'							   => '7.0', // https://wordpress.org/support/topic/false-positive-showing-query-monitor-as-not-php-7-compatible/
+		'*/bbpress/*'									 => '7.0', // https://wordpress.org/support/topic/false-positive-showing-bbpress-as-not-php-7-compatible/
+		'*/comet-cache/*'								 => '7.0', // https://wordpress.org/support/topic/false-positive-comet-cache/
+		'*/comment-mail/*'								=> '7.0', // https://wordpress.org/support/topic/false-positive-comment-mail/
 		'*/social-networks-auto-poster-facebook-twitter-g/*' => '7.0', // https://wordpress.org/plugins/social-networks-auto-poster-facebook-twitter-g/
-		'*/mailpoet/*'                                    => '7.0', // https://wordpress.org/support/topic/false-positive-mailpoet-3-not-compatible-with-php7/
-		'*/give/*'                                        => '7.0', // https://github.com/wpengine/phpcompat/issues/148
-		'*/woocommerce-pdf-invoices-packing-slips/*'      => '7.0', // https://github.com/wpengine/phpcompat/issues/160
-		'*/iwp-client/*'                                  => '7.0', // https://wordpress.org/support/topic/iwp-client-and-php-7-compatibility/
-		'*/health-check/*'                                => '7.2', // https://github.com/wpengine/phpcompat/issues/179
-		'*/genesis/*'                                     => '7.2', // https://github.com/wpengine/phpcompat/issues/127
-		'*/wpmudev-updates/*'                             => '7.3', // https://github.com/wpengine/phpcompat/issues/178
+		'*/mailpoet/*'									=> '7.0', // https://wordpress.org/support/topic/false-positive-mailpoet-3-not-compatible-with-php7/
+		'*/give/*'										=> '7.0', // https://github.com/wpengine/phpcompat/issues/148
+		'*/woocommerce-pdf-invoices-packing-slips/*'	  => '7.0', // https://github.com/wpengine/phpcompat/issues/160
+		'*/iwp-client/*'								  => '7.0', // https://wordpress.org/support/topic/iwp-client-and-php-7-compatibility/
+		'*/health-check/*'								=> '7.2', // https://github.com/wpengine/phpcompat/issues/179
+		'*/genesis/*'									 => '7.2', // https://github.com/wpengine/phpcompat/issues/127
+		'*/wpmudev-updates/*'							 => '7.3', // https://github.com/wpengine/phpcompat/issues/178
 	);
 
 	/**
@@ -175,7 +175,7 @@ class WPEPHPCompat {
 			update_option( 'wpephpcompat.status', '1', false );
 			update_option( 'wpephpcompat.test_version', $this->test_version, false );
 			update_option( 'wpephpcompat.only_active', $this->only_active, false );
-            update_option( 'wpephpcompat.skip_list', $this->skip_list, false );
+			update_option( 'wpephpcompat.skip_list', $this->skip_list, false );
 
 			$this->debug_log( 'Generating directory list.' );
 
@@ -192,9 +192,9 @@ class WPEPHPCompat {
 
 		$args = array(
 			'posts_per_page' => -1,
-			'post_type'      => 'wpephpcompat_jobs',
-			'orderby'        => 'title',
-			'order'          => 'ASC',
+			'post_type'	  => 'wpephpcompat_jobs',
+			'orderby'		=> 'title',
+			'order'		  => 'ASC',
 		);
 
 		$directories = get_posts( $args );
@@ -288,9 +288,9 @@ class WPEPHPCompat {
 	 * @return string Scan results.
 	 */
 	public function process_file( $dir ) {
-		$this->values['files']       = $dir;
+		$this->values['files']	   = $dir;
 		$this->values['testVersion'] = $this->test_version;
-		$this->values['standard']    = 'PHPCompatibility';
+		$this->values['standard']	= 'PHPCompatibility';
 		$this->values['reportWidth'] = '9999';
 		$this->values['extensions']  = array( 'php' );
 
@@ -356,9 +356,9 @@ class WPEPHPCompat {
 		$update_plugins = get_site_transient( 'update_plugins' );
 
 		// strip newline for one line string
-        $this->skip_list = $this->skip_list ? str_replace(array("\r", "\n"), '', $this->skip_list) : '';
-        // split on ; to array, strip leading and trailing whitespace
-        $ignored_plugins = $this->skip_list ? array_map('trim', explode(';', $this->skip_list) ) : [];
+		$this->skip_list = $this->skip_list ? str_replace(array("\r", "\n"), '', $this->skip_list) : '';
+		// split on ; to array, strip leading and trailing whitespace
+		$ignored_plugins = $this->skip_list ? array_map('trim', explode(';', $this->skip_list) ) : [];
 
 		foreach ( $all_plugins as $k => $v ) {
 
@@ -376,9 +376,9 @@ class WPEPHPCompat {
 					continue;
 				}
 			}
-            if (in_array( $v['Name'], $ignored_plugins, true ) ) {
-                continue;
-            }
+			if (in_array( $v['Name'], $ignored_plugins, true ) ) {
+				continue;
+			}
 
 			$plugin_file = plugin_dir_path( $k );
 
@@ -410,7 +410,7 @@ class WPEPHPCompat {
 		$all_themes = wp_get_themes();
 
 		foreach ( $all_themes as $k => $v ) {
-		    continue; // TODO: remove this - it's only for skipping all themes since ours already passed
+			continue; // TODO: remove this - it's only for skipping all themes since ours already passed
 			if ( 'yes' === $this->only_active ) {
 				$current_theme = wp_get_theme();
 				if ( $all_themes[ $k ]->Name !== $current_theme->Name ) {
@@ -426,7 +426,7 @@ class WPEPHPCompat {
 		// Add parent theme if the current theme is a child theme.
 		if ( 'yes' === $this->only_active && is_child_theme() ) {
 			$parent_theme_path = get_template_directory();
-			$theme_data        = wp_get_theme();
+			$theme_data		= wp_get_theme();
 			$parent_theme_name = $theme_data->parent()->Name;
 
 			$this->add_directory( $parent_theme_name, $parent_theme_path );
@@ -437,7 +437,7 @@ class WPEPHPCompat {
 	 * Cleans and formats the final report.
 	 *
 	 * @param  string $report The full report.
-	 * @return string         The cleaned report.
+	 * @return string		 The cleaned report.
 	 */
 	public function clean_report( $report ) {
 		// Remove unnecessary overview.
@@ -466,7 +466,7 @@ class WPEPHPCompat {
 		// Make sure all directories are removed from the queue.
 		$args = array(
 			'posts_per_page' => -1,
-			'post_type'      => 'wpephpcompat_jobs',
+			'post_type'	  => 'wpephpcompat_jobs',
 		);
 
 		$directories = get_posts( $args );
@@ -489,7 +489,7 @@ class WPEPHPCompat {
 			'post_content' => $path,
 			'post_status'  => 'publish',
 			'post_author'  => 1,
-			'post_type'    => 'wpephpcompat_jobs',
+			'post_type'	=> 'wpephpcompat_jobs',
 		);
 
 		return wp_insert_post( $dir );

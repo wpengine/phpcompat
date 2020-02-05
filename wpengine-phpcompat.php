@@ -9,8 +9,8 @@
  * Plugin Name: PHP Compatibility Checker
  * Plugin URI:  https://wpengine.com
  * Description: Make sure your plugins and themes are compatible with newer PHP versions.
- * Author:      WP Engine
- * Version:     1.5.0
+ * Author:	  WP Engine
+ * Version:	 1.5.0
  * Author URI:  https://wpengine.com
  * Text Domain: php-compatibility-checker
  */
@@ -177,9 +177,9 @@ class WPEngine_PHPCompat {
 					$wpephpc->only_active = $test_data['only_active'];
 				}
 
-                if ( isset( $test_data['skip_list'] ) ) {
-                    $wpephpc->skip_list = $test_data['skip_list'];
-                }
+				if ( isset( $test_data['skip_list'] ) ) {
+					$wpephpc->skip_list = $test_data['skip_list'];
+				}
 
 				$wpephpc->start_test();
 			}
@@ -203,16 +203,16 @@ class WPEngine_PHPCompat {
 			$total_jobs   = get_option( 'wpephpcompat.numdirs' );
 			$test_version = get_option( 'wpephpcompat.test_version' );
 			$only_active  = get_option( 'wpephpcompat.only_active' );
-            $skip_list    = get_option( 'wpephpcompat.skip_list' );
+			$skip_list	= get_option( 'wpephpcompat.skip_list' );
 
 			$active_job = false;
 
 			$jobs = get_posts(
 				array(
 					'posts_per_page' => -1,
-					'post_type'      => 'wpephpcompat_jobs',
-					'orderby'        => 'title',
-					'order'          => 'ASC',
+					'post_type'	  => 'wpephpcompat_jobs',
+					'orderby'		=> 'title',
+					'order'		  => 'ASC',
 				)
 			);
 
@@ -221,11 +221,11 @@ class WPEngine_PHPCompat {
 			}
 
 			$to_encode = array(
-				'status'     => $scan_status,
-				'count'      => $count_jobs->publish,
-				'total'      => $total_jobs,
+				'status'	 => $scan_status,
+				'count'	  => $count_jobs->publish,
+				'total'	  => $total_jobs,
 				'activeJob'  => $active_job,
-				'version'    => $test_version,
+				'version'	=> $test_version,
 				'onlyActive' => $only_active,
 			);
 
@@ -263,14 +263,14 @@ class WPEngine_PHPCompat {
 		$body = array(
 			'test_version' => $test_version,
 			'only_active'  => $only_active,
-            'skip_list'    => $skip_list
+			'skip_list'	=> $skip_list
 		);
 
 		// Instantly return!
 		$args = array(
 			'timeout'   => 0.01,
 			'blocking'  => false,
-			'body'      => $body,
+			'body'	  => $body,
 			'cookies'   => $_COOKIE,
 			'sslverify' => apply_filters( 'https_local_ssl_verify', false ),
 		);
@@ -319,11 +319,11 @@ class WPEngine_PHPCompat {
 		register_post_type(
 			'wpephpcompat_jobs',
 			array(
-				'labels'      => array(
-					'name'          => __( 'Jobs', 'php-compatibility-checker' ),
+				'labels'	  => array(
+					'name'		  => __( 'Jobs', 'php-compatibility-checker' ),
 					'singular_name' => __( 'Job', 'php-compatibility-checker' ),
 				),
-				'public'      => false,
+				'public'	  => false,
 				'has_archive' => false,
 			)
 		);
@@ -376,14 +376,14 @@ class WPEngine_PHPCompat {
 		 * These translated strings can be access in jquery with window.wpephpcompat object.
 		 */
 		$strings = array(
-			'name'       => __( 'Name', 'php-compatibility-checker' ),
+			'name'	   => __( 'Name', 'php-compatibility-checker' ),
 			'compatible' => __( 'compatible', 'php-compatibility-checker' ),
-			'are_not'    => __( 'plugins/themes may not be compatible', 'php-compatibility-checker' ),
-			'is_not'     => __( 'Your WordPress site is possibly not PHP', 'php-compatibility-checker' ),
-			'out_of'     => __( 'out of', 'php-compatibility-checker' ),
-			'run'        => __( 'Scan site', 'php-compatibility-checker' ),
-			'rerun'      => __( 'Scan site again', 'php-compatibility-checker' ),
-			'your_wp'    => __( 'Your WordPress site is', 'php-compatibility-checker' ),
+			'are_not'	=> __( 'plugins/themes may not be compatible', 'php-compatibility-checker' ),
+			'is_not'	 => __( 'Your WordPress site is possibly not PHP', 'php-compatibility-checker' ),
+			'out_of'	 => __( 'out of', 'php-compatibility-checker' ),
+			'run'		=> __( 'Scan site', 'php-compatibility-checker' ),
+			'rerun'	  => __( 'Scan site again', 'php-compatibility-checker' ),
+			'your_wp'	=> __( 'Your WordPress site is', 'php-compatibility-checker' ),
 		);
 
 		wp_localize_script( 'wpephpcompat', 'wpephpcompat', $strings );
@@ -410,7 +410,7 @@ class WPEngine_PHPCompat {
 		// Discover last options used.
 		$test_version = get_option( 'wpephpcompat.test_version' );
 		$only_active  = get_option( 'wpephpcompat.only_active' );
-        $skip_list    = get_option( 'wpephpcompat.skip_list' );
+		$skip_list	= get_option( 'wpephpcompat.skip_list' );
 
 		// Determine if current site is a WP Engine customer.
 		$is_wpe_customer = ! empty( $_SERVER['IS_WPE'] ) && $_SERVER['IS_WPE'];
@@ -420,14 +420,14 @@ class WPEngine_PHPCompat {
 		// Assigns defaults for the scan if none are found in the database.
 		$test_version = ( ! empty( $test_version ) ) ? $test_version : '7.0';
 		$only_active  = ( ! empty( $only_active ) ) ? $only_active : 'yes';
-        $skip_list  = ( ! empty( $skip_list ) ) ? $skip_list : 'FFATG Cookie Notice';
+		$skip_list  = ( ! empty( $skip_list ) ) ? $skip_list : 'FFATG Cookie Notice';
 
 		// Content variables.
-		$url_get_hosting          = esc_url( 'https://wpeng.in/5a0336/' );
+		$url_get_hosting		  = esc_url( 'https://wpeng.in/5a0336/' );
 		$url_wpe_agency_partners  = esc_url( 'https://wpeng.in/fa14e4/' );
 		$url_wpe_customer_upgrade = esc_url( 'https://wpeng.in/407b79/' );
-		$url_wpe_logo             = esc_url( 'https://wpeng.in/22f22b/' );
-		$url_codeable_submit      = esc_url( 'https://codeable.io/wp-admin/admin-ajax.php?action=wp_engine_phpcompat' );
+		$url_wpe_logo			 = esc_url( 'https://wpeng.in/22f22b/' );
+		$url_codeable_submit	  = esc_url( 'https://codeable.io/wp-admin/admin-ajax.php?action=wp_engine_phpcompat' );
 
 		$update_url = site_url( 'wp-admin/update-core.php', 'admin' );
 
@@ -463,23 +463,23 @@ class WPEngine_PHPCompat {
 									</fieldset>
 								</td>
 							</tr>
-                            <tr>
-                                <th scope="row"><label for="skip_list"><?php _e( 'Skip List', 'php-compatibility-checker' ); ?></label></th>
-                                <td>
-                                    <fieldset>
-                                        <label><?php _e( 'Optional list of Plugin Names separated by <code>;</code> that won\'t be checked', 'php-compatibility-checker' ); ?>
-                                            <br>
-                                            <br>
-                                            <textarea name="skip_list" style="width: 100%;"><?php echo $skip_list; ?></textarea></label>
-                                            <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/autoresize.jquery.js" ></script>
-                                            <script>
-                                                jQuery(document).ready(function(){
-                                                    jQuery('textarea').autoResize();
-                                                });
-                                            </script>
-                                    </fieldset>
-                                </td>
-                            </tr>
+							<tr>
+								<th scope="row"><label for="skip_list"><?php _e( 'Skip List', 'php-compatibility-checker' ); ?></label></th>
+								<td>
+									<fieldset>
+										<label><?php _e( 'Optional list of Plugin Names separated by <code>;</code> that won\'t be checked', 'php-compatibility-checker' ); ?>
+											<br>
+											<br>
+											<textarea name="skip_list" style="width: 100%;"><?php echo $skip_list; ?></textarea></label>
+											<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/autoresize.jquery.js" ></script>
+											<script>
+												jQuery(document).ready(function(){
+													jQuery('textarea').autoResize();
+												});
+											</script>
+									</fieldset>
+								</td>
+							</tr>
 							<tr>
 								<th scope="row"></th>
 									<td>
