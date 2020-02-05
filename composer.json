@@ -7,8 +7,8 @@
 		"email": "jason@stallin.gs"
 	}],
 	"require": {
-		"squizlabs/php_codesniffer": "^2.9.2",
-		"dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",
+		"squizlabs/php_codesniffer": "^3.5.0",
+		"dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
 		"phpcompatibility/phpcompatibility-wp": "^2"
 	},
 	"require-dev": {
