@@ -7,12 +7,13 @@
 		"email": "jason@stallin.gs"
 	}],
 	"require": {
-		"squizlabs/php_codesniffer": "^3.5.0",
-		"dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
-		"phpcompatibility/phpcompatibility-wp": "^2"
 	},
 	"require-dev": {
-		"wp-coding-standards/wpcs": "^1"
+		"wp-coding-standards/wpcs": "^1",
+		"squizlabs/php_codesniffer": "^3.5.0",
+		"phpunit/phpunit": "^7.5",
+		"dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
+		"phpcompatibility/phpcompatibility-wp": "^2"
 	},
 	"scripts": {
 		"post-update-cmd": [
