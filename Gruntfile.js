@@ -20,23 +20,13 @@ module.exports = function(grunt) {
 		},
 		phplint: {
 			plugin: phpPaths
-		},
-		phpcs: {
-			plugin: {
-				src: phpPaths
-			},
-			options: {
-				bin: 'vendor/bin/phpcs',
-				standard: 'src/ruleset-wordpress.xml'
-			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-wp-readme-to-markdown');
 	grunt.loadNpmTasks('grunt-phplint');
-	grunt.loadNpmTasks('grunt-phpcs');
 
-	grunt.registerTask('default', ['phplint', 'phpcs']);
+	grunt.registerTask('default', ['phplint']);
 
 	grunt.registerTask('readme', ['wp_readme_to_markdown']);
 };
