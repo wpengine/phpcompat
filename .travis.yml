@@ -32,6 +32,7 @@ matrix:
       env: WP_VERSION=latest WP_MULTISITE=1
     - php: 7.3
       env: NPM_TESTS=1
+    - php: 7.3
       env: PHPCS=1
   exclude:
     - php: 7.3
