@@ -90,5 +90,6 @@ script:
     if [[ "$NPM_TESTS" == "1" ]]; then
       npm test
     else
+      composer phpcs
       phpunit
     fi
