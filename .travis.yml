@@ -90,6 +90,11 @@ script:
     if [[ "$NPM_TESTS" == "1" ]]; then
       npm test
     else
-      composer phpcs
+      if [[ "$TRAVIS_PHP_VERSION" == "5.2" ]]; then
+        /home/travis/.phpenv/versions/5.4/bin/composer phpcs
+      else
+        composer phpcs
+      fi
+
       phpunit
     fi
