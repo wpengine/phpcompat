@@ -29,7 +29,9 @@ matrix:
     - php: 7.3
       env: WP_VERSION=5.2 WP_MULTISITE=1
     - php: 7.3
-      env: WP_VERSION=latest WP_MULTISITE=1
+      env:
+        env: WP_VERSION=latest WP_MULTISITE=1 PHPCS=1
+        - PHPCS=1
     - php: 7.3
       env: NPM_TESTS=1
   exclude:
@@ -87,6 +89,10 @@ before_script:
     fi
 script:
   - |
+    if [[ "$PHPCS" == "1" ]]; then
+      composer phpcs
+    fi
+
     if [[ "$NPM_TESTS" == "1" ]]; then
       npm test
     else

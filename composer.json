@@ -20,6 +20,8 @@
 		],
 		"post-install-cmd": [
 			"cd php52; composer install; cd .."
-		]
+		],
+		"phpcs": "phpcs --standard=src/ruleset-wordpress.xml wpengine-phpcompat.php load-files.php src/*.php",
+		"phpcs:fix": "phpcbf --standard=src/ruleset-wordpress.xml wpengine-phpcompat.php load-files.php src/*.php"
 	}
 }
