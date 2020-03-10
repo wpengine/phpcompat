@@ -89,7 +89,7 @@ script:
   - |
     if [[ "$PHPCS" == "1" ]]; then
       composer phpcs
-      composer lint
+      bash php-lint.sh
     fi
 
     if [[ "$NPM_TESTS" == "1" ]]; then
