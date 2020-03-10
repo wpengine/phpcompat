@@ -12,7 +12,8 @@
 		"phpcompatibility/phpcompatibility-wp": "^2"
 	},
 	"require-dev": {
-		"wp-coding-standards/wpcs": "^1"
+		"wp-coding-standards/wpcs": "^1",
+		"overtrue/phplint": "^1.2"
 	},
 	"scripts": {
 		"post-update-cmd": [
@@ -22,6 +23,7 @@
 			"cd php52; composer install; cd .."
 		],
 		"phpcs": "phpcs --standard=src/ruleset-wordpress.xml wpengine-phpcompat.php load-files.php src/*.php",
-		"phpcs:fix": "phpcbf --standard=src/ruleset-wordpress.xml wpengine-phpcompat.php load-files.php src/*.php"
+		"phpcs:fix": "phpcbf --standard=src/ruleset-wordpress.xml wpengine-phpcompat.php load-files.php src/*.php",
+		"lint": "phplint --no-cache --exclude=vendor"
 	}
 }
