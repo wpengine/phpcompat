@@ -89,11 +89,11 @@ script:
   - |
     if [[ "$PHPCS" == "1" ]]; then
       composer phpcs
-      bash php-lint.sh
     fi
 
     if [[ "$NPM_TESTS" == "1" ]]; then
       npm test
     else
+      bash php-lint.sh
       phpunit
     fi
