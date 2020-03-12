@@ -1,11 +1,4 @@
-var phpPaths = [
-	'wpengine-phpcompat.php',
-	'load-files.php',
-	'src/*.php',
-];
-
 module.exports = function(grunt) {
-
 	grunt.initConfig({
 		wp_readme_to_markdown: {
 			options: {
@@ -17,27 +10,12 @@ module.exports = function(grunt) {
 					'readme.md': 'readme.txt'
 				},
 			},
-		},
-		phplint: {
-			plugin: phpPaths
-		},
-		phpcs: {
-			plugin: {
-				src: phpPaths
-			},
-			options: {
-				bin: 'vendor/bin/phpcs',
-				standard: 'src/ruleset-wordpress.xml'
-			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-wp-readme-to-markdown');
-	grunt.loadNpmTasks('grunt-phplint');
-	grunt.loadNpmTasks('grunt-phpcs');
 
-	grunt.registerTask('default', ['phplint', 'phpcs']);
-
+	grunt.registerTask('default', []);
 	grunt.registerTask('readme', ['wp_readme_to_markdown']);
 };
 
