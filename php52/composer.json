@@ -1,7 +1,7 @@
 {
 	"require": {
 		"squizlabs/php_codesniffer": "2.9.*",
-		"wimg/php-compatibility": "7.1.5",
+		"phpcompatibility/php-compatibility": "9.3.5",
 		"xrstf/composer-php52": "1.*"
 	},
 	"scripts": {
