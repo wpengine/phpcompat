@@ -1,0 +1,147 @@
+version: 2
+
+references:
+  load_composer_cache: &load_composer_cache
+    restore_cache:
+      keys:
+        - composer-cache-{{ checksum "composer.json" }}
+        - composer-cache-
+
+  composer_install: &composer_install
+    run:
+      name: Install composer packages.
+      command: composer install --no-suggest --ignore-platform-reqs
+
+  save_composer_cache: &save_composer_cache
+    save_cache:
+      key: composer-cache-{{ checksum "composer.json" }}
+      paths:
+        - ./vendor
+
+  install_composer: &install_composer
+    run:
+      name: Installing composer...
+      command: |
+        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+        EXPECTED_SIGNATURE=$(curl -s https://composer.github.io/installer.sig)
+        ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');")
+        [[ "$EXPECTED_SIGNATURE" == "$ACTUAL_SIGNATURE" ]] && php composer-setup.php --install-dir=/bin --filename=composer || exit 1
+        composer config -g github-protocols https && composer config -g repo.packagist composer https://packagist.org
+        rm composer-setup.php
+
+  job_phpunit_base: &job_phpunit_base
+    docker:
+      - image: wordpress:php$CONTAINER_PHP_VERSION-fpm-alpine
+      - image: mysql:5.7
+        environment:
+          MYSQL_DATABASE: phpcompat_test
+          MYSQL_USER: phpcompat_user
+          MYSQL_PASSWORD: phpcompat_pass
+          MYSQL_ROOT_PASSWORD: wordpress
+    working_directory: /root/project/phpcompat
+    steps:
+      - run: apk add --no-cache git subversion
+      - *install_composer
+      - checkout
+      - run:
+          name: PHP Lint Error Check
+          command: /bin/bash php-lint.sh
+      - *load_composer_cache
+      - *composer_install
+      - *save_composer_cache
+      - run:
+          name: WordPress Test Suite Installation
+          command: /bin/bash tests/install-wp-tests.sh phpcompat_test phpcompat_user phpcompat_pass 127.0.0.1 $CONTAINER_WP_VERSION true
+      - run:
+          name: Run WordPress PHPUnit Tests
+          command: composer test
+
+jobs:
+  job_test_javascript:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - run: npm install
+      - run:
+          name: Run NPM Tests
+          command: npm test
+  job_php_code_standards:
+    docker:
+      - image: wordpress:php7.3-fpm-alpine
+    working_directory: /root/project/phpcompat
+    steps:
+      - run: apk add --no-cache git subversion
+      - *install_composer
+      - checkout
+      - *load_composer_cache
+      - *composer_install
+      - *save_composer_cache
+      - run:
+          name: Run PHP Code Sniffer Check
+          command: composer phpcs
+  job_test_php56_min:
+    <<: *job_phpunit_base
+    environment:
+      CONTAINER_WP_VERSION: "5.1"
+      CONTAINER_PHP_VERSION: "5.6"
+  job_test_php56:
+    <<: *job_phpunit_base
+    environment:
+      CONTAINER_WP_VERSION: "latest"
+      CONTAINER_PHP_VERSION: "5.6"
+  job_test_php70:
+    <<: *job_phpunit_base
+    environment:
+      CONTAINER_WP_VERSION: "latest"
+      CONTAINER_PHP_VERSION: "7.0"
+  job_test_php71:
+    <<: *job_phpunit_base
+    environment:
+      CONTAINER_WP_VERSION: "latest"
+      CONTAINER_PHP_VERSION: "7.1"
+  job_test_php72:
+    <<: *job_phpunit_base
+    environment:
+      CONTAINER_WP_VERSION: "latest"
+      CONTAINER_PHP_VERSION: "7.2"
+  job_test_php73_min:
+    <<: *job_phpunit_base
+    environment:
+      CONTAINER_WP_VERSION: "5.2"
+      CONTAINER_PHP_VERSION: "7.3"
+  job_test_php73:
+    <<: *job_phpunit_base
+    environment:
+      CONTAINER_WP_VERSION: "latest"
+      CONTAINER_PHP_VERSION: "7.3"
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - job_test_javascript
+      - job_php_code_standards:
+          requires:
+            - job_test_javascript:
+      - job_test_php56_min:
+          requires:
+            - job_php_code_standards
+      - job_test_php56:
+          requires:
+            - job_php_code_standards
+      - job_test_php70:
+          requires:
+            - job_php_code_standards
+      - job_test_php71:
+          requires:
+            - job_php_code_standards
+      - job_test_php72:
+          requires:
+            - job_php_code_standards
+      - job_test_php73_min:
+          requires:
+            - job_php_code_standards
+      - job_test_php73:
+          requires:
+            - job_php_code_standards
