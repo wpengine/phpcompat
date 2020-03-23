@@ -29,6 +29,21 @@ references:
         composer config -g github-protocols https && composer config -g repo.packagist composer https://packagist.org
         rm composer-setup.php
 
+  install_dockerize: &install_dockerize
+    run:
+      name: Install Dockerize
+      command: |
+        wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+        tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+        rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+      environment:
+        DOCKERIZE_VERSION: v0.6.1
+
+  wait_for_mysql: &wait_for_mysql
+    run:
+      name: Wait for MySQL
+      command: dockerize -wait tcp://localhost:3306 -timeout 1m
+
   job_phpunit_base: &job_phpunit_base
     docker:
       - image: wordpress:php$CONTAINER_PHP_VERSION-fpm-alpine
@@ -41,6 +56,7 @@ references:
     working_directory: /root/project/phpcompat
     steps:
       - run: apk add --no-cache git subversion
+      - *install_dockerize
       - *install_composer
       - checkout
       - run:
@@ -49,6 +65,7 @@ references:
       - *load_composer_cache
       - *composer_install
       - *save_composer_cache
+      - *wait_for_mysql
       - run:
           name: WordPress Test Suite Installation
           command: /bin/bash tests/install-wp-tests.sh phpcompat_test phpcompat_user phpcompat_pass 127.0.0.1 $CONTAINER_WP_VERSION true
