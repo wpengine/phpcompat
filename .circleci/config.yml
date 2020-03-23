@@ -123,7 +123,7 @@ workflows:
       - job_test_javascript
       - job_php_code_standards:
           requires:
-            - job_test_javascript:
+            - job_test_javascript
       - job_test_php56_min:
           requires:
             - job_php_code_standards
