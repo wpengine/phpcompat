@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 
 // Add build status image to GitHub readme.
 function addBuildStatus(readme) {
-	var buildImage = '<a href="https://travis-ci.org/wpengine/phpcompat"><img src="https://travis-ci.org/wpengine/phpcompat.svg?branch=master"></a>';
+	var buildImage = '<a href="https://circleci.com/gh/wpengine/phpcompat/tree/master"><img src="https://circleci.com/gh/wpengine/phpcompat/tree/master.svg?style=shield"></a>';
 
 	return readme.replace(/# PHP Compatibility Checker #/, '# PHP Compatibility Checker ' + buildImage);
 }
