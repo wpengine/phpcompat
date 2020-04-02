@@ -1,5 +1,5 @@
 // Global variables.
-var test_version, only_active, timer;
+var test_version, only_active, skip_list, timer;
 
 jQuery( document ).ready(function($) {
 
@@ -35,10 +35,12 @@ jQuery( document ).ready(function($) {
 		resetDisplay();
 		test_version = $( 'input[name=phptest_version]:checked' ).val();
 		only_active = $( 'input[name=active_plugins]:checked' ).val();
+		skip_list = $( 'textarea[name=skip_list]' ).val();
 		var data = {
 			'action': 'wpephpcompat_start_test',
 			'test_version': test_version,
 			'only_active': only_active,
+			'skip_list': skip_list,
 			'startScan': 1
 		};
 		$( '.wpe-pcc-test-version' ).text(test_version);
