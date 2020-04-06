@@ -132,6 +132,16 @@ jobs:
     environment:
       CONTAINER_WP_VERSION: "latest"
       CONTAINER_PHP_VERSION: "7.3"
+  deploy_job:
+    docker:
+      - image: wordpress:php7.3-fpm-alpine
+    working_directory: /root/project/phpcompat
+    steps:
+      - run: apk add --no-cache git subversion rsync
+      - checkout
+      - run:
+          name: Deploy plugin to wordpress.org
+          command: /bin/bash .circleci/deploy.sh
 
 workflows:
   version: 2
