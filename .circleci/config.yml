@@ -134,14 +134,20 @@ jobs:
       CONTAINER_PHP_VERSION: "7.3"
   deploy_job:
     docker:
-      - image: wordpress:php7.3-fpm-alpine
-    working_directory: /root/project/phpcompat
+      - image: circleci/buildpack-deps:latest
     steps:
-      - run: apk add --no-cache git subversion rsync
       - checkout
+      - run:
+          name: Install dependencies
+          command: sudo apt-get install rsync -qq
+      - run:
+          name: Create artifacts directory
+          command: mkdir -p /tmp/artifacts
       - run:
           name: Deploy plugin to wordpress.org
           command: /bin/bash .circleci/deploy.sh
+      - store_artifacts:
+          path: /tmp/artifacts
 
 workflows:
   version: 2
