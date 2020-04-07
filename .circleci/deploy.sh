@@ -27,15 +27,10 @@ if [[ -z "$CIRCLE_TAG" ]]; then
     exit 1
 fi
 
-VERSION="$CIRCLE_TAG"
-SVN_DIR="/tmp/svn/${CIRCLE_PROJECT_REPONAME}"
+SVN_DIR="/tmp/artifacts"
+PROJECT_DIR=$(pwd)
 
-echo "Preparing for version $VERSION release..."
-
-if [[ ! -d "$SVN_DIR" ]]; then
-    mkdir -p "$SVN_DIR"
-    echo "SVN directory $SVN_DIR created."
-fi
+echo "Preparing for version $CIRCLE_TAG release..."
 
 # Checkout just trunk and assets for efficiency.
 # Tagging will be handled on the SVN level.
@@ -47,15 +42,13 @@ svn update --set-depth infinity trunk
 
 echo "Copying files..."
 
-if [[ -f "$CIRCLE_WORKING_DIRECTORY/.distignore" ]]; then
-    # Copy from current branch to /trunk, excluding assets.
-    # The --delete flag will delete anything in destination that no longer exists in source.
-    rsync -rc --exclude-from="$CIRCLE_WORKING_DIRECTORY/.distignore" "$CIRCLE_WORKING_DIRECTORY/" trunk/ --delete --delete-excluded
+if [[ -f "$PROJECT_DIR/.distignore" ]]; then
+    rsync -rc --exclude-from="$PROJECT_DIR/.distignore" "$PROJECT_DIR/" trunk/ --delete --delete-excluded
 fi
 
-# Copy assets to /assets as this was skipped in the previous step.
-if [[ -d "$CIRCLE_WORKING_DIRECTORY/assets/" ]]; then
-    rsync -rc "$CIRCLE_WORKING_DIRECTORY/assets/" assets/ --delete
+# Copy assets to /assets.
+if [[ -d "$PROJECT_DIR/assets/" ]]; then
+    rsync -rc "$PROJECT_DIR/assets/" assets/ --delete
 fi
 
 # Add everything and commit to SVN.
@@ -67,13 +60,13 @@ svn add . --force > /dev/null
 # SVN delete all deleted files and suppress stdout.
 svn status | grep '^\!' | sed 's/! *//' | xargs -I% svn rm %@ > /dev/null
 
-# Copy tag locally from trunk.
+# Copy trunk into the current tag directory.
 echo "Copying tag..."
-svn cp "trunk" "tags/$VERSION"
+svn cp "trunk" "tags/$CIRCLE_TAG"
 
 svn status
 
 echo "Committing files..."
-svn commit -m "Release version $VERSION." --no-auth-cache --non-interactive --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
+svn commit -m "Release version $CIRCLE_TAG." --no-auth-cache --non-interactive --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
 
-echo "Plugin release $VERSION deployed to $SVN_URL"
+echo "Plugin version $CIRCLE_TAG deployed."
