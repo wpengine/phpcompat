@@ -2,7 +2,7 @@
 
 set -eo
 
-# SVN_USERNAME and SVN_PASSWORD should be saved as a private environment variables in CircleCI.
+# SVN_USERNAME, SVN_PASSWORD, and SVN_URL should be saved as a private environment variables.
 # See https://circleci.com/docs/2.0/env-vars/#setting-an-environment-variable-in-a-project
 # See https://circleci.com/blog/keep-environment-variables-private-with-secret-masking/
 if [[ -z "$SVN_USERNAME" ]]; then
