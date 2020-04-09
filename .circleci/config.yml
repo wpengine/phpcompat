@@ -132,6 +132,22 @@ jobs:
     environment:
       CONTAINER_WP_VERSION: "latest"
       CONTAINER_PHP_VERSION: "7.3"
+  deploy_job:
+    docker:
+      - image: circleci/buildpack-deps:latest
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: sudo apt-get install rsync -qq
+      - run:
+          name: Create artifacts directory
+          command: mkdir -p /tmp/artifacts
+      - run:
+          name: Deploy plugin to wordpress.org
+          command: /bin/bash .circleci/deploy.sh
+      - store_artifacts:
+          path: /tmp/artifacts
 
 workflows:
   version: 2
