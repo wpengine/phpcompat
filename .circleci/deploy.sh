@@ -29,8 +29,9 @@ fi
 
 SVN_DIR="/tmp/artifacts"
 PROJECT_DIR=$(pwd)
+RELEASE_TAG=$(echo $CIRCLE_TAG | sed 's/[^0-9\.]*//g')
 
-echo "Preparing for version $CIRCLE_TAG release..."
+echo "Preparing for version $RELEASE_TAG release..."
 
 # Checkout just trunk and assets for efficiency.
 # Tagging will be handled on the SVN level.
@@ -62,11 +63,11 @@ svn status | grep '^\!' | sed 's/! *//' | xargs -I% svn rm %@ > /dev/null
 
 # Copy trunk into the current tag directory.
 echo "Copying tag..."
-svn cp "trunk" "tags/$CIRCLE_TAG"
+svn cp "trunk" "tags/$RELEASE_TAG"
 
 svn status
 
 echo "Committing files..."
-svn commit -m "Release version $CIRCLE_TAG." --no-auth-cache --non-interactive --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
+svn commit -m "Release version $RELEASE_TAG." --no-auth-cache --non-interactive --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
 
-echo "Plugin version $CIRCLE_TAG deployed."
+echo "Plugin version $RELEASE_TAG deployed."

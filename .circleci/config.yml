@@ -193,7 +193,6 @@ workflows:
           requires:
             - job_test_php56_min
             - job_test_php56
-            - job_test_php56_min
             - job_test_php70
             - job_test_php71
             - job_test_php72
@@ -203,4 +202,4 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^(\d+)\.(\d+)(\.\d+)?$/
+              only: /^(v)?(\d+)\.(\d+)(\.\d+)?$/
