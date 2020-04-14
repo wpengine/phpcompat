@@ -157,8 +157,10 @@ workflows:
   version: 2
   test:
     jobs:
-      - job_test_javascript
+      - job_test_javascript:
+          <<: *workflow_job
       - job_php_code_standards:
+          <<: *workflow_job
           requires:
             - job_test_javascript
       - job_test_php56_min:
