@@ -1,9 +1,9 @@
 # PHP Compatibility Checker <a href="https://circleci.com/gh/wpengine/phpcompat/tree/master"><img src="https://circleci.com/gh/wpengine/phpcompat/tree/master.svg?style=shield"></a>
 **Contributors:** [wpengine](https://profiles.wordpress.org/wpengine), [octalmage](https://profiles.wordpress.org/octalmage), [stevenkword](https://profiles.wordpress.org/stevenkword), [Taylor4484](https://profiles.wordpress.org/Taylor4484), [pross](https://profiles.wordpress.org/pross), [jcross](https://profiles.wordpress.org/jcross)  
-**Tags:** php 7, php 5.5, php, version, compatibility, checker, wp engine, wpe, wpengine  
-**Requires at least:** 3.5  
-**Tested up to:** 5.2.2  
-**Stable tag:** 1.5.0  
+**Tags:** php 7, php, version, compatibility, checker, wp engine, wpe, wpengine  
+**Requires at least:** 4.8  
+**Tested up to:** 5.4  
+**Stable tag:** 1.5.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -117,6 +117,9 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 
 ## Changelog ##
+### 1.5.1 ###
+- Added Smart Plugin Manager to whitelisted plugins
+
 ### 1.5.0 ###
 - Added support for PHP 7.3 compatibility checks
 
