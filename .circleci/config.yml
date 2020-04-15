@@ -137,13 +137,16 @@ jobs:
       CONTAINER_WP_VERSION: "latest"
       CONTAINER_PHP_VERSION: "7.3"
   deploy_job:
+    working_directory: /root/project/phpcompat-demo
     docker:
-      - image: circleci/buildpack-deps:latest
+      - image: wordpress:php7.3-fpm-alpine
     steps:
+      - run: apk add --no-cache git subversion rsync
+      - *install_composer
       - checkout
       - run:
-          name: Install dependencies
-          command: sudo apt-get install rsync -qq
+          name: Install composer without dev packages
+          command: composer install --no-dev --no-suggest --optimize-autoloader
       - run:
           name: Create artifacts directory
           command: mkdir -p /tmp/artifacts
@@ -157,8 +160,10 @@ workflows:
   version: 2
   test:
     jobs:
-      - job_test_javascript
+      - job_test_javascript:
+          <<: *workflow_job
       - job_php_code_standards:
+          <<: *workflow_job
           requires:
             - job_test_javascript
       - job_test_php56_min:

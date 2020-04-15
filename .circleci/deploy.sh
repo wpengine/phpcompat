@@ -44,7 +44,7 @@ svn update --set-depth infinity trunk
 echo "Copying files..."
 
 if [[ -f "$PROJECT_DIR/.distignore" ]]; then
-    rsync -rc --exclude-from="$PROJECT_DIR/.distignore" "$PROJECT_DIR/" trunk/ --delete --delete-excluded
+    rsync -rcl --exclude-from="$PROJECT_DIR/.distignore" "$PROJECT_DIR/" trunk/ --delete --delete-excluded
 fi
 
 # Copy assets to /assets.

@@ -1,0 +1,23 @@
++ php52/vendor/bin
++ vendor/bin
+- bin
+.circleci
+.distignore
+.git
+.gitignore
+.phplint.yml
+Dockerfile
+Gruntfile.js
+Makefile
+build.sh
+composer.json
+composer.lock
+docker-compose.yml
+helpers
+package-lock.json
+package.json
+php-lint.sh
+phpunit.xml.dist
+readme.md
+tests
+assets
