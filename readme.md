@@ -1,5 +1,5 @@
 # PHP Compatibility Checker <a href="https://circleci.com/gh/wpengine/phpcompat/tree/master"><img src="https://circleci.com/gh/wpengine/phpcompat/tree/master.svg?style=shield"></a>
-**Contributors:** [wpengine](https://profiles.wordpress.org/wpengine), [octalmage](https://profiles.wordpress.org/octalmage), [stevenkword](https://profiles.wordpress.org/stevenkword), [Taylor4484](https://profiles.wordpress.org/Taylor4484), [pross](https://profiles.wordpress.org/pross), [jcross](https://profiles.wordpress.org/jcross)  
+**Contributors:** [wpengine](https://profiles.wordpress.org/wpengine), [octalmage](https://profiles.wordpress.org/octalmage), [stevenkword](https://profiles.wordpress.org/stevenkword), [Taylor4484](https://profiles.wordpress.org/Taylor4484), [pross](https://profiles.wordpress.org/pross), [jcross](https://profiles.wordpress.org/jcross), [rfmeier](https://profiles.wordpress.org/rfmeier)  
 **Tags:** php 7, php, version, compatibility, checker, wp engine, wpe, wpengine  
 **Requires at least:** 4.8  
 **Tested up to:** 5.4  
