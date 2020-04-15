@@ -69,6 +69,7 @@ class WPEPHPCompat {
 	 *  @var array
 	 */
 	public $whitelist = array(
+		'*/autoupdater/*'                                 => '7.0', // WP Engine Smart Plugin Manager uses a php5 package to maintain backwards compatibility.
 		'*/jetpack/*'                                     => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#jetpack
 		'*/wordfence/*'                                   => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#wordfence-security
 		'*/woocommerce/*'                                 => '7.0', // https://github.com/wpengine/phpcompat/wiki/Results#woocommerce
