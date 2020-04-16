@@ -1,4 +1,3 @@
-+ php52/vendor/bin
 + vendor/bin
 - bin
 .circleci
