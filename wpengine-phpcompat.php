@@ -111,33 +111,14 @@ class WPEngine_PHPCompat {
 	function get_phpversions() {
 
 		$versions = array(
+			'PHP 7.3' => '7.3',
 			'PHP 7.2' => '7.2',
 			'PHP 7.1' => '7.1',
 			'PHP 7.0' => '7.0',
 		);
 
-		if ( version_compare( phpversion(), '5.3', '>=' ) ) {
-			$versions = array( 'PHP 7.3' => '7.3' ) + $versions;
-		}
-
-		$old_versions = array( '5.6', '5.5', '5.4', '5.3' );
-
-		while ( ! empty( $old_versions ) ) {
-			$oldest = array_pop( $old_versions );
-
-			if ( version_compare( phpversion(), $oldest, '<' ) ) {
-				array_push( $old_versions, $oldest );
-
-				foreach ( $old_versions as $old_version ) {
-					$old_version_label = "PHP {$old_version}";
-
-					$versions[ $old_version_label ] = $old_version;
-				}
-				break;
-			}
-		}
-
 		return apply_filters( 'phpcompat_phpversions', $versions );
+
 	}
 
 	/**
