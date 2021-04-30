@@ -1,0 +1,5 @@
+gulpfile.js
+**/*-min.js
+wordpress/
+node_modules/
+vendor/

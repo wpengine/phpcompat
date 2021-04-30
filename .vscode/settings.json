@@ -1,0 +1,6 @@
+{
+    "phpcs.standard": "phpcs.xml",
+    "phpcbf.executablePath": "${workspaceRoot}/vendor/bin/phpcbf",
+    "phpcbf.standard": "phpcs.xml",
+    "intelephense.diagnostics.undefinedConstants": false,
+}
