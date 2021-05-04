@@ -4,14 +4,14 @@
  *
  * Used when clicking "Delete" from inside of WordPress's plugins page.
  *
- * @package WPEngine\PHP_Compatibility_Checker
+ * @package WPEngine_PHPCompat\PHP_Compatibility_Checker
  *
  * @since   1.0.0
  *
  * @author  WP Engine <wptech@wpengine.com>
  */
 
-namespace WPEngine\PHP_Compatibility_Checker\Uninstall;
+namespace WPEngine_PHPCompat\PHP_Compatibility_Checker\Uninstall;
 
 /**
  * Initialize uninstaller

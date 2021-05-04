@@ -82,11 +82,6 @@ release: | build-assets wpe-php-compat.zip
 .PHONY: reset
 reset: stop clean
 
-.PHONY: setup-fakerpress
-setup-fakerpress:
-	@echo "Setting up fakerpress to generate dummy data"
-	npm run wp-env run cli plugin install fakerpress -- --activate
-
 .PHONY: setup-sample-meta
 setup-sample-meta:
 	@echo "Setting up sample post ids"
@@ -105,11 +100,6 @@ run-test-e2e:
 	@echo "Setting up sample post data"
 	npm run test:e2e
 
-.PHONY: setup-permalinks
-setup-permalinks:
-	@echo "Setting up permalinks"
-	npm run wp-env run cli option update permalink_structure '/%postname%'
-
 .PHONY: setup
 setup:
 	@echo "Setting up the project"
@@ -120,8 +110,6 @@ setup:
 start:
 	@echo "Starting WordPress"
 	npm run wp-env start
-	$(MAKE) setup-permalinks
-	$(MAKE) setup-fakerpress
 
 .PHONY: stop
 stop:

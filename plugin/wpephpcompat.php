@@ -10,10 +10,17 @@
  * Author URI: https://wpengine.com/
  * License: GPLv2
  *
- * @package WPEngine\PHP_Compatibility_Checker
+ * @package WPEngine_PHPCompat\PHP_Compatibility_Checker
  */
 
+namespace WPEngine_PHPCompat;
+
+// @todo this is confusing. maybe change later. 
 define( 'WPENGINE_PHP_COMPATIBILITY_VERSION', '0.0.1' );
+define( 'WPEPHPCOMPAT_ADMIN_PAGE_SLUG', 'php-compatibility-checker' );
+define( 'WPEPHPCOMPAT_CAPABILITY', 'manage_options' );
+
+use WPEngine_PHPCompat\PHP_Compatibility_Checker;
 
 /**
  * Load plugin functionality.
@@ -21,10 +28,11 @@ define( 'WPENGINE_PHP_COMPATIBILITY_VERSION', '0.0.1' );
  * @since 1.0.0
  */
 function wpe_phpcompat_loader() {
+	$register_phpcompat = new PHP_Compatibility_Checker();
+	$register_phpcompat->init();
 
 	// Load the text domain.
 	load_plugin_textdomain( 'wpe-php-compat', false, dirname( dirname( __FILE__ ) ) . '/languages' );
-
 }
 
 /**
@@ -37,7 +45,7 @@ function wpe_phpcompat_loader() {
  */
 function wpe_phpcompat_get_class_file( $class ) {
 
-	$prefix   = 'WPEngine\\PHP_Compatibility_Checker\\';
+	$prefix   = 'WPEngine_PHPCompat\\';
 	$base_dir = __DIR__ . '/lib/';
 
 	$len = strlen( $prefix );
@@ -78,6 +86,6 @@ function wpe_phpcompat_autoloader( $class ) {
 	}
 }
 
-spl_autoload_register( 'wpe_phpcompat_autoloader' );
+spl_autoload_register(  __NAMESPACE__ . '\wpe_phpcompat_autoloader' );
 
-add_action( 'plugins_loaded', 'wpe_phpcompat_loader' );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\wpe_phpcompat_loader' );

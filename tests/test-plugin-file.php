@@ -3,10 +3,10 @@
 /**
  * Test the primary plugin file
  *
- * @package WPEngine\PHP_Compatibility_Checker
+ * @package WPEngine_PHPCompat\PHP_Compatibility_Checker
  */
 
-namespace WPEngine\PHP_Compatibility_Checker\Tests;
+namespace WPEngine_PHPCompat\PHP_Compatibility_Checker\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
@@ -43,8 +43,8 @@ class PluginFileTest extends TestCase {
 	public function test_autoloader() {
 
 		$test_classes = array(
-			'WPEngine\PHP_Compatibility_Checker\Class_One' => '/app/plugin/lib/class-class-one.php',
-			'WPEngine\PHP_Compatibility_Checker\Sub_Classes\Class_Two' => '/app/plugin/lib/Sub_Classes/class-class-two.php',
+			'WPEngine_PHPCompat\PHP_Compatibility_Checker\Class_One' => '/app/plugin/lib/class-class-one.php',
+			'WPEngine_PHPCompat\PHP_Compatibility_Checker\Sub_Classes\Class_Two' => '/app/plugin/lib/Sub_Classes/class-class-two.php',
 			'Class_Three' => '',
 		);
 
