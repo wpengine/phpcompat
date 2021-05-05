@@ -1,23 +1,27 @@
-+ php52/vendor/bin
-+ vendor/bin
+# Directories
+/.circleci
+/.git
+/.github
+/assets
 - bin
-.circleci
+/helpers
++ php52/vendor/bin
+/tests
++ vendor/bin
+
+# Files
 .distignore
-.git
 .gitignore
 .phplint.yml
-Dockerfile
-Gruntfile.js
-Makefile
 build.sh
 composer.json
 composer.lock
 docker-compose.yml
-helpers
+Dockerfile
+Gruntfile.js
+Makefile
 package-lock.json
 package.json
 php-lint.sh
 phpunit.xml.dist
 readme.md
-tests
-assets
