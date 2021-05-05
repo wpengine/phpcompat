@@ -3,6 +3,7 @@ Contributors: wpengine, octalmage, stevenkword, Taylor4484, pross, jcross, rfmei
 Tags: php 7, php, version, compatibility, checker, wp engine, wpe, wpengine
 Requires at least: 4.8
 Tested up to: 5.4
+Requires PHP: 
 Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html

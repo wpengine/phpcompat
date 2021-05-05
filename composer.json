@@ -1,7 +1,9 @@
 {
 	"name": "wpengine/phpcompat",
+	"description": "Make sure your plugins and themes are compatible with newer PHP versions.",
 	"type": "wordpress-plugin",
-	"description": "Test PHP Compatibility.",
+	"homepage": "https://github.com/wpengine/phpcompat#readme",
+	"license": "GPL-2.0-or-later",
 	"authors": [{
 		"name": "Jason Stallings",
 		"email": "jason@stallin.gs"
