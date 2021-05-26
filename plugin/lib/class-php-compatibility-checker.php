@@ -47,6 +47,37 @@ class PHP_Compatibility_Checker {
 	}
 
 	/**
+	 * Registers available blocks.
+	 *
+	 * @since 1.0.0
+	 */
+	public function set_up_ajax() {
+		$ajax_js = '../scripts/scan-runner.js';
+
+		global $wp_query;
+
+		wp_register_script( 'tide-checker', plugins_url( $ajax_js, __FILE__ ), array( 'jquery' ), '1.0', true );
+
+		wp_enqueue_script(
+			'tide-checker',
+			plugins_url( $ajax_js, __FILE__ ),
+			array( 'jquery' ),
+			'1.0',
+			true
+		);
+
+		wp_localize_script(
+			'tide-checker',
+			'checkerList',
+			array(
+				'pluginList'       => $this->generate_directory_list(),
+				'themeList'        => 'tbd',
+				'userOptions'        => 'some user options',
+			)
+		);
+	}
+
+	/**
 	 * Tool Page initialization.
 	 */
 	public function init() {
@@ -60,6 +91,7 @@ class PHP_Compatibility_Checker {
 
 		// Load our JavaScript.
 		add_action( 'admin_enqueue_scripts', array( $instance, 'admin_enqueue' ) );
+		add_action( 'admin_enqueue_scripts', array( $instance, 'set_up_ajax' ) );
 
 		// The action to run the compatibility test.
 		// add_action( 'wp_ajax_wpephpcompat_start_test', array( $instance, 'start_test' ) );
@@ -452,7 +484,7 @@ class PHP_Compatibility_Checker {
 		wp_enqueue_style( 'wpephpcompat-style', plugins_url( '/styles/css/style.css', __FILE__ ), array(), $version );
 
 		// Scripts.
-		wp_enqueue_script( 'wpephpcompat-ajax', plugins_url( '/scripts/starter-script.js', __FILE__ ), array( 'jquery' ), $version );
+		// wp_enqueue_script( 'wpephpcompat-ajax', plugins_url( '/scripts/starter-script.js', __FILE__ ), array( 'jquery' ), $version );
 
 		/**
 		 * Strings for i18n.
