@@ -47,7 +47,7 @@ class PHP_Compatibility_Checker {
 	}
 
 	/**
-	 * Registers available blocks.
+	 * Registers jquery for ajax calls.
 	 *
 	 * @since 1.0.0
 	 */
