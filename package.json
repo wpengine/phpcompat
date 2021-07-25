@@ -1,14 +1,18 @@
 {
   "name": "php-compatibility-checker",
+  "version": "1.5.1",
+  "description": "Make sure your plugins and themes are compatible with newer PHP versions.",
+  "homepage": "https://github.com/wpengine/phpcompat#readme",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "test": "npm run test:qunit",
+    "test:qunit": "node-qunit-phantomjs tests/qunit/index.html  --verbose",
+    "readme": "grunt readme"
+  }
   "devDependencies": {
     "grunt": "^1.1.0",
     "grunt-cli": "^1.3.2",
     "grunt-wp-readme-to-markdown": "^2.0.0",
     "node-qunit-phantomjs": "^2.1.1"
   },
-  "scripts": {
-    "test": "npm run test:qunit",
-    "test:qunit": "node-qunit-phantomjs tests/qunit/index.html  --verbose",
-    "readme": "grunt readme"
-  }
 }

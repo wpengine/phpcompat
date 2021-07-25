@@ -21,3 +21,4 @@ phpunit.xml.dist
 readme.md
 tests
 assets
+LICENSE.md

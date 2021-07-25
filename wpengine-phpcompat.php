@@ -2,17 +2,21 @@
 /**
  * WPEngine_PHPCompat class
  *
- * @package WPEngine\PHPCompat
- * @since 1.0.0
+ * @package           WPEngine\PHPCompat
+ * @since             1.0.0
  *
  * @wordpress-plugin
- * Plugin Name: PHP Compatibility Checker
- * Plugin URI:  https://wpengine.com
- * Description: Make sure your plugins and themes are compatible with newer PHP versions.
- * Author:      WP Engine
- * Version:     1.5.1
- * Author URI:  https://wpengine.com
- * Text Domain: php-compatibility-checker
+ * Plugin Name:       PHP Compatibility Checker
+ * Plugin URI:        https://wpengine.com
+ * Description:       Make sure your plugins and themes are compatible with newer PHP versions.
+ * Version:           1.5.1
+ * Requires at least: 4.8
+ * Requires PHP:      
+ * Author:            WP Engine
+ * Author URI:        https://wpengine.com
+ * License:           GPL v2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       php-compatibility-checker
  */
 
 // Exit if this file is directly accessed.
