@@ -14,5 +14,23 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 require_once dirname( __FILE__ ) . '/load-files.php';
 
 $wpephpc = new WPEPHPCompat( dirname( __FILE__ ) );
-$wpephpc->clean_after_scan();
+delete_option( 'wpephpcompat.lock' );
+delete_option( 'wpephpcompat.status' );
+delete_option( 'wpephpcompat.numdirs' );
+
+// Clear scheduled cron.
+wp_clear_scheduled_hook( 'wpephpcompat_start_test_cron' );
+
+// Make sure all directories are removed from the queue.
+$args = array(
+	'posts_per_page' => -1,
+	'post_type'      => 'wpephpcompat_jobs',
+);
+
+$directories = get_posts( $args );
+
+foreach ( $directories as $directory ) {
+	wp_delete_post( $directory->ID );
+}
+
 delete_option( 'wpephpcompat.scan_results' );
