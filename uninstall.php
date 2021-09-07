@@ -11,9 +11,6 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	die;
 }
 
-require_once dirname( __FILE__ ) . '/load-files.php';
-
-$wpephpc = new WPEPHPCompat( dirname( __FILE__ ) );
 delete_option( 'wpephpcompat.lock' );
 delete_option( 'wpephpcompat.status' );
 delete_option( 'wpephpcompat.numdirs' );
