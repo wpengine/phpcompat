@@ -20,8 +20,6 @@ rsync \
 	--include="src/**" \
 	--include='vendor' \
 	--include='vendor/**' \
-	--include='php52' \
-	--include='php52/**' \
 	--exclude="*" \
 	./ ./build/trunk
 

@@ -7,21 +7,15 @@
 		"email": "jason@stallin.gs"
 	}],
 	"require": {
-		"squizlabs/php_codesniffer": "^2.9.2",
 		"dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",
-		"phpcompatibility/phpcompatibility-wp": "^2"
+		"phpcompatibility/phpcompatibility-wp": "^2",
+		"squizlabs/php_codesniffer": "2.9.2"
 	},
 	"require-dev": {
 		"wp-coding-standards/wpcs": "^1",
 		"phpunit/phpunit": "^5"
 	},
 	"scripts": {
-		"post-update-cmd": [
-			"cd php52; composer update; cd .."
-		],
-		"post-install-cmd": [
-			"cd php52; composer install; cd .."
-		],
 		"phpcs": "phpcs --standard=src/ruleset-wordpress.xml wpengine-phpcompat.php load-files.php src/*.php",
 		"phpcs:fix": "phpcbf --standard=src/ruleset-wordpress.xml wpengine-phpcompat.php load-files.php src/*.php",
 		"test": "phpunit"
