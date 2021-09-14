@@ -156,14 +156,6 @@ workflows:
           <<: *workflow_job
           requires:
             - job_test_javascript
-      - job_test_php56_min:
-          <<: *workflow_job
-          requires:
-            - job_php_code_standards
-      - job_test_php56:
-          <<: *workflow_job
-          requires:
-            - job_php_code_standards
       - job_test_php70:
           <<: *workflow_job
           requires:
@@ -186,8 +178,6 @@ workflows:
             - job_php_code_standards
       - deploy_job:
           requires:
-            - job_test_php56_min
-            - job_test_php56
             - job_test_php70
             - job_test_php71
             - job_test_php72
