@@ -3,17 +3,17 @@
 	"type": "wordpress-plugin",
 	"description": "Test PHP Compatibility.",
 	"authors": [{
-		"name": "Jason Stallings",
-		"email": "jason@stallin.gs"
+		"name": "WP Engine",
+		"email": "wptech@wpengine.com"
 	}],
 	"require": {
-		"dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",
-		"phpcompatibility/phpcompatibility-wp": "^2",
-		"squizlabs/php_codesniffer": "2.9.2"
+		"dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
+		"phpcompatibility/phpcompatibility-wp": "^2.1.2",
+		"squizlabs/php_codesniffer": "^2.6"
 	},
 	"require-dev": {
 		"wp-coding-standards/wpcs": "^1",
-		"phpunit/phpunit": "^5"
+		"phpunit/phpunit": "^6"
 	},
 	"scripts": {
 		"phpcs": "phpcs --standard=src/ruleset-wordpress.xml wpengine-phpcompat.php load-files.php src/*.php",
