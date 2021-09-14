@@ -26,7 +26,7 @@ RUN rm -rf /usr/local/etc/php/conf.d/opcache-recommended.ini
 # Install composer.
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN composer global require "phpunit/phpunit:^6"
+RUN composer global require "phpunit/phpunit:^5"
 
 # Install global grunt task runner.
 RUN npm install grunt-cli -g

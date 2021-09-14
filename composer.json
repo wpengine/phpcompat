@@ -13,7 +13,7 @@
 	},
 	"require-dev": {
 		"wp-coding-standards/wpcs": "^2.3.0",
-		"phpunit/phpunit": "^6"
+		"phpunit/phpunit": "^5"
 	},
 	"scripts": {
 		"phpcs": "phpcs --standard=src/ruleset-wordpress.xml wpengine-phpcompat.php load-files.php src/*.php",
