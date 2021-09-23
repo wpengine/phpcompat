@@ -188,3 +188,4 @@ workflows:
               ignore: /.*/
             tags:
               only: /^(v)?(\d+)\.(\d+)(\.\d+)?$/
+          context: wpe-wporg-svn-creds
