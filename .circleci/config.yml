@@ -122,7 +122,7 @@ jobs:
       CONTAINER_WP_VERSION: "latest"
       CONTAINER_PHP_VERSION: "7.3"
   deploy_job:
-    working_directory: /root/project/phpcompat-demo
+    working_directory: /root/project/phpcompat
     docker:
       - image: wordpress:php7.3-fpm-alpine
     steps:
