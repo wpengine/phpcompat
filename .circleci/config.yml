@@ -116,11 +116,6 @@ jobs:
     environment:
       CONTAINER_WP_VERSION: "latest"
       CONTAINER_PHP_VERSION: "7.2"
-  job_test_php73_min:
-    <<: *job_phpunit_base
-    environment:
-      CONTAINER_WP_VERSION: "latest"
-      CONTAINER_PHP_VERSION: "7.3"
   job_test_php73:
     <<: *job_phpunit_base
     environment:
@@ -165,10 +160,6 @@ workflows:
           requires:
             - job_php_code_standards
       - job_test_php72:
-          <<: *workflow_job
-          requires:
-            - job_php_code_standards
-      - job_test_php73_min:
           <<: *workflow_job
           requires:
             - job_php_code_standards
