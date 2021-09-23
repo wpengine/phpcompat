@@ -52,6 +52,10 @@ if [[ -d "$PROJECT_DIR/assets/" ]]; then
     rsync -rc "$PROJECT_DIR/assets/" assets/ --delete
 fi
 
+# Clean up working copy to satisfy svn-files.
+echo "SVN cleanup..."
+svn cleanup
+
 # Add everything and commit to SVN.
 # The force flag ensures we recurse into subdirectories even if they are already added.
 # Suppress stdout in favor of svn status later for readability.
