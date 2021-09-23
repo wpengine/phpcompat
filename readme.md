@@ -2,8 +2,8 @@
 **Contributors:** [wpengine](https://profiles.wordpress.org/wpengine), [octalmage](https://profiles.wordpress.org/octalmage), [stevenkword](https://profiles.wordpress.org/stevenkword), [Taylor4484](https://profiles.wordpress.org/Taylor4484), [pross](https://profiles.wordpress.org/pross), [jcross](https://profiles.wordpress.org/jcross), [rfmeier](https://profiles.wordpress.org/rfmeier)  
 **Tags:** php 7, php, version, compatibility, checker, wp engine, wpe, wpengine  
 **Requires at least:** 4.8  
-**Tested up to:** 5.4  
-**Stable tag:** 1.5.1  
+**Tested up to:** 5.8  
+**Stable tag:** 1.5.2  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -117,6 +117,11 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 
 
 ## Changelog ##
+
+### 1.5.2 ###
+- Removed PHP 5.2 checks
+- Fixed PHP 8 issue where plugin cannot cannot be uninstalled.
+
 ### 1.5.1 ###
 - Added Smart Plugin Manager to whitelisted plugins
 
