@@ -172,7 +172,6 @@ workflows:
             - job_test_php70
             - job_test_php71
             - job_test_php72
-            - job_test_php73_min
             - job_test_php73
           filters:
             branches:
