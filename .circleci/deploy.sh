@@ -36,10 +36,11 @@ echo "Preparing for version $RELEASE_TAG release..."
 # Checkout just trunk and assets for efficiency.
 # Tagging will be handled on the SVN level.
 echo "Checking out svn repository..."
-svn checkout --depth immediates "$SVN_URL" "$SVN_DIR"
+svn co "$SVN_URL" --depth=empty "$SVN_DIR"
 cd "$SVN_DIR"
-svn update --set-depth infinity assets
-svn update --set-depth infinity trunk
+svn up assets
+svn up trunk
+svn up tags --depth=empty
 find ./trunk -not -path "./trunk" -delete
 
 echo "Copying files..."
@@ -61,9 +62,9 @@ ls -lah trunk
 echo "Adding files..."
 svn add . --force
 
-echo "svn remove deleted files..."
+# echo "svn remove deleted files..."
 # SVN delete all deleted files and suppress stdout.
-svn status | grep '^\!' | sed 's/! *//' | xargs -I% svn rm %@
+# svn status | grep '^\!' | sed 's/! *//' | xargs -I% svn rm %@
 
 # Copy trunk into the current tag directory.
 echo "Copying tag..."
