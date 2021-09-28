@@ -41,7 +41,6 @@ cd "$SVN_DIR"
 svn update --set-depth infinity assets
 svn update --set-depth infinity trunk
 find ./trunk -not -path "./trunk" -delete
-ls -lah trunk
 
 echo "Copying files..."
 
@@ -54,6 +53,7 @@ fi
 if [[ -d "$PROJECT_DIR/assets/" ]]; then
     rsync -rc "$PROJECT_DIR/assets/" assets/ --delete
 fi
+ls -lah trunk
 
 # Add everything and commit to SVN.
 # The force flag ensures we recurse into subdirectories even if they are already added.
