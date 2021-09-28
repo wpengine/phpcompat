@@ -41,10 +41,12 @@ cd "$SVN_DIR"
 svn update --set-depth infinity assets
 svn update --set-depth infinity trunk
 find ./trunk -not -path "./trunk" -delete
+ls -lah
 
 echo "Copying files..."
 
 if [[ -f "$PROJECT_DIR/.distignore" ]]; then
+    echo "doing rsync..."
     rsync -rcl --exclude-from="$PROJECT_DIR/.distignore" "$PROJECT_DIR/" trunk/ --delete --delete-excluded
 fi
 
