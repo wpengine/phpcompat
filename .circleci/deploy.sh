@@ -55,18 +55,14 @@ if [[ -d "$PROJECT_DIR/assets/" ]]; then
     rsync -rc "$PROJECT_DIR/assets/" assets/ --delete
 fi
 
-# Clean up working copy to satisfy svn-files.
-echo "SVN cleanup..."
-svn cleanup
-
 # Add everything and commit to SVN.
 # The force flag ensures we recurse into subdirectories even if they are already added.
 # Suppress stdout in favor of svn status later for readability.
 echo "Preparing files..."
-svn add . --force > /dev/null
+svn add . --force
 
 # SVN delete all deleted files and suppress stdout.
-svn status | grep '^\!' | sed 's/! *//' | xargs -I% svn rm %@ > /dev/null
+svn status | grep '^\!' | sed 's/! *//' | xargs -I% svn rm %@
 
 # Copy trunk into the current tag directory.
 echo "Copying tag..."
