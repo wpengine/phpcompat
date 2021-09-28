@@ -58,9 +58,10 @@ ls -lah trunk
 # Add everything and commit to SVN.
 # The force flag ensures we recurse into subdirectories even if they are already added.
 # Suppress stdout in favor of svn status later for readability.
-echo "Preparing files..."
+echo "Adding files..."
 svn add . --force
 
+echo "svn remove deleted files..."
 # SVN delete all deleted files and suppress stdout.
 svn status | grep '^\!' | sed 's/! *//' | xargs -I% svn rm %@
 
