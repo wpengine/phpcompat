@@ -40,6 +40,7 @@ svn checkout --depth immediates "$SVN_URL" "$SVN_DIR"
 cd "$SVN_DIR"
 svn update --set-depth infinity assets
 svn update --set-depth infinity trunk
+find ./trunk -not -path "./trunk" -delete
 
 echo "Copying files..."
 
@@ -72,6 +73,6 @@ svn cp "trunk" "tags/$RELEASE_TAG"
 svn status
 
 echo "Committing files..."
-svn commit -m "Release version $RELEASE_TAG." --no-auth-cache --non-interactive --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
+# svn commit -m "Release version $RELEASE_TAG." --no-auth-cache --non-interactive --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
 
 echo "Plugin version $RELEASE_TAG deployed."
