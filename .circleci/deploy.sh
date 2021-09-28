@@ -74,5 +74,8 @@ svn status
 
 echo "Committing files..."
 # svn commit -m "Release version $RELEASE_TAG." --no-auth-cache --non-interactive --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
+mkdir /tmp/zip
+cd /tmp/zip
+tar -czvf /tmp/zip/1.5.2.tar.gz /tmp/artifacts/tags/1.5.2
 
 echo "Plugin version $RELEASE_TAG deployed."

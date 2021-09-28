@@ -139,7 +139,7 @@ jobs:
           name: Deploy plugin to wordpress.org
           command: /bin/bash .circleci/deploy.sh
       - store_artifacts:
-          path: /tmp/artifacts
+          path: /tmp/zip
 
 workflows:
   version: 2
