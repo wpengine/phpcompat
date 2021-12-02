@@ -129,7 +129,7 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 - Added support for PHP 7.3 compatibility checks
 
 ### 1.4.8 ###
-- Update dependencies.
+- Update dependencies
 
 ### 1.4.7 ###
 - Better translation support.
