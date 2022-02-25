@@ -4,11 +4,12 @@
     "grunt": "^1.4.1",
     "grunt-cli": "^1.4.3",
     "grunt-wp-readme-to-markdown": "^2.1.0",
-    "node-qunit-phantomjs": "^2.1.1"
+    "node-qunit-phantomjs": "^2.1.1",
+    "phantomjs-prebuilt": "^2.1.16"
   },
   "scripts": {
     "test": "npm run test:qunit",
-    "test:qunit": "node-qunit-phantomjs tests/qunit/index.html  --verbose",
+    "test:qunit": "node-qunit-phantomjs ./tests/qunit/index.html  --verbose",
     "readme": "grunt readme"
   }
 }
