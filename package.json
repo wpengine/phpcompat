@@ -3,7 +3,7 @@
   "devDependencies": {
     "grunt": "^1.4.1",
     "grunt-cli": "^1.4.3",
-    "grunt-wp-readme-to-markdown": "^2.0.0",
+    "grunt-wp-readme-to-markdown": "^2.1.0",
     "node-qunit-phantomjs": "^2.1.1"
   },
   "scripts": {
