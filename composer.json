@@ -13,11 +13,17 @@
 	},
 	"require-dev": {
 		"wp-coding-standards/wpcs": "^1",
-		"phpunit/phpunit": "^6"
+		"phpunit/phpunit": "^6",
+		"yoast/phpunit-polyfills": "^1.0"
 	},
 	"scripts": {
 		"phpcs": "phpcs --standard=src/ruleset-wordpress.xml wpengine-phpcompat.php load-files.php src/*.php",
 		"phpcs:fix": "phpcbf --standard=src/ruleset-wordpress.xml wpengine-phpcompat.php load-files.php src/*.php",
 		"test": "phpunit"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
 	}
 }
