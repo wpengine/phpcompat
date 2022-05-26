@@ -4,7 +4,7 @@
     "braces": "^2.3.1",
     "chokidar": "^3.5.3",
     "glob-parent": "^5.1.2",
-    "grunt": "^1.5.2",
+    "grunt": "^1.5.3",
     "grunt-cli": "^1.4.3",
     "grunt-wp-readme-to-markdown": "^2.1.0",
     "node-qunit-phantomjs": "^2.1.1",
