@@ -171,7 +171,7 @@ class PHP_Compatibility_Checker {
 			}
 		}
 
-		return $plugins;
+		return apply_filters( 'phpcompat_plugins_to_test', $plugins );
 	}
 
 	/**
