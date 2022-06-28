@@ -188,6 +188,29 @@ class PHP_Compatibility_Checker {
 	}
 
 	/**
+	 * Get themes list to test
+	 *
+	 * @return array
+	 */
+	public function get_themes_to_test() {
+		$themes_data = wp_prepare_themes_for_js();
+
+		$themes = array_map(
+			function( $theme ) {
+				return array(
+					'slug'    => $theme['id'],
+					'name'    => $theme['name'],
+					'version' => $theme['version'],
+					'active'  => true === $theme['active'] ? 'yes' : 'no',
+				);
+			},
+			$themes_data
+		);
+
+		return apply_filters( 'phpcompat_themes_to_test', $themes );
+	}
+
+	/**
 	 * Generates a list of directories to scan and populate the queue.
 	 *
 	 * @since  1.0.0
