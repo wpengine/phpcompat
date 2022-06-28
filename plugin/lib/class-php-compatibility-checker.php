@@ -108,7 +108,7 @@ class PHP_Compatibility_Checker {
 	}
 
 	/**
-	 * Check if the plugin should be excluded from the test
+	 * Check if a plugin should be excluded from scans.
 	 *
 	 * @param array $plugin_data Plugin data.
 	 * @see https://developer.wordpress.org/reference/functions/get_plugin_data/
@@ -122,7 +122,7 @@ class PHP_Compatibility_Checker {
 	}
 
 	/**
-	 * Get plugins list to test
+	 * Get all plugins that should be scanned.
 	 *
 	 * @return array
 	 */
@@ -134,7 +134,7 @@ class PHP_Compatibility_Checker {
 
 		$plugins = get_plugins();
 
-		// Exclude plugins.
+		// Exclude some plugins.
 		$plugins = array_filter(
 			$plugins,
 			function ( $plugin_data ) {
@@ -148,7 +148,7 @@ class PHP_Compatibility_Checker {
 		$plugins = array_map(
 			function( $plugin_file, $plugin_data ) use ( $active_plugins ) {
 				$plugin_data['plugin_file'] = $plugin_file;
-				$plugin_data['active'] = in_array( $plugin_file, $active_plugins, true ) ? 'yes' : 'no';
+				$plugin_data['active']      = in_array( $plugin_file, $active_plugins, true ) ? 'yes' : 'no';
 				return $plugin_data;
 			},
 			array_keys( $plugins ),
@@ -157,9 +157,10 @@ class PHP_Compatibility_Checker {
 
 		$plugin_info = get_site_transient( 'update_plugins' );
 
-		// Extract real plugin slugs from the update_plugins transient
+		// Extract real plugin slugs from the update_plugins transient.
 		foreach ( $plugins as $key => $plugin_data ) {
 			$plugin_file = $plugin_data['plugin_file'];
+
 			if ( isset( $plugin_info->response[ $plugin_file ] ) ) {
 				$plugins[ $key ]['slug'] = $plugin_info->response[ $plugin_file ]->slug;
 			} elseif ( isset( $plugin_info->no_update[ $plugin_file ] ) ) {
@@ -186,7 +187,7 @@ class PHP_Compatibility_Checker {
 	}
 
 	/**
-	 * Get themes list to test
+	 * Get all themes that should be scanned.
 	 *
 	 * @return array
 	 */
