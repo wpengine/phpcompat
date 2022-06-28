@@ -71,7 +71,7 @@ class PHP_Compatibility_Checker {
 			'checkerList',
 			array(
 				'plugins' => $this->get_plugins_to_test(),
-				'pluginList'       => $this->generate_directory_list(),
+				'pluginList'       => $this->generate_directory_list(), // TODO Remove deprecated.
 				'themeList'        => 'tbd',
 				'userOptions'        => 'some user options',
 			)
@@ -178,6 +178,8 @@ class PHP_Compatibility_Checker {
 	 * Generates a list of directories to scan and populate the queue.
 	 *
 	 * @since  1.0.0
+	 *
+	 * @todo Remove deprecated.
 	 */
 	public function generate_directory_list() {
 		if ( ! function_exists( 'get_plugins' ) ) {
@@ -275,6 +277,7 @@ class PHP_Compatibility_Checker {
 		$url_codeable_submit      = esc_url( 'https://codeable.io/wp-admin/admin-ajax.php?action=wp_engine_phpcompat' );
 
 		$update_url = site_url( 'wp-admin/update-core.php', 'admin' );
+		// TODO Remove deprecated.
 		$active_plugins = $this->generate_directory_list();
 		foreach ( $active_plugins as $slug ) {
 			$active_plugin_slugs[] = rtrim( $slug[0], "/" );
