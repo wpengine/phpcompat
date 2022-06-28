@@ -70,6 +70,7 @@ class PHP_Compatibility_Checker {
 			'tide-checker',
 			'checkerList',
 			array(
+				'plugins' => $this->get_plugins_to_test(),
 				'pluginList'       => $this->generate_directory_list(),
 				'themeList'        => 'tbd',
 				'userOptions'        => 'some user options',
@@ -84,7 +85,7 @@ class PHP_Compatibility_Checker {
 		$instance = self::instance();
 
 		// Load textdomain.
-		add_action( 'init', array( $instance, 'load_textdomain' ) );
+		// add_action( 'init', array( $instance, 'load_textdomain' ) );
 
 		// Build our tools page.
 		add_action( 'admin_menu', array( $instance, 'create_menu' ) );
@@ -106,6 +107,71 @@ class PHP_Compatibility_Checker {
 		if ( is_admin() ) {
 			// not sure yet.
 		}
+	}
+
+	/**
+	 * Check if the plugin should be excluded from the test
+	 *
+	 * @param array $plugin_data Plugin data.
+	 * @see https://developer.wordpress.org/reference/functions/get_plugin_data/
+	 * @return boolean
+	 */
+	public function exclude_plugin( $plugin_data ) {
+		$excluded_plugins = array( 'PHP Compatibility Checker', 'Hello Dolly' );
+		$excluded_plugins = apply_filters( 'phpcompat_excluded_plugins', $excluded_plugins );
+
+		return in_array( $plugin_data['Name'], $excluded_plugins, true );
+	}
+
+	/**
+	 * Get plugins list to test
+	 *
+	 * @return array
+	 */
+	public function get_plugins_to_test() {
+		if ( ! function_exists( 'get_plugins' ) ) {
+			// phpcs:ignore PEAR.Files.IncludingFile.UseIncludeOnce -- strict requirement
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
+		$plugins = get_plugins();
+
+		// Exclude plugins.
+		$plugins = array_filter(
+			$plugins,
+			function ( $plugin_data ) {
+				return ! $this->exclude_plugin( $plugin_data );
+			}
+		);
+
+		$active_plugins = get_option( 'active_plugins' );
+
+		// Add "active" attribute.
+		$plugins = array_map(
+			function( $plugin_file, $plugin_data ) use ( $active_plugins ) {
+				$plugin_data['plugin_file'] = $plugin_file;
+				$plugin_data['active'] = in_array( $plugin_file, $active_plugins, true ) ? 'yes' : 'no';
+				return $plugin_data;
+			},
+			array_keys( $plugins ),
+			$plugins
+		);
+
+		$plugin_info = get_site_transient( 'update_plugins' );
+
+		// Extract real plugin slugs from the update_plugins transient
+		foreach ( $plugins as $key => $plugin_data ) {
+			$plugin_file = $plugin_data['plugin_file'];
+			if ( isset( $plugin_info->response[ $plugin_file ] ) ) {
+				$plugins[ $key ]['slug'] = $plugin_info->response[ $plugin_file ]->slug;
+			} elseif ( isset( $plugin_info->no_update[ $plugin_file ] ) ) {
+				$plugins[ $key ]['slug'] = $plugin_info->no_update[ $plugin_file ]->slug;
+			} else {
+				$plugins[ $key ]['slug'] = false;
+			}
+		}
+
+		return $plugins;
 	}
 
 	/**
@@ -264,7 +330,7 @@ class PHP_Compatibility_Checker {
 
 				<div>
 				<?php
-					var_dump( $active_plugin_slugs );				
+					//var_dump( $active_plugin_slugs );				
 				?>
 				</div>
 
