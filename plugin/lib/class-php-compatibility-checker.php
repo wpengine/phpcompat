@@ -71,9 +71,7 @@ class PHP_Compatibility_Checker {
 			'checkerList',
 			array(
 				'plugins' => $this->get_plugins_to_test(),
-				'pluginList'       => $this->generate_directory_list(), // TODO Remove deprecated.
-				'themeList'        => 'tbd',
-				'userOptions'        => 'some user options',
+				'themes'  => $this->get_themes_to_test(),
 			)
 		);
 	}
@@ -313,11 +311,6 @@ class PHP_Compatibility_Checker {
 		$url_codeable_submit      = esc_url( 'https://codeable.io/wp-admin/admin-ajax.php?action=wp_engine_phpcompat' );
 
 		$update_url = site_url( 'wp-admin/update-core.php', 'admin' );
-		// TODO Remove deprecated.
-		$active_plugins = $this->generate_directory_list();
-		foreach ( $active_plugins as $slug ) {
-			$active_plugin_slugs[] = rtrim( $slug[0], "/" );
-		}
 
 		?>
 		<div class="wrap wpe-pcc-wrap">
@@ -366,12 +359,6 @@ class PHP_Compatibility_Checker {
 						</tbody>
 					</table>
 				</div> <!-- /wpe-pcc-scan-options -->
-
-				<div>
-				<?php
-					//var_dump( $active_plugin_slugs );				
-				?>
-				</div>
 
 				<div class="wpe-pcc-results" style="display:none;">
 					<hr>
