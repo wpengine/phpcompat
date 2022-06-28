@@ -171,6 +171,19 @@ class PHP_Compatibility_Checker {
 			}
 		}
 
+		// Compact output.
+		$plugins = array_map(
+			function( $plugin ) {
+				return array(
+					'slug'    => $plugin['slug'],
+					'name'    => $plugin['Name'],
+					'version' => $plugin['Version'],
+					'active'  => $plugin['active'],
+				);
+			},
+			$plugins
+		);
+
 		return apply_filters( 'phpcompat_plugins_to_test', $plugins );
 	}
 
