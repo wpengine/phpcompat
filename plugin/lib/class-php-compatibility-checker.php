@@ -70,8 +70,8 @@ class PHP_Compatibility_Checker {
 			'tide-checker',
 			'checkerList',
 			array(
-				'plugins' => $this->get_plugins_to_test(),
-				'themes'  => $this->get_themes_to_test(),
+				'plugins' => $this->get_plugins_to_scan(),
+				'themes'  => $this->get_themes_to_scan(),
 			)
 		);
 	}
@@ -126,7 +126,7 @@ class PHP_Compatibility_Checker {
 	 *
 	 * @return array
 	 */
-	public function get_plugins_to_test() {
+	public function get_plugins_to_scan() {
 		if ( ! function_exists( 'get_plugins' ) ) {
 			// phpcs:ignore PEAR.Files.IncludingFile.UseIncludeOnce -- strict requirement
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -182,7 +182,7 @@ class PHP_Compatibility_Checker {
 			$plugins
 		);
 
-		return apply_filters( 'phpcompat_plugins_to_test', $plugins );
+		return apply_filters( 'phpcompat_plugins_to_scan', $plugins );
 	}
 
 	/**
@@ -190,7 +190,7 @@ class PHP_Compatibility_Checker {
 	 *
 	 * @return array
 	 */
-	public function get_themes_to_test() {
+	public function get_themes_to_scan() {
 		$themes_data = wp_prepare_themes_for_js();
 
 		$themes = array_map(
@@ -205,7 +205,7 @@ class PHP_Compatibility_Checker {
 			$themes_data
 		);
 
-		return apply_filters( 'phpcompat_themes_to_test', $themes );
+		return apply_filters( 'phpcompat_themes_to_scan', $themes );
 	}
 
 	/**
