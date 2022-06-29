@@ -139,46 +139,48 @@ class PHP_Compatibility_Checker {
 			}
 		);
 
-		$active_plugins = get_option( 'active_plugins' );
+		if ( ! empty( $plugins ) ) {
+			$active_plugins = get_option( 'active_plugins' );
 
-		// Add "active" attribute.
-		$plugins = array_map(
-			function( $plugin_file, $plugin_data ) use ( $active_plugins ) {
-				$plugin_data['plugin_file'] = $plugin_file;
-				$plugin_data['active']      = in_array( $plugin_file, $active_plugins, true ) ? 'yes' : 'no';
-				return $plugin_data;
-			},
-			array_keys( $plugins ),
-			$plugins
-		);
+			// Add "active" attribute.
+			$plugins = array_map(
+				function( $plugin_file, $plugin_data ) use ( $active_plugins ) {
+					$plugin_data['plugin_file'] = $plugin_file;
+					$plugin_data['active']      = in_array( $plugin_file, $active_plugins, true ) ? 'yes' : 'no';
+					return $plugin_data;
+				},
+				array_keys( $plugins ),
+				$plugins
+			);
 
-		$plugin_info = get_site_transient( 'update_plugins' );
+			$plugin_info = get_site_transient( 'update_plugins' );
 
-		// Extract real plugin slugs from the update_plugins transient.
-		foreach ( $plugins as $key => $plugin_data ) {
-			$plugin_file = $plugin_data['plugin_file'];
+			// Extract real plugin slugs from the update_plugins transient.
+			foreach ( $plugins as $key => $plugin_data ) {
+				$plugin_file = $plugin_data['plugin_file'];
 
-			if ( isset( $plugin_info->response[ $plugin_file ] ) ) {
-				$plugins[ $key ]['slug'] = $plugin_info->response[ $plugin_file ]->slug;
-			} elseif ( isset( $plugin_info->no_update[ $plugin_file ] ) ) {
-				$plugins[ $key ]['slug'] = $plugin_info->no_update[ $plugin_file ]->slug;
-			} else {
-				$plugins[ $key ]['slug'] = false;
+				if ( isset( $plugin_info->response[ $plugin_file ] ) ) {
+					$plugins[ $key ]['slug'] = $plugin_info->response[ $plugin_file ]->slug;
+				} elseif ( isset( $plugin_info->no_update[ $plugin_file ] ) ) {
+					$plugins[ $key ]['slug'] = $plugin_info->no_update[ $plugin_file ]->slug;
+				} else {
+					$plugins[ $key ]['slug'] = false;
+				}
 			}
-		}
 
-		// Compact output.
-		$plugins = array_map(
-			function( $plugin ) {
-				return array(
-					'slug'    => $plugin['slug'],
-					'name'    => $plugin['Name'],
-					'version' => $plugin['Version'],
-					'active'  => $plugin['active'],
-				);
-			},
-			$plugins
-		);
+			// Compact output.
+			$plugins = array_map(
+				function( $plugin ) {
+					return array(
+						'slug'    => $plugin['slug'],
+						'name'    => $plugin['Name'],
+						'version' => $plugin['Version'],
+						'active'  => $plugin['active'],
+					);
+				},
+				$plugins
+			);
+		}//end if
 
 		return apply_filters( 'phpcompat_plugins_to_scan', $plugins );
 	}
