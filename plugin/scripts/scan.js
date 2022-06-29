@@ -1,4 +1,3 @@
-//esversion: 6
 (function ($) {
   if ("undefined" === typeof checkerList) {
     return;
@@ -10,6 +9,7 @@
 
   var xhr = false;
 
+  // Fake data before https://github.com/10up/phpcompat/pull/2 is merged
   checkerList = {
     plugins: [
       {
@@ -21,7 +21,7 @@
       {
         slug: "debug-bar",
         name: "Debug Bar",
-        version: "1.1.33",
+        version: "1.1.3",
         active: "yes",
       },
     ],
