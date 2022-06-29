@@ -82,9 +82,6 @@ class PHP_Compatibility_Checker {
 	public function init() {
 		$instance = self::instance();
 
-		// Load textdomain.
-		// add_action( 'init', array( $instance, 'load_textdomain' ) );
-
 		// Build our tools page.
 		add_action( 'admin_menu', array( $instance, 'create_menu' ) );
 
