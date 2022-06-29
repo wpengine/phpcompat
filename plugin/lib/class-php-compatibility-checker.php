@@ -52,7 +52,7 @@ class PHP_Compatibility_Checker {
 	 * @since 1.0.0
 	 */
 	public function set_up_ajax() {
-		$ajax_js = '../scripts/scan-runner.js';
+		$ajax_js = '../scripts/scan.js';
 
 		global $wp_query;
 
