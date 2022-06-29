@@ -111,9 +111,11 @@ class PHP_Compatibility_Checker {
 		$excluded_plugins = array( 'PHP Compatibility Checker', 'Hello Dolly' );
 
 		/**
-		 * Filter plugins which should be excluded from scans
+		 * Filter which plugins should be excluded from scans.
 		 *
-		 * @param string[] $excluded_plugins List with names of excluded plugins.
+		 * This will exclude based on the plugin name, not the plugin slug.
+		 *
+		 * @param string[] $excluded_plugins Plugins we want to exclude.
 		 */
 		$excluded_plugins = apply_filters( 'phpcompat_excluded_plugins', $excluded_plugins );
 
@@ -141,51 +143,53 @@ class PHP_Compatibility_Checker {
 			}
 		);
 
-		if ( ! empty( $plugins ) ) {
-			$active_plugins = get_option( 'active_plugins' );
+		if ( empty( $plugins ) ) {
+			return array();
+		}
 
-			// Add "active" attribute.
-			$plugins = array_map(
-				function( $plugin_file, $plugin_data ) use ( $active_plugins ) {
-					$plugin_data['plugin_file'] = $plugin_file;
-					$plugin_data['active']      = in_array( $plugin_file, $active_plugins, true ) ? 'yes' : 'no';
-					return $plugin_data;
-				},
-				array_keys( $plugins ),
-				$plugins
-			);
+		$active_plugins = get_option( 'active_plugins' );
 
-			$plugin_info = get_site_transient( 'update_plugins' );
+		// Add "active" attribute.
+		$plugins = array_map(
+			function( $plugin_file, $plugin_data ) use ( $active_plugins ) {
+				$plugin_data['plugin_file'] = $plugin_file;
+				$plugin_data['active']      = in_array( $plugin_file, $active_plugins, true ) ? 'yes' : 'no';
+				return $plugin_data;
+			},
+			array_keys( $plugins ),
+			$plugins
+		);
 
-			// Extract real plugin slugs from the update_plugins transient.
-			foreach ( $plugins as $key => $plugin_data ) {
-				$plugin_file = $plugin_data['plugin_file'];
+		$plugin_info = get_site_transient( 'update_plugins' );
 
-				if ( isset( $plugin_info->response[ $plugin_file ] ) ) {
-					$plugins[ $key ]['slug'] = $plugin_info->response[ $plugin_file ]->slug;
-				} elseif ( isset( $plugin_info->no_update[ $plugin_file ] ) ) {
-					$plugins[ $key ]['slug'] = $plugin_info->no_update[ $plugin_file ]->slug;
-				} else {
-					$plugins[ $key ]['slug'] = false;
-				}
+		// Extract real plugin slugs from the update_plugins transient.
+		foreach ( $plugins as $key => $plugin_data ) {
+			$plugin_file = $plugin_data['plugin_file'];
+
+			if ( isset( $plugin_info->response[ $plugin_file ] ) ) {
+				$plugins[ $key ]['slug'] = $plugin_info->response[ $plugin_file ]->slug;
+			} elseif ( isset( $plugin_info->no_update[ $plugin_file ] ) ) {
+				$plugins[ $key ]['slug'] = $plugin_info->no_update[ $plugin_file ]->slug;
+			} else {
+				$plugins[ $key ]['slug'] = false;
 			}
+		}
 
-			// Compact output.
-			$plugins = array_map(
-				function( $plugin ) {
-					return array(
-						'slug'    => sanitize_text_field( $plugin['slug'] ),
-						'name'    => sanitize_text_field( $plugin['Name'] ),
-						'version' => sanitize_text_field( $plugin['Version'] ),
-						'active'  => $plugin['active'],
-					);
-				},
-				$plugins
-			);
-		}//end if
+		// Compact output.
+		$plugins = array_map(
+			function( $plugin ) {
+				return array(
+					'slug'    => sanitize_text_field( $plugin['slug'] ),
+					'name'    => sanitize_text_field( $plugin['Name'] ),
+					'version' => sanitize_text_field( $plugin['Version'] ),
+					'active'  => $plugin['active'],
+				);
+			},
+			$plugins
+		);
 
 		/**
-		 * Filter plugins which should be scanned
+		 * Filter which plugins should be scanned.
 		 *
 		 * @param array[] $plugins {
 		 *     List of plugins.
@@ -220,7 +224,7 @@ class PHP_Compatibility_Checker {
 		);
 
 		/**
-		 * Filter themes which should be scanned
+		 * Filter which themes should be scanned.
 		 *
 		 * @param array[] $themes {
 		 *     List of themes.
