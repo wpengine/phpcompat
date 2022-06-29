@@ -109,6 +109,12 @@ class PHP_Compatibility_Checker {
 	 */
 	public function exclude_plugin( $plugin_data ) {
 		$excluded_plugins = array( 'PHP Compatibility Checker', 'Hello Dolly' );
+
+		/**
+		 * Filter plugins which should be excluded from scans
+		 *
+		 * @param string[] $excluded_plugins List with names of excluded plugins.
+		 */
 		$excluded_plugins = apply_filters( 'phpcompat_excluded_plugins', $excluded_plugins );
 
 		return in_array( $plugin_data['Name'], $excluded_plugins, true );
@@ -178,6 +184,18 @@ class PHP_Compatibility_Checker {
 			);
 		}//end if
 
+		/**
+		 * Filter plugins which should be scanned
+		 *
+		 * @param array[] $plugins {
+		 *     List of plugins.
+		 *
+		 *     @type string $slug Plugin slug.
+		 *     @type string $name Plugin name.
+		 *     @type string $version Plugin version.
+		 *     @type string $active Whether the plugin is active (yes or no).
+		 * }
+		 */
 		return apply_filters( 'phpcompat_plugins_to_scan', $plugins );
 	}
 
@@ -201,6 +219,18 @@ class PHP_Compatibility_Checker {
 			$themes_data
 		);
 
+		/**
+		 * Filter themes which should be scanned
+		 *
+		 * @param array[] $themes {
+		 *     List of themes.
+		 *
+		 *     @type string $slug Theme slug.
+		 *     @type string $name Theme name.
+		 *     @type string $version Theme version.
+		 *     @type string $active Whether the theme is active (yes or no).
+		 * }
+		 */
 		return apply_filters( 'phpcompat_themes_to_scan', $themes );
 	}
 
