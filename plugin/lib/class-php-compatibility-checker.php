@@ -174,9 +174,9 @@ class PHP_Compatibility_Checker {
 			$plugins = array_map(
 				function( $plugin ) {
 					return array(
-						'slug'    => $plugin['slug'],
-						'name'    => $plugin['Name'],
-						'version' => $plugin['Version'],
+						'slug'    => sanitize_text_field( $plugin['slug'] ),
+						'name'    => sanitize_text_field( $plugin['Name'] ),
+						'version' => sanitize_text_field( $plugin['Version'] ),
 						'active'  => $plugin['active'],
 					);
 				},
@@ -210,9 +210,9 @@ class PHP_Compatibility_Checker {
 		$themes = array_map(
 			function( $theme ) {
 				return array(
-					'slug'    => $theme['id'],
-					'name'    => $theme['name'],
-					'version' => $theme['version'],
+					'slug'    => sanitize_text_field( $theme['id'] ),
+					'name'    => sanitize_text_field( $theme['name'] ),
+					'version' => sanitize_text_field( $theme['version'] ),
 					'active'  => true === $theme['active'] ? 'yes' : 'no',
 				);
 			},
