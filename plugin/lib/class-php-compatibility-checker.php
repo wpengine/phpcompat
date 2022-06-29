@@ -98,10 +98,6 @@ class PHP_Compatibility_Checker {
 		// Handle activation notice.
 		// register_activation_hook( __FILE__, array( $instance, 'set_activation_notice_flag' ) );
 		// add_action( 'admin_notices', array( $instance, 'maybe_show_activation_notice' ) );
-
-		if ( is_admin() ) {
-			// not sure yet.
-		}
 	}
 
 	/**
