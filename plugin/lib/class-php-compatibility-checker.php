@@ -70,9 +70,8 @@ class PHP_Compatibility_Checker {
 			'tide-checker',
 			'checkerList',
 			array(
-				'pluginList'       => $this->generate_directory_list(),
-				'themeList'        => 'tbd',
-				'userOptions'        => 'some user options',
+				'plugins' => $this->get_plugins_to_scan(),
+				'themes'  => $this->get_themes_to_scan(),
 			)
 		);
 	}
@@ -82,9 +81,6 @@ class PHP_Compatibility_Checker {
 	 */
 	public function init() {
 		$instance = self::instance();
-
-		// Load textdomain.
-		add_action( 'init', array( $instance, 'load_textdomain' ) );
 
 		// Build our tools page.
 		add_action( 'admin_menu', array( $instance, 'create_menu' ) );
@@ -102,73 +98,148 @@ class PHP_Compatibility_Checker {
 		// Handle activation notice.
 		// register_activation_hook( __FILE__, array( $instance, 'set_activation_notice_flag' ) );
 		// add_action( 'admin_notices', array( $instance, 'maybe_show_activation_notice' ) );
-
-		if ( is_admin() ) {
-			// not sure yet.
-		}
 	}
 
 	/**
-	 * Generates a list of directories to scan and populate the queue.
+	 * Get all plugins that should be scanned.
 	 *
-	 * @since  1.0.0
+	 * @return array
 	 */
-	public function generate_directory_list() {
+	public function get_plugins_to_scan() {
 		if ( ! function_exists( 'get_plugins' ) ) {
-
+			// phpcs:ignore PEAR.Files.IncludingFile.UseIncludeOnce -- strict requirement
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 
-		$plugin_base = dirname( $this->base ) . DIRECTORY_SEPARATOR;
-		$all_plugins = get_plugins();
+		$plugins = get_plugins();
 
-		$update_plugins = get_site_transient( 'update_plugins' );
-		//$slug_name[] = plugin_basename();
+		/**
+		 * Filter which plugins should be excluded from scans.
+		 *
+		 * This will exclude based on the plugin name, not the plugin slug.
+		 *
+		 * @param string[] $excluded_plugins Plugins we want to exclude.
+		 */
+		$excluded_plugins = apply_filters( 'phpcompat_excluded_plugins', array( 'PHP Compatibility Checker', 'Hello Dolly' ) );
 
-		foreach ( $all_plugins as $k => $v ) {
-			// Exclude some plugins.
-			if ( 'PHP Compatibility Checker' === $v['Name'] ) {
-				continue;
+		// Exclude some plugins.
+		$plugins = array_filter(
+			$plugins,
+			function ( $plugin_data ) use ( $excluded_plugins ) {
+				return ! in_array( $plugin_data['Name'], $excluded_plugins, true );
 			}
-			if ( 'Hello Dolly' === $v['Name'] ) {
-				continue;
-			}
+		);
 
-			// Exclude active plugins if only_active = "yes".
-			if ( 'yes' === $this->only_active ) {
-				// Get array of active plugins.
-				$active_plugins = get_option( 'active_plugins' );
+		if ( empty( $plugins ) ) {
+			return array();
+		}
 
-				if ( ! in_array( $k, $active_plugins, true ) ) {
-					continue;
-				}
-			}
+		$active_plugins = get_option( 'active_plugins' );
 
-			$plugin_file = plugin_dir_path( $k );
+		// Add "active" attribute.
+		$plugins = array_map(
+			function( $plugin_file, $plugin_data ) use ( $active_plugins ) {
+				$plugin_data['plugin_file'] = $plugin_file;
+				$plugin_data['active']      = in_array( $plugin_file, $active_plugins, true ) ? 'yes' : 'no';
+				return $plugin_data;
+			},
+			array_keys( $plugins ),
+			$plugins
+		);
 
-			// Plugin in root directory (like Hello Dolly).
-			if ( './' === $plugin_file ) {
-				$plugin_path = $plugin_base . $k;
+		$plugin_info = get_site_transient( 'update_plugins' );
+
+		// Extract real plugin slugs from the update_plugins transient.
+		foreach ( $plugins as $key => $plugin_data ) {
+			$plugin_file = $plugin_data['plugin_file'];
+
+			if ( isset( $plugin_info->response[ $plugin_file ] ) ) {
+				$plugins[ $key ]['slug'] = $plugin_info->response[ $plugin_file ]->slug;
+			} elseif ( isset( $plugin_info->no_update[ $plugin_file ] ) ) {
+				$plugins[ $key ]['slug'] = $plugin_info->no_update[ $plugin_file ]->slug;
 			} else {
-				$plugin_path = $plugin_base . $plugin_file;
+				$plugins[ $key ]['slug'] = false;
 			}
-			$id[] = array( $plugin_file );
+		}
 
-			if ( is_object( $update_plugins ) && is_array( $update_plugins->response ) ) {
-				// Check for plugin updates.
-				foreach ( $update_plugins->response as $uk => $uv ) {
-					// If we have a match.
-					if ( $uk === $k ) {
-						$this->debug_log( 'An update exists for: ' . $v['Name'] );
-						// Save the update version.
-						//update_post_meta( $id, 'update', $uv->new_version );
-						// Save the current version.
-						//update_post_meta( $id, 'version', $v['Version'] );
-					}
-				}
+		// Compact output.
+		$plugins = array_map(
+			function( $plugin ) {
+				return array(
+					'slug'    => sanitize_text_field( $plugin['slug'] ),
+					'name'    => sanitize_text_field( $plugin['Name'] ),
+					'version' => sanitize_text_field( $plugin['Version'] ),
+					'active'  => $plugin['active'],
+				);
+			},
+			$plugins
+		);
+
+		/**
+		 * Filter which plugins should be scanned.
+		 *
+		 * @param array[] $plugins {
+		 *     List of plugins.
+		 *
+		 *     @type string $slug Plugin slug.
+		 *     @type string $name Plugin name.
+		 *     @type string $version Plugin version.
+		 *     @type string $active Whether the plugin is active (yes or no).
+		 * }
+		 */
+		return apply_filters( 'phpcompat_plugins_to_scan', $plugins );
+	}
+
+	/**
+	 * Get all themes that should be scanned.
+	 *
+	 * @return array
+	 */
+	public function get_themes_to_scan() {
+		$themes_data = wp_prepare_themes_for_js();
+
+		/**
+		 * Filter which themes should be excluded from scans.
+		 *
+		 * This will exclude based on the theme name, not the theme slug.
+		 *
+		 * @param string[] $excluded_themes Themes we want to exclude.
+		 */
+		$excluded_themes = apply_filters( 'phpcompat_excluded_themes', array() );
+
+		// Exclude some themes.
+		$themes_data = array_filter(
+			$themes_data,
+			function ( $theme_data ) use ( $excluded_themes ) {
+				return ! in_array( $theme_data['name'], $excluded_themes, true );
 			}
-		}//end foreach
-		return $id;
+		);
+
+		$themes = array_map(
+			function( $theme ) {
+				return array(
+					'slug'    => sanitize_text_field( $theme['id'] ),
+					'name'    => sanitize_text_field( $theme['name'] ),
+					'version' => sanitize_text_field( $theme['version'] ),
+					'active'  => true === $theme['active'] ? 'yes' : 'no',
+				);
+			},
+			$themes_data
+		);
+
+		/**
+		 * Filter which themes should be scanned.
+		 *
+		 * @param array[] $themes {
+		 *     List of themes.
+		 *
+		 *     @type string $slug Theme slug.
+		 *     @type string $name Theme name.
+		 *     @type string $version Theme version.
+		 *     @type string $active Whether the theme is active (yes or no).
+		 * }
+		 */
+		return apply_filters( 'phpcompat_themes_to_scan', $themes );
 	}
 
 	/**
@@ -209,10 +280,6 @@ class PHP_Compatibility_Checker {
 		$url_codeable_submit      = esc_url( 'https://codeable.io/wp-admin/admin-ajax.php?action=wp_engine_phpcompat' );
 
 		$update_url = site_url( 'wp-admin/update-core.php', 'admin' );
-		$active_plugins = $this->generate_directory_list();
-		foreach ( $active_plugins as $slug ) {
-			$active_plugin_slugs[] = rtrim( $slug[0], "/" );
-		}
 
 		?>
 		<div class="wrap wpe-pcc-wrap">
@@ -261,12 +328,6 @@ class PHP_Compatibility_Checker {
 						</tbody>
 					</table>
 				</div> <!-- /wpe-pcc-scan-options -->
-
-				<div>
-				<?php
-					var_dump( $active_plugin_slugs );				
-				?>
-				</div>
 
 				<div class="wpe-pcc-results" style="display:none;">
 					<hr>
