@@ -3,7 +3,7 @@
     return;
   }
 
-  var activePluginsSwitch = $("input[type=radio][name=active_plugins]");
+  var activeOnlySwitch = $("input[type=radio][name=active_plugins]");
 
   var queue = [];
 
@@ -18,6 +18,12 @@
         version: "4.2.4",
         active: "no",
       },
+	  {
+		slug: "comparepress",
+		name: "ComparePress (incompatible)",
+		version: "2.0.8",
+		active: "no",
+	  },
       {
         slug: "debug-bar",
         name: "Debug Bar",
@@ -49,7 +55,7 @@
 
   init(checkerList);
 
-  activePluginsSwitch.on("change", function () {
+  activeOnlySwitch.on("change", function () {
     init(checkerList);
     console.log(queue);
   });
@@ -60,23 +66,23 @@
   });
 
   function init(itemsToScan) {
-    var activePlugins = $(
+    var activeOnly = $(
       "input[type=radio][name=active_plugins]:checked"
     ).val();
-    renderResults(itemsToScan, activePlugins);
-    initQueue(itemsToScan, activePlugins);
+    renderResults(itemsToScan, activeOnly);
+    initQueue(itemsToScan, activeOnly);
   }
 
-  function renderResults(itemsToScan, activePlugins) {
+  function renderResults(itemsToScan, activeOnly) {
     // Todo in ENG-4
   }
 
-  function initQueue(itemsToScan, activePlugins) {
+  function initQueue(itemsToScan, activeOnly) {
     // Reset the queue.
     queue.length = 0;
 
     itemsToScan.plugins.forEach((plugin) => {
-      if ("yes" === plugin.active || "no" === activePlugins) {
+      if ("yes" === plugin.active || "no" === activeOnly) {
         queue.push({
           type: "plugin",
           slug: plugin.slug,
@@ -86,7 +92,7 @@
     });
 
     itemsToScan.themes.forEach((theme) => {
-      if ("yes" === theme.active || "no" === activePlugins) {
+      if ("yes" === theme.active || "no" === activeOnly) {
         queue.push({
           type: "theme",
           slug: theme.slug,
@@ -108,6 +114,8 @@
           // console.log(response);
           if ("complete" === response.status) {
             // TODO Perform rendering of results here.
+
+			renderResults(response);
             console.log(
               "Report is ready",
               response.reports?.phpcs_phpcompatibilitywp?.report
