@@ -135,11 +135,20 @@ class PHP_Compatibility_Checker {
 
 		$plugins = get_plugins();
 
+                /**
+		 * Filter which plugins should be excluded from scans.
+		 *
+		 * This will exclude based on the plugin name, not the plugin slug.
+		 *
+		 * @param string[] $excluded_plugins Plugins we want to exclude.
+		 */
+		$excluded_plugins = apply_filters( 'phpcompat_excluded_plugins', array( 'PHP Compatibility Checker', 'Hello Dolly' ) );
+
 		// Exclude some plugins.
 		$plugins = array_filter(
 			$plugins,
-			function ( $plugin_data ) {
-				return ! $this->exclude_plugin( $plugin_data );
+			function ( $plugin_data ) use ( $excluded_plugins ) {
+				return ! in_array( $plugin_data['Name'], $excluded_plugins, true );
 			}
 		);
 
