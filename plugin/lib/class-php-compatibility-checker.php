@@ -101,28 +101,6 @@ class PHP_Compatibility_Checker {
 	}
 
 	/**
-	 * Check if a plugin should be excluded from scans.
-	 *
-	 * @param array $plugin_data Plugin data.
-	 * @see https://developer.wordpress.org/reference/functions/get_plugin_data/
-	 * @return boolean
-	 */
-	public function exclude_plugin( $plugin_data ) {
-		$excluded_plugins = array( 'PHP Compatibility Checker', 'Hello Dolly' );
-
-		/**
-		 * Filter which plugins should be excluded from scans.
-		 *
-		 * This will exclude based on the plugin name, not the plugin slug.
-		 *
-		 * @param string[] $excluded_plugins Plugins we want to exclude.
-		 */
-		$excluded_plugins = apply_filters( 'phpcompat_excluded_plugins', $excluded_plugins );
-
-		return in_array( $plugin_data['Name'], $excluded_plugins, true );
-	}
-
-	/**
 	 * Get all plugins that should be scanned.
 	 *
 	 * @return array
