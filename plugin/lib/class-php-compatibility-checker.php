@@ -135,7 +135,7 @@ class PHP_Compatibility_Checker {
 
 		$plugins = get_plugins();
 
-                /**
+		/**
 		 * Filter which plugins should be excluded from scans.
 		 *
 		 * This will exclude based on the plugin name, not the plugin slug.
@@ -220,7 +220,7 @@ class PHP_Compatibility_Checker {
 	public function get_themes_to_scan() {
 		$themes_data = wp_prepare_themes_for_js();
 
-                /**
+		/**
 		 * Filter which themes should be excluded from scans.
 		 *
 		 * This will exclude based on the theme name, not the theme slug.
