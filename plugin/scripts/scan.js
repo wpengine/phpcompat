@@ -105,12 +105,16 @@
     if (false === xhr || xhr.readyState === 4) {
       xhr = $.ajax(endpoint, { dataType: "json", cache: false }).done(
         (response) => {
-          console.log(response);
+          // console.log(response);
           if ("complete" === response.status) {
             // TODO Perform rendering of results here.
-            console.log(response.reports?.phpcs_phpcompatibilitywp?.report);
+            console.log(
+              "Report is ready",
+              response.reports?.phpcs_phpcompatibilitywp?.report
+            );
           } else if ("pending" === response.status) {
             const now = new Date();
+            console.log("Report is pending, retry in 5 seconds");
             // Retry in 5 seconds.
             job.retryAt = new Date(now.getTime() + 5000);
             queue.push(job);
@@ -133,18 +137,18 @@
 
     // Pick up next job from queue.
     var job = queue.shift();
-    console.log(job);
+    console.log("Queue item", job);
 
     // The job is new or the time has come.
     if ("undefined" === typeof job.retryAt || job.retryAt <= now) {
       // Run the job now.
-      console.log("run it");
+      console.log("Run it");
       executeJob(job, () => {
         runNextJob();
       });
     } else {
       // Or put it back to the end of queue.
-      console.log("wait for it");
+      console.log("Now is", now, "wait for it until", job.retryAt);
       queue.push(job);
       setTimeout(runNextJob, 1000);
     }
