@@ -220,6 +220,23 @@ class PHP_Compatibility_Checker {
 	public function get_themes_to_scan() {
 		$themes_data = wp_prepare_themes_for_js();
 
+                /**
+		 * Filter which themes should be excluded from scans.
+		 *
+		 * This will exclude based on the theme name, not the theme slug.
+		 *
+		 * @param string[] $excluded_themes Themes we want to exclude.
+		 */
+		$excluded_themes = apply_filters( 'phpcompat_excluded_themes', array() );
+
+		// Exclude some themes.
+		$themes_data = array_filter(
+			$themes_data,
+			function ( $theme_data ) use ( $excluded_themes ) {
+				return ! in_array( $theme_data['name'], $excluded_themes, true );
+			}
+		);
+
 		$themes = array_map(
 			function( $theme ) {
 				return array(
