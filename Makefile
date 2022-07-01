@@ -16,6 +16,7 @@ build-assets: | build-docker-node install-npm
 	@echo "Building plugin assets"
 	rm -f plugin/languages/*.pot plugin/scripts/*-min.js
 	$(DOCKER_RUN) $(NODE_IMAGE) ./node_modules/gulp-cli/bin/gulp.js
+	npx wp-scripts build
 
 .PHONY: build-docker
 build-docker: build-docker-node build-docker-php

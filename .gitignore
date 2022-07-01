@@ -203,6 +203,7 @@ assets/js/*.js
 assets/js/*.map
 coverage.clover
 /plugin/scripts/*-min.js
+/plugin/build/
 wpe-php-compat.zip
 .phpunit.result.cache
 

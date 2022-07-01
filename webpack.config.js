@@ -1,41 +1,21 @@
-const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
-const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
-const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
+const defaultConfig = require("@wordpress/scripts/config/webpack.config");
+const DependencyExtractionWebpackPlugin = require("@wordpress/dependency-extraction-webpack-plugin");
+const path = require("path");
 
 module.exports = {
-    ...defaultConfig,
-    context: __dirname,    
-    entry: './src/index.js',
-    output: {
-        path: __dirname + '/lib/build/',
-    },
-    module: {
-        ...defaultConfig.module,
-        rules: [
-            ...defaultConfig.module.rules,
-            {
-                test: /\.s[ac]ss$/i,
-                use: [
-                    { loader: MiniCssExtractPlugin.loader },
-                    { loader: 'css-loader' },
-                    { loader: 'sass-loader' },
-                ],
-            },
-        ],
-    },
-    plugins: [
-		...defaultConfig.plugins.filter(
-			( plugin ) =>
-				plugin.constructor.name !== 'DependencyExtractionWebpackPlugin'
-		),
-		new DependencyExtractionWebpackPlugin( {
-			injectPolyfill: true,
-			requestToExternal( request ) {
-				/* My externals */
-			},
-		} ),
-        new MiniCssExtractPlugin( {
-            filename: '../[name].css',
-        } ),
-    ],
+  ...defaultConfig,
+  output: {
+    ...defaultConfig.output,
+    path: path.resolve(process.cwd(), "plugin/build"),
+  },
+  entry: {
+    scan: path.resolve(process.cwd(), "src/js", "scan.js"),
+  },
+  plugins: [
+    ...defaultConfig.plugins.filter(
+      (plugin) =>
+        plugin.constructor.name !== "DependencyExtractionWebpackPlugin"
+    ),
+    new DependencyExtractionWebpackPlugin(),
+  ],
 };
