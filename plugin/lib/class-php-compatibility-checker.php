@@ -290,8 +290,6 @@ class PHP_Compatibility_Checker {
 		// Determine if current site is a WP Engine customer.
 		$is_wpe_customer = ! empty( $_SERVER['IS_WPE'] ) && $_SERVER['IS_WPE'];
 
-		$phpversions = $this->get_phpversions();
-
 		// Assigns defaults for the scan if none are found in the database.
 		$test_version = ( ! empty( $test_version ) ) ? $test_version : '7.0';
 		$only_active  = ( ! empty( $only_active ) ) ? $only_active : 'yes';
@@ -302,8 +300,6 @@ class PHP_Compatibility_Checker {
 		$url_wpe_customer_upgrade = esc_url( 'https://wpeng.in/407b79/' );
 		$url_wpe_logo             = esc_url( 'https://wpeng.in/22f22b/' );
 		$url_codeable_submit      = esc_url( 'https://codeable.io/wp-admin/admin-ajax.php?action=wp_engine_phpcompat' );
-
-		$update_url = site_url( 'wp-admin/update-core.php', 'admin' );
 
 		?>
 		<div class="wrap wpe-pcc-wrap">
@@ -316,18 +312,6 @@ class PHP_Compatibility_Checker {
 					<h2><?php _e( 'Scan Options', 'php-compatibility-checker' ); ?></h2>
 					<table class="form-table wpe-pcc-form-table">
 						<tbody>
-							<tr>
-								<th scope="row"><label for="phptest_version"><?php _e( 'PHP Version', 'php-compatibility-checker' ); ?></label></th>
-								<td>
-									<fieldset>
-										<?php
-										foreach ( $phpversions as $name => $version ) {
-											printf( '<label><input type="radio" name="phptest_version" value="%s" %s /> %s</label><br>', $version, checked( $test_version, $version, false ), $name );
-										}
-										?>
-									</fieldset>
-								</td>
-							</tr>
 							<tr>
 								<th scope="row"><label for="active_plugins"><?php _e( 'Plugin / Theme Status', 'php-compatibility-checker' ); ?></label></th>
 								<td>
@@ -511,47 +495,6 @@ class PHP_Compatibility_Checker {
 			</div>
 		</script>
 		<?php
-	}
-
-	/**
-	 * Returns an array of available PHP versions to test.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return array Associative array of available PHP versions.
-	 */
-	public function get_phpversions() {
-
-		$versions = array(
-			'PHP 7.2' => '7.2',
-			'PHP 7.1' => '7.1',
-			'PHP 7.0' => '7.0',
-			'PHP 7.4' => '7.4',
-			'PHP 8.0' => '8.0',
-		);
-
-		if ( version_compare( phpversion(), '5.3', '>=' ) ) {
-			$versions = array( 'PHP 7.3' => '7.3' ) + $versions;
-		}
-
-		$old_versions = array( '5.6', '5.5', '5.4', '5.3' );
-
-		while ( ! empty( $old_versions ) ) {
-			$oldest = array_pop( $old_versions );
-
-			if ( version_compare( phpversion(), $oldest, '<' ) ) {
-				array_push( $old_versions, $oldest );
-
-				foreach ( $old_versions as $old_version ) {
-					$old_version_label = "PHP {$old_version}";
-
-					$versions[ $old_version_label ] = $old_version;
-				}
-				break;
-			}
-		}
-
-		return apply_filters( 'phpcompat_phpversions', $versions );
 	}
 
 	/**
