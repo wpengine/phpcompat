@@ -52,28 +52,52 @@ class PHP_Compatibility_Checker {
 	 * @since 1.0.0
 	 */
 	public function set_up_ajax() {
-		$ajax_js = '../scripts/scan.js';
+		$assets_file = dirname( dirname( __FILE__ ) ) . '/build/scan.asset.php';
 
-		global $wp_query;
+		if ( file_exists( $assets_file ) ) {
+			//phpcs:ignore PEAR.Files.IncludingFile.UseIncludeOnce
+			$ajax_js_assets = require_once $assets_file;
 
-		wp_register_script( 'tide-checker', plugins_url( $ajax_js, __FILE__ ), array( 'jquery' ), '1.0', true );
+			$scan_css = '../build/scan.css';
+			$ajax_js  = '../build/scan.js';
 
-		wp_enqueue_script(
-			'tide-checker',
-			plugins_url( $ajax_js, __FILE__ ),
-			array( 'jquery' ),
-			'1.0',
-			true
-		);
+			wp_enqueue_style(
+				'tide-checker',
+				plugins_url( $scan_css, __FILE__ ),
+				array(),
+				$ajax_js_assets['version']
+			);
 
-		wp_localize_script(
-			'tide-checker',
-			'checkerList',
-			array(
-				'plugins' => $this->get_plugins_to_scan(),
-				'themes'  => $this->get_themes_to_scan(),
-			)
-		);
+			wp_register_script(
+				'tide-checker',
+				plugins_url( $ajax_js, __FILE__ ),
+				$ajax_js_assets['dependencies'],
+				$ajax_js_assets['version'],
+				true
+			);
+
+			wp_localize_script(
+				'tide-checker',
+				'checkerList',
+				array(
+					'plugins' => $this->get_plugins_to_scan(),
+					'themes'  => $this->get_themes_to_scan(),
+				)
+			);
+
+			wp_enqueue_script( 'tide-checker' );
+		} else {
+			add_action(
+				'admin_notices',
+				function() {
+					?>
+					<div class="notice notice-error is-dismissible">
+						<p><?php echo wp_kses_post( __( 'Looks like you are using a development version of <strong>PHP Compatibility Checker</strong>. Please run <code>make build</code> to create assets.', 'wpe-php-compat' ) ); ?></p>
+					</div>
+					<?php
+				}
+			);
+		}//end if
 	}
 
 	/**
@@ -341,6 +365,8 @@ class PHP_Compatibility_Checker {
 						?>
 					</h2>
 
+					<div id="wpe_pcc_results"></div>
+
 					<div class="wpe-pcc-download-report" style="display:none;">
 						<a id="downloadReport" class="button-primary" href="#"><span class="dashicons dashicons-download"></span> <?php _e( 'Download Report', 'php-compatibility-checker' ); ?></a>
 						<a class="wpe-pcc-clear-results" name="run" id="cleanupButton"><?php _e( 'Clear results', 'php-compatibility-checker' ); ?></a>
@@ -448,32 +474,41 @@ class PHP_Compatibility_Checker {
 		</div> <!-- /wpe-pcc-wrap -->
 
 		<script id="result-template" type="text/x-handlebars-template">
-			<div class="wpe-pcc-alert wpe-pcc-alert-{{#if skipped}}skipped{{else if passed}}passed{{else}}error{{/if}}">
+			<div id="{{type}}_{{slug}}" class="wpe-pcc-alert wpe-pcc-alert-{{status}}">
 				<p>
-					<span class="dashicons-before dashicons-{{#if errors}}no{{else if skipped}}editor-help{{else}}yes{{/if}}"></span>
-					<strong>{{plugin_name}} </strong> -
-					<span class="wpe-pcc-alert-status">
-						{{#if skipped}}
-							<span class="wpe-pcc-badge wpe-pcc-badge-skipped"><?php _e( 'Unknown', 'php-compatibility-checker' ); ?></span>
-						{{else}}
-							{{#if passed}}
-								<span class="wpe-pcc-badge wpe-pcc-badge-passed"><?php _e( 'Compatible', 'php-compatibility-checker' ); ?></span>
-							{{/if}}
-							{{#if warnings}}
-								<span class="wpe-pcc-badge wpe-pcc-badge-warnings"><?php _e( 'Warnings:', 'php-compatibility-checker' ); ?> <strong>{{warnings}}</strong></span>
-							{{/if}}
-							{{#if errors}}
-								<span class="wpe-pcc-badge wpe-pcc-badge-errors"><?php _e( 'Errors:', 'php-compatibility-checker' ); ?> <strong>{{errors}}</strong></span>
-							{{/if}}
-						{{/if}}
-						</span>
-						{{#if updateAvailable}}
-							(<a href="<?php echo esc_url( $update_url ); ?>"><?php _e( 'Update Available', 'php-compatibility-checker' ); ?></a>)
-						{{/if}}
-					<a class="wpe-pcc-alert-details" href="#"><?php _e( 'toggle details', 'php-compatibility-checker' ); ?></a>
-					<textarea class="wpe-pcc-alert-logs hide">{{logs}}</textarea>
+					<strong>{{name}} {{version}}</strong>
 				</p>
-			</div> <!-- /wpe-pcc-alert -->
+
+				{{#php.length}}
+					<p class="wpe-pcc-results">
+						{{#php}}
+							{{#passed}}
+							<span class="wpe-pcc-php-version-passed dashicons-before dashicons-yes">{{phpversion}}</span>
+							{{/passed}}
+							{{^passed}}
+							<a href="#" data-php-version="{{phpversion}}" data-target="report_{{type}}_{{slug}}_{{phpversion}}" class="wpe-pcc-php-version-errors dashicons-before dashicons-no-alt">{{phpversion}}</a>
+							{{/passed}}
+						{{/php}}
+
+						{{#has_errors}}
+							<div>Click on PHP Version to see errors and warnings</div>
+						{{/has_errors}}
+					</p>
+				{{/php.length}}
+
+				{{#reports.length}}
+				<div id="wpe_pcc_reports">
+					{{#reports}}
+					<div id="report_{{type}}_{{slug}}_{{phpversion}}" data-php-version="{{phpversion}}" class="wpe-pcc-php-version-report" style="display:none">
+						<h4>PHP {{phpversion}}</h4>
+						<textarea>{{#messages}}
+{{.}}
+{{/messages}}</textarea>
+					</div>
+					{{/reports}}
+				</div>
+				{{/reports.length}}
+			</div>
 		</script>
 		<?php
 	}

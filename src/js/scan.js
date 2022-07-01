@@ -1,36 +1,43 @@
 import "../scss/scan.scss";
 import jQuery from "jquery";
 import { initQueue, runNextJob } from "./include/queue-manager";
-import { renderResults } from "./include/render";
+import { initResults } from "./include/render";
 
 (function ($) {
   if ("undefined" === typeof checkerList) {
     return;
   }
 
+  window.phpcompat = {};
+  window.phpcompat.queue = [];
+  window.phpcompat.xhr = false;
+
   const activeOnlySwitch = $("input[type=radio][name=active_plugins]");
-
-  const queue = [];
-
-  var xhr = false;
 
   init(checkerList);
 
   activeOnlySwitch.on("change", function () {
     init(checkerList);
-    console.log(queue);
   });
 
   $("#runButton").on("click", function (event) {
-    //event.prevenDefault();
+    event.preventDefault();
     runNextJob();
   });
 
+  $(document).on("click", ".wpe-pcc-php-version-errors", function (event) {
+    event.preventDefault();
+    const phpVersion = $(this).data("php-version");
+    const reports = $(this).closest(".wpe-pcc-alert").find("#wpe_pcc_reports");
+    const report = reports.find(`[data-php-version="${phpVersion}"]`);
+	console.log(report);
+    $(".wpe-pcc-php-version-report").hide();
+    $(report).show();
+  });
+
   function init(itemsToScan) {
-    var activeOnly = $(
-      "input[type=radio][name=active_plugins]:checked"
-    ).val();
-    renderResults(itemsToScan, activeOnly);
+    var activeOnly = $("input[type=radio][name=active_plugins]:checked").val();
     initQueue(itemsToScan, activeOnly);
+    initResults(itemsToScan, activeOnly);
   }
 })(jQuery);
