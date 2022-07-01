@@ -3,7 +3,7 @@ import $ from "jquery";
 
 export function initQueue(itemsToScan, activeOnly) {
   // Reset the queue.
-  window.phpcompat.queue.length = 0;
+  window.phpcompat.queue = [];
 
   itemsToScan.plugins.forEach((plugin) => {
     if ("yes" === plugin.active || "no" === activeOnly) {
