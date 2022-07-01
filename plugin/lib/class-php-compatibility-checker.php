@@ -109,8 +109,6 @@ class PHP_Compatibility_Checker {
 		// Build our tools page.
 		add_action( 'admin_menu', array( $instance, 'create_menu' ) );
 
-		// Load our JavaScript.
-		add_action( 'admin_enqueue_scripts', array( $instance, 'admin_enqueue' ) );
 		add_action( 'admin_enqueue_scripts', array( $instance, 'set_up_ajax' ) );
 
 		// The action to run the compatibility test.
@@ -497,51 +495,6 @@ class PHP_Compatibility_Checker {
 		<?php
 	}
 
-	/**
-	 * Enqueues our JavaScript and CSS.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @action admin_enqueue_scripts
-	 *
-	 * @param string $hook Current page hook name.
-	 */
-	public function admin_enqueue( $hook ) {
 
-		// Only enqueue these assets on the settings page.
-		if ( $this->page !== $hook ) {
-			return;
-		}
-
-		// Grab the plugin version.
-		$plugin_data = get_plugin_data( __FILE__, false, false );
-		if ( isset( $plugin_data['Version'] ) ) {
-			$version = $plugin_data['Version'];
-		}
-
-		// Styles.
-		wp_enqueue_style( 'wpephpcompat-style', plugins_url( '/styles/css/style.css', __FILE__ ), array(), $version );
-
-		// Scripts.
-		// wp_enqueue_script( 'wpephpcompat-ajax', plugins_url( '/scripts/starter-script.js', __FILE__ ), array( 'jquery' ), $version );
-
-		/**
-		 * Strings for i18n.
-		 *
-		 * These translated strings can be access in jquery with window.wpephpcompat object.
-		 */
-		$strings = array(
-			'name'       => __( 'Name', 'php-compatibility-checker' ),
-			'compatible' => __( 'compatible', 'php-compatibility-checker' ),
-			'are_not'    => __( 'plugins/themes may not be compatible', 'php-compatibility-checker' ),
-			'is_not'     => __( 'Your WordPress site is possibly not PHP', 'php-compatibility-checker' ),
-			'out_of'     => __( 'out of', 'php-compatibility-checker' ),
-			'run'        => __( 'Scan site', 'php-compatibility-checker' ),
-			'rerun'      => __( 'Scan site again', 'php-compatibility-checker' ),
-			'your_wp'    => __( 'Your WordPress site is', 'php-compatibility-checker' ),
-		);
-
-		wp_localize_script( 'wpephpcompat', 'wpephpcompat', $strings );
-	}
 
 }
