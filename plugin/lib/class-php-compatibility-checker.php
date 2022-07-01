@@ -22,14 +22,6 @@ class PHP_Compatibility_Checker {
 	private static $instance = null;
 
 	/**
-	 * Settings page hook.
-	 *
-	 * @since 1.0.0
-	 * @var string
-	 */
-	private $page;
-
-	/**
 	 * Returns an instance of this class.
 	 *
 	 * @since 1.0.0
@@ -473,10 +465,14 @@ class PHP_Compatibility_Checker {
 						{{/php}}
 
 						{{#has_errors}}
-							<div>Click on PHP Version to see errors and warnings</div>
+							<div><?php esc_html_e( 'Click on PHP Version to see errors and warnings', 'wpe-php-compat' ); ?></div>
 						{{/has_errors}}
 					</p>
 				{{/php.length}}
+
+				{{#custom_error}}
+					<p><?php esc_html_e( 'The remote API returned unexpected status:', 'wpe-php-compat' ); ?> {{response_status}}</p>
+				{{/custom_error}}
 
 				{{#reports.length}}
 				<div id="wpe_pcc_reports">
@@ -494,7 +490,5 @@ class PHP_Compatibility_Checker {
 		</script>
 		<?php
 	}
-
-
 
 }

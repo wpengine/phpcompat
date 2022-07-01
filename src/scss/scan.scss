@@ -16,9 +16,8 @@ $color-border: #c3c4c7;
 
     .spinner {
       position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
+      right: 0;
+	  top: 10px;
 	  visibility: visible;
     }
 

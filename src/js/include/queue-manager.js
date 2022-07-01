@@ -1,4 +1,4 @@
-import { renderResults, updateResult } from "./render";
+import { updateResultFailure, updateResult } from "./render";
 import $ from "jquery";
 
 export function initQueue(itemsToScan, activeOnly) {
@@ -50,7 +50,10 @@ export function executeJob(job, cb) {
         // Retry in 5 seconds.
         job.retryAt = new Date(now.getTime() + 5000);
         window.phpcompat.queue.push(job);
-      }
+      } else {
+		// Unexpected behaviour. Stop scanning and display current status.
+		updateResultFailure(response, job);
+	  }
       cb();
     });
   }

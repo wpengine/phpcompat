@@ -1,6 +1,7 @@
 import Mustache from "mustache";
 import $ from "jquery";
 import compareVersions from "compare-versions";
+const { __ } = wp.i18n;
 
 export function initResults(itemsToScan, activeOnly) {
   const container = $("#wpe_pcc_results");
@@ -48,6 +49,7 @@ export function updateResult(response, job) {
   const view = {
     ...job,
   };
+
   const report = response.reports?.phpcs_phpcompatibilitywp?.report;
 
   view.status =
@@ -91,5 +93,19 @@ export function updateResult(response, job) {
 
   const output = Mustache.render(template, view);
 
+  resultItem.replaceWith(output);
+}
+
+export function updateResultFailure(response, job) {
+  const resultItem = $(`#${job.type}_${job.slug}`);
+  const template = $("#result-template").html().toString();
+  const view = {
+    ...job,
+    status: "error",
+	custom_error: true,
+	response_status: response.status
+  };
+
+  const output = Mustache.render(template, view);
   resultItem.replaceWith(output);
 }
