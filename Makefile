@@ -16,7 +16,7 @@ build-assets: | build-docker-node install-npm
 	@echo "Building plugin assets"
 	rm -f plugin/languages/*.pot plugin/scripts/*-min.js
 	$(DOCKER_RUN) $(NODE_IMAGE) ./node_modules/gulp-cli/bin/gulp.js
-	npx wp-scripts build
+	$(DOCKER_RUN) $(NODE_IMAGE) npm run build
 
 .PHONY: build-docker
 build-docker: build-docker-node build-docker-php
@@ -160,6 +160,10 @@ update-composer: lando-stop
 .PHONY: update-npm
 update-npm: | build-docker-node
 	$(DOCKER_RUN) $(NODE_IMAGE) npm update
+
+.PHONY: watch
+watch: | build-docker-node install-npm
+	$(DOCKER_RUN) $(NODE_IMAGE) npm run start
 
 wpe-php-compat.zip:
 	@echo "Building release file: wpe-php-compat.zip"
