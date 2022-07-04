@@ -46,39 +46,7 @@ class PHP_Compatibility_Checker {
 	public function set_up_ajax() {
 		$assets_file = dirname( dirname( __FILE__ ) ) . '/build/scan.asset.php';
 
-		if ( file_exists( $assets_file ) ) {
-			//phpcs:ignore PEAR.Files.IncludingFile.UseIncludeOnce
-			$ajax_js_assets = require_once $assets_file;
-
-			$scan_css = '../build/scan.css';
-			$ajax_js  = '../build/scan.js';
-
-			wp_enqueue_style(
-				'tide-checker',
-				plugins_url( $scan_css, __FILE__ ),
-				array(),
-				$ajax_js_assets['version']
-			);
-
-			wp_register_script(
-				'tide-checker',
-				plugins_url( $ajax_js, __FILE__ ),
-				$ajax_js_assets['dependencies'],
-				$ajax_js_assets['version'],
-				true
-			);
-
-			wp_localize_script(
-				'tide-checker',
-				'checkerList',
-				array(
-					'plugins' => $this->get_plugins_to_scan(),
-					'themes'  => $this->get_themes_to_scan(),
-				)
-			);
-
-			wp_enqueue_script( 'tide-checker' );
-		} else {
+		if ( ! file_exists( $assets_file ) ) {
 			add_action(
 				'admin_notices',
 				function() {
@@ -89,7 +57,39 @@ class PHP_Compatibility_Checker {
 					<?php
 				}
 			);
-		}//end if
+		}
+
+		//phpcs:ignore PEAR.Files.IncludingFile.UseIncludeOnce
+		$ajax_js_assets = require_once $assets_file;
+
+		$scan_css = '../build/scan.css';
+		$ajax_js  = '../build/scan.js';
+
+		wp_enqueue_style(
+			'tide-checker',
+			plugins_url( $scan_css, __FILE__ ),
+			array(),
+			$ajax_js_assets['version']
+		);
+
+		wp_register_script(
+			'tide-checker',
+			plugins_url( $ajax_js, __FILE__ ),
+			$ajax_js_assets['dependencies'],
+			$ajax_js_assets['version'],
+			true
+		);
+
+		wp_localize_script(
+			'tide-checker',
+			'checkerList',
+			array(
+				'plugins' => $this->get_plugins_to_scan(),
+				'themes'  => $this->get_themes_to_scan(),
+			)
+		);
+
+		wp_enqueue_script( 'tide-checker' );
 	}
 
 	/**
