@@ -2,6 +2,7 @@ import "../scss/scan.scss";
 import jQuery from "jquery";
 import { initQueue, runNextJob } from "./include/queue-manager";
 import { initResults } from "./include/render";
+import { downloadReport } from "./include/download";
 
 (function ($) {
   if ("undefined" === typeof checkerList) {
@@ -46,6 +47,11 @@ import { initResults } from "./include/render";
       $("#developerMode").hide();
       $("#wpe_pcc_results").show();
     }
+  });
+
+  $("#downloadReport").on("click", function (event) {
+    event.preventDefault();
+    downloadReport();
   });
 
   function init(itemsToScan) {

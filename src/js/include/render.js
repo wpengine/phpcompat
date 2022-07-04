@@ -115,7 +115,7 @@ export function updateResult(response, job) {
   resultItem.replaceWith(output);
 
   const fullReport = $("#testResults").val();
-  console.log(fullReport);
+
   $("#testResults").val(
     fullReport + (fullReport.length ? "\n\n\n" : "") + rawReport
   );
