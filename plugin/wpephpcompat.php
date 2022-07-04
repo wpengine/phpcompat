@@ -15,9 +15,7 @@
 
 namespace WPEngine_PHPCompat;
 
-// @todo this is confusing. maybe change later. 
-define( 'WPENGINE_PHP_COMPATIBILITY_VERSION', '0.0.1' );
-define( 'WPEPHPCOMPAT_ADMIN_PAGE_SLUG', 'php-compatibility-checker' );
+define( 'WPEPHPCOMPAT_ADMIN_PAGE_SLUG', 'wpe-php-compat' );
 define( 'WPEPHPCOMPAT_CAPABILITY', 'manage_options' );
 
 use WPEngine_PHPCompat\PHP_Compatibility_Checker;
