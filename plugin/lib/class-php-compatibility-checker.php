@@ -339,9 +339,7 @@ class PHP_Compatibility_Checker {
 						?>
 					</h2>
 
-					<div id="wpe_pcc_results"></div>
-
-					<div class="wpe-pcc-download-report" style="display:none;">
+					<div id="wpe-pcc-download-report" class="wpe-pcc-download-report" style="display:none;">
 						<a id="downloadReport" class="button-primary" href="#"><span class="dashicons dashicons-download"></span> <?php esc_html_e( 'Download Report', 'wpe-php-compat' ); ?></a>
 						<a class="wpe-pcc-clear-results" name="run" id="cleanupButton"><?php esc_html_e( 'Clear results', 'wpe-php-compat' ); ?></a>
 						<label class="wpe-pcc-developer-mode">
@@ -351,7 +349,7 @@ class PHP_Compatibility_Checker {
 						<hr>
 					</div> <!-- /wpe-pcc-download-report -->
 
-					<div id="wpe-pcc-standardMode"></div>
+					<div id="wpe_pcc_results"></div>
 
 					<div style="display:none;" id="developerMode">
 						<textarea readonly="readonly" id="testResults"></textarea>
@@ -479,7 +477,7 @@ class PHP_Compatibility_Checker {
 					{{#reports}}
 					<div id="report_{{type}}_{{slug}}_{{phpversion}}" data-php-version="{{phpversion}}" class="wpe-pcc-php-version-report" style="display:none">
 						<h4>PHP {{phpversion}}</h4>
-						<textarea>{{#messages}}
+						<textarea readonly="readonly">{{#messages}}
 {{.}}
 {{/messages}}</textarea>
 					</div>

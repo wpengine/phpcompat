@@ -1,13 +1,17 @@
 import { updateResultFailure, updateResult } from "./render";
 import $ from "jquery";
+import { hideDownload, showDownload } from "./download";
 
 export function initQueue(itemsToScan, activeOnly) {
   // Reset the queue.
   window.phpcompat.queue = [];
+  window.phpcompat.results = [];
   clearTimeout(window.phpcompat.ticker);
   if (window.phpcompat.xhr) {
     window.phpcompat.xhr.abort();
   }
+  hideDownload();
+  $("#testResults").val("");
 
   itemsToScan.plugins.forEach((plugin) => {
     if ("yes" === plugin.active || "no" === activeOnly) {
@@ -48,6 +52,7 @@ export function executeJob(job, cb) {
       },
     }).done((response) => {
       if ("complete" === response.status) {
+        window.phpcompat.results.push({ ...job, ...response });
         updateResult(response, job);
       } else if ("pending" === response.status) {
         const now = new Date();
@@ -66,7 +71,7 @@ export function executeJob(job, cb) {
 
 export function runNextJob() {
   if (window.phpcompat.queue.length === 0) {
-    // Nothing more to do.
+    showDownload();
     return;
   }
 

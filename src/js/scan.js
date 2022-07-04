@@ -12,6 +12,7 @@ import { initResults } from "./include/render";
   window.phpcompat.queue = [];
   window.phpcompat.xhr = false;
   window.phpcompat.ticker = false;
+  window.phpcompat.results = [];
 
   const activeOnlySwitch = $("input[type=radio][name=active_plugins]");
 
@@ -33,6 +34,18 @@ import { initResults } from "./include/render";
     const report = reports.find(`[data-php-version="${phpVersion}"]`);
     $(".wpe-pcc-php-version-report").hide();
     $(report).show();
+  });
+
+  $("#developermode").on("change", function (event) {
+    if ($(this).is(":checked")) {
+      console.log("show dev mode");
+      $("#developerMode").show();
+      $("#wpe_pcc_results").hide();
+    } else {
+      console.log("Hide dev mode");
+      $("#developerMode").hide();
+      $("#wpe_pcc_results").show();
+    }
   });
 
   function init(itemsToScan) {

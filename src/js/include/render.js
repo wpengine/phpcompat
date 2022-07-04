@@ -62,6 +62,7 @@ export function updateResult(response, job) {
 
   // Create index for PHP Versions.
   const phpVersions = Object.keys(report.versions).sort(compareVersions);
+  let rawReport = "";
 
   view.php = [];
   view.reports = [];
@@ -76,10 +77,13 @@ export function updateResult(response, job) {
     if (report.incompatible.includes(phpVersion)) {
       const messages = [];
       const files = report.versions[phpVersion].files;
+      const fileReports = [];
 
       // In each file of the plugin, add error messages.
       Object.keys(files).forEach((file) => {
         if (files[file].messages.length) {
+          fileReports.push(processFileReport(file, files[file]));
+
           files[file].messages.forEach((message) => {
             // Compile plain text with source file, line, error code and error text.
             messages.push(
@@ -89,10 +93,16 @@ export function updateResult(response, job) {
         }
       });
 
+      // Override raw report with most recent PHP version
+      rawReport =
+        `${job.name} ${job.version}\n\n` + fileReports.join("\n\n\n") + "\n\n";
+
       view.reports.push({
         phpversion: phpVersion,
-        messages: messages,
+        messages: [rawReport],
       });
+    } else {
+      rawReport = `${job.name} ${job.version}\n\nCompatible with PHP ${phpVersion}`;
     }
   });
 
@@ -103,6 +113,57 @@ export function updateResult(response, job) {
   const output = Mustache.render(template, view);
 
   resultItem.replaceWith(output);
+
+  const fullReport = $("#testResults").val();
+  console.log(fullReport);
+  $("#testResults").val(
+    fullReport + (fullReport.length ? "\n\n\n" : "") + rawReport
+  );
+}
+
+export function processFileReport(fileName, fileReport) {
+  const colWidths = fileReport.messages.reduce(
+    (prev, current) => {
+      return [
+        `${current.line}`.length > prev[0] ? `${current.line}`.length : prev[0],
+        `${current.type}`.length > prev[1] ? `${current.type}`.length : prev[1],
+        `${current.message}`.length > prev[2]
+          ? `${current.message}`.length
+          : prev[2],
+      ];
+    },
+    [0, 0, 0]
+  );
+
+  const uinqueLines = fileReport.messages.reduce((lines, message) => {
+    if (-1 === lines.indexOf(message.line)) {
+      lines.push(message.line);
+    }
+    return lines;
+  }, []);
+
+  const plainMessages = fileReport.messages.map((message) => {
+    const col1 = message.line.toString().padStart(colWidths[0], " ");
+    const col2 = message.type.toString().padEnd(colWidths[1], " ");
+    const col3 = message.message.toString().padEnd(colWidths[2], " ");
+
+    return ` ${col1} | ${col2} | ${col3} `;
+  });
+
+  const header = `FILE: ${fileName}`;
+  const found = `FOUND ${fileReport.errors} ERRORS AND ${fileReport.warnings} WARNINGS AFFECTING ${uinqueLines.length} LINES`;
+  const maxWidth = Math.max(
+    header.length,
+    found.length,
+    plainMessages[0].length
+  );
+  const hr = new Array(maxWidth + 1).join("-");
+  const output =
+    `${header}\n${hr}\n${found}\n${hr}\n` +
+    plainMessages.join("\n") +
+    `\n${hr}`;
+
+  return output;
 }
 
 export function updateResultFailure(response, job) {
