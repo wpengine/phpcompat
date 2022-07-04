@@ -25,6 +25,7 @@ export function initQueue(itemsToScan, activeOnly) {
 }
 
 export function executeJob(job, cb) {
+  // TODO Change staging to live endpoint
   var endpoint = `https://staging.wptide.org/api/v1/audit/wporg/${job.type}/${job.slug}/${job.version}?reports=phpcs_phpcompatibilitywp`;
 
   // Only allow 1 concurrent request at a time
