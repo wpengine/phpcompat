@@ -30,7 +30,6 @@ import { initResults } from "./include/render";
     const phpVersion = $(this).data("php-version");
     const reports = $(this).closest(".wpe-pcc-alert").find("#wpe_pcc_reports");
     const report = reports.find(`[data-php-version="${phpVersion}"]`);
-	console.log(report);
     $(".wpe-pcc-php-version-report").hide();
     $(report).show();
   });

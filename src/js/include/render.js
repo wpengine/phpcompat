@@ -71,17 +71,17 @@ export function updateResult(response, job) {
       passed: report.compatible.includes(phpVersion),
     });
 
-	// Extract all error messages from incompatible PHP versions.
+    // Extract all error messages from incompatible PHP versions.
     if (report.incompatible.includes(phpVersion)) {
       const messages = [];
       const files = report.versions[phpVersion].files;
 
-	  // In each file of the plugin, add error messages.
+      // In each file of the plugin, add error messages.
       Object.keys(files).forEach((file) => {
         if (files[file].messages.length) {
           files[file].messages.forEach((message) => {
             // Compile plain text with source file, line, error code and error text.
-			messages.push(
+            messages.push(
               `${file}:${message.line}\n${message.source}\n${message.message}`
             );
           });

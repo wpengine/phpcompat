@@ -50,9 +50,9 @@ export function executeJob(job, cb) {
         job.retryAt = new Date(now.getTime() + 5000);
         window.phpcompat.queue.push(job);
       } else {
-		// Unexpected behaviour. Stop scanning and display current status.
-		updateResultFailure(response, job);
-	  }
+        // Unexpected behaviour. Stop scanning and display current status.
+        updateResultFailure(response, job);
+      }
       cb();
     });
   }
