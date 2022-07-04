@@ -4,6 +4,10 @@ import $ from "jquery";
 export function initQueue(itemsToScan, activeOnly) {
   // Reset the queue.
   window.phpcompat.queue = [];
+  clearTimeout(window.phpcompat.ticker);
+  if (window.phpcompat.xhr) {
+    window.phpcompat.xhr.abort();
+  }
 
   itemsToScan.plugins.forEach((plugin) => {
     if ("yes" === plugin.active || "no" === activeOnly) {
@@ -29,10 +33,12 @@ export function executeJob(job, cb) {
   var endpoint = `https://staging.wptide.org/api/v1/audit/wporg/${job.type}/${job.slug}/${job.version}?reports=phpcs_phpcompatibilitywp`;
 
   // Only allow 1 concurrent request at a time
-  if (false === window.phpcompat.xhr || window.phpcompat.xhr.readyState === 4) {
+  if (
+    false === window.phpcompat.xhr ||
+    [0, 4].includes(window.phpcompat.xhr.readyState)
+  ) {
     window.phpcompat.xhr = $.ajax(endpoint, {
       dataType: "json",
-      cache: false,
       beforeSend: () => {
         const resultItem = $(`#${job.type}_${job.slug}`);
         if (!resultItem.find(".spinner").length) {
@@ -78,6 +84,6 @@ export function runNextJob() {
   } else {
     // Or put it back to the end of queue.
     window.phpcompat.queue.push(job);
-    setTimeout(runNextJob, 1000);
+    window.phpcompat.ticker = setTimeout(runNextJob, 1000);
   }
 }

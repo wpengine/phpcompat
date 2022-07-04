@@ -11,6 +11,7 @@ import { initResults } from "./include/render";
   window.phpcompat = {};
   window.phpcompat.queue = [];
   window.phpcompat.xhr = false;
+  window.phpcompat.ticker = false;
 
   const activeOnlySwitch = $("input[type=radio][name=active_plugins]");
 
