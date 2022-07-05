@@ -1,0 +1,81 @@
+$color-error: #d63638;
+$color-success: #00a32a;
+$color-background: #fff;
+$color-border: #c3c4c7;
+
+@mixin textarea {
+  width: 100%;
+  height: 30em;
+  max-height: 80vh;
+  font-size: 12px;
+  font-family: Consolas, Monaco, Lucida Console, Liberation Mono,
+    DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+}
+
+.wpe-pcc {
+  &-wrap {
+    .button-primary {
+      .dashicons,
+      .dashicons-before {
+        line-height: 1.4em;
+      }
+    }
+  }
+  &-alert {
+    background: $color-background;
+    border: 1px solid $color-border;
+    border-left-width: 4px;
+    box-shadow: 0 1px 1px rgb(0 0 0 / 4%);
+    margin: 5px 15px 2px;
+    padding: 1px 12px;
+    position: relative;
+
+    .spinner {
+      position: absolute;
+      right: 0;
+      top: 10px;
+      visibility: visible;
+    }
+
+    &-error {
+      border-left-color: $color-error;
+    }
+
+    &-success {
+      border-left-color: $color-success;
+    }
+  }
+  &-php-version {
+    &-passed {
+      color: $color-success;
+    }
+
+    &-errors {
+      color: $color-error;
+      text-decoration: none;
+    }
+  }
+
+  &-results {
+    textarea {
+      @include textarea();
+    }
+  }
+
+  &-download-report {
+    clear: both;
+  }
+
+  &-developer-mode {
+    float: right;
+  }
+
+  &-clear-results {
+    border: 0 none;
+    color: #b4b9be;
+    background: none;
+    cursor: pointer;
+    line-height: 28px;
+    margin-left: 10px;
+  }
+}

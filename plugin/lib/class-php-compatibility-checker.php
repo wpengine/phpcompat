@@ -22,14 +22,6 @@ class PHP_Compatibility_Checker {
 	private static $instance = null;
 
 	/**
-	 * Settings page hook.
-	 *
-	 * @since 1.0.0
-	 * @var string
-	 */
-	private $page;
-
-	/**
 	 * Returns an instance of this class.
 	 *
 	 * @since 1.0.0
@@ -52,17 +44,39 @@ class PHP_Compatibility_Checker {
 	 * @since 1.0.0
 	 */
 	public function set_up_ajax() {
-		$ajax_js = '../scripts/scan-runner.js';
+		$assets_file = dirname( dirname( __FILE__ ) ) . '/build/scan.asset.php';
 
-		global $wp_query;
+		if ( ! file_exists( $assets_file ) ) {
+			add_action(
+				'admin_notices',
+				function() {
+					?>
+					<div class="notice notice-error is-dismissible">
+						<p><?php echo wp_kses_post( __( 'Looks like you are using a development version of <strong>PHP Compatibility Checker</strong>. Please run <code>make build</code> to create assets.', 'wpe-php-compat' ) ); ?></p>
+					</div>
+					<?php
+				}
+			);
+		}
 
-		wp_register_script( 'tide-checker', plugins_url( $ajax_js, __FILE__ ), array( 'jquery' ), '1.0', true );
+		//phpcs:ignore PEAR.Files.IncludingFile.UseIncludeOnce
+		$ajax_js_assets = require_once $assets_file;
 
-		wp_enqueue_script(
+		$scan_css = '../build/scan.css';
+		$ajax_js  = '../build/scan.js';
+
+		wp_enqueue_style(
+			'tide-checker',
+			plugins_url( $scan_css, __FILE__ ),
+			array(),
+			$ajax_js_assets['version']
+		);
+
+		wp_register_script(
 			'tide-checker',
 			plugins_url( $ajax_js, __FILE__ ),
-			array( 'jquery' ),
-			'1.0',
+			$ajax_js_assets['dependencies'],
+			$ajax_js_assets['version'],
 			true
 		);
 
@@ -74,6 +88,8 @@ class PHP_Compatibility_Checker {
 				'themes'  => $this->get_themes_to_scan(),
 			)
 		);
+
+		wp_enqueue_script( 'tide-checker' );
 	}
 
 	/**
@@ -85,8 +101,6 @@ class PHP_Compatibility_Checker {
 		// Build our tools page.
 		add_action( 'admin_menu', array( $instance, 'create_menu' ) );
 
-		// Load our JavaScript.
-		add_action( 'admin_enqueue_scripts', array( $instance, 'admin_enqueue' ) );
 		add_action( 'admin_enqueue_scripts', array( $instance, 'set_up_ajax' ) );
 
 		// The action to run the compatibility test.
@@ -158,7 +172,7 @@ class PHP_Compatibility_Checker {
 			} elseif ( isset( $plugin_info->no_update[ $plugin_file ] ) ) {
 				$plugins[ $key ]['slug'] = $plugin_info->no_update[ $plugin_file ]->slug;
 			} else {
-				$plugins[ $key ]['slug'] = false;
+				$plugins[ $key ]['slug'] = dirname( $plugin_file );
 			}
 		}
 
@@ -251,7 +265,7 @@ class PHP_Compatibility_Checker {
 	 */
 	public function create_menu() {
 		// Create Tools sub-menu.
-		$this->page = add_submenu_page( 'tools.php', __( 'PHP Compatibility', 'php-compatibility-checker' ), __( 'PHP Compatibility', 'php-compatibility-checker' ), WPEPHPCOMPAT_CAPABILITY, WPEPHPCOMPAT_ADMIN_PAGE_SLUG, array( self::instance(), 'settings_page' ) );
+		$this->page = add_submenu_page( 'tools.php', esc_html__( 'PHP Compatibility', 'wpe-php-compat' ), esc_html__( 'PHP Compatibility', 'wpe-php-compat' ), WPEPHPCOMPAT_CAPABILITY, WPEPHPCOMPAT_ADMIN_PAGE_SLUG, array( self::instance(), 'settings_page' ) );
 	}
 	/**
 	 * Render method for the settings page.
@@ -266,8 +280,6 @@ class PHP_Compatibility_Checker {
 		// Determine if current site is a WP Engine customer.
 		$is_wpe_customer = ! empty( $_SERVER['IS_WPE'] ) && $_SERVER['IS_WPE'];
 
-		$phpversions = $this->get_phpversions();
-
 		// Assigns defaults for the scan if none are found in the database.
 		$test_version = ( ! empty( $test_version ) ) ? $test_version : '7.0';
 		$only_active  = ( ! empty( $only_active ) ) ? $only_active : 'yes';
@@ -279,37 +291,23 @@ class PHP_Compatibility_Checker {
 		$url_wpe_logo             = esc_url( 'https://wpeng.in/22f22b/' );
 		$url_codeable_submit      = esc_url( 'https://codeable.io/wp-admin/admin-ajax.php?action=wp_engine_phpcompat' );
 
-		$update_url = site_url( 'wp-admin/update-core.php', 'admin' );
-
 		?>
 		<div class="wrap wpe-pcc-wrap">
-			<h1><?php _e( 'PHP Compatibility Checker', 'php-compatibility-checker' ); ?></h1>
+			<h1><?php esc_html_e( 'PHP Compatibility Checker', 'wpe-php-compat' ); ?></h1>
 			<div class="wpe-pcc-main">
-				<p><?php _e( 'The PHP Compatibility Checker can be used on any WordPress website on any web host.', 'php-compatibility-checker' ); ?></p>
-				<p><?php _e( 'This tool will lint your theme and plugin code on this site and provide you a report of compatibility issues. These issues are categorized into errors and warnings and will list the file and line number of the offending code, as well as the info about why that line of code is incompatible with the chosen version of PHP. This tool will also suggest updates to themes and plugins, as a new version may offer compatible code.', 'php-compatibility-checker' ); ?></p>
+				<p><?php esc_html_e( 'The PHP Compatibility Checker can be used on any WordPress website on any web host.', 'wpe-php-compat' ); ?></p>
+				<p><?php esc_html_e( 'This tool will lint your theme and plugin code on this site and provide you a report of compatibility issues. These issues are categorized into errors and warnings and will list the file and line number of the offending code, as well as the info about why that line of code is incompatible with the chosen version of PHP. This tool will also suggest updates to themes and plugins, as a new version may offer compatible code.', 'wpe-php-compat' ); ?></p>
 				<hr>
 				<div class="wpe-pcc-scan-options">
-					<h2><?php _e( 'Scan Options', 'php-compatibility-checker' ); ?></h2>
+					<h2><?php esc_html_e( 'Scan Options', 'wpe-php-compat' ); ?></h2>
 					<table class="form-table wpe-pcc-form-table">
 						<tbody>
 							<tr>
-								<th scope="row"><label for="phptest_version"><?php _e( 'PHP Version', 'php-compatibility-checker' ); ?></label></th>
+								<th scope="row"><label for="active_plugins"><?php esc_html_e( 'Plugin / Theme Status', 'wpe-php-compat' ); ?></label></th>
 								<td>
 									<fieldset>
-										<?php
-										foreach ( $phpversions as $name => $version ) {
-											printf( '<label><input type="radio" name="phptest_version" value="%s" %s /> %s</label><br>', $version, checked( $test_version, $version, false ), $name );
-										}
-										?>
-									</fieldset>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row"><label for="active_plugins"><?php _e( 'Plugin / Theme Status', 'php-compatibility-checker' ); ?></label></th>
-								<td>
-									<fieldset>
-										<label><input type="radio" name="active_plugins" value="yes" <?php checked( $only_active, 'yes', true ); ?> /> <?php _e( 'Only scan active plugins and themes', 'php-compatibility-checker' ); ?></label><br>
-										<label><input type="radio" name="active_plugins" value="no" <?php checked( $only_active, 'no', true ); ?> /> <?php _e( 'Scan all plugins and themes', 'php-compatibility-checker' ); ?></label>
+										<label><input type="radio" name="active_plugins" value="yes" <?php checked( $only_active, 'yes', true ); ?> /> <?php esc_html_e( 'Only scan active plugins and themes', 'wpe-php-compat' ); ?></label><br>
+										<label><input type="radio" name="active_plugins" value="no" <?php checked( $only_active, 'no', true ); ?> /> <?php esc_html_e( 'Scan all plugins and themes', 'wpe-php-compat' ); ?></label>
 									</fieldset>
 								</td>
 							</tr>
@@ -317,7 +315,7 @@ class PHP_Compatibility_Checker {
 								<th scope="row"></th>
 									<td>
 										<div class="wpe-pcc-run-scan">
-											<input name="run" id="runButton" type="button" value="<?php _e( 'Scan site', 'php-compatibility-checker' ); ?>" class="button-secondary" />
+											<input name="run" id="runButton" type="button" value="<?php esc_html_e( 'Scan site', 'wpe-php-compat' ); ?>" class="button-secondary" />
 											<div class="wpe-pcc-scan-information">
 												<span style="display:none; visibility:visible;" class="spinner wpe-pcc-spinner"></span> <span id="wpe-progress-active"></span> <span style="display:none;" id="wpe-pcc-progress-count"></span>
 											</div> <!-- /wpe-pcc-scan-information -->
@@ -335,23 +333,23 @@ class PHP_Compatibility_Checker {
 						<?php
 						printf(
 							/* translators: %s: PHP version number */
-							__( 'Scan Results for PHP %s Compatibility', 'php-compatibility-checker' ),
-							'<span class="wpe-pcc-test-version">' . $test_version . '</span>'
+							esc_html__( 'Scan Results for PHP %s Compatibility', 'wpe-php-compat' ),
+							'<span class="wpe-pcc-test-version">' . esc_attr( $test_version ) . '</span>'
 						);
 						?>
 					</h2>
 
-					<div class="wpe-pcc-download-report" style="display:none;">
-						<a id="downloadReport" class="button-primary" href="#"><span class="dashicons dashicons-download"></span> <?php _e( 'Download Report', 'php-compatibility-checker' ); ?></a>
-						<a class="wpe-pcc-clear-results" name="run" id="cleanupButton"><?php _e( 'Clear results', 'php-compatibility-checker' ); ?></a>
+					<div id="wpe-pcc-download-report" class="wpe-pcc-download-report" style="display:none;">
+						<a id="downloadReport" class="button-primary" href="#"><span class="dashicons dashicons-download"></span> <?php esc_html_e( 'Download Report', 'wpe-php-compat' ); ?></a>
+						<a class="wpe-pcc-clear-results" name="run" id="cleanupButton"><?php esc_html_e( 'Clear results', 'wpe-php-compat' ); ?></a>
 						<label class="wpe-pcc-developer-mode">
 							<input type="checkbox" id="developermode" name="developermode" value="yes" />
-							<?php _e( 'View results as raw text', 'php-compatibility-checker' ); ?>
+							<?php esc_html_e( 'View results as raw text', 'wpe-php-compat' ); ?>
 						</label>
 						<hr>
 					</div> <!-- /wpe-pcc-download-report -->
 
-					<div id="wpe-pcc-standardMode"></div>
+					<div id="wpe_pcc_results"></div>
 
 					<div style="display:none;" id="developerMode">
 						<textarea readonly="readonly" id="testResults"></textarea>
@@ -361,8 +359,8 @@ class PHP_Compatibility_Checker {
 						<?php
 						printf(
 							/* translators: %s: hosting URL */
-							__( '<strong>Attention:</strong> Not all errors are show-stoppers. <a target="_blank" href="%s">Test this site on PHP 7</a> to see if it just works!', 'php-compatibility-checker' ),
-							$url_get_hosting
+							wp_kses_post( __( '<strong>Attention:</strong> Not all errors are show-stoppers. <a target="_blank" href="%s">Test this site on PHP 7</a> to see if it just works!', 'wpe-php-compat' ) ),
+							esc_url( $url_get_hosting )
 						);
 						?>
 					</p>
@@ -393,18 +391,18 @@ class PHP_Compatibility_Checker {
 					<div class="wpe-pcc-get-hosting">
 						<div class="wpe-pcc-aside-content">
 							<?php if ( $is_wpe_customer ) : ?>
-								<h2><?php _e( 'Make your site 2x faster by upgrading to PHP 7', 'php-compatibility-checker' ); ?></h2>
+								<h2><?php esc_html_e( 'Make your site 2x faster by upgrading to PHP 7', 'wpe-php-compat' ); ?></h2>
 							<?php else : ?>
-								<h2><?php _e( 'Make your site 2x faster with PHP 7 WordPress hosting', 'php-compatibility-checker' ); ?></h2>
+								<h2><?php esc_html_e( 'Make your site 2x faster with PHP 7 WordPress hosting', 'wpe-php-compat' ); ?></h2>
 							<?php endif; ?>
 
-							<p><?php _e( 'Speed up your site and improve your conversion opportunities by upgrading to PHP 7 on the WP Engine platform.', 'php-compatibility-checker' ); ?></p>
+							<p><?php esc_html_e( 'Speed up your site and improve your conversion opportunities by upgrading to PHP 7 on the WP Engine platform.', 'wpe-php-compat' ); ?></p>
 
 							<?php if ( $is_wpe_customer ) : ?>
-								<a target="_blank" class="wpe-pcc-button wpe-pcc-button-primary" href="<?php echo $url_wpe_customer_upgrade; ?>"><?php _e( 'Upgrade to PHP 7 for free', 'php-compatibility-checker' ); ?></a>
+								<a target="_blank" class="wpe-pcc-button wpe-pcc-button-primary" href="<?php echo $url_wpe_customer_upgrade; ?>"><?php esc_html_e( 'Upgrade to PHP 7 for free', 'wpe-php-compat' ); ?></a>
 							<?php else : ?>
-								<a target="_blank" class="wpe-pcc-button wpe-pcc-button-primary" href="<?php echo $url_get_hosting; ?>"><?php _e( 'Get PHP 7 Hosting', 'php-compatibility-checker' ); ?></a>
-								<p><?php _e( 'Already a WP Engine customer?', 'php-compatibility-checker' ); ?> <a target="_blank" href="<?php echo $url_wpe_customer_upgrade; ?>"><?php _e( 'Click here to upgrade to PHP 7', 'php-compatibility-checker' ); ?></a></p>
+								<a target="_blank" class="wpe-pcc-button wpe-pcc-button-primary" href="<?php echo $url_get_hosting; ?>"><?php esc_html_e( 'Get PHP 7 Hosting', 'wpe-php-compat' ); ?></a>
+								<p><?php esc_html_e( 'Already a WP Engine customer?', 'wpe-php-compat' ); ?> <a target="_blank" href="<?php echo $url_wpe_customer_upgrade; ?>"><?php esc_html_e( 'Click here to upgrade to PHP 7', 'wpe-php-compat' ); ?></a></p>
 							<?php endif; ?>
 
 						</div> <!-- /wpe-pcc-aside-content -->
@@ -412,19 +410,19 @@ class PHP_Compatibility_Checker {
 
 					<div style="display:none;" class="wpe-pcc-information wpe-pcc-information-errors">
 						<div class="wpe-pcc-aside-content">
-							<h2><?php _e( 'Need help making this site PHP 7 compatible?', 'php-compatibility-checker' ); ?></h2>
+							<h2><?php esc_html_e( 'Need help making this site PHP 7 compatible?', 'wpe-php-compat' ); ?></h2>
 							<div class="wpe-pcc-dev-helper">
-								<p class="title"><strong><?php _e( 'Get help from WP Engine partners', 'php-compatibility-checker' ); ?></strong></p>
-								<p><?php _e( 'Our agency partners can help make your site PHP 7 compatible.', 'php-compatibility-checker' ); ?></p>
-								<a target="_blank" class="wpe-pcc-button" href="<?php echo $url_wpe_agency_partners; ?>"><?php _e( 'Find a WP Engine Partner', 'php-compatibility-checker' ); ?></a>
+								<p class="title"><strong><?php esc_html_e( 'Get help from WP Engine partners', 'wpe-php-compat' ); ?></strong></p>
+								<p><?php esc_html_e( 'Our agency partners can help make your site PHP 7 compatible.', 'wpe-php-compat' ); ?></p>
+								<a target="_blank" class="wpe-pcc-button" href="<?php echo $url_wpe_agency_partners; ?>"><?php esc_html_e( 'Find a WP Engine Partner', 'wpe-php-compat' ); ?></a>
 							</div> <!-- /wpe-pcc-dev-helper -->
 
 							<div class="wpe-pcc-dev-helper">
-								<p class="title"><strong><?php _e( 'Get PHP 7 ready with Codeable', 'php-compatibility-checker' ); ?></strong></p>
-								<p><?php _e( 'Automatically submit this error report to Codeable to get a quick quote from their vetted WordPress developers.', 'php-compatibility-checker' ); ?></p>
+								<p class="title"><strong><?php esc_html_e( 'Get PHP 7 ready with Codeable', 'wpe-php-compat' ); ?></strong></p>
+								<p><?php esc_html_e( 'Automatically submit this error report to Codeable to get a quick quote from their vetted WordPress developers.', 'wpe-php-compat' ); ?></p>
 								<form target="_blank" action="<?php echo add_query_arg( array( 'action' => 'wp_engine_phpcompat' ), $url_codeable_submit ); ?>" method="POST">
 									<input type="hidden" name="data" value="<?php echo base64_encode( get_option( 'wpephpcompat.scan_results' ) ); ?>" />
-									<input type="submit" class="wpe-pcc-button" value="<?php _e( 'Submit to Codeable', 'php-compatibility-checker' ); ?>" />
+									<input type="submit" class="wpe-pcc-button" value="<?php esc_html_e( 'Submit to Codeable', 'wpe-php-compat' ); ?>" />
 								</form>
 							</div> <!-- /wpe-pcc-dev-helper -->
 						</div> <!-- /wpe-pcc-aside-content -->
@@ -436,122 +434,47 @@ class PHP_Compatibility_Checker {
 		</div> <!-- /wpe-pcc-wrap -->
 
 		<script id="result-template" type="text/x-handlebars-template">
-			<div class="wpe-pcc-alert wpe-pcc-alert-{{#if skipped}}skipped{{else if passed}}passed{{else}}error{{/if}}">
+			<div id="{{type}}_{{slug}}" class="wpe-pcc-alert wpe-pcc-alert-{{status}}">
 				<p>
-					<span class="dashicons-before dashicons-{{#if errors}}no{{else if skipped}}editor-help{{else}}yes{{/if}}"></span>
-					<strong>{{plugin_name}} </strong> -
-					<span class="wpe-pcc-alert-status">
-						{{#if skipped}}
-							<span class="wpe-pcc-badge wpe-pcc-badge-skipped"><?php _e( 'Unknown', 'php-compatibility-checker' ); ?></span>
-						{{else}}
-							{{#if passed}}
-								<span class="wpe-pcc-badge wpe-pcc-badge-passed"><?php _e( 'Compatible', 'php-compatibility-checker' ); ?></span>
-							{{/if}}
-							{{#if warnings}}
-								<span class="wpe-pcc-badge wpe-pcc-badge-warnings"><?php _e( 'Warnings:', 'php-compatibility-checker' ); ?> <strong>{{warnings}}</strong></span>
-							{{/if}}
-							{{#if errors}}
-								<span class="wpe-pcc-badge wpe-pcc-badge-errors"><?php _e( 'Errors:', 'php-compatibility-checker' ); ?> <strong>{{errors}}</strong></span>
-							{{/if}}
-						{{/if}}
-						</span>
-						{{#if updateAvailable}}
-							(<a href="<?php echo esc_url( $update_url ); ?>"><?php _e( 'Update Available', 'php-compatibility-checker' ); ?></a>)
-						{{/if}}
-					<a class="wpe-pcc-alert-details" href="#"><?php _e( 'toggle details', 'php-compatibility-checker' ); ?></a>
-					<textarea class="wpe-pcc-alert-logs hide">{{logs}}</textarea>
+					<strong>{{name}} {{version}}</strong>
 				</p>
-			</div> <!-- /wpe-pcc-alert -->
+
+				{{#php.length}}
+					<p class="wpe-pcc-results">
+						{{#php}}
+							{{#passed}}
+							<span class="wpe-pcc-php-version-passed dashicons-before dashicons-yes">{{phpversion}}</span>
+							{{/passed}}
+							{{^passed}}
+							<a href="#" data-php-version="{{phpversion}}" data-target="report_{{type}}_{{slug}}_{{phpversion}}" class="wpe-pcc-php-version-errors dashicons-before dashicons-no-alt">{{phpversion}}</a>
+							{{/passed}}
+						{{/php}}
+
+						{{#has_errors}}
+							<div><?php esc_html_e( 'Click on PHP Version to see errors and warnings', 'wpe-php-compat' ); ?></div>
+						{{/has_errors}}
+					</p>
+				{{/php.length}}
+
+				{{#custom_error}}
+					<p><?php esc_html_e( 'The remote API returned unexpected status:', 'wpe-php-compat' ); ?> {{response_status}}</p>
+				{{/custom_error}}
+
+				{{#reports.length}}
+				<div id="wpe_pcc_reports">
+					{{#reports}}
+					<div id="report_{{type}}_{{slug}}_{{phpversion}}" data-php-version="{{phpversion}}" class="wpe-pcc-php-version-report" style="display:none">
+						<h4>PHP {{phpversion}}</h4>
+						<textarea readonly="readonly">{{#messages}}
+{{.}}
+{{/messages}}</textarea>
+					</div>
+					{{/reports}}
+				</div>
+				{{/reports.length}}
+			</div>
 		</script>
 		<?php
-	}
-
-	/**
-	 * Returns an array of available PHP versions to test.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return array Associative array of available PHP versions.
-	 */
-	public function get_phpversions() {
-
-		$versions = array(
-			'PHP 7.2' => '7.2',
-			'PHP 7.1' => '7.1',
-			'PHP 7.0' => '7.0',
-			'PHP 7.4' => '7.4',
-			'PHP 8.0' => '8.0',
-		);
-
-		if ( version_compare( phpversion(), '5.3', '>=' ) ) {
-			$versions = array( 'PHP 7.3' => '7.3' ) + $versions;
-		}
-
-		$old_versions = array( '5.6', '5.5', '5.4', '5.3' );
-
-		while ( ! empty( $old_versions ) ) {
-			$oldest = array_pop( $old_versions );
-
-			if ( version_compare( phpversion(), $oldest, '<' ) ) {
-				array_push( $old_versions, $oldest );
-
-				foreach ( $old_versions as $old_version ) {
-					$old_version_label = "PHP {$old_version}";
-
-					$versions[ $old_version_label ] = $old_version;
-				}
-				break;
-			}
-		}
-
-		return apply_filters( 'phpcompat_phpversions', $versions );
-	}
-
-	/**
-	 * Enqueues our JavaScript and CSS.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @action admin_enqueue_scripts
-	 *
-	 * @param string $hook Current page hook name.
-	 */
-	public function admin_enqueue( $hook ) {
-
-		// Only enqueue these assets on the settings page.
-		if ( $this->page !== $hook ) {
-			return;
-		}
-
-		// Grab the plugin version.
-		$plugin_data = get_plugin_data( __FILE__, false, false );
-		if ( isset( $plugin_data['Version'] ) ) {
-			$version = $plugin_data['Version'];
-		}
-
-		// Styles.
-		wp_enqueue_style( 'wpephpcompat-style', plugins_url( '/styles/css/style.css', __FILE__ ), array(), $version );
-
-		// Scripts.
-		// wp_enqueue_script( 'wpephpcompat-ajax', plugins_url( '/scripts/starter-script.js', __FILE__ ), array( 'jquery' ), $version );
-
-		/**
-		 * Strings for i18n.
-		 *
-		 * These translated strings can be access in jquery with window.wpephpcompat object.
-		 */
-		$strings = array(
-			'name'       => __( 'Name', 'php-compatibility-checker' ),
-			'compatible' => __( 'compatible', 'php-compatibility-checker' ),
-			'are_not'    => __( 'plugins/themes may not be compatible', 'php-compatibility-checker' ),
-			'is_not'     => __( 'Your WordPress site is possibly not PHP', 'php-compatibility-checker' ),
-			'out_of'     => __( 'out of', 'php-compatibility-checker' ),
-			'run'        => __( 'Scan site', 'php-compatibility-checker' ),
-			'rerun'      => __( 'Scan site again', 'php-compatibility-checker' ),
-			'your_wp'    => __( 'Your WordPress site is', 'php-compatibility-checker' ),
-		);
-
-		wp_localize_script( 'wpephpcompat', 'wpephpcompat', $strings );
 	}
 
 }
