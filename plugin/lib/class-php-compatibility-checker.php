@@ -371,30 +371,18 @@ class PHP_Compatibility_Checker {
 
 				<div class="wpe-pcc-footer">
 					<hr>
-					<strong><?php _e( 'Limitations &amp; Caveats', 'php-compatibility-checker' ); ?></strong>
+					<strong><?php esc_html_e( 'Limitations &amp; Caveats', 'wpe-php-compat' ); ?></strong>
 					<ul class="wpe-pcc-bullets">
-						<li><?php _e( 'This tool cannot detect unused code paths that might be used for backwards compatibility, potentially showing false positives. We maintain <a target="_blank" href="https://github.com/wpengine/phpcompat/wiki/Results">a whitelist of plugins</a> that can cause false positives.', 'php-compatibility-checker' ); ?></li>
-						<li><?php _e( 'This tool does not execute your theme or plugin code, so it cannot detect runtime compatibility issues.', 'php-compatibility-checker' ); ?></li>
-						<li><?php _e( 'PHP Warnings could cause compatibility issues with future PHP versions and/or spam your logs.', 'php-compatibility-checker' ); ?></li>
-						<li>
-							<?php
-							printf(
-								/* translators: %s: FAQ URL */
-								__( 'The scan will get stuck if WP-Cron is not running correctly. Please <a target="_blank" href="%s">see the FAQ</a> for more information.', 'php-compatibility-checker' ),
-								'https://wordpress.org/plugins/php-compatibility-checker/faq/'
-							);
-							?>
-						</li>
-					</ul>
-					<p>
-						<?php
+						<li><?php esc_html_e( 'This tool does not execute your theme or plugin code, so it cannot detect runtime compatibility issues.', 'wpe-php-compat' ); ?></li>
+						<li><?php esc_html_e( 'PHP Warnings could cause compatibility issues with future PHP versions and/or spam your logs.', 'wpe-php-compat' ); ?></li>
+						<li><?php
 						printf(
 							/* translators: %s: GitHub Wiki URL */
-							__( 'Report false positives <a target="_blank" href="%s">on our GitHub repo</a>.', 'php-compatibility-checker' ),
+							wp_kses_post( __( 'Report false positives <a target="_blank" href="%s">on our GitHub repo</a>.', 'wpe-php-compat' ) ),
 							'https://github.com/wpengine/phpcompat/wiki/Results'
 						);
-						?>
-					</p>
+						?></li>
+					</ul>
 				</div> <!-- /wpe-pcc-footer -->
 			</div> <!-- /wpe-pcc-main -->
 
