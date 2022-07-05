@@ -23,6 +23,11 @@ import { downloadReport } from "./include/download";
     init(checkerList);
   });
 
+  $("#cleanupButton").on("click", function (event) {
+    event.preventDefault();
+    init(checkerList);
+  });
+
   $("#runButton").on("click", function (event) {
     event.preventDefault();
     runNextJob();

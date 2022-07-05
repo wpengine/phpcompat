@@ -13,6 +13,14 @@ $color-border: #c3c4c7;
 }
 
 .wpe-pcc {
+  &-wrap {
+    .button-primary {
+      .dashicons,
+      .dashicons-before {
+        line-height: 1.4em;
+      }
+    }
+  }
   &-alert {
     background: $color-background;
     border: 1px solid $color-border;
@@ -55,5 +63,19 @@ $color-border: #c3c4c7;
   }
 
   &-download-report {
+    clear: both;
+  }
+
+  &-developer-mode {
+    float: right;
+  }
+
+  &-clear-results {
+    border: 0 none;
+    color: #b4b9be;
+    background: none;
+    cursor: pointer;
+    line-height: 28px;
+    margin-left: 10px;
   }
 }
