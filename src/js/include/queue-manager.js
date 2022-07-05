@@ -50,22 +50,31 @@ export function executeJob(job, cb) {
           spinner.show().appendTo(resultItem);
         }
       },
-    }).done((response) => {
-      if ("complete" === response.status) {
-        window.phpcompat.results.push({ ...job, ...response });
-        updateResult(response, job);
-      } else if ("pending" === response.status) {
-        const now = new Date();
-        console.log("Report is pending, retry in 5 seconds");
-        // Retry in 5 seconds.
-        job.retryAt = new Date(now.getTime() + 5000);
-        window.phpcompat.queue.push(job);
-      } else {
-        // Unexpected behaviour. Stop scanning and display current status.
+    })
+      .done((response) => {
+        if ("complete" === response.status) {
+          window.phpcompat.results.push({ ...job, ...response });
+          updateResult(response, job);
+        } else if ("pending" === response.status) {
+          const now = new Date();
+          console.log("Report is pending, retry in 5 seconds");
+          // Retry in 5 seconds.
+          job.retryAt = new Date(now.getTime() + 5000);
+          window.phpcompat.queue.push(job);
+        } else {
+          // Unexpected behaviour. Stop scanning and display current status.
+          updateResultFailure(response, job);
+        }
+      })
+      .fail((jqXHR) => {
+        const response = {
+          status: jqXHR.responseJSON?.message,
+        };
         updateResultFailure(response, job);
-      }
-      cb();
-    });
+      })
+      .always(() => {
+        cb();
+      });
   }
 }
 

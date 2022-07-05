@@ -172,7 +172,7 @@ class PHP_Compatibility_Checker {
 			} elseif ( isset( $plugin_info->no_update[ $plugin_file ] ) ) {
 				$plugins[ $key ]['slug'] = $plugin_info->no_update[ $plugin_file ]->slug;
 			} else {
-				$plugins[ $key ]['slug'] = false;
+				$plugins[ $key ]['slug'] = dirname( $plugin_file );
 			}
 		}
 
