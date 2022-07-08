@@ -81,6 +81,7 @@ export function executeJob(job, cb) {
 export function runNextJob() {
   if (window.phpcompat.queue.length === 0) {
     showDownload();
+	$('.wpe-pcc-information').show();
     return;
   }
 

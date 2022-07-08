@@ -409,7 +409,7 @@ class PHP_Compatibility_Checker {
 						</div> <!-- /wpe-pcc-aside-content -->
 					</div> <!-- /wpe-pcc-get-hosting -->
 
-					<div class="wpe-pcc-information wpe-pcc-information-errors">
+					<div style="display: none;" class="wpe-pcc-information wpe-pcc-information-errors">
 						<div class="wpe-pcc-aside-content">
 							<h2><?php esc_html_e( 'Need help making this site PHP 7 compatible?', 'wpe-php-compat' ); ?></h2>
 							<div class="wpe-pcc-dev-helper">
@@ -422,7 +422,7 @@ class PHP_Compatibility_Checker {
 								<p class="title"><strong><?php esc_html_e( 'Get PHP 7 ready with Codeable', 'wpe-php-compat' ); ?></strong></p>
 								<p><?php esc_html_e( 'Automatically submit this error report to Codeable to get a quick quote from their vetted WordPress developers.', 'wpe-php-compat' ); ?></p>
 								<form target="_blank" action="<?php echo add_query_arg( array( 'action' => 'wp_engine_phpcompat' ), $url_codeable_submit ); ?>" method="POST">
-									<input type="hidden" name="data" value="<?php echo base64_encode( get_option( 'wpephpcompat.scan_results' ) ); ?>" />
+									<input type="hidden" id="wpe-pcc-codeable-data" name="data" value="<?php echo base64_encode( get_option( 'wpephpcompat.scan_results' ) ); ?>" />
 									<input type="submit" class="wpe-pcc-button" value="<?php esc_html_e( 'Submit to Codeable', 'wpe-php-compat' ); ?>" />
 								</form>
 							</div> <!-- /wpe-pcc-dev-helper -->
