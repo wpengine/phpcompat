@@ -115,9 +115,12 @@ export function updateResult(response, job) {
   resultItem.replaceWith(output);
 
   const fullReport = $("#testResults").val();
+  const updatedReport =
+    fullReport + (fullReport.length ? "\n\n\n" : "") + rawReport;
 
-  $("#testResults").val(
-    fullReport + (fullReport.length ? "\n\n\n" : "") + rawReport
+  $("#testResults").val(updatedReport);
+  $("#wpe-pcc-codeable-data").val(
+    Buffer.from(updatedReport).toString("base64")
   );
 }
 
