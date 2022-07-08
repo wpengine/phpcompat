@@ -78,4 +78,90 @@ $color-border: #c3c4c7;
     line-height: 28px;
     margin-left: 10px;
   }
+
+  &-main,
+  &-aside {
+    display: table-cell;
+  }
+
+  &-main {
+    padding-right: 40px;
+  }
+
+  &-aside {
+    width: 277px;
+
+    h2 {
+      line-height: 1.15em;
+      text-transform: capitalize;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    &-content {
+      border: 1px solid #babec3;
+      padding: 20px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+
+      p {
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+
+  &-scan-information {
+    display: inline-block;
+  }
+
+  &-logo {
+    display: block;
+    max-width: 182px;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  &-get-hosting {
+    background: #e8e9ea;
+  }
+
+  &-button {
+    display: block;
+    padding: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    background: #40bac8;
+    color: #fff;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      cursor: pointer;
+      background: #3199a5;
+      color: #fff;
+    }
+
+    &-primary {
+      background: #eb6126;
+
+      &:hover,
+      &:focus {
+        background: #bf4a18;
+      }
+    }
+  }
+}
+
+input.wpe-pcc-button {
+	display: block;
+	border: 0 none;
+	width: 100%;
 }
