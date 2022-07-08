@@ -102,16 +102,6 @@ class PHP_Compatibility_Checker {
 		add_action( 'admin_menu', array( $instance, 'create_menu' ) );
 
 		add_action( 'admin_enqueue_scripts', array( $instance, 'set_up_ajax' ) );
-
-		// The action to run the compatibility test.
-		// add_action( 'wp_ajax_wpephpcompat_start_test', array( $instance, 'start_test' ) );
-		// add_action( 'wp_ajax_wpephpcompat_check_status', array( $instance, 'check_status' ) );
-		// add_action( 'wpephpcompat_start_test_cron', array( $instance, 'start_test' ) );
-		// add_action( 'wp_ajax_wpephpcompat_clean_up', array( $instance, 'clean_up' ) );
-
-		// Handle activation notice.
-		// register_activation_hook( __FILE__, array( $instance, 'set_activation_notice_flag' ) );
-		// add_action( 'admin_notices', array( $instance, 'maybe_show_activation_notice' ) );
 	}
 
 	/**
