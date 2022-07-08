@@ -360,7 +360,7 @@ class PHP_Compatibility_Checker {
 						printf(
 							/* translators: %s: hosting URL */
 							wp_kses_post( __( '<strong>Attention:</strong> Not all errors are show-stoppers. <a target="_blank" href="%s">Test this site on PHP 7</a> to see if it just works!', 'wpe-php-compat' ) ),
-							esc_url( $url_get_hosting )
+							esc_url( 'https://localwp.com/' )
 						);
 						?>
 					</p>
