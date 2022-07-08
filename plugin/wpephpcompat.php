@@ -84,6 +84,56 @@ function wpe_phpcompat_autoloader( $class ) {
 	}
 }
 
-spl_autoload_register(  __NAMESPACE__ . '\wpe_phpcompat_autoloader' );
+spl_autoload_register( __NAMESPACE__ . '\wpe_phpcompat_autoloader' );
 
 add_action( 'plugins_loaded', __NAMESPACE__ . '\wpe_phpcompat_loader' );
+
+/**
+ * Remove old options and custom post type
+ *
+ * @return void
+ */
+function clean_legacy_data() {
+	delete_option( 'wpephpcompat.test_version' );
+	delete_option( 'wpephpcompat.only_active' );
+	delete_option( 'wpephpcompat.scan_results' );
+	delete_option( 'wpephpcompat.lock' );
+	delete_option( 'wpephpcompat.status' );
+	delete_option( 'wpephpcompat.numdirs' );
+	delete_option( 'wpephpcompat.show_notice' );
+
+	wp_clear_scheduled_hook( 'wpephpcompat_start_test_cron' );
+
+	$jobs = get_posts(
+		array(
+			'posts_per_page' => -1,
+			'post_type'      => 'wpephpcompat_jobs',
+			'fields'         => 'ids',
+		)
+	);
+
+	foreach ( $jobs as $job ) {
+		wp_delete_post( $job );
+	}
+}
+
+/**
+ * Activate plugin
+ *
+ * @return void
+ */
+function activate() {
+	clean_legacy_data();
+}
+
+/**
+ * Uninstall plugin
+ *
+ * @return void
+ */
+function uninstall() {
+	clean_legacy_data();
+}
+
+register_activation_hook( __FILE__, __NAMESPACE__ . '\activate' );
+register_uninstall_hook( __FILE__, __NAMESPACE__ . '\uninstall' );
