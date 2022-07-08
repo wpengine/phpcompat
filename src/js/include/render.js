@@ -119,7 +119,9 @@ export function updateResult(response, job) {
     fullReport + (fullReport.length ? "\n\n\n" : "") + rawReport;
 
   $("#testResults").val(updatedReport);
-  $("#wpe-pcc-codeable-data").val(Buffer.from(updatedReport).toString("base64"));
+  $("#wpe-pcc-codeable-data").val(
+    Buffer.from(updatedReport).toString("base64")
+  );
 }
 
 export function processFileReport(fileName, fileReport) {
