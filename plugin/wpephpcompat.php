@@ -135,5 +135,25 @@ function uninstall() {
 	clean_legacy_data();
 }
 
+/**
+ * Perform operations when the plugin is upgraded
+ *
+ * @param WP_Upgrader $upgrader WordPress upgrader instance.
+ * @param array       $hook_extra Options.
+ * @return void
+ */
+function upgrade( $upgrader, $hook_extra ) {
+	$current_plugin_path_name = plugin_basename( __FILE__ );
+
+	if ( 'update' === $hook_extra['action'] && 'plugin' === $hook_extra['type'] ) {
+		foreach ( $hook_extra['plugins'] as $plugin ) {
+			if ( $plugin === $current_plugin_path_name ) {
+				clean_legacy_data();
+			}
+		}
+	}
+}
+
 register_activation_hook( __FILE__, __NAMESPACE__ . '\activate' );
 register_uninstall_hook( __FILE__, __NAMESPACE__ . '\uninstall' );
+add_action( 'upgrader_process_complete', __NAMESPACE__ . '\upgrade', 10, 2 );
