@@ -268,7 +268,7 @@ class PHP_Compatibility_Checker {
 		$only_active  = get_option( 'wpephpcompat.only_active' );
 
 		// Determine if current site is a WP Engine customer.
-		$is_wpe_customer = ! empty( $_SERVER['IS_WPE'] ) && $_SERVER['IS_WPE'];
+		$is_wpe_customer = function_exists( 'is_wpe' ) && is_wpe();
 
 		// Assigns defaults for the scan if none are found in the database.
 		$test_version = ( ! empty( $test_version ) ) ? $test_version : '7.0';
