@@ -93,7 +93,14 @@ add_action( 'plugins_loaded', __NAMESPACE__ . '\wpe_phpcompat_loader' );
  *
  * @return void
  */
-function clean_legacy_data() {
+function maybe_migrate_to_wptide() {
+	$is_wptide = get_option( 'wpephpcompat_is_wptide', false );
+
+	if ( $is_wptide ) {
+		// No need to clean legacy options.
+		return;
+	}
+
 	delete_option( 'wpephpcompat.test_version' );
 	delete_option( 'wpephpcompat.only_active' );
 	delete_option( 'wpephpcompat.scan_results' );
@@ -104,17 +111,27 @@ function clean_legacy_data() {
 
 	wp_clear_scheduled_hook( 'wpephpcompat_start_test_cron' );
 
-	$jobs = get_posts(
-		array(
-			'posts_per_page' => -1,
-			'post_type'      => 'wpephpcompat_jobs',
-			'fields'         => 'ids',
-		)
-	);
+	$paged = 1;
 
-	foreach ( $jobs as $job ) {
-		wp_delete_post( $job );
-	}
+	do {
+		$jobs = get_posts(
+			array(
+				'posts_per_page' => 100,
+				'paged'          => $paged,
+				'post_type'      => 'wpephpcompat_jobs',
+				'fields'         => 'ids',
+			)
+		);
+
+		foreach ( $jobs as $job ) {
+			wp_delete_post( $job );
+		}
+
+		$found_jobs = count( $jobs );
+		$paged ++;
+	} while ( $found_jobs );
+
+	update_option( 'wpephpcompat_is_wptide', 1 );
 }
 
 /**
@@ -123,7 +140,7 @@ function clean_legacy_data() {
  * @return void
  */
 function activate() {
-	clean_legacy_data();
+	maybe_migrate_to_wptide();
 }
 
 /**
@@ -132,7 +149,8 @@ function activate() {
  * @return void
  */
 function uninstall() {
-	clean_legacy_data();
+	maybe_migrate_to_wptide();
+	delete_option( 'wpephpcompat_is_wptide' );
 }
 
 /**
@@ -148,7 +166,7 @@ function upgrade( $upgrader, $hook_extra ) {
 	if ( 'update' === $hook_extra['action'] && 'plugin' === $hook_extra['type'] ) {
 		foreach ( $hook_extra['plugins'] as $plugin ) {
 			if ( $plugin === $current_plugin_path_name ) {
-				clean_legacy_data();
+				maybe_migrate_to_wptide();
 			}
 		}
 	}
