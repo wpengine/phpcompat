@@ -84,6 +84,94 @@ function wpe_phpcompat_autoloader( $class ) {
 	}
 }
 
-spl_autoload_register(  __NAMESPACE__ . '\wpe_phpcompat_autoloader' );
+spl_autoload_register( __NAMESPACE__ . '\wpe_phpcompat_autoloader' );
 
 add_action( 'plugins_loaded', __NAMESPACE__ . '\wpe_phpcompat_loader' );
+
+/**
+ * Remove old options and custom post type
+ *
+ * @return void
+ */
+function maybe_migrate_to_wptide() {
+	$is_wptide = get_option( 'wpephpcompat_is_wptide', false );
+
+	if ( $is_wptide ) {
+		// No need to clean legacy options.
+		return;
+	}
+
+	delete_option( 'wpephpcompat.test_version' );
+	delete_option( 'wpephpcompat.only_active' );
+	delete_option( 'wpephpcompat.scan_results' );
+	delete_option( 'wpephpcompat.lock' );
+	delete_option( 'wpephpcompat.status' );
+	delete_option( 'wpephpcompat.numdirs' );
+	delete_option( 'wpephpcompat.show_notice' );
+
+	wp_clear_scheduled_hook( 'wpephpcompat_start_test_cron' );
+
+	$paged = 1;
+
+	do {
+		$jobs = get_posts(
+			array(
+				'posts_per_page' => 100,
+				'paged'          => $paged,
+				'post_type'      => 'wpephpcompat_jobs',
+				'fields'         => 'ids',
+			)
+		);
+
+		foreach ( $jobs as $job ) {
+			wp_delete_post( $job );
+		}
+
+		$found_jobs = count( $jobs );
+		$paged ++;
+	} while ( $found_jobs );
+
+	update_option( 'wpephpcompat_is_wptide', 1 );
+}
+
+/**
+ * Activate plugin
+ *
+ * @return void
+ */
+function activate() {
+	maybe_migrate_to_wptide();
+}
+
+/**
+ * Uninstall plugin
+ *
+ * @return void
+ */
+function uninstall() {
+	maybe_migrate_to_wptide();
+	delete_option( 'wpephpcompat_is_wptide' );
+}
+
+/**
+ * Perform operations when the plugin is upgraded
+ *
+ * @param WP_Upgrader $upgrader WordPress upgrader instance.
+ * @param array       $hook_extra Options.
+ * @return void
+ */
+function upgrade( $upgrader, $hook_extra ) {
+	$current_plugin_path_name = plugin_basename( __FILE__ );
+
+	if ( 'update' === $hook_extra['action'] && 'plugin' === $hook_extra['type'] ) {
+		foreach ( $hook_extra['plugins'] as $plugin ) {
+			if ( $plugin === $current_plugin_path_name ) {
+				maybe_migrate_to_wptide();
+			}
+		}
+	}
+}
+
+register_activation_hook( __FILE__, __NAMESPACE__ . '\activate' );
+register_uninstall_hook( __FILE__, __NAMESPACE__ . '\uninstall' );
+add_action( 'upgrader_process_complete', __NAMESPACE__ . '\upgrade', 10, 2 );
