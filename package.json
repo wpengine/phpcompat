@@ -3,7 +3,7 @@
 	"description": "The WP Engine PHP Compatibility Checker can be used by any WordPress website on any web host to check PHP version compatibility.",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/anthonyburchell/phpcompat"
+		"url": "https://github.com/wpengine/phpcompat"
 	},
 	"author": "WP Engine <wptech@wpengine.com>",
 	"license": "GPLv2",
