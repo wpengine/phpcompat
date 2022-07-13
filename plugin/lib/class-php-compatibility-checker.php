@@ -263,16 +263,9 @@ class PHP_Compatibility_Checker {
 	 * @since 1.0.0
 	 */
 	public function settings_page() {
-		// Discover last options used.
-		$test_version = get_option( 'wpephpcompat.test_version' );
-		$only_active  = get_option( 'wpephpcompat.only_active' );
 
 		// Determine if current site is a WP Engine customer.
 		$is_wpe_customer = function_exists( 'is_wpe' ) && is_wpe();
-
-		// Assigns defaults for the scan if none are found in the database.
-		$test_version = ( ! empty( $test_version ) ) ? $test_version : '7.0';
-		$only_active  = ( ! empty( $only_active ) ) ? $only_active : 'yes';
 
 		// Content variables.
 		$url_get_hosting          = esc_url( 'https://wpeng.in/5a0336/' );
@@ -296,8 +289,8 @@ class PHP_Compatibility_Checker {
 								<th scope="row"><label for="active_plugins"><?php esc_html_e( 'Plugin / Theme Status', 'wpe-php-compat' ); ?></label></th>
 								<td>
 									<fieldset>
-										<label><input type="radio" name="active_plugins" value="yes" <?php checked( $only_active, 'yes', true ); ?> /> <?php esc_html_e( 'Only scan active plugins and themes', 'wpe-php-compat' ); ?></label><br>
-										<label><input type="radio" name="active_plugins" value="no" <?php checked( $only_active, 'no', true ); ?> /> <?php esc_html_e( 'Scan all plugins and themes', 'wpe-php-compat' ); ?></label>
+										<label><input type="radio" name="active_plugins" value="yes" checked="checked" ?> /> <?php esc_html_e( 'Only scan active plugins and themes', 'wpe-php-compat' ); ?></label><br>
+										<label><input type="radio" name="active_plugins" value="no" /> <?php esc_html_e( 'Scan all plugins and themes', 'wpe-php-compat' ); ?></label>
 									</fieldset>
 								</td>
 							</tr>
@@ -320,13 +313,7 @@ class PHP_Compatibility_Checker {
 				<div class="wpe-pcc-results" style="display:none;">
 					<hr>
 					<h2>
-						<?php
-						printf(
-							/* translators: %s: PHP version number */
-							esc_html__( 'Scan Results for PHP %s Compatibility', 'wpe-php-compat' ),
-							'<span class="wpe-pcc-test-version">' . esc_attr( $test_version ) . '</span>'
-						);
-						?>
+						<?php esc_html_e( 'Scan Results for PHP Compatibility', 'wpe-php-compat' ); ?>
 					</h2>
 
 					<div id="wpe-pcc-download-report" class="wpe-pcc-download-report" style="display:none;">
