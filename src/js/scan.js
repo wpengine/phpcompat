@@ -44,11 +44,9 @@ import { downloadReport } from "./include/download";
 
   $("#developermode").on("change", function (event) {
     if ($(this).is(":checked")) {
-      console.log("show dev mode");
       $("#developerMode").show();
       $("#wpe_pcc_results").hide();
     } else {
-      console.log("Hide dev mode");
       $("#developerMode").hide();
       $("#wpe_pcc_results").show();
     }

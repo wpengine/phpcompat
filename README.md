@@ -26,9 +26,7 @@ __URL:__ _http://localhost:8888/wp-admin_
 
 __Admin User:__ _admin_
 
-__Admin Password:__ _password
-
-After you have logged in, go to http://localhost:8888/wp-admin/admin.php?page=fakerpress and generate some dummy content for the block to render.
+__Admin Password:__ _password_
 
 If anything goes wrong and you suspect your local is frozen, you can always `make choose-violence` to rebuild the local environment and containers. Hopefully you never have to choose violence. :)
 

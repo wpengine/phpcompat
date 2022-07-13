@@ -58,14 +58,11 @@ function wpe_phpcompat_get_class_file( $class ) {
 	$relative_class_parts = explode( '\\', $relative_class );
 
 	if ( 1 < count( $relative_class_parts ) ) {
-
 		$class_file = $relative_class_parts[0] . '/class-' . strtolower( str_replace( '_', '-', $relative_class_parts[1] ) );
 		$file       = $base_dir . str_replace( '\\', '/', $class_file ) . '.php';
-
 	}
 
 	return $file;
-
 }
 
 /**
