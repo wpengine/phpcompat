@@ -16,21 +16,25 @@ import { downloadReport } from "./include/download";
   window.phpcompat.results = [];
 
   const activeOnlySwitch = $("input[type=radio][name=active_plugins]");
+  const runButton = $("#runButton");
 
   init(checkerList);
 
   activeOnlySwitch.on("change", function () {
     init(checkerList);
+    runButton.prop("disabled", false);
   });
 
   $("#cleanupButton").on("click", function (event) {
     event.preventDefault();
+    runButton.prop("disabled", false);
     init(checkerList);
   });
 
-  $("#runButton").on("click", function (event) {
+  runButton.on("click", function (event) {
     event.preventDefault();
     runNextJob();
+    $(this).prop("disabled", true);
   });
 
   $(document).on("click", ".wpe-pcc-php-version-errors", function (event) {
