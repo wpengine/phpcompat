@@ -67,10 +67,13 @@ export function executeJob(job, cb) {
         }
       })
       .fail((jqXHR) => {
-        const response = {
-          status: jqXHR.responseJSON?.message,
-        };
-        updateResultFailure(response, job);
+        updateResultFailure(
+          jqXHR.responseJSON ?? {
+            status: jqXHR.status,
+            message: jqXHR.responseText,
+          },
+          job
+        );
       })
       .always(() => {
         cb();
