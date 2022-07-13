@@ -94,12 +94,12 @@ export function updateResult(response, job) {
       });
 
       // Override raw report with most recent PHP version
-	  const rawVersionReport = 
-	  `PHP ${phpVersion} incompatibilities:\n\n` +
-	  fileReports.join("\n\n") +
-	  "\n\n";
+      const rawVersionReport =
+        `PHP ${phpVersion} incompatibilities:\n\n` +
+        fileReports.join("\n\n") +
+        "\n\n";
 
-	  rawReport += rawVersionReport;
+      rawReport += rawVersionReport;
 
       view.reports.push({
         phpversion: phpVersion,
