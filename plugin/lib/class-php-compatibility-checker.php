@@ -450,6 +450,9 @@ class PHP_Compatibility_Checker {
 
 				{{#custom_error}}
 					<p><?php esc_html_e( 'The remote API returned unexpected status:', 'wpe-php-compat' ); ?> {{response_status}}</p>
+					{{#response_message}}
+					<p>{{.}}</p>
+					{{/response_message}}
 				{{/custom_error}}
 
 				{{#reports.length}}

@@ -177,6 +177,7 @@ export function updateResultFailure(response, job) {
     status: "error",
     custom_error: true,
     response_status: response.status,
+	response_message: response.message ?? '',
   };
 
   const output = Mustache.render(template, view);
