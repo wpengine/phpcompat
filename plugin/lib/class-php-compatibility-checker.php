@@ -456,7 +456,7 @@ class PHP_Compatibility_Checker {
 				<div id="wpe_pcc_reports">
 					{{#reports}}
 					<div id="report_{{type}}_{{slug}}_{{phpversion}}" data-php-version="{{phpversion}}" class="wpe-pcc-php-version-report" style="display:none">
-						<h4>PHP {{phpversion}}</h4>
+						<h4>PHP {{phpversion}} <a href="#" class="wpe-pcc-php-version-report-close"><?php esc_html_e( 'close', 'wpe-php-compat' ); ?></a></h4>
 						<textarea readonly="readonly">{{#messages}}
 {{.}}
 {{/messages}}</textarea>
