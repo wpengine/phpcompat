@@ -94,14 +94,16 @@ export function updateResult(response, job) {
       });
 
       // Override raw report with most recent PHP version
-      rawReport +=
-        `PHP ${phpVersion} incompatibilities:\n\n` +
-        fileReports.join("\n\n") +
-        "\n\n";
+	  const rawVersionReport = 
+	  `PHP ${phpVersion} incompatibilities:\n\n` +
+	  fileReports.join("\n\n") +
+	  "\n\n";
+
+	  rawReport += rawVersionReport;
 
       view.reports.push({
         phpversion: phpVersion,
-        messages: [rawReport],
+        messages: [rawVersionReport],
       });
     } else {
       rawReport += `Compatible with PHP ${phpVersion}\n`;
@@ -184,7 +186,10 @@ export function updateResultFailure(response, job) {
   const output = Mustache.render(template, view);
   resultItem.replaceWith(output);
 
-  let rawReport = `${job.name} ${job.version}\n\nErrors during the scan\n`;
+  let rawReport = `${job.name} ${job.version}\n\n`;
+  if (response.status) {
+    rawReport += `Scan status: ${response.status}\n`;
+  }
   if (response.message) {
     rawReport += response.message + "\n";
   }
