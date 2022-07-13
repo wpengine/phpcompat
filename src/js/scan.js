@@ -38,9 +38,18 @@ import { downloadReport } from "./include/download";
     const phpVersion = $(this).data("php-version");
     const reports = $(this).closest(".wpe-pcc-alert").find("#wpe_pcc_reports");
     const report = reports.find(`[data-php-version="${phpVersion}"]`);
-    $(".wpe-pcc-php-version-report").hide();
-    $(report).show();
+    $(".wpe-pcc-php-version-report").not(report).hide();
+    $(report).toggle();
   });
+
+  $(document).on(
+    "click",
+    ".wpe-pcc-php-version-report-close",
+    function (event) {
+      event.preventDefault();
+      $(this).closest(".wpe-pcc-php-version-report").hide();
+    }
+  );
 
   $("#developermode").on("change", function (event) {
     if ($(this).is(":checked")) {
