@@ -291,7 +291,7 @@ class PHP_Compatibility_Checker {
 								<th scope="row"><label for="active_plugins"><?php esc_html_e( 'Plugin / Theme Status', 'wpe-php-compat' ); ?></label></th>
 								<td>
 									<fieldset>
-										<label><input type="radio" name="active_plugins" value="yes" checked="checked" ?> /> <?php esc_html_e( 'Only scan active plugins and themes', 'wpe-php-compat' ); ?></label><br>
+										<label><input type="radio" name="active_plugins" value="yes" checked="checked" /> <?php esc_html_e( 'Only scan active plugins and themes', 'wpe-php-compat' ); ?></label><br>
 										<label><input type="radio" name="active_plugins" value="no" /> <?php esc_html_e( 'Scan all plugins and themes', 'wpe-php-compat' ); ?></label>
 									</fieldset>
 								</td>
