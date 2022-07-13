@@ -62,7 +62,7 @@ export function updateResult(response, job) {
 
   // Create index for PHP Versions.
   const phpVersions = Object.keys(report.versions).sort(compareVersions);
-  let rawReport = "";
+  let rawReport = `${job.name} ${job.version}\n\n`;
 
   view.php = [];
   view.reports = [];
@@ -94,15 +94,14 @@ export function updateResult(response, job) {
       });
 
       // Override raw report with most recent PHP version
-      rawReport =
-        `${job.name} ${job.version}\n\n` + fileReports.join("\n\n\n") + "\n\n";
+      rawReport += `PHP ${phpVersion} incompatibilities:\n\n` + fileReports.join("\n\n") + "\n\n";
 
       view.reports.push({
         phpversion: phpVersion,
         messages: [rawReport],
       });
     } else {
-      rawReport = `${job.name} ${job.version}\n\nCompatible with PHP ${phpVersion}`;
+      rawReport += `Compatible with PHP ${phpVersion}\n`;
     }
   });
 
