@@ -44,6 +44,20 @@ export function initResults(itemsToScan, activeOnly) {
 }
 
 export function updateResult(response, job) {
+  const report = response.reports?.phpcs_phpcompatibilitywp?.report;
+
+  // If we have a success response but don't have report data, show an error.
+  if (!report) {
+    updateResultFailure(
+      {
+        status: "failed",
+        message: __("No scan results found", "wpe-php-compat"),
+      },
+      job
+    );
+    return;
+  }
+
   const resultItem = $(`#${job.type}_${job.slug}`);
   const template = $("#result-template").html().toString();
 
@@ -51,8 +65,6 @@ export function updateResult(response, job) {
   const view = {
     ...job,
   };
-
-  const report = response.reports?.phpcs_phpcompatibilitywp?.report;
 
   // Success if no errors.
   view.status =
