@@ -225,3 +225,5 @@ Docker/debug
 clover.xml
 
 .vscode/*.log
+
+.wp-env.override.json
