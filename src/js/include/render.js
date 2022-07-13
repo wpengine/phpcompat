@@ -62,7 +62,7 @@ export function updateResult(response, job) {
 
   // Create index for PHP Versions.
   const phpVersions = Object.keys(report.versions).sort(compareVersions);
-  let rawReport = "";
+  let rawReport = `${job.name} ${job.version}\n\n`;
 
   view.php = [];
   view.reports = [];
@@ -94,15 +94,19 @@ export function updateResult(response, job) {
       });
 
       // Override raw report with most recent PHP version
-      rawReport =
-        `${job.name} ${job.version}\n\n` + fileReports.join("\n\n\n") + "\n\n";
+      const rawVersionReport =
+        `PHP ${phpVersion} incompatibilities:\n\n` +
+        fileReports.join("\n\n") +
+        "\n\n";
+
+      rawReport += rawVersionReport;
 
       view.reports.push({
         phpversion: phpVersion,
-        messages: [rawReport],
+        messages: [rawVersionReport],
       });
     } else {
-      rawReport = `${job.name} ${job.version}\n\nCompatible with PHP ${phpVersion}`;
+      rawReport += `Compatible with PHP ${phpVersion}\n`;
     }
   });
 
@@ -181,4 +185,26 @@ export function updateResultFailure(response, job) {
 
   const output = Mustache.render(template, view);
   resultItem.replaceWith(output);
+
+  let rawReport = `${job.name} ${job.version}\n\n`;
+  if (response.status) {
+    rawReport += `Scan status: ${response.status}\n`;
+  }
+  if (response.message) {
+    rawReport += response.message + "\n";
+  }
+  if (response.errors) {
+    response.errors.forEach((error) => {
+      rawReport += error.message + "\n";
+    });
+  }
+  rawReport += "\n";
+  const fullReport = $("#testResults").val();
+  const updatedReport =
+    fullReport + (fullReport.length ? "\n\n\n" : "") + rawReport;
+
+  $("#testResults").val(updatedReport);
+  $("#wpe-pcc-codeable-data").val(
+    Buffer.from(updatedReport).toString("base64")
+  );
 }
