@@ -21,19 +21,19 @@ import { downloadReport } from "./include/download";
 
   activeOnlySwitch.on("change", function () {
     init(checkerList);
-	$("#runButton").prop('disabled', false);
+    $("#runButton").prop("disabled", false);
   });
 
   $("#cleanupButton").on("click", function (event) {
     event.preventDefault();
-	$("#runButton").prop('disabled', false);
+    $("#runButton").prop("disabled", false);
     init(checkerList);
   });
 
   $("#runButton").on("click", function (event) {
     event.preventDefault();
     runNextJob();
-	$(this).prop('disabled', true);
+    $(this).prop("disabled", true);
   });
 
   $(document).on("click", ".wpe-pcc-php-version-errors", function (event) {
