@@ -51,7 +51,7 @@ export function updateResult(response, job) {
     updateResultFailure(
       {
         status: "failed",
-        message: __("No scan results found", "wpe-php-compat"),
+        message: "No scan results found",
       },
       job
     );
