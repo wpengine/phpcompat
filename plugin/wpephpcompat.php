@@ -3,7 +3,9 @@
  * Plugin Name: PHP Compatibility Checker
  * Plugin URI: https://wpengine.com
  * Description: The WP Engine PHP Compatibility Checker can be used by any WordPress website on any web host to check PHP version compatibility.
- * Version: 0.0.1
+ * Version: 1.6.0
+ * Requires at least: 5.6
+ * Requires PHP: 5.6
  * Text Domain: wpe-php-compat
  * Domain Path: /languages
  * Author: WP Engine

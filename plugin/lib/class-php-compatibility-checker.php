@@ -72,6 +72,7 @@ class PHP_Compatibility_Checker {
 			$ajax_js_assets['version']
 		);
 
+		wp_style_add_data();
 		wp_register_script(
 			'tide-checker',
 			plugins_url( $ajax_js, __FILE__ ),
@@ -124,6 +125,8 @@ class PHP_Compatibility_Checker {
 		 * This will exclude based on the plugin name, not the plugin slug.
 		 *
 		 * @param string[] $excluded_plugins Plugins we want to exclude.
+		 *
+		 * @since 1.6.0
 		 */
 		$excluded_plugins = apply_filters( 'phpcompat_excluded_plugins', array( 'PHP Compatibility Checker', 'Hello Dolly' ) );
 
@@ -191,6 +194,8 @@ class PHP_Compatibility_Checker {
 		 *     @type string $version Plugin version.
 		 *     @type string $active Whether the plugin is active (yes or no).
 		 * }
+		 *
+		 * @since 1.6.0
 		 */
 		return apply_filters( 'phpcompat_plugins_to_scan', $plugins );
 	}
@@ -209,6 +214,8 @@ class PHP_Compatibility_Checker {
 		 * This will exclude based on the theme name, not the theme slug.
 		 *
 		 * @param string[] $excluded_themes Themes we want to exclude.
+		 *
+		 * @since 1.6.0
 		 */
 		$excluded_themes = apply_filters( 'phpcompat_excluded_themes', array() );
 
@@ -243,6 +250,8 @@ class PHP_Compatibility_Checker {
 		 *     @type string $version Theme version.
 		 *     @type string $active Whether the theme is active (yes or no).
 		 * }
+		 *
+		 * @since 1.6.0
 		 */
 		return apply_filters( 'phpcompat_themes_to_scan', $themes );
 	}
