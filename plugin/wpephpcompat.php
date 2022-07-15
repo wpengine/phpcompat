@@ -1,16 +1,17 @@
 <?php
 /**
- * Plugin Name: PHP Compatibility Checker
- * Plugin URI: https://wpengine.com
- * Description: The WP Engine PHP Compatibility Checker can be used by any WordPress website on any web host to check PHP version compatibility.
- * Version: 1.6.0
+ * Plugin Name:       PHP Compatibility Checker
+ * Plugin URI:        https://wpengine.com
+ * Description:       The WP Engine PHP Compatibility Checker can be used by any WordPress website on any web host to check PHP version compatibility.
+ * Version:           1.6.0
  * Requires at least: 5.6
- * Requires PHP: 5.6
- * Text Domain: wpe-php-compat
- * Domain Path: /languages
- * Author: WP Engine
- * Author URI: https://wpengine.com/
- * License: GPLv2
+ * Requires PHP:      5.6
+ * Author:            WP Engine
+ * Author URI:        https://wpengine.com/
+ * License:           GPLv2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       wpe-php-compat
+ * Domain Path:       /languages
  *
  * @package WPEngine_PHPCompat\PHP_Compatibility_Checker
  */
