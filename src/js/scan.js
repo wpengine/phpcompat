@@ -23,11 +23,13 @@ import { downloadReport } from "./include/download";
   activeOnlySwitch.on("change", function () {
     init(checkerList);
     runButton.prop("disabled", false);
+    disableDeveloperMode();
   });
 
   $("#cleanupButton").on("click", function (event) {
     event.preventDefault();
     runButton.prop("disabled", false);
+    disableDeveloperMode();
     init(checkerList);
   });
 
@@ -74,5 +76,11 @@ import { downloadReport } from "./include/download";
     var activeOnly = $("input[type=radio][name=active_plugins]:checked").val();
     initQueue(itemsToScan, activeOnly);
     initResults(itemsToScan, activeOnly);
+  }
+
+  function disableDeveloperMode() {
+    $("#developermode").prop("checked", false);
+    $("#developerMode").hide();
+    $("#wpe_pcc_results").show();
   }
 })(jQuery);
