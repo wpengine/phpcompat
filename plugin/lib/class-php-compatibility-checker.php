@@ -72,7 +72,6 @@ class PHP_Compatibility_Checker {
 			$ajax_js_assets['version']
 		);
 
-		wp_style_add_data();
 		wp_register_script(
 			'tide-checker',
 			plugins_url( $ajax_js, __FILE__ ),
