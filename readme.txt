@@ -1,11 +1,11 @@
 === PHP Compatibility Checker ===
-Contributors: wpengine, octalmage, stevenkword, Taylor4484, pross, jcross, rfmeier
-Tags: php 7, php, version, compatibility, checker, wp engine, wpe, wpengine
-Requires at least: 4.8
-Tested up to: 5.8
-Stable tag: 1.5.2
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Contributors:      wpengine, octalmage, stevenkword, Taylor4484, pross, jcross, rfmeier
+Tags:              php 7, php 8, php, version, compat, compatibility, checker, wp engine, wpe, wpengine
+Requires at least: 5.6
+Tested up to:      6.0
+Stable tag:        1.6.0
+License:           GPLv2 or later
+License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
 Make sure your plugins and themes are compatible with newer PHP versions.
 
@@ -26,7 +26,6 @@ This plugin will lint theme and plugin code inside your WordPress file system an
 * As of [July 2019](https://wordpress.org/about/stats/), 20.1% of WordPress websites run a PHP version older than PHP 5.6.
 * These versions of PHP have been [deprecated and unsupported](https://secure.php.net/supported-versions.php) for over 2 years.
 * Only 54.1% of WordPress websites run PHP 7, the current main version of PHP.
-
 
 = Disclaimer =
 *While this plugin is written to detect as many problems as accurately as possible, 100% reliable detection is very difficult to ensure. It is best practice to run comprehensive tests before you migrate to a new PHP version.*
@@ -64,28 +63,29 @@ PHP Compatibility Checker includes WP-CLI command support:
     - active
     - all
 `
+
 Example: `wp phpcompat 7.2 --scan=active`
 
 
 == Frequently Asked Questions ==
 
-1. Will this work outside of the WP Engine hosting account?
+= 1. Will this work outside of the WP Engine hosting account? =
 
     Yes, this plugin can be used any ANY WordPress website on ANY host.
 
-2. Are there WP-CLI commands available?
+= 2. Are there WP-CLI commands available? =
 
     Yes, this plugin does extend WP-CLI and provide commands. See the [Other Notes](https://wordpress.org/plugins/php-compatibility-checker/other_notes/) tab for details.
 
-3. A plugin I created is listed as not compatible, what should I do?
+= 3. A plugin I created is listed as not compatible, what should I do? =
 
     We maintain a [whitelist of plugins](https://github.com/wpengine/phpcompat/wiki/Results) that cause false positives. If your plugin shows up as incompatible but you think that is wrong, please open a [GitHub issue](https://github.com/wpengine/phpcompat/issues/new) on the project, or email wordpress@wpengine.com with info about your plugin and why you know it is compatible (you have automated tests, the failure is on backwards compatibility code paths, etc).
 
-4. Can I use this to test non-WordPress PHP Projects?
+= 4. Can I use this to test non-WordPress PHP Projects? =
 
     Yes! While you cannot use this WordPress plugin to test your non-WordPress projects, you can use the [Open Source PHPCompatibility Library](https://github.com/wimg/PHPCompatibility) that this plugin is built on.
 
-5. Why was my plugin/theme skipped?
+= 5. Why was my plugin/theme skipped? =
 
     Some servers have timeouts to prevent long running queries, this is commonly 60 seconds. This can prevent the checker from being able to process large themes or plugins. You should check with your host to see if this timeout can be temporarily removed. The best way around this timeout issue is to run this plugin on a [local copy](https://make.wordpress.org/core/handbook/tutorials/installing-a-local-server/) of your site, or you can use the WP-CLI command.
 
@@ -93,19 +93,19 @@ Example: `wp phpcompat 7.2 --scan=active`
 
     Setting the timeout to 0 disables the cron/timeout.
 
-6. The scan is stuck, what can I do?
+= 6. The scan is stuck, what can I do? =
 
     The PHP Compatibility Checker relies on WP-Cron to process plugins/themes in batches, this is necessary to avoid server timeouts. The scan will get stuck if your site's WP-Cron isn't functioning. You can look into this using [WP Crontrol](https://wordpress.org/plugins/wp-crontrol/). The cron is called `wpephpcompat_start_test_cron`. This could also be an issue if your site is using basic authentication.
 
     You can also use the [WP-CLI command](https://wordpress.org/plugins/php-compatibility-checker/other_notes/) or disable the timeout to avoid using WP-Cron.
 
-7. I found a bug, or have a suggestion, can I contribute back?
+= 7. I found a bug, or have a suggestion, can I contribute back? =
 
     Yes! WP Engine has a public GitHub repo where you can contribute back to this plugin. Please open an issue on the [Plugin GitHub](https://github.com/wpengine/phpcompat). We actively develop this plugin, and are always happy to receive pull requests.
 
     The plugin was created by WP Engine to help the WordPress community increase adoption of modern PHP versions. We welcome contributors to this plugin, and are excited to see how developers and other WordPress hosts use this plugin.
 
-To disclose security issues for this plugin please email WordPress@wpengine.com
+    To disclose security issues for this plugin please email WordPress@wpengine.com.
 
 == Screenshots ==
 
@@ -113,6 +113,10 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 2. Compatibility results screen
 
 == Changelog ==
+
+= 1.6.0 =
+- 
+
 = 1.5.2 =
 - Removed PHP 5.2 checks
 - Fixed PHP 8 issue where plugin cannot cannot be uninstalled.
@@ -218,6 +222,10 @@ To disclose security issues for this plugin please email WordPress@wpengine.com
 - Basic WP-CLI Commands
 
 == Upgrade Notice ==
+
+= 1.6.0 =
+- WordPress minimum increased from 4.8 to 5.6.
+- PHP Compatibility scans now run via wptide.org and no longer run on your host server!
 
 = 1.4.8 =
 - Update dependencies.
