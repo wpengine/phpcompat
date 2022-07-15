@@ -13,59 +13,37 @@ Make sure your plugins and themes are compatible with newer PHP versions.
 
 The WP Engine PHP Compatibility Checker can be used by any WordPress website on any web host to check PHP version compatibility.
 
-This plugin will lint theme and plugin code inside your WordPress file system and give you back a report of compatibility issues for you to fix. Compatibility issues are categorized into errors and warnings and will list the file and line number of the offending code, as well as the info about why that line of code is incompatible with the chosen version of PHP. The plugin will also suggest updates to themes and plugins, as a new version may offer compatible code.
+This plugin will lint theme and plugin code installed on your WordPress site and give you back a report of compatibility issues as reported by [Tide](https://wptide.org) for you to fix. Compatibility issues are categorized into errors and warnings and will list the file and line number of the offending code, as well as the info about why that line of code is incompatible with the chosen version of PHP. The plugin will also suggest updates to themes and plugins, as a new version may offer compatible code.
 
 **This plugin does not execute your theme and plugin code, as such this plugin cannot detect runtime compatibility issues.**
 
 **Please note that linting code is not perfect. This plugin cannot detect unused code-paths that might be used for backwards compatibility, and thus might show false positives. We maintain a [whitelist of plugins](https://github.com/wpengine/phpcompat/wiki/Results) that can cause false positives. We are continuously working to ensure the checker provides the most accurate results possible.**
 
-**This plugin relies on WP-Cron to scan files in the background. The scan will get stuck if the site's WP-Cron isn't running correctly. Please see the [FAQ](https://wordpress.org/plugins/php-compatibility-checker/faq/) for more information.**
+**This plugin relies on [Tide](https://wptide.org) that constantly scans updated versions of plugins and themes in the background. Your scan results should be near real-time, but if not that just means Tide has not yet scanned your specific plugin or theme version. Please be patient as this may take up to 10 minutes for results to be returned from Tide. Please see the [FAQ](https://wordpress.org/plugins/php-compatibility-checker/faq/) for more information.**
 
-= Update to PHP 7.3 =
-* Use this plugin to check your site for compatibility up to PHP 7.3!
-* As of [July 2019](https://wordpress.org/about/stats/), 20.1% of WordPress websites run a PHP version older than PHP 5.6.
+= Update to PHP 7.4 =
+
+* Use this plugin to check your site for compatibility up to PHP 7.4!
+* As of [July 2022](https://wordpress.org/about/stats/), 8.52% of WordPress websites run a PHP version older than PHP 7.0.
 * These versions of PHP have been [deprecated and unsupported](https://secure.php.net/supported-versions.php) for over 2 years.
-* Only 54.1% of WordPress websites run PHP 7, the current main version of PHP.
+* Only 7.1% of WordPress websites run PHP 8, the current main version of PHP.
 
 = Disclaimer =
 *While this plugin is written to detect as many problems as accurately as possible, 100% reliable detection is very difficult to ensure. It is best practice to run comprehensive tests before you migrate to a new PHP version.*
 
 The plugin was created by WP Engine to help the WordPress community increase adoption of modern PHP versions. We [welcome contributors](https://github.com/wpengine/phpcompat) to this plugin, and are excited to see how developers and other WordPress hosts use this plugin.
 
-To disclose security issues for this plugin please email WordPress@wpengine.com
+To disclose security issues for this plugin please email WordPress@wpengine.com.
 
 == Installation ==
 
-*Note: If you have WordPress 2.7 or above you can simply go to 'Plugins' > 'Add New' in the WordPress admin and search for "PHP Compatibility Checker" and install it from there.*
+*Note: Go to 'Plugins' > 'Add New' in the WordPress admin and search for "PHP Compatibility Checker" and install it from there.*
 
 To manually install:
 1. Upload `phpcompat` to the `/wpengine-wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 You will find the plugin options in the WP Admin `Tools => PHP Compatibility` menu. Once you click `run` it will take a few minutes to conduct the test. Feel free to navigate away from the page and check back later.
-
-There are WP-CLI commands available see the [Other Notes](https://wordpress.org/plugins/php-compatibility-checker/other_notes/) tab for details.
-
-== Other Notes ==
-
-PHP Compatibility Checker includes WP-CLI command support:
-
-`wp phpcompat <version> [--scan=<scan>]`
-
-`
-<version>
-    PHP version to test.
-
-[--scan=<scan>]
-  Whether to scan only active plugins and themes or all of them.
-  default: active
-  options:
-    - active
-    - all
-`
-
-Example: `wp phpcompat 7.2 --scan=active`
-
 
 == Frequently Asked Questions ==
 
@@ -75,7 +53,7 @@ Example: `wp phpcompat 7.2 --scan=active`
 
 = 2. Are there WP-CLI commands available? =
 
-    Yes, this plugin does extend WP-CLI and provide commands. See the [Other Notes](https://wordpress.org/plugins/php-compatibility-checker/other_notes/) tab for details.
+    As of the 1.6.0 release this plugin no longer includes the `phpcompat` WP-CLI command. If you still require use of that command, then please run version 1.5.2 or older of this plugin as those versions extend WP-CLI and provide commands.
 
 = 3. A plugin I created is listed as not compatible, what should I do? =
 
@@ -87,17 +65,13 @@ Example: `wp phpcompat 7.2 --scan=active`
 
 = 5. Why was my plugin/theme skipped? =
 
-    Some servers have timeouts to prevent long running queries, this is commonly 60 seconds. This can prevent the checker from being able to process large themes or plugins. You should check with your host to see if this timeout can be temporarily removed. The best way around this timeout issue is to run this plugin on a [local copy](https://make.wordpress.org/core/handbook/tutorials/installing-a-local-server/) of your site, or you can use the WP-CLI command.
-
-    You can use the filter `wpephpcompat_scan_timeout` to customize the scan timeout. See [this](https://gist.github.com/octalmage/07f26e0d1f25cea9a8ca92ebc67a3a14) for an example.
-
-    Setting the timeout to 0 disables the cron/timeout.
+    If your plugin or theme is not available on WordPress.org, then [Tide](https://wptide.org) will not be able to scan or return results of that plugin or theme.
+    
+    If your plugin or theme is available on WordPress.org, but Tide is not immediately returning results than it likely means Tide has not yet audited that plugin or theme and within a few minutes results should be available once Tide completes its audit.
 
 = 6. The scan is stuck, what can I do? =
 
-    The PHP Compatibility Checker relies on WP-Cron to process plugins/themes in batches, this is necessary to avoid server timeouts. The scan will get stuck if your site's WP-Cron isn't functioning. You can look into this using [WP Crontrol](https://wordpress.org/plugins/wp-crontrol/). The cron is called `wpephpcompat_start_test_cron`. This could also be an issue if your site is using basic authentication.
-
-    You can also use the [WP-CLI command](https://wordpress.org/plugins/php-compatibility-checker/other_notes/) or disable the timeout to avoid using WP-Cron.
+    As of version 1.6.0 of this plugin, there should no longer be issues of the scan getting stuck as it no longer runs on your WordPress host server.  If you are seeing significantly slow or unresponsive results from a plugin or theme that is available on WordPress.org, then please [open an issue](https://github.com/wptide/wptide.org/issues/new/choose) with those details for the Tide team to investigate why that specific plugin or theme version is not appearing in the Tide results.
 
 = 7. I found a bug, or have a suggestion, can I contribute back? =
 
@@ -115,17 +89,19 @@ Example: `wp phpcompat 7.2 --scan=active`
 == Changelog ==
 
 = 1.6.0 =
-- 
+- Changed from running PHP Compatibility scans on your WordPress server to using scan data from [Tide](https://wptide.org).
+- Removed `phpcompat` WP-CLI command.
+- Update dependencies.
 
 = 1.5.2 =
 - Removed PHP 5.2 checks
 - Fixed PHP 8 issue where plugin cannot cannot be uninstalled.
 
 = 1.5.1 =
-- Added Smart Plugin Manager to whitelisted plugins
+- Added Smart Plugin Manager to whitelisted plugins.
 
 = 1.5.0 =
-- Added support for PHP 7.3 compatibility checks
+- Added support for PHP 7.3 compatibility checks.
 
 = 1.4.8 =
 - Update dependencies.
@@ -176,10 +152,10 @@ Example: `wp phpcompat 7.2 --scan=active`
 - Whitelisted UpdraftPlus and Max Mega Menu.
 
 = 1.2.1 =
-- Updated the PHPCompatibility library to latest version
+- Updated the PHPCompatibility library to latest version.
 
 = 1.2.0 =
-- Updated the PHPCompatibility library to latest version
+- Updated the PHPCompatibility library to latest version.
 - Added support for PHP 5.6
 
 = 1.1.2 =
@@ -198,34 +174,35 @@ Example: `wp phpcompat 7.2 --scan=active`
 - The scan timeout is now configurable using a filter. See the FAQ for more details.
 
 = 1.0.3 =
-- Fixed a bug in the WP-CLI command
-- Added a handful of PHP 7 compatible plugins to the whitelist
+- Fixed a bug in the WP-CLI command.
+- Added a handful of PHP 7 compatible plugins to the whitelist.
 
 = 1.0.2 =
-- Added additional role protections
-- Changed the UI colors to better understand output at a glance
-- Exclude checking node_modules and tmp directories
-- Added support for child theme's parent theme
+- Added additional role protections.
+- Changed the UI colors to better understand output at a glance.
+- Exclude checking node_modules and tmp directories.
+- Added support for child theme's parent theme.
 
 = 1.0.1 =
-- Updated compatibility library with a few bugfixes
-- Added skip logic to prevent checker from hanging
+- Updated compatibility library with a few bugfixes.
+- Added skip logic to prevent checker from hanging.
 
 = 1.0.0 =
-- Major update to add PHP 7 checking support
-- Improved the UX of the progress bar
-- Fixed bug with the way the plugin menu was registered
+- Major update to add PHP 7 checking support.
+- Improved the UX of the progress bar.
+- Fixed bug with the way the plugin menu was registered.
 
 = 0.1.0 =
-- Initial version
-- PHP 5.5, 5.4, and 5.3 Support
-- Basic WP-CLI Commands
+- Initial version.
+- PHP 5.5, 5.4, and 5.3 Support.
+- Basic WP-CLI Commands.
 
 == Upgrade Notice ==
 
 = 1.6.0 =
 - WordPress minimum increased from 4.8 to 5.6.
-- PHP Compatibility scans now run via wptide.org and no longer run on your host server!
+- PHP Compatibility scans now run via [Tide](https://wptide.org) and no longer run on your host server!
+- The WP-CLI `phpcompat` command has been removed as this plugin no longer runs on your host server and relies upon Tide.
 
 = 1.4.8 =
 - Update dependencies.
