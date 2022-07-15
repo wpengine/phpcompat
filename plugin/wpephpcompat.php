@@ -33,6 +33,9 @@ function wpe_phpcompat_loader() {
 
 	// Load the text domain.
 	load_plugin_textdomain( 'wpe-php-compat', false, dirname( dirname( __FILE__ ) ) . '/languages' );
+
+	// Add plugin action link.
+	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $register_phpcompat, 'filter_plugin_links' ) );
 }
 
 /**
