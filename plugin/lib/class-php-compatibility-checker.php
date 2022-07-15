@@ -103,9 +103,6 @@ class PHP_Compatibility_Checker {
 
 		// Enqueue scripts and styles.
 		add_action( 'admin_enqueue_scripts', array( $instance, 'enqueue_scripts' ) );
-
-		// Add plugin action link.
-		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $instance, 'filter_plugin_links' ) );
 	}
 
 	/**
