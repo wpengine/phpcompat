@@ -103,6 +103,9 @@ class PHP_Compatibility_Checker {
 
 		// Enqueue scripts and styles.
 		add_action( 'admin_enqueue_scripts', array( $instance, 'enqueue_scripts' ) );
+
+		// Add plugin action link.
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $instance, 'filter_plugin_links' ) );
 	}
 
 	/**
@@ -466,4 +469,19 @@ class PHP_Compatibility_Checker {
 		<?php
 	}
 
+	/**
+	 * Adds a link to the admin page to the plugin action links.
+	 *
+	 * @since 1.4.4
+	 *
+	 * @param array $links Plugin action links.
+	 * @return array Modified plugin action links.
+	 */
+	public function filter_plugin_links( $links ) {
+
+		$url = add_query_arg( 'page', WPEPHPCOMPAT_ADMIN_PAGE_SLUG, admin_url( 'tools.php' ) );
+		array_unshift( $links, '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Start Scan', 'wpe-php-compat' ) . '</a>' );
+
+		return $links;
+	}
 }
