@@ -67,13 +67,24 @@ export function executeJob(job, cb) {
         }
       })
       .fail((jqXHR) => {
-        updateResultFailure(
-          jqXHR.responseJSON ?? {
-            status: jqXHR.status,
-            message: jqXHR.responseText,
-          },
-          job
-        );
+        // If connection was lost during scan, show error message.
+        if (!jqXHR.responseJSON && 0 === jqXHR.status && 0 === jqXHR.readyState) {
+          updateResultFailure(
+            {
+              status: "failed",
+              message: "The audit of this code was interrupted, please scan again.",
+            },
+            job
+          );
+        } else {
+          updateResultFailure(
+            jqXHR.responseJSON ?? {
+              status: jqXHR.status,
+              message: jqXHR.responseText,
+            },
+            job
+          );
+        }
       })
       .always(() => {
         cb();
