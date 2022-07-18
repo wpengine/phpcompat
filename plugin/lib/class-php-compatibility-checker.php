@@ -42,8 +42,15 @@ class PHP_Compatibility_Checker {
 	 * Enqueue any needed scripts and styles.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @param string $hook_suffix The current admin page.
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts( $hook_suffix = '' ) {
+		// Only load on our scan admin page.
+		if ( 'tools_page_wpe-php-compat' !== $hook_suffix ) {
+			return;
+		}
+
 		$assets_file = dirname( dirname( __FILE__ ) ) . '/build/scan.asset.php';
 
 		if ( ! file_exists( $assets_file ) ) {
