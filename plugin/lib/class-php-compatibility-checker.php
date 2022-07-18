@@ -57,6 +57,8 @@ class PHP_Compatibility_Checker {
 					<?php
 				}
 			);
+
+			return;
 		}
 
 		// phpcs:ignore PEAR.Files.IncludingFile.UseIncludeOnce
