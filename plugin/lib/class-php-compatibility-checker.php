@@ -346,7 +346,7 @@ class PHP_Compatibility_Checker {
 						<?php
 						printf(
 							/* translators: %s: hosting URL */
-							wp_kses_post( __( '<strong>Attention:</strong> Not all errors are show-stoppers. <a target="_blank" href="%s">Test this site on PHP 7</a> to see if it just works!', 'wpe-php-compat' ) ),
+							wp_kses_post( __( '<strong>Attention:</strong> Not all errors are show-stoppers. <a target="_blank" href="%s">Use LocalWP to test this site on PHP 8</a> to see if it just works!', 'wpe-php-compat' ) ),
 							esc_url( 'https://localwp.com/' )
 						);
 						?>
@@ -399,15 +399,15 @@ class PHP_Compatibility_Checker {
 
 					<div style="display: none;" class="wpe-pcc-information wpe-pcc-information-errors">
 						<div class="wpe-pcc-aside-content">
-							<h2><?php esc_html_e( 'Need help making this site PHP 7 compatible?', 'wpe-php-compat' ); ?></h2>
+							<h2><?php esc_html_e( 'Need help making this site PHP 8 compatible?', 'wpe-php-compat' ); ?></h2>
 							<div class="wpe-pcc-dev-helper">
 								<p class="title"><strong><?php esc_html_e( 'Get help from WP Engine partners', 'wpe-php-compat' ); ?></strong></p>
-								<p><?php esc_html_e( 'Our agency partners can help make your site PHP 7 compatible.', 'wpe-php-compat' ); ?></p>
+								<p><?php esc_html_e( 'Our agency partners can help make your site PHP 8 compatible.', 'wpe-php-compat' ); ?></p>
 								<a target="_blank" class="wpe-pcc-button" href="<?php echo esc_url( $url_wpe_agency_partners ); ?>"><?php esc_html_e( 'Find a WP Engine Partner', 'wpe-php-compat' ); ?></a>
 							</div> <!-- /wpe-pcc-dev-helper -->
 
 							<div class="wpe-pcc-dev-helper">
-								<p class="title"><strong><?php esc_html_e( 'Get PHP 7 ready with Codeable', 'wpe-php-compat' ); ?></strong></p>
+								<p class="title"><strong><?php esc_html_e( 'Get PHP 8 ready with Codeable', 'wpe-php-compat' ); ?></strong></p>
 								<p><?php esc_html_e( 'Automatically submit this error report to Codeable to get a quick quote from their vetted WordPress developers.', 'wpe-php-compat' ); ?></p>
 								<form target="_blank" action="<?php echo esc_url( add_query_arg( array( 'action' => 'wp_engine_phpcompat' ), $url_codeable_submit ) ); ?>" method="POST">
 									<input type="hidden" id="wpe-pcc-codeable-data" name="data" value="" />
