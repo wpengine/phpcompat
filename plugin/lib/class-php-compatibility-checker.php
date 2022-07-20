@@ -152,6 +152,14 @@ class PHP_Compatibility_Checker {
 
 		$active_plugins = get_option( 'active_plugins' );
 
+		// On multisite, get network active plugins.
+		if ( is_multisite() ) {
+		    $active_plugins = array_merge(
+				$active_plugins,
+				array_keys( (array) get_site_option( 'active_sitewide_plugins', array() ) )
+			);
+		}
+
 		// Add "active" attribute.
 		$plugins = array_map(
 			function( $plugin_file, $plugin_data ) use ( $active_plugins ) {
