@@ -160,6 +160,47 @@ $color-border: #c3c4c7;
   }
 }
 
+.rtl {
+  direction: rtl;
+  unicode-bidi: embed;
+
+  .wpe-pcc {
+    &-alert {
+      border-left-width: 1px;
+      border-right-width: 4px;
+
+      .spinner {
+        left: 0;
+        right: auto;
+      }
+
+      &-error {
+        border-left-color: $color-border;
+        border-right-color: $color-error;
+      }
+
+      &-success {
+        border-left-color: $color-border;
+        border-right-color: $color-success;
+      }
+    }
+
+    &-developer-mode {
+      float: left;
+    }
+
+    &-clear-results {
+      margin-left: 0;
+      margin-right: 10px;
+    }
+
+    &-main {
+      padding-left: 40px;
+      padding-right: 0;
+    }
+  }
+}
+
 input.wpe-pcc-button {
 	display: block;
 	border: 0 none;
