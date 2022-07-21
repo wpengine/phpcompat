@@ -11,6 +11,8 @@ import { downloadReport } from "./include/download";
 
   window.phpcompat = {};
   window.phpcompat.queue = [];
+  window.phpcompat.total = 0;
+  window.phpcompat.completed = 0;
   window.phpcompat.xhr = false;
   window.phpcompat.ticker = false;
   window.phpcompat.results = [];
@@ -36,6 +38,7 @@ import { downloadReport } from "./include/download";
   runButton.on("click", function (event) {
     event.preventDefault();
     runNextJob();
+    $(".wpe-pcc-spinner").show();
     $(this).prop("disabled", true);
   });
 

@@ -115,6 +115,18 @@ $color-border: #c3c4c7;
 
   &-scan-information {
     display: inline-block;
+
+    .wpe-pcc-spinner {
+      float: none;
+      margin: 4px 0 4px 10px;
+      padding: 0;
+    }
+
+    .wpe-progress-active {
+      margin-left: 10px;
+      line-height: 1.8;
+      display: inline-block;
+    }
   }
 
   &-logo {

@@ -2,15 +2,23 @@ import { updateResultFailure, updateResult } from "./render";
 import $ from "jquery";
 import { hideDownload, showDownload } from "./download";
 
+const progress = $(".wpe-progress-active");
+const progressCount = $(".wpe-pcc-progress-count");
+
 export function initQueue(itemsToScan, activeOnly) {
   // Reset the queue.
   window.phpcompat.queue = [];
   window.phpcompat.results = [];
+  window.phpcompat.total = 0;
+  window.phpcompat.completed = 0;
+
   clearTimeout(window.phpcompat.ticker);
   if (window.phpcompat.xhr) {
     window.phpcompat.xhr.abort();
   }
+
   hideDownload();
+  resetProgress();
   $("#testResults").val("");
 
   itemsToScan.plugins.forEach((plugin) => {
@@ -30,6 +38,8 @@ export function initQueue(itemsToScan, activeOnly) {
       });
     }
   });
+
+  window.phpcompat.total = window.phpcompat.queue.length;
 }
 
 export function executeJob(job, cb) {
@@ -55,6 +65,7 @@ export function executeJob(job, cb) {
         if ("complete" === response.status) {
           window.phpcompat.results.push({ ...job, ...response });
           updateResult(response, job);
+          updateProgress();
         } else if ("pending" === response.status) {
           const now = new Date();
           console.log("Report is pending, retry in 5 seconds");
@@ -62,11 +73,14 @@ export function executeJob(job, cb) {
           job.retryAt = new Date(now.getTime() + 5000);
           window.phpcompat.queue.push(job);
         } else {
+          updateProgress();
           // Unexpected behaviour. Stop scanning and display current status.
           updateResultFailure(response, job);
         }
       })
       .fail((jqXHR) => {
+        updateProgress();
+
         // If connection was lost during scan, show error message.
         if (!jqXHR.responseJSON && 0 === jqXHR.status && 0 === jqXHR.readyState) {
           updateResultFailure(
@@ -94,6 +108,7 @@ export function executeJob(job, cb) {
 
 export function runNextJob() {
   if (window.phpcompat.queue.length === 0) {
+    resetProgress();
     showDownload();
     $(".wpe-pcc-information").show();
     return;
@@ -115,4 +130,16 @@ export function runNextJob() {
     window.phpcompat.queue.push(job);
     window.phpcompat.ticker = setTimeout(runNextJob, 1000);
   }
+}
+
+export function updateProgress() {
+  window.phpcompat.completed++;
+  progress.show();
+  progressCount.text(`${window.phpcompat.completed} of ${window.phpcompat.total}`);
+}
+
+function resetProgress() {
+  $(".wpe-pcc-spinner").hide();
+  progressCount.text("");
+  progress.hide();
 }

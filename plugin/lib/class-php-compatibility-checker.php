@@ -273,23 +273,23 @@ class PHP_Compatibility_Checker {
 	}
 
 	/**
-	 * Add the settings page to the wp-admin menu.
+	 * Add the scan page to the wp-admin menu.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @action admin_menu
 	 */
 	public function create_menu() {
-		// Create Tools sub-menu.
-		$this->page = add_submenu_page( 'tools.php', esc_html__( 'PHP Compatibility', 'wpe-php-compat' ), esc_html__( 'PHP Compatibility', 'wpe-php-compat' ), WPEPHPCOMPAT_CAPABILITY, WPEPHPCOMPAT_ADMIN_PAGE_SLUG, array( self::instance(), 'settings_page' ) );
+		// Create under Tools sub-menu.
+		$this->page = add_submenu_page( 'tools.php', esc_html__( 'PHP Compatibility', 'wpe-php-compat' ), esc_html__( 'PHP Compatibility', 'wpe-php-compat' ), WPEPHPCOMPAT_CAPABILITY, WPEPHPCOMPAT_ADMIN_PAGE_SLUG, array( self::instance(), 'scan_page' ) );
 	}
 
 	/**
-	 * Render method for the settings page.
+	 * Render method for the scan page.
 	 *
 	 * @since 1.0.0
 	 */
-	public function settings_page() {
+	public function scan_page() {
 
 		// Determine if current site is a WP Engine customer.
 		$is_wpe_customer = function_exists( '\is_wpe' ) && \is_wpe();
@@ -300,8 +300,8 @@ class PHP_Compatibility_Checker {
 		$url_wpe_customer_upgrade = esc_url( 'https://wpeng.in/407b79/' );
 		$url_wpe_logo             = esc_url( 'https://wpeng.in/22f22b/' );
 		$url_codeable_submit      = esc_url( 'https://codeable.io/wp-admin/admin-ajax.php?action=wp_engine_phpcompat' );
-
 		?>
+
 		<div class="wrap wpe-pcc-wrap">
 			<h1><?php esc_html_e( 'PHP Compatibility Checker', 'wpe-php-compat' ); ?></h1>
 			<div class="wpe-pcc-main">
@@ -327,7 +327,11 @@ class PHP_Compatibility_Checker {
 										<div class="wpe-pcc-run-scan">
 											<input name="run" id="runButton" type="button" value="<?php esc_html_e( 'Scan site', 'wpe-php-compat' ); ?>" class="button-secondary" />
 											<div class="wpe-pcc-scan-information">
-												<span style="display:none; visibility:visible;" class="spinner wpe-pcc-spinner"></span> <span id="wpe-progress-active"></span> <span style="display:none;" id="wpe-pcc-progress-count"></span>
+												<span style="display:none; visibility:visible;" class="spinner wpe-pcc-spinner"></span>
+												<span class="wpe-progress-active" style="display:none;">
+													<?php esc_html_e( 'Now scanning:', 'wpe-php-compat' ); ?>
+													<span class="wpe-pcc-progress-count"></span>
+												</span>
 											</div> <!-- /wpe-pcc-scan-information -->
 										</div> <!-- /wpe-pcc-run-scan -->
 									</td>
@@ -488,6 +492,7 @@ class PHP_Compatibility_Checker {
 				{{/reports.length}}
 			</div>
 		</script>
+
 		<?php
 	}
 
@@ -506,4 +511,5 @@ class PHP_Compatibility_Checker {
 
 		return $links;
 	}
+
 }
