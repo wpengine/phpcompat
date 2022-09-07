@@ -12,10 +12,11 @@ END_HIGHLIGHT                          :=\033[0m # No Color
 build: build-docker build-assets
 
 .PHONY: build-assets
-build-assets: | build-docker-node install-npm
+build-assets: | build-docker-node install-npm install-composer
 	@echo "Building plugin assets"
 	rm -f plugin/languages/*.pot plugin/scripts/*-min.js
-	$(DOCKER_RUN) $(NODE_IMAGE) ./node_modules/gulp-cli/bin/gulp.js
+	$(DOCKER_RUN) $(NODE_IMAGE) npm run build
+	$(DOCKER_RUN) $(COMPOSER_BASE_CONTAINER) run-script makepot
 
 .PHONY: build-docker
 build-docker: build-docker-node build-docker-php
@@ -159,6 +160,10 @@ update-composer: lando-stop
 .PHONY: update-npm
 update-npm: | build-docker-node
 	$(DOCKER_RUN) $(NODE_IMAGE) npm update
+
+.PHONY: watch
+watch: | build-docker-node install-npm
+	$(DOCKER_RUN) $(NODE_IMAGE) npm run start
 
 wpe-php-compat.zip:
 	@echo "Building release file: wpe-php-compat.zip"

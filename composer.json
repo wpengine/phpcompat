@@ -5,7 +5,17 @@
     "phpunit/phpunit": "^9.5.4",
     "brain/monkey": "^2.6.0",
     "dealerdirect/phpcodesniffer-composer-installer": "^v0.7.1",
+    "wp-cli/wp-cli-bundle": "*",
     "wpengine/wpengine-coding-standards": "^1.0.0",
     "johnpbloch/wordpress": "*"
+  },
+  "config": {
+    "allow-plugins": {
+      "johnpbloch/wordpress-core-installer": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  },
+  "scripts": {
+    "makepot": "./vendor/bin/wp i18n make-pot plugin --slug=wpe-php-compat"
   }
 }

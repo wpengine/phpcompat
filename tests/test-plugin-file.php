@@ -6,7 +6,7 @@
  * @package WPEngine_PHPCompat\PHP_Compatibility_Checker
  */
 
-namespace WPEngine_PHPCompat\PHP_Compatibility_Checker\Tests;
+namespace WPEngine_PHPCompat;
 
 use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
@@ -23,6 +23,10 @@ class PluginFileTest extends TestCase {
 
 	}
 
+	public function test_true()
+	{
+		$this->assertTrue(true);
+	}
 	/**
 	 * Test loader function
 	 */
@@ -37,14 +41,15 @@ class PluginFileTest extends TestCase {
 	}
 
 	public function test_autoloader_registered() {
-		$this->assertContains( 'wpe_phpcompat_autoloader', spl_autoload_functions() );
+		$this->assertContains( 'WPEngine_PHPCompat\wpe_phpcompat_autoloader', spl_autoload_functions() );
 	}
 
 	public function test_autoloader() {
 
+		$home = dirname( __DIR__ );
 		$test_classes = array(
-			'WPEngine_PHPCompat\PHP_Compatibility_Checker\Class_One' => '/app/plugin/lib/class-class-one.php',
-			'WPEngine_PHPCompat\PHP_Compatibility_Checker\Sub_Classes\Class_Two' => '/app/plugin/lib/Sub_Classes/class-class-two.php',
+			'WPEngine_PHPCompat\Class_One' => $home. '/plugin/lib/class-class-one.php',
+			'WPEngine_PHPCompat\Sub_Classes\Class_Two' => $home . '/plugin/lib/Sub_Classes/class-class-two.php',
 			'Class_Three' => '',
 		);
 
