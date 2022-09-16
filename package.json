@@ -1,5 +1,5 @@
 {
-  "name": "php-compatibility-checker",
+  "name": "@wpengine/php-compatibility-checker",
   "devDependencies": {
     "braces": "^2.3.1",
     "chokidar": "^3.5.3",
