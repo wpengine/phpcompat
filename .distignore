@@ -9,6 +9,7 @@ Dockerfile
 Gruntfile.js
 Makefile
 build.sh
+CODE_OF_CONDUCT.md
 composer.json
 composer.lock
 docker-compose.yml
