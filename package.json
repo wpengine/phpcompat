@@ -48,7 +48,7 @@
 		"webpack-livereload-plugin": "^2.3.0"
 	},
 	"dependencies": {
-		"@wordpress/env": "^4.0.0",
+		"@wordpress/env": "^4.9.0",
 		"@wordpress/hooks": "^2.12.0",
 		"lodash": "^4.17.21"
 	}
