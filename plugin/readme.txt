@@ -3,7 +3,7 @@ Contributors:      wpengine, octalmage, stevenkword, Taylor4484, pross, jcross, 
 Tags:              php 7, php 8, php, version, compat, compatibility, checker, wp engine, wpe, wpengine
 Requires at least: 5.6
 Tested up to:      6.2
-Stable tag:        1.6.1
+Stable tag:        1.6.0
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,8 +87,6 @@ You will find the plugin options in the WP Admin `Tools => PHP Compatibility` me
 2. Compatibility results screen
 
 == Changelog ==
-= 1.6.1 =
-- Fix issue on update where old files were included.
 
 = 1.6.0 =
 - Changed from running PHP Compatibility scans on your WordPress server to using scan data from [Tide](https://wptide.org).
