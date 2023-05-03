@@ -1,11 +1,10 @@
+const { merge } = require("webpack-merge");
 const defaultConfig = require("@wordpress/scripts/config/webpack.config");
 const DependencyExtractionWebpackPlugin = require("@wordpress/dependency-extraction-webpack-plugin");
 const path = require("path");
 
-module.exports = {
-  ...defaultConfig,
+module.exports = merge(defaultConfig, {
   output: {
-    ...defaultConfig.output,
     path: path.resolve(process.cwd(), "plugin/build"),
   },
   entry: {
@@ -17,5 +16,5 @@ module.exports = {
         plugin.constructor.name !== "DependencyExtractionWebpackPlugin"
     ),
     new DependencyExtractionWebpackPlugin(),
-  ],
-};
+  ]
+});
