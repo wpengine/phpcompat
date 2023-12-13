@@ -34,6 +34,7 @@
 		"@wordpress/scripts": "^26.2.0",
 		"babel-jest": "^26.0",
 		"babel-loader": "^8.1",
+		"buffer": "^6.0.3",
 		"compare-versions": "^4.1",
 		"ignore-emit-webpack-plugin": "^2.0",
 		"jest": "^26.0",
@@ -46,7 +47,8 @@
 		"webpack-bundle-analyzer": "^4.2",
 		"webpack-cli": "^4.6",
 		"webpack-livereload-plugin": "^2.3",
-		"webpack-merge": "^5.8.0"
+		"webpack-merge": "^5.8.0",
+		"webpack-node-externals": "^3.0.0"
 	},
 	"dependencies": {
 		"@wordpress/env": "^5.16.0",
