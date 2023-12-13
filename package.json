@@ -47,8 +47,7 @@
 		"webpack-bundle-analyzer": "^4.2",
 		"webpack-cli": "^4.6",
 		"webpack-livereload-plugin": "^2.3",
-		"webpack-merge": "^5.8.0",
-		"webpack-node-externals": "^3.0.0"
+		"webpack-merge": "^5.8.0"
 	},
 	"dependencies": {
 		"@wordpress/env": "^5.16.0",
