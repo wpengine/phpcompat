@@ -34,6 +34,7 @@
 		"@wordpress/scripts": "^26.2.0",
 		"babel-jest": "^26.0",
 		"babel-loader": "^8.1",
+		"buffer": "^6.0.3",
 		"compare-versions": "^4.1",
 		"ignore-emit-webpack-plugin": "^2.0",
 		"jest": "^26.0",

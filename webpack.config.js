@@ -2,6 +2,7 @@ const { merge } = require("webpack-merge");
 const defaultConfig = require("@wordpress/scripts/config/webpack.config");
 const DependencyExtractionWebpackPlugin = require("@wordpress/dependency-extraction-webpack-plugin");
 const path = require("path");
+const webpack = require('webpack');
 
 module.exports = merge(defaultConfig, {
   output: {
@@ -16,5 +17,13 @@ module.exports = merge(defaultConfig, {
         plugin.constructor.name !== "DependencyExtractionWebpackPlugin"
     ),
     new DependencyExtractionWebpackPlugin(),
-  ]
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+    }),
+  ],
+  resolve: {
+    fallback: {
+      buffer: require.resolve("buffer/"),
+    }
+  }
 });
