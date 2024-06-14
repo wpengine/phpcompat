@@ -52,6 +52,7 @@
 	"dependencies": {
 		"@wordpress/env": "^5.16.0",
 		"@wordpress/hooks": "^2.12",
-		"lodash": "^4.17"
+		"lodash": "^4.17",
+		"ip": "^2.0.1"
 	}
 }
