@@ -30,8 +30,8 @@
 		"@testing-library/react": "^11.1",
 		"@testing-library/user-event": "^12.1",
 		"@wordpress/dependency-extraction-webpack-plugin": "^3.1",
-		"@wordpress/e2e-test-utils": "^5.1",
-		"@wordpress/scripts": "^26.19.0",
+		"@wordpress/e2e-test-utils": "^11.3.0",
+		"@wordpress/scripts": "^28.3.0",
 		"babel-jest": "^29.7",
 		"babel-loader": "^8.1",
 		"buffer": "^6.0.3",
@@ -52,6 +52,7 @@
 	"dependencies": {
 		"@wordpress/env": "^5.16.0",
 		"@wordpress/hooks": "^2.12",
-		"lodash": "^4.17"
+		"lodash": "^4.17",
+		"puppeteer-core": "^22.13.1"
 	}
 }
