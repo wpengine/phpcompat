@@ -8,6 +8,7 @@
  * Requires PHP:      5.6
  * Author:            WP Engine
  * Author URI:        https://wpengine.com/
+ * Update URI:        false
  * License:           GPLv2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       wpe-php-compat
@@ -178,3 +179,19 @@ function upgrade( $upgrader, $hook_extra ) {
 register_activation_hook( __FILE__, __NAMESPACE__ . '\activate' );
 register_uninstall_hook( __FILE__, __NAMESPACE__ . '\uninstall' );
 add_action( 'upgrader_process_complete', __NAMESPACE__ . '\upgrade', 10, 2 );
+
+/**
+ * Registers the plugin updater.
+ *
+ * @return void
+ */
+function check_for_upgrades() {
+	$properties = array(
+		'plugin_slug'     => 'php-compatibility-checker',
+		'plugin_basename' => plugin_basename( __FILE__ ),
+	);
+
+	require_once __DIR__ . '/lib/class-plugin-updater.php';
+	new \WPEngine_PHPCompat\PluginUpdater( $properties );
+}
+add_action( 'admin_init', __NAMESPACE__ . '\check_for_upgrades' );
