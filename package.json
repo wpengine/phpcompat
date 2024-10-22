@@ -9,7 +9,7 @@
 	"license": "GPLv2",
 	"homepage": "https://wpengine.com",
 	"scripts": {
-		"build": "wp-scripts build --output-path=plugin/build",
+		"build": "wp-scripts build --output-path=plugin/build && cp readme.txt plugin/",
 		"makepot": "./vendor/bin/wp i18n make-pot plugin --slug=wpe-php-compat",
 		"test:e2e": "wp-scripts test-e2e",
 		"start": "wp-scripts start --output-path=plugin/build",
