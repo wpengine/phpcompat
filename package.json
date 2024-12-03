@@ -33,7 +33,7 @@
 		"@wordpress/e2e-test-utils": "^11.3.0",
 		"@wordpress/env": "^5.16.0",
 		"@wordpress/hooks": "^2.12",
-		"@wordpress/scripts": "^28.3.0",
+		"@wordpress/scripts": "^30.5.0",
 		"babel-jest": "^29.7",
 		"babel-loader": "^8.1",
 		"compare-versions": "^4.1",
@@ -52,7 +52,9 @@
 		"webpack-merge": "^5.8.0"
 	},
 	"overrides": {
-		"ws": "^8.17.1"
+		"ws": "^8.17.1",
+		"cookie": "^0.7.1",
+		"http-proxy-middleware": "^2.0.7"
 	},
 	"dependencies": {
 		"buffer": "^6.0.3",
