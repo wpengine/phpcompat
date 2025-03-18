@@ -20,12 +20,12 @@
 			"@wordpress/default"
 		],
 		"plugins": [
-			"@babel/plugin-proposal-class-properties"
+			"@babel/plugin-transform-class-properties"
 		]
 	},
 	"devDependencies": {
-		"@babel/core": "^7.9",
-		"@babel/preset-env": "^7.9",
+		"@babel/core": "^7.26",
+		"@babel/preset-env": "^7.26",
 		"@testing-library/jest-dom": "^5.11",
 		"@testing-library/react": "^11.1",
 		"@testing-library/user-event": "^12.1",
