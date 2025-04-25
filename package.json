@@ -33,7 +33,7 @@
 		"@wordpress/e2e-test-utils": "^11.3.0",
 		"@wordpress/env": "^5.16.0",
 		"@wordpress/hooks": "^2.12",
-		"@wordpress/scripts": "^30.8.0",
+		"@wordpress/scripts": "^30.15.0",
 		"babel-jest": "^29.7",
 		"babel-loader": "^8.1",
 		"compare-versions": "^4.1",
