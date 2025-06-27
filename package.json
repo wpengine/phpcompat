@@ -55,7 +55,8 @@
 	"overrides": {
 		"ws": "^8.17.1",
 		"cookie": "^0.7.1",
-		"http-proxy-middleware": "^2.0.7"
+		"http-proxy-middleware": "^2.0.7",
+		"webpack-dev-server": "^5.2.1"
 	},
 	"dependencies": {
 		"buffer": "^6.0.3",
