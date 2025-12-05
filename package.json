@@ -58,7 +58,11 @@
 		"http-proxy-middleware": "^2.0.7",
 		"webpack-dev-server": "^5.2.1",
 		"@eslint/plugin-kit": "^0.3.4",
-		"@babel/runtime": "^7.28.2"
+		"@babel/runtime": "^7.28.2",
+		"glob": "^11.1.0"
+	},
+	"resolutions": {
+		"glob": "^11.1.0"
 	},
 	"dependencies": {
 		"buffer": "^6.0.3",
