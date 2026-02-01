@@ -16,6 +16,6 @@
     }
   },
   "scripts": {
-    "makepot": "./vendor/bin/wp i18n make-pot plugin --slug=wpe-php-compat"
+    "makepot": "./vendor/bin/wp i18n make-pot plugin --slug=php-compatibility-checker"
   }
 }
