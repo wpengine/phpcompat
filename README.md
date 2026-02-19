@@ -7,6 +7,9 @@ An easy way to check your site for PHP Compatibility.
 Before starting your workstation will need the following:
 
 * [Docker](https://www.docker.com/)
+* [Node.js](https://nodejs.org/) v20 LTS (recommended via [nvm](https://github.com/nvm-sh/nvm))
+
+If using nvm, run `nvm use` in the project root to switch to the correct Node version.
 
 1. Clone the repository
 
