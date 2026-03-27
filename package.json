@@ -55,5 +55,9 @@
 	"dependencies": {
 		"buffer": "^6.0.3",
 		"mustache": "^4.2.0"
+	},
+	"overrides": {
+		"minimatch": "^9.0.9",
+		"serialize-javascript": "^7.0.3"
 	}
 }
