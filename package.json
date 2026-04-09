@@ -58,6 +58,7 @@
 	},
 	"overrides": {
 		"minimatch": "^9.0.9",
-		"serialize-javascript": "^7.0.3"
+		"serialize-javascript": "^7.0.3",
+		"yauzl": "3.2.1"
 	}
 }
