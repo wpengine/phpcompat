@@ -59,6 +59,9 @@
 	"overrides": {
 		"minimatch": "^9.0.9",
 		"serialize-javascript": "^7.0.3",
-		"yauzl": "3.2.1"
+		"yauzl": "3.2.1",
+		"webpack-dev-server": "5.2.4",
+		"ws": "8.21.0",
+		"fast-xml-builder": "1.2.0"
 	}
 }
