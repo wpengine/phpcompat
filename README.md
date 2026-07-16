@@ -1,5 +1,10 @@
 # PHP Compatibility Checker
 
+> [!WARNING]
+> **PHP Compatibility Checker is no longer actively maintained.**
+>
+> This software is still free to use under the license provided, but users should be aware that it is not currently maintained. No additional releases, including security releases, will be made available.
+
 An easy way to check your site for PHP Compatibility.
 
 ## Setup Development Environment
