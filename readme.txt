@@ -11,6 +11,10 @@ Make sure your plugins and themes are compatible with newer PHP versions.
 
 == Description ==
 
+**WARNING: PHP Compatibility Checker is no longer actively maintained.**
+
+This software is still free to use under the license provided, but users should be aware that it is not currently maintained. No additional releases, including security releases, will be made available.
+
 The WP Engine PHP Compatibility Checker can be used by any WordPress website on any web host to check PHP version compatibility.
 
 This plugin will lint theme and plugin code installed on your WordPress site and give you back a report of compatibility issues as reported by [Tide](https://wptide.org) for you to fix. Compatibility issues are categorized into errors and warnings and will list the file and line number of the offending code, as well as the info about why that line of code is incompatible with the chosen version of PHP. The plugin will also suggest updates to themes and plugins, as a new version may offer compatible code.
