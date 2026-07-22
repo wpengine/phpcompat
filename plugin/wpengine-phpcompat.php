@@ -11,7 +11,7 @@
  * Update URI:        false
  * License:           GPLv2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       wpe-php-compat
+ * Text Domain:       php-compatibility-checker
  * Domain Path:       /languages
  *
  * @package WPEngine_PHPCompat\PHP_Compatibility_Checker
@@ -34,7 +34,7 @@ function wpe_phpcompat_loader() {
 	$register_phpcompat->init();
 
 	// Load the text domain.
-	load_plugin_textdomain( 'wpe-php-compat', false, dirname( dirname( __FILE__ ) ) . '/languages' );
+	load_plugin_textdomain( 'php-compatibility-checker', false, dirname( dirname( __FILE__ ) ) . '/languages' );
 
 	// Add plugin action link.
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $register_phpcompat, 'filter_plugin_links' ) );
